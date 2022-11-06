@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>令尹仙府</title>
+  
+  <subtitle> </subtitle>
+  <link href="https://www.xcjyc.top/atom.xml" rel="self"/>
+  
+  <link href="https://www.xcjyc.top/"/>
+  <updated>2022-11-06T15:09:19.167Z</updated>
+  <id>https://www.xcjyc.top/</id>
+  
+  <author>
+    <name>XCJYC</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux常用命令</title>
+    <link href="https://www.xcjyc.top/2022/11/06/linux-chang-yong-ming-ling/"/>
+    <id>https://www.xcjyc.top/2022/11/06/linux-chang-yong-ming-ling/</id>
+    <published>2022-11-06T10:52:38.000Z</published>
+    <updated>2022-11-06T15:09:19.167Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Linux常用命令&quot;&gt;&lt;a href=&quot;#Linux常用命令&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Linux" scheme="https://www.xcjyc.top/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="https://www.xcjyc.top/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux安装初始化</title>
+    <link href="https://www.xcjyc.top/2022/11/06/linux-chu-shi-hua-cao-zuo/"/>
+    <id>https://www.xcjyc.top/2022/11/06/linux-chu-shi-hua-cao-zuo/</id>
+    <published>2022-11-06T10:52:38.000Z</published>
+    <updated>2022-11-06T14:35:14.403Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Linux-各种命名规范&quot;&gt;&lt;a href=&quot;#Linux-各种命名规范&quot; class=&quot;headerlink&quot; title=&quot;Linux 各种命名规范&quot;&gt;&lt;/a&gt;Linux 各种命名规范&lt;/h2&gt;&lt;p&gt;1、文件名不能包括反斜线字符   “/”</summary>
+        
+      
+    
+    
+    
+    <category term="Linux" scheme="https://www.xcjyc.top/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="https://www.xcjyc.top/tags/Linux/"/>
+    
+  </entry>
+  
+</feed>
