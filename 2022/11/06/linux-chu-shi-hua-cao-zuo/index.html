@@ -32,7 +32,7 @@
 <meta name="generator" content="Hexo 5.4.2">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="令尹仙府" type="application/atom+xml">
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -373,9 +373,6 @@
         <hr class="clearfix">
 
         
-        <!-- 是否加载使用自带的 prismjs. -->
-        <link rel="stylesheet" href="/libs/prism/prism.css">
-        
 
         
         <!-- 代码块折行 -->
@@ -387,75 +384,74 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="Linux-各种命名规范"><a href="#Linux-各种命名规范" class="headerlink" title="Linux 各种命名规范"></a>Linux 各种命名规范</h2><p>1、文件名不能包括反斜线字符   “/” “NUL(空)”，其它字符均可。<br>2、主机名不支持下划线字符  “_”，可使用字母、数字、横线组合，部分软件对主机名有特殊要求。</p>
-<h2 id="命令帮助"><a href="#命令帮助" class="headerlink" title="命令帮助"></a>命令帮助</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment"># which  ls </span>
-<span class="token builtin class-name">alias</span> <span class="token assign-left variable">ls</span><span class="token operator">=</span><span class="token string">'ls --color=auto'</span>
-	/usr/bin/ls
-	
-<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment"># type trap</span>
-<span class="token builtin class-name">trap</span> is a shell <span class="token builtin class-name">builtin</span>	
-<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment"># help trap </span>
+<h2 id="命令帮助"><a href="#命令帮助" class="headerlink" title="命令帮助"></a>命令帮助</h2><pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># which  ls </span>
+<span class="token function">alias</span> ls<span class="token operator">=</span><span class="token string">'ls --color=auto'</span>
+    /usr/bin/ls
+    
+<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># type trap</span>
+<span class="token function">trap</span> is a shell <span class="token function">builtin</span>    
+<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># help trap </span>
 
-<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment"># type vim </span>
-<span class="token function">vim</span> is /usr/bin/vim
-<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment"># vim --help / -h </span>
-<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment"># man vim </span>
+<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># type vim </span>
+vim is /usr/bin/vim
+<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># vim --help / -h </span>
+<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># man vim </span>
 
-<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment"># whatis ls </span>
-<span class="token function">ls</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>               - list directory contents
-<span class="token function">ls</span> <span class="token punctuation">(</span>1p<span class="token punctuation">)</span>              - list directory contents<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@tencent ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># whatis ls </span>
+<span class="token function">ls</span> <span class="token punctuation">(</span>1<span class="token punctuation">)</span>               - list directory contents
+<span class="token function">ls</span> <span class="token punctuation">(</span>1p<span class="token punctuation">)</span>              - list directory contents
+</code></pre>
+<h2 id="CentOS-安装后必需所做的初始化操作"><a href="#CentOS-安装后必需所做的初始化操作" class="headerlink" title="CentOS 安装后必需所做的初始化操作"></a>CentOS 安装后必需所做的初始化操作</h2><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true">#关闭SELinux </span>
+<span class="token function">sed</span> -i <span class="token string">'/^SELINUX=/c SELINUX=disabled'</span> /etc/selinux/config
 
-<h2 id="CentOS-安装后必需所做的初始化操作"><a href="#CentOS-安装后必需所做的初始化操作" class="headerlink" title="CentOS 安装后必需所做的初始化操作"></a>CentOS 安装后必需所做的初始化操作</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#关闭SELinux </span>
-<span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">'/^SELINUX=/c SELINUX=disabled'</span> /etc/selinux/config
+<span class="token comment" spellcheck="true">#关闭防火墙</span>
+systemctl disable --now firewalld 
 
-<span class="token comment">#关闭防火墙</span>
-systemctl disable <span class="token parameter variable">--now</span> firewalld 
+<span class="token comment" spellcheck="true">#支持光盘,/misc/cd对应就是光盘内容</span>
+yum -y <span class="token function">install</span> autofs
+systemctl <span class="token function">enable</span> --now autofs
 
-<span class="token comment">#支持光盘,/misc/cd对应就是光盘内容</span>
-yum <span class="token parameter variable">-y</span> <span class="token function">install</span> autofs
-systemctl <span class="token builtin class-name">enable</span> <span class="token parameter variable">--now</span> autofs
-
-<span class="token comment">#配置yum 仓库</span>
+<span class="token comment" spellcheck="true">#配置yum 仓库</span>
 系统源，EPEL源
 
-<span class="token comment">#修改网卡名称</span>
-<span class="token punctuation">[</span>root@rocky8 ~<span class="token punctuation">]</span><span class="token comment">#sed -ri '/GRUB_CMDLINE_LINUX=/s#(.*)"$#\1 net.ifnames=0"#' /etc/default/grub</span>
-<span class="token punctuation">[</span>root@rocky8 ~<span class="token punctuation">]</span><span class="token comment">#grub2-mkconfig -o /boot/grub2/grub.cfg </span>
-<span class="token punctuation">[</span>root@rocky8 ~<span class="token punctuation">]</span><span class="token comment">#reboot</span>
+<span class="token comment" spellcheck="true">#修改网卡名称</span>
+<span class="token punctuation">[</span>root@rocky8 ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true">#sed -ri '/GRUB_CMDLINE_LINUX=/s#(.*)"$#\1 net.ifnames=0"#' /etc/default/grub</span>
+<span class="token punctuation">[</span>root@rocky8 ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true">#grub2-mkconfig -o /boot/grub2/grub.cfg </span>
+<span class="token punctuation">[</span>root@rocky8 ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true">#reboot</span>
 
-<span class="token comment">#配置网卡地址：</span>
-<span class="token punctuation">[</span>root@rocky ~<span class="token punctuation">]</span><span class="token comment"># mv   /etc/sysconfig/network-scripts/ifcfg-xxxxx  ifcfg-xxxxx.bak</span>
-<span class="token punctuation">[</span>root@rocky ~<span class="token punctuation">]</span><span class="token comment"># vim   /etc/sysconfig/network-scripts/ifcfg-eth0</span>
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>eth0
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>eth0
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static
-<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">10.0</span>.0.129
-<span class="token assign-left variable">PERFIX</span><span class="token operator">=</span><span class="token number">24</span>
-<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">10.0</span>.0.2
-<span class="token assign-left variable">DNS1</span><span class="token operator">=</span><span class="token number">223.5</span>.5.5
-<span class="token assign-left variable">DNS2</span><span class="token operator">=</span><span class="token number">180.76</span>.76.76
-<span class="token punctuation">[</span>root@rocky ~<span class="token punctuation">]</span><span class="token comment"># nmcli connection reload </span>
-<span class="token punctuation">[</span>root@rocky ~<span class="token punctuation">]</span><span class="token comment"># nmcli connection up eth0</span>
+<span class="token comment" spellcheck="true">#配置网卡地址：</span>
+<span class="token punctuation">[</span>root@rocky ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># mv   /etc/sysconfig/network-scripts/ifcfg-xxxxx  ifcfg-xxxxx.bak</span>
+<span class="token punctuation">[</span>root@rocky ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># vim   /etc/sysconfig/network-scripts/ifcfg-eth0</span>
+DEVICE<span class="token operator">=</span>eth0
+NAME<span class="token operator">=</span>eth0
+BOOTPROTO<span class="token operator">=</span>static
+IPADDR<span class="token operator">=</span>10.0.0.129
+PERFIX<span class="token operator">=</span>24
+GATEWAY<span class="token operator">=</span>10.0.0.2
+DNS1<span class="token operator">=</span>223.5.5.5
+DNS2<span class="token operator">=</span>180.76.76.76
+<span class="token punctuation">[</span>root@rocky ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># nmcli connection reload </span>
+<span class="token punctuation">[</span>root@rocky ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># nmcli connection up eth0</span>
 
-<span class="token comment">#最小化安装系统后，建议安装常用软件</span>
-yum <span class="token parameter variable">-y</span> <span class="token function">install</span> autofs  <span class="token function">vim</span> vim-enhanced tcpdump autofs chrony lrzsz tree telnet <span class="token function">ftp</span> lftp redhat-lsb-core bash-completion net-tools postfix <span class="token function">wget</span> <span class="token function">bzip2</span> <span class="token function">zip</span> <span class="token function">unzip</span> xz <span class="token function">lsof</span> mlocate man-pages <span class="token function">rsync</span> gcc  autoconf gcc-c++  iotop nfs-utils openssl-devel pcre-devel systemd-devel tmux dos2unix
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="Ubuntu开启root远程登录功能"><a href="#Ubuntu开启root远程登录功能" class="headerlink" title="Ubuntu开启root远程登录功能"></a>Ubuntu开启root远程登录功能</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token parameter variable">-i</span>
+<span class="token comment" spellcheck="true">#最小化安装系统后，建议安装常用软件</span>
+yum -y <span class="token function">install</span> autofs  vim vim-enhanced tcpdump autofs chrony lrzsz tree telnet <span class="token function">ftp</span> lftp redhat-lsb-core bash-completion net-tools postfix <span class="token function">wget</span> <span class="token function">bzip2</span> <span class="token function">zip</span> unzip xz <span class="token function">lsof</span> mlocate man-pages <span class="token function">rsync</span> gcc  autoconf gcc-c++  iotop nfs-utils openssl-devel pcre-devel systemd-devel tmux dos2unix
+</code></pre>
+<h2 id="Ubuntu开启root远程登录功能"><a href="#Ubuntu开启root远程登录功能" class="headerlink" title="Ubuntu开启root远程登录功能"></a>Ubuntu开启root远程登录功能</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> -i
 <span class="token function">passwd</span> root
-<span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">'/PermitRootLogin/c PermitRootLogin yes'</span> /etc/ssh/sshd_config
-systemctl restart sshd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="网络检查命令"><a href="#网络检查命令" class="headerlink" title="网络检查命令"></a>网络检查命令</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">监听端口：ss   <span class="token parameter variable">-ntlp</span>
-监听端口：losf <span class="token parameter variable">-i</span>  :port
+<span class="token function">sed</span> -i <span class="token string">'/PermitRootLogin/c PermitRootLogin yes'</span> /etc/ssh/sshd_config
+systemctl restart sshd
+</code></pre>
+<h2 id="网络检查命令"><a href="#网络检查命令" class="headerlink" title="网络检查命令"></a>网络检查命令</h2><pre class=" language-bash"><code class="language-bash">监听端口：ss   -ntlp
+监听端口：losf -i  :port
 IP地址：ip   a 
-网关：  route  <span class="token parameter variable">-n</span> 
-DNS：  <span class="token function">cat</span>  /etc/resolv.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="CentOS6设置主机名"><a href="#CentOS6设置主机名" class="headerlink" title="CentOS6设置主机名"></a>CentOS6设置主机名</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@x-z ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/sysconfig/network</span>
-<span class="token punctuation">[</span>root@x-z ~<span class="token punctuation">]</span><span class="token comment"># hostname x-z.top</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<h2 id="CentOS7设置主机名"><a href="#CentOS7设置主机名" class="headerlink" title="CentOS7设置主机名"></a>CentOS7设置主机名</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@x-z ~<span class="token punctuation">]</span><span class="token comment"># hostnamectl set-hostname x-z.top</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+网关：  route  -n 
+DNS：  <span class="token function">cat</span>  /etc/resolv.conf
+</code></pre>
+<h2 id="CentOS6设置主机名"><a href="#CentOS6设置主机名" class="headerlink" title="CentOS6设置主机名"></a>CentOS6设置主机名</h2><pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@x-z ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># vim /etc/sysconfig/network</span>
+<span class="token punctuation">[</span>root@x-z ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># hostname x-z.top</span>
+</code></pre>
+<h2 id="CentOS7设置主机名"><a href="#CentOS7设置主机名" class="headerlink" title="CentOS7设置主机名"></a>CentOS7设置主机名</h2><pre class=" language-bash"><code class="language-bash"><span class="token punctuation">[</span>root@x-z ~<span class="token punctuation">]</span><span class="token comment" spellcheck="true"># hostnamectl set-hostname x-z.top</span>
+</code></pre>
 <h4 id=""><a href="#" class="headerlink" title=""></a></h4>
                 
             </div>
