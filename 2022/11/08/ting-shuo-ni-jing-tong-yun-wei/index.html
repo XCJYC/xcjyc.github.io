@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux常用命令, 令尹仙府">
+    <meta name="keywords" content="听说你精通运维, 令尹仙府">
     <meta name="description" content="令尹的个人学习档案">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Linux常用命令 | 令尹仙府</title>
+    <title>听说你精通运维 | 令尹仙府</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -206,12 +206,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux常用命令</h1>
+                    <h1 class="description center-align post-title">听说你精通运维</h1>
                 </div>
             </div>
         </div>
@@ -327,8 +327,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Linux/">
-                                <span class="chip bg-color">Linux</span>
+                            <a href="/tags/%E8%BF%90%E7%BB%B4/">
+                                <span class="chip bg-color">运维</span>
                             </a>
                         
                     </div>
@@ -339,8 +339,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="post-category">
-                                Linux基础
+                            <a href="/categories/%E8%BF%90%E7%BB%B4%E7%9F%A5%E8%AF%86/" class="post-category">
+                                运维知识
                             </a>
                         
                     </div>
@@ -352,7 +352,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-06
+                    2022-11-08
                 </div>
                 
 
@@ -361,7 +361,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.3k
                 </div>
                 
 
@@ -383,129 +383,31 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Linux常用命令"><a href="#Linux常用命令" class="headerlink" title="Linux常用命令"></a><strong>Linux常用命令</strong></h1><p>在开发中常用的一些命令。</p>
-<p>1）目录切换</p>
-<p>2）对目录（文件夹）的操作</p>
-<p>3）对文件的操作</p>
-<p>4）文件的压缩、解压</p>
-<p>5）软件的安装</p>
-<p>6）权限的操作</p>
-<p>7）防火墙端口的开启</p>
-<p>8）一些其他的命令</p>
-<p>执行以下命令时需要注意自己对应系统的版本，不同的版本会稍有差别。</p>
-<h2 id="1、目录切换"><a href="#1、目录切换" class="headerlink" title="1、目录切换"></a><strong>1、目录切换</strong></h2><p>cd /     切换到根目录</p>
-<p>cd ~ 切换到用户跟目录</p>
-<p>cd ../    切换到上一级目录</p>
-<p>cd -     切换到上次访问目录</p>
-<p>cd etc   切换到当前目录下的etc目录</p>
-<h2 id="2、目录的操作命令（增删改查）"><a href="#2、目录的操作命令（增删改查）" class="headerlink" title="2、目录的操作命令（增删改查）"></a><strong>2、目录的操作命令（增删改查）</strong></h2><h4 id="（1）新增目录"><a href="#（1）新增目录" class="headerlink" title="（1）新增目录"></a><strong>（1）新增目录</strong></h4><p>​    mkdir xxx (xxx为自己为目录取的名字)</p>
-<p>​       mkdir  -p   xxx         递归创建</p>
-<h4 id="（2）查看目录"><a href="#（2）查看目录" class="headerlink" title="（2）查看目录"></a><strong>（2）查看目录</strong></h4><p>​    ls[-a|-l]</p>
-<p>​    ls -a 查看当前目录下的所有目录，以及隐藏目录</p>
-<p>​    ls -l 查看当前目录下的所有目录的详细信息    缩写成ll</p>
-<h4 id="（3）搜索目录"><a href="#（3）搜索目录" class="headerlink" title="（3）搜索目录"></a><strong>（3）搜索目录</strong></h4><p>​     find /root -name <em>test</em></p>
-<h4 id="（4）修改目录"><a href="#（4）修改目录" class="headerlink" title="（4）修改目录"></a><strong>（4）修改目录</strong></h4><p>​     mv xxx aaa  (xxx 旧目录名，aaa新目录名) mv同样可以修改文件及压缩包的名字</p>
-<h4 id="（5）移动目录"><a href="#（5）移动目录" class="headerlink" title="（5）移动目录"></a><strong>（5）移动目录</strong></h4><p>​     mv yyy /root (yyy需要修改目录。/root 剪切到的位置)</p>
-<h4 id="（6）复制目录及文件"><a href="#（6）复制目录及文件" class="headerlink" title="（6）复制目录及文件"></a><strong>（6）复制目录及文件</strong></h4><p>​     cp -r aaa /  (将aaa目录复制到根目录下)</p>
-<p>  cp tt.zip /  (将tt.zip复制到根目录下)</p>
-<h4 id="（7）删除目录"><a href="#（7）删除目录" class="headerlink" title="（7）删除目录"></a><strong>（7）删除目录</strong></h4><p>​    rm删除文件</p>
-<p>​    rm -r   删除目录</p>
-<p>​     <strong>rm-rf   强制删除目录 （就可以用本句去删除任何东西，常用这句就行了）</strong></p>
-<h2 id="3、文件的操作命令"><a href="#3、文件的操作命令" class="headerlink" title="3、文件的操作命令"></a><strong>3、文件的操作命令</strong></h2><h4 id="（1）新建文件"><a href="#（1）新建文件" class="headerlink" title="（1）新建文件"></a><strong>（1）新建文件</strong></h4><p>​     touch test.txt (Linux 下是可以不加文件的后缀名的，加上文件名是为了开发者分辨文件)</p>
-<h4 id="（2）查看文件"><a href="#（2）查看文件" class="headerlink" title="（2）查看文件"></a><strong>（2）查看文件</strong></h4><p>​     cat/more/less/tail</p>
-<p>​     cat  使用cat可以比较方便的查看较小的文件。用cat查看文件直接显示的文件的最后一屏</p>
-<p>​     more  使用more查看文件，回车翻一行，空格翻一页，Q结束查看，只能往下查看</p>
-<p>​     less 使用less可以用more的方式查看，但是可以使用pg up ,pg down 向上向下翻</p>
-<p>​     tail  使用tail查看文件的后几行</p>
-<p>​       tail -10 xxx.txt 查看文件的后10行</p>
-<p>​       tail -f xxx.txt 动态监控文件 crtl+ c 退出</p>
-<h4 id="（3）修改文件"><a href="#（3）修改文件" class="headerlink" title="（3）修改文件"></a><strong>（3）修改文件</strong></h4><p>​     vim       按 i  a  o （I  A  O）进入编辑模式</p>
-<p>​     vim文件名–&gt;进入文件–&gt;命令模式–&gt;按i进入编辑模式–&gt;编辑文件–&gt;按Esc进入底行模式–&gt;输入:–&gt;</p>
-<p>​     输入命令 wq（保存并退出） 输入q! (不保存，强制退出)</p>
-<h4 id="（4）删除文件"><a href="#（4）删除文件" class="headerlink" title="（4）删除文件"></a><strong>（4）删除文件</strong></h4><p>​     rm -rf   xxx.txt</p>
-<h2 id="4、压缩文件的操作命令"><a href="#4、压缩文件的操作命令" class="headerlink" title="4、压缩文件的操作命令"></a><strong>4、压缩文件的操作命令</strong></h2><h4 id="（1）压缩"><a href="#（1）压缩" class="headerlink" title="（1）压缩"></a><strong>（1）压缩</strong></h4><p>​     tar -zcvf 打包后的名称 打包前的名称</p>
-<p>​     tar -zcvf xxx.tar.gz ./*    (./*表示当前目录下的所有文件)</p>
-<h4 id="（2）解压"><a href="#（2）解压" class="headerlink" title="（2）解压"></a><strong>（2）解压</strong></h4><p>​     tar-xvf 包名    解压到当前的目录</p>
-<p>​     tar-xvf 包名 -C 目标目录  解压到指定的目标目录</p>
-<h2 id="5、安装软件"><a href="#5、安装软件" class="headerlink" title="5、安装软件"></a><strong>5、安装软件</strong></h2><h4 id="（1）yam"><a href="#（1）yam" class="headerlink" title="（1）yam"></a><strong>（1）yam</strong></h4><p><strong>1）安装Linux的源包软件</strong></p>
-<p>yum install packagexx</p>
-<p><strong>2）查看所有安装的软件</strong></p>
-<p>yum list</p>
-<p><strong>3）卸载软件</strong></p>
-<p>yum remove xx(xx为查询看到的结果)</p>
-<h4 id="（2）rpm"><a href="#（2）rpm" class="headerlink" title="（2）rpm"></a><strong>（2）rpm</strong></h4><p><strong>1）安装</strong></p>
-<p>rpm -ivh package</p>
-<p><strong>2） 查询</strong></p>
-<p>rpm -qa | grep str(str为需要查询的字符串)</p>
-<p><strong>3） 卸载</strong></p>
-<p>rpm -e –nodeps xxx（xxx为上面查询到的结果）</p>
-<p>ps：一般也卸载了之后也需要删除相应的文件夹（目录）</p>
-<p>find / -name str查看残留的文件夹</p>
-<h2 id="6、其他常用命令"><a href="#6、其他常用命令" class="headerlink" title="6、其他常用命令"></a><strong>6、其他常用命令</strong></h2><h4 id="（1）显示当前目录的路径"><a href="#（1）显示当前目录的路径" class="headerlink" title="（1）显示当前目录的路径"></a><strong>（1）显示当前目录的路径</strong></h4><p>​     pwd</p>
-<h4 id="（2）搜索命令"><a href="#（2）搜索命令" class="headerlink" title="（2）搜索命令"></a><strong>（2）搜索命令</strong></h4><p>​     grep xx  要搜索的字符串，要搜索的文件</p>
-<p>​     grep xx test.txt    在test.txt中搜索xx字符串</p>
-<h4 id="（3）管道命令"><a href="#（3）管道命令" class="headerlink" title="（3）管道命令"></a><strong>（3）管道命令</strong></h4><p>​     |</p>
-<p>​     将上次一的命令作为下一次的输入</p>
-<h4 id="（4）查看进程"><a href="#（4）查看进程" class="headerlink" title="（4）查看进程"></a><strong>（4）查看进程</strong></h4><p>​     ps- ef</p>
-<p>​     与管道结合</p>
-<p>​     ps-ef | grep mysql  从所有进程中搜索包含mysql的内容</p>
-<h4 id="（5）杀死进程"><a href="#（5）杀死进程" class="headerlink" title="（5）杀死进程"></a><strong>（5）杀死进程</strong></h4><p>​     kill -9 pid       （pid为进程ID）</p>
-<h4 id="（6）网络配置"><a href="#（6）网络配置" class="headerlink" title="（6）网络配置"></a><strong>（6）网络配置</strong></h4><p>​     1）查看ip地址</p>
-<p>​     ifconfig</p>
-<p>​     2）查看端口状态</p>
-<p>​     netstat -a</p>
-<p>​      3）查询端口占用情况</p>
-<p>​     netstat -tulpn</p>
-<h2 id="7、Linux-的权限命令"><a href="#7、Linux-的权限命令" class="headerlink" title="7、Linux 的权限命令"></a><strong>7、Linux 的权限命令</strong></h2><p>​    -rwxrwxr–</p>
-<p>​    一共10个位</p>
-<p>​    第一个类型</p>
-<p>​    第一个3位 属主权限</p>
-<p>​    第二个3位 属组权限</p>
-<p>​    第三个3位 其他权限用户</p>
-<p>​    r 读取权</p>
-<p>​    w写入权</p>
-<p>​    x 执行权</p>
-<h4 id="（1）修改权限"><a href="#（1）修改权限" class="headerlink" title="（1）修改权限"></a><strong>（1）修改权限</strong></h4><p>​    chmod u=rwx,g=rw,o=r sudo.conf   (sudo.conf为文件名)</p>
-<p>u        主权限</p>
-<p>g     组权限</p>
-<p>o        其他权限</p>
-<h4 id="（2）修改所属主，组"><a href="#（2）修改所属主，组" class="headerlink" title="（2）修改所属主，组"></a><strong>（2）修改所属主，组</strong></h4><p>​    chown -R mysql mysql/ 将mysql文件下的所有文件及文件夹的所属主修改为mysql</p>
-<p>​    chgrp -R mysql mysql/     将mysql文件下的所有文件及文件夹的所属组修改为mysql</p>
-<h2 id="8、系统信息、用户"><a href="#8、系统信息、用户" class="headerlink" title="8、系统信息、用户"></a><strong>8、系统信息、用户</strong></h2><h4 id="（1）查看系统版本"><a href="#（1）查看系统版本" class="headerlink" title="（1）查看系统版本"></a><strong>（1）查看系统版本</strong></h4><p>​     cat /proc/version    cat /etc/os-release</p>
-<p>[root@x-z ~]# cat /etc/os-release </p>
-<p>NAME=”CentOS Stream”</p>
-<p>VERSION=”8”</p>
-<p>ID=”centos”</p>
-<p>ID_LIKE=”rhel fedora”</p>
-<p>VERSION_ID=”8”</p>
-<p>PLATFORM_ID=”platform:el8”</p>
-<p>PRETTY_NAME=”CentOS Stream 8”</p>
-<p>ANSI_COLOR=”0;31”</p>
-<p>CPE_NAME=”cpe:/o:centos:centos:8”</p>
-<p>HOME_URL=”<a target="_blank" rel="noopener" href="https://centos.org/&quot;">https://centos.org/"</a></p>
-<p>BUG_REPORT_URL=”<a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/&quot;">https://bugzilla.redhat.com/"</a></p>
-<p>REDHAT_SUPPORT_PRODUCT=”Red Hat Enterprise Linux 8”</p>
-<p>REDHAT_SUPPORT_PRODUCT_VERSION=”CentOS Stream”</p>
-<h4 id="（2）查看开机自动启动的服务使用chkconfig命令"><a href="#（2）查看开机自动启动的服务使用chkconfig命令" class="headerlink" title="（2）查看开机自动启动的服务使用chkconfig命令"></a><strong>（2）查看开机自动启动的服务使用chkconfig命令</strong></h4><p>​     chkconfig –list</p>
-<h4 id="（3）修改密码"><a href="#（3）修改密码" class="headerlink" title="（3）修改密码"></a><strong>（3）修改密码</strong></h4><p>​     passwd</p>
-<h2 id="9、配置防火墙"><a href="#9、配置防火墙" class="headerlink" title="9、配置防火墙"></a><strong>9、配置防火墙</strong></h2><h4 id="（1）安装防火墙"><a href="#（1）安装防火墙" class="headerlink" title="（1）安装防火墙"></a><strong>（1）安装防火墙</strong></h4><p>​     yum install firewalld</p>
-<h4 id="（2）启动防火墙"><a href="#（2）启动防火墙" class="headerlink" title="（2）启动防火墙"></a><strong>（2）启动防火墙</strong></h4><p>​    systemctl start firewalld</p>
-<h4 id="（3）开机自启动"><a href="#（3）开机自启动" class="headerlink" title="（3）开机自启动"></a><strong>（3）开机自启动</strong></h4><p>​    systemctl enable firewalld</p>
-<h4 id="（4）关闭防火墙"><a href="#（4）关闭防火墙" class="headerlink" title="（4）关闭防火墙"></a><strong>（4）关闭防火墙</strong></h4><p>​    systemctl stop firewalld</p>
-<h4 id="（5）关闭开机自启动"><a href="#（5）关闭开机自启动" class="headerlink" title="（5）关闭开机自启动"></a><strong>（5）关闭开机自启动</strong></h4><p>​    systemctl disable firewalld</p>
-<h4 id="（6）查看防火墙运行状态"><a href="#（6）查看防火墙运行状态" class="headerlink" title="（6）查看防火墙运行状态"></a><strong>（6）查看防火墙运行状态</strong></h4><p>​    firewall-cmd –state  或者 systemctl status firewalld.service</p>
-<h4 id="（7）重启防火墙"><a href="#（7）重启防火墙" class="headerlink" title="（7）重启防火墙"></a><strong>（7）重启防火墙</strong></h4><p>​    firewall-cmd –reload 或者systemctl [start|stop|restart] firewalld.service </p>
-<h4 id="（8）查看帮助"><a href="#（8）查看帮助" class="headerlink" title="（8）查看帮助"></a><strong>（8）查看帮助</strong></h4><p>​    firewall-cmd –help</p>
-<h2 id="10、配置防火墙端口"><a href="#10、配置防火墙端口" class="headerlink" title="10、配置防火墙端口"></a><strong>10、配置防火墙端口</strong></h2><h4 id="（1）开放端口"><a href="#（1）开放端口" class="headerlink" title="（1）开放端口"></a><strong>（1）开放端口</strong></h4><p>​    firewall-cmd –permanent –zone=public –add-port=8080/tcp</p>
-<p>​    –permanent永久开放8080端口</p>
-<h4 id="（2）关闭端口（执行成功）"><a href="#（2）关闭端口（执行成功）" class="headerlink" title="（2）关闭端口（执行成功）"></a><strong>（2）关闭端口（执行成功）</strong></h4><p>​    firewall-cmd –zone=public –remove-port=8080/tcp</p>
-<h4 id="（3）查询端口是否开放"><a href="#（3）查询端口是否开放" class="headerlink" title="（3）查询端口是否开放"></a><strong>（3）查询端口是否开放</strong></h4><p>​    firewall-cmd –query-port=8080/tcp</p>
-<h4 id="（4）查询所有用户开放的端口"><a href="#（4）查询所有用户开放的端口" class="headerlink" title="（4）查询所有用户开放的端口"></a><strong>（4）查询所有用户开放的端口</strong></h4><p>firewall-cmd –list-ports</p>
-<p><strong>–zone #作用域</strong></p>
-<p><strong>–add-port=80/tcp  #添加端口，格式为：端口/通讯协议</strong></p>
-<p><strong>–permanent  #永久生效，没有此参数重启后失效</strong></p>
-<p>每次关闭开启就需要reload</p>
-<p>firewall-cmd –reload</p>
+                <h1 id="听说你精通运维？"><a href="#听说你精通运维？" class="headerlink" title="听说你精通运维？"></a>听说你精通运维？</h1><p>Apache、Nginx、tomcat、vmstat、iftop、awk、sed、sar、iostat、LVS、HA-proxy、MHA、Zookeeper、Zabbix、Nagios、Cacti、Prometheus、shell、python、go、rundeck、ansible、saltstack、puppet、chef、cobbler、fabric、docker、Moby、kubernetes 了解一下？</p>
+<p>运维除了懂Linux，还要懂Windows，涉及运维的其他方方面面。</p>
+<h1 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h1><p>一开始这个世界是开发的，然后才是运维的。</p>
+<p>开发实现产品逻辑，将产品开发完成后，然后提交运维进行部署。此时允许就需要准备好部署环境，如部署在Linux服务器上，安装相应的软件，如Apache、Nginx、tomcat、JDK、PHP、MySQL等等。你不能只装了软件吧，还需要看看具体是哪个版本，java 7 和java 8 的差别还是有点的，php5和php7也有些语法不兼容。把软件都安装好了，就可以上线了？还是不行。还需要测试吧，那就还需要部署一套测试环境。有些时候，开发环境也是需要运维来部署的。</p>
+<h1 id="排错和调优"><a href="#排错和调优" class="headerlink" title="排错和调优"></a>排错和调优</h1><p>事情从来都没有一帆风顺的。</p>
+<p>上线没多久，服务就502了，还不被老板骂死。尽管你有一肚子的委屈，我只是个运维，代码不是我写的，为什么要我来背这锅？！委屈归委屈，服务访问不了了，就是运维的事。尽快定位问题，解决问题才是王道。怎么来定位问题呢？最简单直接的办法就是看日志，看系统日志，看软件相关的日志，结合故障现象和经验，快速的进行定位和恢复。然后就是总结经验，吸取教训，写事故报告。OK，现在你知道，需要对系统环境需要进行一定的调优操作，不再做背锅侠。</p>
+<p>相关技术: top, vmstat, iftop, awk, sed, sar, iostat, strace, …</p>
+<h1 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h1><p>做最好的计划，做最坏的打算。</p>
+<p>前不久的gitlab删库事件的教训犹在眼前，丢失了几小时的数据，虽然大部分的备份策略都失效了，但还是挽救了几小时前的一个备份，才没有造成更大的数据丢失和公司损失。我们需要对设备进行备份冗余，需要对数据库进行备份及离线备份，需要对网站静态进行备份冗余，需要对机房进行备用，能做到双活，那是更好的啦。</p>
+<p>相关技术: rsync, crontab, lvm快照, mysqldump, extrabackup, 完全备份, 差异备份, 增量备份, 离线异地备份, …</p>
+<h1 id="高可用和集群"><a href="#高可用和集群" class="headerlink" title="高可用和集群"></a>高可用和集群</h1><p>没有永垂不朽，我们不能保证硬件24小时在线，但需要保障服务24小时在线。</p>
+<p>出现故障后，如果做好高可用和冗余，故障自动切换，移除故障节点，那样也就保障了服务的实时在线。在老板和用户不知情的情况下，悄么的把故障处理好的，KPI算是保住了，奖金也许就会有的吧。</p>
+<p>相关技术: F5, Nginx, LVS, HA-proxy, MHA, Zookeeper, 各种其他分布式集群方案, …</p>
+<h1 id="监控告警"><a href="#监控告警" class="headerlink" title="监控告警"></a>监控告警</h1><p>运维工程师的第一次解放运动。</p>
+<p>时刻担心网站挂掉，一年365天、每周7天、每天24小时，时刻保持精神高度紧张，就算你是神仙都会撑不住的。我们需要一个机器来监督其他的机器工作，我们需要解放我们自己。当有故障发生的时候，通过短信、微信、钉钉、邮件等等通知对应的运维工程师来处理，甚至是自动切换或摘除故障节点，然后我们离线对故障节点进行问题排查。</p>
+<p>相关技术：Zabbix, Nagios, Cacti, Prometheus, open-falcon, Ganglia, sar, …</p>
+<h1 id="安全和审计"><a href="#安全和审计" class="headerlink" title="安全和审计"></a>安全和审计</h1><p>狂奔在互联网的康庄大道上，不过有些人是在裸奔。</p>
+<p>不安全的网络环境和服务器配置，无异于在网络世界裸奔，任何人都可以窥探你的隐私。你的应用是否做了SQL防注入？你的防火墙是否开启？是否还在用root+密码的方式登录服务器？网站开启了https么？是否对系统操作进行审计？</p>
+<p>相关技术: iptables, firewalld, waf, auditd, 各服务的正确配置, …</p>
+<h1 id="自动化和DevOps"><a href="#自动化和DevOps" class="headerlink" title="自动化和DevOps"></a>自动化和DevOps</h1><p>运维工程师的第二次解放运动。</p>
+<p>偷懒是社会进步的第一动力。聪明的我们怎么会让自己一直在重复枯燥的事情上浪费时间，装系统、部署环境、发版本、批量操作，把这一切交给程序去实现吧，我们需要的是享受生活。</p>
+<p>相关技术: shell, python, go, rundeck, ansible, saltstack, puppet, chef, cobbler, fabric, …</p>
+<h1 id="虚拟化和云服务"><a href="#虚拟化和云服务" class="headerlink" title="虚拟化和云服务"></a>虚拟化和云服务</h1><p>正在发生的一场运维革命。</p>
+<p>这场革命的发起人是买书的亚马逊，这家伙希望卖一切可以卖的东西，包括自己闲置的服务器资源。现在国内的阿里云和腾讯云也发展得如日中天，他们几乎提供了运维所需要的一切，甚至可以让一个公司不再需要运维的岗位。你需要服务器，只需要几秒钟，就可以创建一台。你需要数据库集群，只需要鼠标点击几下，就可以开通。</p>
+<p>相关技术：docker, Moby, kubernetes, Xen, CoreOS, Hyper-V, KVM, …</p>
 
                 
             </div>
@@ -532,7 +434,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.xcjyc.top/2022/11/06/linux-chang-yong-ming-ling/">https://www.xcjyc.top/2022/11/06/linux-chang-yong-ming-ling/</a>
+                    <a href="https://www.xcjyc.top/2022/11/08/ting-shuo-ni-jing-tong-yun-wei/">https://www.xcjyc.top/2022/11/08/ting-shuo-ni-jing-tong-yun-wei/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -570,8 +472,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/%E8%BF%90%E7%BB%B4/">
+                                    <span class="chip bg-color">运维</span>
                                 </a>
                             
                         </div>
@@ -738,46 +640,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/11/07/linux-zui-quan-ji-chu-ming-ling/">
+                <a href="/2022/11/08/ting-shuo-ni-jing-tong-yun-wei/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Linux最全基础命令">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="听说你精通运维">
                         
-                        <span class="card-title">Linux最全基础命令</span>
+                        <span class="card-title">听说你精通运维</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux最全基础命令
+                            听说你精通运维
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    Linux基础
+                            <a href="/categories/%E8%BF%90%E7%BB%B4%E7%9F%A5%E8%AF%86/" class="post-category">
+                                    运维知识
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
+                    <a href="/tags/%E8%BF%90%E7%BB%B4/">
+                        <span class="chip bg-color">运维</span>
                     </a>
                     
                 </div>
@@ -791,31 +695,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/06/linux-chu-shi-hua-cao-zuo/">
+                <a href="/2022/11/08/zheng-ze-biao-da-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Linux安装初始化">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="正则表达式">
                         
-                        <span class="card-title">Linux安装初始化</span>
+                        <span class="card-title">正则表达式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux初始化
+                            正则表达式
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    Linux基础
+                            <a href="/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-category">
+                                    正则表达式
                                 </a>
                             
                             
@@ -825,8 +729,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
+                    <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+                        <span class="chip bg-color">正则表达式</span>
                     </a>
                     
                 </div>
