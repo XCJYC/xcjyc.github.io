@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux常用命令, 令尹仙府">
+    <meta name="keywords" content="华为数通命令随记, 令尹仙府">
     <meta name="description" content="令尹的个人学习档案">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Linux常用命令 | 令尹仙府</title>
+    <title>华为数通命令随记 | 令尹仙府</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -206,12 +206,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux常用命令</h1>
+                    <h1 class="description center-align post-title">华为数通命令随记</h1>
                 </div>
             </div>
         </div>
@@ -327,8 +327,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Linux/">
-                                <span class="chip bg-color">Linux</span>
+                            <a href="/tags/huawei-R-S/">
+                                <span class="chip bg-color">huawei R&amp;S</span>
                             </a>
                         
                     </div>
@@ -339,8 +339,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="post-category">
-                                Linux基础
+                            <a href="/categories/%E5%8D%8E%E4%B8%BA/" class="post-category">
+                                华为
                             </a>
                         
                     </div>
@@ -352,7 +352,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-06
+                    2022-11-07
                 </div>
                 
 
@@ -361,7 +361,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    4.6k
                 </div>
                 
 
@@ -383,129 +383,440 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Linux常用命令"><a href="#Linux常用命令" class="headerlink" title="Linux常用命令"></a><strong>Linux常用命令</strong></h1><p>在开发中常用的一些命令。</p>
-<p>1）目录切换</p>
-<p>2）对目录（文件夹）的操作</p>
-<p>3）对文件的操作</p>
-<p>4）文件的压缩、解压</p>
-<p>5）软件的安装</p>
-<p>6）权限的操作</p>
-<p>7）防火墙端口的开启</p>
-<p>8）一些其他的命令</p>
-<p>执行以下命令时需要注意自己对应系统的版本，不同的版本会稍有差别。</p>
-<h2 id="1、目录切换"><a href="#1、目录切换" class="headerlink" title="1、目录切换"></a><strong>1、目录切换</strong></h2><p>cd /     切换到根目录</p>
-<p>cd ~ 切换到用户跟目录</p>
-<p>cd ../    切换到上一级目录</p>
-<p>cd -     切换到上次访问目录</p>
-<p>cd etc   切换到当前目录下的etc目录</p>
-<h2 id="2、目录的操作命令（增删改查）"><a href="#2、目录的操作命令（增删改查）" class="headerlink" title="2、目录的操作命令（增删改查）"></a><strong>2、目录的操作命令（增删改查）</strong></h2><h4 id="（1）新增目录"><a href="#（1）新增目录" class="headerlink" title="（1）新增目录"></a><strong>（1）新增目录</strong></h4><p>​    mkdir xxx (xxx为自己为目录取的名字)</p>
-<p>​       mkdir  -p   xxx         递归创建</p>
-<h4 id="（2）查看目录"><a href="#（2）查看目录" class="headerlink" title="（2）查看目录"></a><strong>（2）查看目录</strong></h4><p>​    ls[-a|-l]</p>
-<p>​    ls -a 查看当前目录下的所有目录，以及隐藏目录</p>
-<p>​    ls -l 查看当前目录下的所有目录的详细信息    缩写成ll</p>
-<h4 id="（3）搜索目录"><a href="#（3）搜索目录" class="headerlink" title="（3）搜索目录"></a><strong>（3）搜索目录</strong></h4><p>​     find /root -name <em>test</em></p>
-<h4 id="（4）修改目录"><a href="#（4）修改目录" class="headerlink" title="（4）修改目录"></a><strong>（4）修改目录</strong></h4><p>​     mv xxx aaa  (xxx 旧目录名，aaa新目录名) mv同样可以修改文件及压缩包的名字</p>
-<h4 id="（5）移动目录"><a href="#（5）移动目录" class="headerlink" title="（5）移动目录"></a><strong>（5）移动目录</strong></h4><p>​     mv yyy /root (yyy需要修改目录。/root 剪切到的位置)</p>
-<h4 id="（6）复制目录及文件"><a href="#（6）复制目录及文件" class="headerlink" title="（6）复制目录及文件"></a><strong>（6）复制目录及文件</strong></h4><p>​     cp -r aaa /  (将aaa目录复制到根目录下)</p>
-<p>  cp tt.zip /  (将tt.zip复制到根目录下)</p>
-<h4 id="（7）删除目录"><a href="#（7）删除目录" class="headerlink" title="（7）删除目录"></a><strong>（7）删除目录</strong></h4><p>​    rm删除文件</p>
-<p>​    rm -r   删除目录</p>
-<p>​     <strong>rm-rf   强制删除目录 （就可以用本句去删除任何东西，常用这句就行了）</strong></p>
-<h2 id="3、文件的操作命令"><a href="#3、文件的操作命令" class="headerlink" title="3、文件的操作命令"></a><strong>3、文件的操作命令</strong></h2><h4 id="（1）新建文件"><a href="#（1）新建文件" class="headerlink" title="（1）新建文件"></a><strong>（1）新建文件</strong></h4><p>​     touch test.txt (Linux 下是可以不加文件的后缀名的，加上文件名是为了开发者分辨文件)</p>
-<h4 id="（2）查看文件"><a href="#（2）查看文件" class="headerlink" title="（2）查看文件"></a><strong>（2）查看文件</strong></h4><p>​     cat/more/less/tail</p>
-<p>​     cat  使用cat可以比较方便的查看较小的文件。用cat查看文件直接显示的文件的最后一屏</p>
-<p>​     more  使用more查看文件，回车翻一行，空格翻一页，Q结束查看，只能往下查看</p>
-<p>​     less 使用less可以用more的方式查看，但是可以使用pg up ,pg down 向上向下翻</p>
-<p>​     tail  使用tail查看文件的后几行</p>
-<p>​       tail -10 xxx.txt 查看文件的后10行</p>
-<p>​       tail -f xxx.txt 动态监控文件 crtl+ c 退出</p>
-<h4 id="（3）修改文件"><a href="#（3）修改文件" class="headerlink" title="（3）修改文件"></a><strong>（3）修改文件</strong></h4><p>​     vim       按 i  a  o （I  A  O）进入编辑模式</p>
-<p>​     vim文件名–&gt;进入文件–&gt;命令模式–&gt;按i进入编辑模式–&gt;编辑文件–&gt;按Esc进入底行模式–&gt;输入:–&gt;</p>
-<p>​     输入命令 wq（保存并退出） 输入q! (不保存，强制退出)</p>
-<h4 id="（4）删除文件"><a href="#（4）删除文件" class="headerlink" title="（4）删除文件"></a><strong>（4）删除文件</strong></h4><p>​     rm -rf   xxx.txt</p>
-<h2 id="4、压缩文件的操作命令"><a href="#4、压缩文件的操作命令" class="headerlink" title="4、压缩文件的操作命令"></a><strong>4、压缩文件的操作命令</strong></h2><h4 id="（1）压缩"><a href="#（1）压缩" class="headerlink" title="（1）压缩"></a><strong>（1）压缩</strong></h4><p>​     tar -zcvf 打包后的名称 打包前的名称</p>
-<p>​     tar -zcvf xxx.tar.gz ./*    (./*表示当前目录下的所有文件)</p>
-<h4 id="（2）解压"><a href="#（2）解压" class="headerlink" title="（2）解压"></a><strong>（2）解压</strong></h4><p>​     tar-xvf 包名    解压到当前的目录</p>
-<p>​     tar-xvf 包名 -C 目标目录  解压到指定的目标目录</p>
-<h2 id="5、安装软件"><a href="#5、安装软件" class="headerlink" title="5、安装软件"></a><strong>5、安装软件</strong></h2><h4 id="（1）yam"><a href="#（1）yam" class="headerlink" title="（1）yam"></a><strong>（1）yam</strong></h4><p><strong>1）安装Linux的源包软件</strong></p>
-<p>yum install packagexx</p>
-<p><strong>2）查看所有安装的软件</strong></p>
-<p>yum list</p>
-<p><strong>3）卸载软件</strong></p>
-<p>yum remove xx(xx为查询看到的结果)</p>
-<h4 id="（2）rpm"><a href="#（2）rpm" class="headerlink" title="（2）rpm"></a><strong>（2）rpm</strong></h4><p><strong>1）安装</strong></p>
-<p>rpm -ivh package</p>
-<p><strong>2） 查询</strong></p>
-<p>rpm -qa | grep str(str为需要查询的字符串)</p>
-<p><strong>3） 卸载</strong></p>
-<p>rpm -e –nodeps xxx（xxx为上面查询到的结果）</p>
-<p>ps：一般也卸载了之后也需要删除相应的文件夹（目录）</p>
-<p>find / -name str查看残留的文件夹</p>
-<h2 id="6、其他常用命令"><a href="#6、其他常用命令" class="headerlink" title="6、其他常用命令"></a><strong>6、其他常用命令</strong></h2><h4 id="（1）显示当前目录的路径"><a href="#（1）显示当前目录的路径" class="headerlink" title="（1）显示当前目录的路径"></a><strong>（1）显示当前目录的路径</strong></h4><p>​     pwd</p>
-<h4 id="（2）搜索命令"><a href="#（2）搜索命令" class="headerlink" title="（2）搜索命令"></a><strong>（2）搜索命令</strong></h4><p>​     grep xx  要搜索的字符串，要搜索的文件</p>
-<p>​     grep xx test.txt    在test.txt中搜索xx字符串</p>
-<h4 id="（3）管道命令"><a href="#（3）管道命令" class="headerlink" title="（3）管道命令"></a><strong>（3）管道命令</strong></h4><p>​     |</p>
-<p>​     将上次一的命令作为下一次的输入</p>
-<h4 id="（4）查看进程"><a href="#（4）查看进程" class="headerlink" title="（4）查看进程"></a><strong>（4）查看进程</strong></h4><p>​     ps- ef</p>
-<p>​     与管道结合</p>
-<p>​     ps-ef | grep mysql  从所有进程中搜索包含mysql的内容</p>
-<h4 id="（5）杀死进程"><a href="#（5）杀死进程" class="headerlink" title="（5）杀死进程"></a><strong>（5）杀死进程</strong></h4><p>​     kill -9 pid       （pid为进程ID）</p>
-<h4 id="（6）网络配置"><a href="#（6）网络配置" class="headerlink" title="（6）网络配置"></a><strong>（6）网络配置</strong></h4><p>​     1）查看ip地址</p>
-<p>​     ifconfig</p>
-<p>​     2）查看端口状态</p>
-<p>​     netstat -a</p>
-<p>​      3）查询端口占用情况</p>
-<p>​     netstat -tulpn</p>
-<h2 id="7、Linux-的权限命令"><a href="#7、Linux-的权限命令" class="headerlink" title="7、Linux 的权限命令"></a><strong>7、Linux 的权限命令</strong></h2><p>​    -rwxrwxr–</p>
-<p>​    一共10个位</p>
-<p>​    第一个类型</p>
-<p>​    第一个3位 属主权限</p>
-<p>​    第二个3位 属组权限</p>
-<p>​    第三个3位 其他权限用户</p>
-<p>​    r 读取权</p>
-<p>​    w写入权</p>
-<p>​    x 执行权</p>
-<h4 id="（1）修改权限"><a href="#（1）修改权限" class="headerlink" title="（1）修改权限"></a><strong>（1）修改权限</strong></h4><p>​    chmod u=rwx,g=rw,o=r sudo.conf   (sudo.conf为文件名)</p>
-<p>u        主权限</p>
-<p>g     组权限</p>
-<p>o        其他权限</p>
-<h4 id="（2）修改所属主，组"><a href="#（2）修改所属主，组" class="headerlink" title="（2）修改所属主，组"></a><strong>（2）修改所属主，组</strong></h4><p>​    chown -R mysql mysql/ 将mysql文件下的所有文件及文件夹的所属主修改为mysql</p>
-<p>​    chgrp -R mysql mysql/     将mysql文件下的所有文件及文件夹的所属组修改为mysql</p>
-<h2 id="8、系统信息、用户"><a href="#8、系统信息、用户" class="headerlink" title="8、系统信息、用户"></a><strong>8、系统信息、用户</strong></h2><h4 id="（1）查看系统版本"><a href="#（1）查看系统版本" class="headerlink" title="（1）查看系统版本"></a><strong>（1）查看系统版本</strong></h4><p>​     cat /proc/version    cat /etc/os-release</p>
-<p>[root@x-z ~]# cat /etc/os-release </p>
-<p>NAME=”CentOS Stream”</p>
-<p>VERSION=”8”</p>
-<p>ID=”centos”</p>
-<p>ID_LIKE=”rhel fedora”</p>
-<p>VERSION_ID=”8”</p>
-<p>PLATFORM_ID=”platform:el8”</p>
-<p>PRETTY_NAME=”CentOS Stream 8”</p>
-<p>ANSI_COLOR=”0;31”</p>
-<p>CPE_NAME=”cpe:/o:centos:centos:8”</p>
-<p>HOME_URL=”<a target="_blank" rel="noopener" href="https://centos.org/&quot;">https://centos.org/"</a></p>
-<p>BUG_REPORT_URL=”<a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/&quot;">https://bugzilla.redhat.com/"</a></p>
-<p>REDHAT_SUPPORT_PRODUCT=”Red Hat Enterprise Linux 8”</p>
-<p>REDHAT_SUPPORT_PRODUCT_VERSION=”CentOS Stream”</p>
-<h4 id="（2）查看开机自动启动的服务使用chkconfig命令"><a href="#（2）查看开机自动启动的服务使用chkconfig命令" class="headerlink" title="（2）查看开机自动启动的服务使用chkconfig命令"></a><strong>（2）查看开机自动启动的服务使用chkconfig命令</strong></h4><p>​     chkconfig –list</p>
-<h4 id="（3）修改密码"><a href="#（3）修改密码" class="headerlink" title="（3）修改密码"></a><strong>（3）修改密码</strong></h4><p>​     passwd</p>
-<h2 id="9、配置防火墙"><a href="#9、配置防火墙" class="headerlink" title="9、配置防火墙"></a><strong>9、配置防火墙</strong></h2><h4 id="（1）安装防火墙"><a href="#（1）安装防火墙" class="headerlink" title="（1）安装防火墙"></a><strong>（1）安装防火墙</strong></h4><p>​     yum install firewalld</p>
-<h4 id="（2）启动防火墙"><a href="#（2）启动防火墙" class="headerlink" title="（2）启动防火墙"></a><strong>（2）启动防火墙</strong></h4><p>​    systemctl start firewalld</p>
-<h4 id="（3）开机自启动"><a href="#（3）开机自启动" class="headerlink" title="（3）开机自启动"></a><strong>（3）开机自启动</strong></h4><p>​    systemctl enable firewalld</p>
-<h4 id="（4）关闭防火墙"><a href="#（4）关闭防火墙" class="headerlink" title="（4）关闭防火墙"></a><strong>（4）关闭防火墙</strong></h4><p>​    systemctl stop firewalld</p>
-<h4 id="（5）关闭开机自启动"><a href="#（5）关闭开机自启动" class="headerlink" title="（5）关闭开机自启动"></a><strong>（5）关闭开机自启动</strong></h4><p>​    systemctl disable firewalld</p>
-<h4 id="（6）查看防火墙运行状态"><a href="#（6）查看防火墙运行状态" class="headerlink" title="（6）查看防火墙运行状态"></a><strong>（6）查看防火墙运行状态</strong></h4><p>​    firewall-cmd –state  或者 systemctl status firewalld.service</p>
-<h4 id="（7）重启防火墙"><a href="#（7）重启防火墙" class="headerlink" title="（7）重启防火墙"></a><strong>（7）重启防火墙</strong></h4><p>​    firewall-cmd –reload 或者systemctl [start|stop|restart] firewalld.service </p>
-<h4 id="（8）查看帮助"><a href="#（8）查看帮助" class="headerlink" title="（8）查看帮助"></a><strong>（8）查看帮助</strong></h4><p>​    firewall-cmd –help</p>
-<h2 id="10、配置防火墙端口"><a href="#10、配置防火墙端口" class="headerlink" title="10、配置防火墙端口"></a><strong>10、配置防火墙端口</strong></h2><h4 id="（1）开放端口"><a href="#（1）开放端口" class="headerlink" title="（1）开放端口"></a><strong>（1）开放端口</strong></h4><p>​    firewall-cmd –permanent –zone=public –add-port=8080/tcp</p>
-<p>​    –permanent永久开放8080端口</p>
-<h4 id="（2）关闭端口（执行成功）"><a href="#（2）关闭端口（执行成功）" class="headerlink" title="（2）关闭端口（执行成功）"></a><strong>（2）关闭端口（执行成功）</strong></h4><p>​    firewall-cmd –zone=public –remove-port=8080/tcp</p>
-<h4 id="（3）查询端口是否开放"><a href="#（3）查询端口是否开放" class="headerlink" title="（3）查询端口是否开放"></a><strong>（3）查询端口是否开放</strong></h4><p>​    firewall-cmd –query-port=8080/tcp</p>
-<h4 id="（4）查询所有用户开放的端口"><a href="#（4）查询所有用户开放的端口" class="headerlink" title="（4）查询所有用户开放的端口"></a><strong>（4）查询所有用户开放的端口</strong></h4><p>firewall-cmd –list-ports</p>
-<p><strong>–zone #作用域</strong></p>
-<p><strong>–add-port=80/tcp  #添加端口，格式为：端口/通讯协议</strong></p>
-<p><strong>–permanent  #永久生效，没有此参数重启后失效</strong></p>
-<p>每次关闭开启就需要reload</p>
-<p>firewall-cmd –reload</p>
+                <p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/image-20221107203013436.png" alt="image-20221107203013436"></p>
+<h1 id="命令行："><a href="#命令行：" class="headerlink" title="命令行："></a>命令行：</h1><p>&lt;&gt;    用户视图模式，配置基本参数，调试命令，权限较小</p>
+<p>[  ]    系统视图模式，可以做高级配置</p>
+<p>？    帮助信息         int?    提示出完整命令</p>
+<p>tab    补全命令</p>
+<p>ctrl + Z     回到用户模式</p>
+<p>system-view            进入系统视图                            sy</p>
+<p>quit                     退出当前模式或接口                        qu+tab</p>
+<p>undo 原来的命令        取消一项参数设置    </p>
+<p>&lt;&gt; save                    保存配置</p>
+<p>&lt;&gt; dir    /all        查看硬盘文件  /   所有文件</p>
+<p>&lt;&gt; copy    复制</p>
+<p>&lt;&gt; mkdir   新建目录</p>
+<p>&lt;&gt; rmdir   删除目录</p>
+<p>&lt;&gt; cd          cd ..</p>
+<p>&lt;&gt; unzip   解压</p>
+<p>&lt;&gt; more   查看文件内容</p>
+<p>&lt;&gt; move   移动  </p>
+<p>&lt;&gt; rename     改名</p>
+<p>&lt;&gt; delete   **    /unreserved     删除  / 彻底删除</p>
+<p>&lt;&gt; undelete   恢复删除</p>
+<p>&lt;&gt; reset  re   清空回收站</p>
+<p>&lt;&gt; startup saved-conf   flash:/***  指定启动文件</p>
+<p>&lt;&gt; reset saved-configuration    清空配置文件</p>
+<p>&lt;&gt; reboot   重启</p>
+<p>display    在任务模式都可以使用,more 回车跑行，空格翻页，任意键中断    dis</p>
+<h1 id="通过web管理交换机"><a href="#通过web管理交换机" class="headerlink" title="通过web管理交换机"></a><strong>通过web管理交换机</strong></h1><p> http server load S2700-V100R005C01SPC100.web.zip       加载web配置操作系统</p>
+<p> http server enable                    启动web 配置服务</p>
+<p> int  vlanif  1                                给交换机配置ip地址 用于管理</p>
+<p>​      ip  address  192.168.31.85  24</p>
+<p>web登陆默认的用户名和密码：admin  admin      （可用dis cu 查看默认密码）</p>
+<h1 id="Telnet-功能："><a href="#Telnet-功能：" class="headerlink" title="Telnet 功能："></a><strong>Telnet 功能：</strong></h1><p>[R1] aaa           进入AAA模式</p>
+<p>  local-user aa privilege level 3 password cipher  123        建一个aa用户，权限为3，密码123</p>
+<p>  local-user aa service-type telnet         指定aa用户服务类型为telnet</p>
+<p>qu</p>
+<p>user-interface vty 0 4          允许同时5个人同时使用</p>
+<p>authentication-mode aaa    </p>
+<p>新版telnet必须加指令：</p>
+<ul>
+<li>protocol inbound telnet</li>
+</ul>
+<h1 id="SSH功能："><a href="#SSH功能：" class="headerlink" title="SSH功能："></a><strong>SSH功能：</strong></h1><p>[Huawei]aaa</p>
+<p>[Huawei-aaa]local-user ssh privilege level 3 password cipher aa</p>
+<p>[Huawei-aaa]local-user aa service-type ssh</p>
+<p>[Huawei]user-interface vty 0 4</p>
+<p>[Huawei-ui-vty0-4]protocol inbound ssh</p>
+<p>[Huawei-ui-vty0-4]authentication-mode aaa</p>
+<p>[Huawei]stelnet server enable </p>
+<h1 id="为console-口设置密码："><a href="#为console-口设置密码：" class="headerlink" title="为console 口设置密码："></a><strong>为console 口设置密码：</strong></h1><p>方式A：密码验证</p>
+<p>user-interface con 0</p>
+<p> authentication-mode password</p>
+<p> set authentication password cipher  abc</p>
+<p>设置完成后，quit 退出后 再尝试登陆</p>
+<p>方式B：使用用户名和密码形式验证</p>
+<p>user-interface con 0</p>
+<p>   authentication-mode   aaa</p>
+<p>aaa   进入aaa</p>
+<p>​    local-user gebi privilege level 3  password simple laowang </p>
+<p>配置用户名gebi 权限级别3级  密码laowang</p>
+<p>​    local-user gebi service-type terminal</p>
+<p>指定gebi帐户服务器类型是terminal </p>
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><p>&lt;&gt; undo info-center enable   关闭信息中心，防止弹出日志</p>
+<p>​     un in en </p>
+<p>[  ] sysname  名称    为设备命名    （需要系统视图模式）    简写 sy</p>
+<p>[  ] display this    查看当前配置                             简写dis thi</p>
+<p>[  ] interface e0/0/0                进入接口e0/0/0        简写int</p>
+<p>[  ] ip address 192.168.1.1 24        为接口配置IP 掩码</p>
+<p>[  ] shutdown                    进入接品，关闭、禁止该接口</p>
+<p>&lt; &gt; reset saved-configuration   清空配置信息</p>
+<p>&lt; &gt; startup saved-configuration   vrpcfg.zip      指定下一次启动加载的配置文件</p>
+<p>&lt; &gt; startup system-software ******.cc           指定系统软件</p>
+<p>language-mode chinese        改变语言为中文提示            需按Y确认</p>
+<p>dis ip int brief                查看路由器接口摘要信息            常用</p>
+<p>dis ip rou                    查看路由器路由表</p>
+<p>dis mac-add                查看交换机MAC表</p>
+<p>dis cu                    显示当前所有的配置</p>
+<p>dis saved-configuration        显示保存的配置</p>
+<p>dis tcp status                查看ICP连接状态</p>
+<p>dis version                 查看系统软件版本号</p>
+<p>dis memory-usage            查看内存状态</p>
+<p>dis mac-address            查看MAC配置表</p>
+<p>dis port vlan active             </p>
+<p>dir /all                    查看flash内所有文件（包括回收站）</p>
+<p>reset recycle-bin            删除回收站文件</p>
+<p>clear configuration interface g0/0/10   清除接口所有配置</p>
+<p>reset saved-configuration      重新初始化交换机</p>
+<h1 id="DHCP"><a href="#DHCP" class="headerlink" title="DHCP"></a><strong>DHCP</strong></h1><p>1、简单DHCP，基于接口的配置：</p>
+<p>[ ] dhcp enable                    允许DHCP服务（全局启用）</p>
+<p>[ ] int initerface e0/0/0   </p>
+<p>[ ] dhcp select interface            开启DHCP</p>
+<p>[ ] dhcp server dns-list  114.114.114.114  8.8.8.8    配置DNS</p>
+<p>2、DHCP中继relay:</p>
+<p>广播包则中继变成单播，发送到DHCP服务器。</p>
+<p>[Huawei-Vlanif10] DHCP select relay </p>
+<p>[Huawei-Vlanif10]DHCP relay server-ip 12.1.1.1</p>
+<p>3、DHCP  snooping:防止非法的DHCP服务器 在接入层交换机使用。</p>
+<p>[Huawei]dhcp snooping enable </p>
+<p>[Huawei]int e0/0/2</p>
+<p>[Huawei-Ethernet0/0/2]dhcp snooping trusted </p>
+<h1 id="DHCP-调试命令："><a href="#DHCP-调试命令：" class="headerlink" title="DHCP 调试命令："></a><strong>DHCP 调试命令：</strong></h1><p>[ ] dis ip pool                        查看DHCP地址池信息        </p>
+<p>[ ] dis ip pool interface **** used        ***为pool名称不能简写    </p>
+<p>[ ] reset ip pool interface *** used                        </p>
+<p>* 需首先配置好端口的IP地址</p>
+<p>excluded-ip-address   192.168.10.2   192.168.10.19    保留/排除  地址段</p>
+<p>reset ip pool name 2L 192.168.9.254 192.168.9.254  清空分配过的IP 地址</p>
+<p>static-bind ip-address 192.168.9.88 mac-address 5489-986f-1dff   静态绑定</p>
+<p>dis dhcp snooping user-bind all      接入层交换机显示dhcp映射表</p>
+<p>ip  source check user-bind enable    开启IP 源地址检查功能</p>
+<p>dhcp server  ?</p>
+<h1 id="路由器："><a href="#路由器：" class="headerlink" title="路由器："></a><strong>路由器：</strong></h1><p>int  e0/0/0</p>
+<p>​    ip add 192.168.31.1  24</p>
+<p>​    dhcp select global  配置dhcp选择从全局分配地址</p>
+<p> dhcp  enable                      启用dhcp 功能</p>
+<p> ip pool qq                            创建地址池qq</p>
+<p> gateway-list 192.168.31.1           网关</p>
+<p> network 192.168.31.0 mask 255.255.255.0          ip和掩码</p>
+<p> dns-list 114.114.114.114 192.168.31.1                 DNS</p>
+<p>启用loopback接口：</p>
+<p>[R2] int loopback 0   </p>
+<h1 id="静态路由："><a href="#静态路由：" class="headerlink" title="静态路由："></a><strong>静态路由：</strong></h1><p>[ ] ip route-static     192.168.2.0 24        12.1.1.2          去192.168.2.0网段走12.1.1.2接口</p>
+<p>​                        目标网段 / 掩码    下一跳地址</p>
+<p>[ ] dis ip r        显示路由表</p>
+<p>缺省（默认）路由：缺省路由是替补路由，当其它路由不可达时才会使用，适合边缘路由器。</p>
+<p>[ ] ip route-static   0.0.0.0   0   12.1.1.2</p>
+<p>环回接口：逻辑虚拟接口，模拟服务器，网络，用于测试。</p>
+<p>[ ] int loopback 0    启用0号环回接口 ，模拟一个网络。（范围：0.-1023）</p>
+<p>[R1] dis cu          查看所有配置</p>
+<p>[R1] dis ip int b    查看所有接口</p>
+<p>[R1] dis ip rou      查看路由表</p>
+<p>当接口down掉后，路由表消失，配置还存在</p>
+<p>[R1] ip route-static 172.16.1.0 24 23.1.1.2 preference 55  配置静态路由，优先级55</p>
+<p>[R2] ip route-static 192.168.1.0 24 23.1.1.1 preference 55 </p>
+<h1 id="RIP动态路由："><a href="#RIP动态路由：" class="headerlink" title="RIP动态路由："></a><strong>RIP动态路由：</strong></h1><p>[R1] rip 1                  启用rip1进程</p>
+<p>[R1] version 2              启用第2版协议，版本不同不兼容</p>
+<p>[R1] network 192.168.1.0    宣告直连网段，需要是主类网络（A类，B类，C类）</p>
+<p>[R1] dis rip 1 route        查看rip1路由</p>
+<p>[R1] dis rip 1 neighbor     查看路由邻居</p>
+<p>RIP加密：路由器之间都需配置才能学习路由表</p>
+<p>​    int  xxx</p>
+<p>​    rip authentication-mode md5 usual abc123</p>
+<p>路由汇总：减小大型网络路由器的路由表</p>
+<p>R3：</p>
+<p>[R3] int gi 0/0/0</p>
+<p>[R3-GI0/0/0] rip summary-address 3.3.0.0  255.255.252.0    掩码包括三个子网段 </p>
+<p>RIP静默接口：减少发向用户（非路由器）的RIP报文</p>
+<p>[R x ] RIP 1</p>
+<p>​    silent-interface e0/0/0  （e0/0/0接口通常是接用户的接口）</p>
+<h1 id="OSPF基本配置："><a href="#OSPF基本配置：" class="headerlink" title="OSPF基本配置："></a><strong>OSPF基本配置：</strong></h1><p>[R1] ospf 1               启动OSPF进程1</p>
+<p>[R1-OSPF-1] area 0        进入区域0</p>
+<p>[R1-OSPF-1-AREA-0.0.0.0] network 192.168.1.0   0.0.0.255   宣告直连网段，IP地址接反掩码</p>
+<p>[R1-OSPF-1-AREA-0.0.0.0] network  12.1.1.0   0.0.0.255  </p>
+<p>[R4]   可以使用接口地址进行精确宣告工作网段</p>
+<p>  ospf1  </p>
+<p>  area 0.0.0.0</p>
+<p>  network 34.1.1.4 0.0.0.0</p>
+<p>  network 4.4.4.4 0.0.0.0</p>
+<p>重置OSPF</p>
+<p> reset ospf process   重置OSPF进程</p>
+<h1 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a><strong>FTP</strong></h1><p>[R1] ftp server enable        开启FTP</p>
+<p>[R1] set default ftp-directory flash:     设置FTP主目录</p>
+<p>[R1] aaa                                  设置FTP验证 </p>
+<p>[R1-aaa] local-user lisi privilege level 3 password cipher 12345</p>
+<p>[R1-aaa] local-user lisi service-type ftp </p>
+<p> FTP 12.1.1.1      登录FTP</p>
+<p>[ftp] get R1.ZIP       下载文件</p>
+<p>[ftp] put R2.ZIP       传输文件</p>
+<p><strong>Vlan</strong></p>
+<p>[Huawei] vlan 10        创建VLAN10</p>
+<p>[Huawei] int g0/0/1     进入接口</p>
+<p>[Huawei-GigabitEthernet0/0/1] port link-type access      指定接口类型 </p>
+<p>[Huawei-GigabitEthernet0/0/1] port default vlan 10       指定接口VLAN组</p>
+<p>批量划入VLAN</p>
+<p>[Huawei] port-group group-member gi0/0/4 to g0/0/20  指定接口组</p>
+<p>[Huawei-port-group] port link-type access            指定接口类型</p>
+<p>[Huawei-port-group] port default vlan 20 </p>
+<p>[ ] vlan batch 10 20 30    批量创建VLAN</p>
+<p>[ ] dis port vlan active      显示VLAN配置</p>
+<h1 id="vlan高级配置："><a href="#vlan高级配置：" class="headerlink" title="vlan高级配置："></a><strong>vlan高级配置：</strong></h1><p>查看vlan状态命令：</p>
+<p>[Huwaei]  display port vlan | exclude hy </p>
+<pre><code>          简写：dis port vlan | ex hy
+</code></pre>
+<p>查看HYbird接口状态：</p>
+<p>[Huwaei]  dis port vlan active</p>
+<p>基于MAC的vlan</p>
+<p>[SW2]vlan batch 10 20  创建VLAN 10 20</p>
+<p>[SW2-vlan10]mac-vlan mac-address 0000-0000-0001   在vlan 10中指定mac </p>
+<p>[SW2-vlan20]mac-vlan mac-address 0000-0000-0002   在vlan 20中指定mac</p>
+<p>[SW2-GigabitEthernet0/0/1]port hybrid untagged vlan 10 20     检测VLAN 10 20</p>
+<p>[SW2-GigabitEthernet0/0/1]mac-vlan enable                    对接口开启MAC vlan</p>
+<p>基于MAC的vlan</p>
+<p>[SW2]VLAN 10</p>
+<p>[SW2-vlan10]ip-subnet-vlan IP 192.168.10.0 24          vlan10的网段 </p>
+<p>[SW2]VLAN 20</p>
+<p>[SW2-vlan20]ip-subnet-vlan IP 192.168.20.0 24          vlan20的网段</p>
+<p>[SW2-vlan20]INT GI 0/0/1</p>
+<p>[SW2-GigabitEthernet0/0/1]port hybrid untagged vlan 10 20 </p>
+<p>[SW2-GigabitEthernet0/0/1]ip-subnet-vlan enable </p>
+<p>超级VLAN:</p>
+<p>[Huawei]vlan 30</p>
+<p>[Huawei-vlan30]aggregate-vlan </p>
+<p>[Huawei-vlan30]access-vlan 10 20</p>
+<p>[Huawei-vlan30]int vlanif 30</p>
+<p>[Huawei-Vlanif30]ip address 192.168.1.1 24</p>
+<p>相同VLAN端口隔离：相同的隔离组不能通信，</p>
+<p>[Huawei]vlan 10</p>
+<p>[Huawei]<strong>port-group group-member gi 0/0/1 to gi 0/0/4</strong></p>
+<p>[Huawei-port-group]port link-type access </p>
+<p>[Huawei-port-group]port default vlan 10</p>
+<p>[Huawei-GigabitEthernet0/0/1]port-isolate enable group 1  将接口划入隔离组1</p>
+<p>[Huawei-GigabitEthernet0/0/4]port-isolate enable group 1</p>
+<h1 id="trunk"><a href="#trunk" class="headerlink" title="trunk"></a><strong>trunk</strong></h1><p>[Huawei] int g0/0/4</p>
+<p>[Huawei-GigabitEthernet0/0/4] port link-type trunk</p>
+<p>[Huawei-GigabitEthernet0/0/4] port trunk allow-pass vlan all</p>
+<p>​                                                    华为trunk默认不允许VLAN通信</p>
+<p>[Huawei-GigabitEthernet0/0/4] port trunk pvid vlan 10  修改本征vlan(PVID)</p>
+<h1 id="HYbird-接口："><a href="#HYbird-接口：" class="headerlink" title="HYbird 接口："></a><strong>HYbird 接口：</strong></h1><p>hybird接口当作ACCESS口</p>
+<p>[SW1]vlan 10</p>
+<p>[SW1-GigabitEthernet0/0/1]port hybrid pvid vlan 10</p>
+<p>[SW1-GigabitEthernet0/0/1]port hybrid untagged vlan 10</p>
+<p>[SW1-GigabitEthernet0/0/1]undo port hybrid untagged vlan 1</p>
+<p>hybird接口当作TRUNK口</p>
+<p>SW1</p>
+<p>[SW1-GigabitEthernet0/0/2]PORT hybrid tagged VLAN 10</p>
+<p>SW2</p>
+<p>[SW2-GigabitEthernet0/0/1]port hybrid tagged VLAN 10</p>
+<p>HYbird接口特殊用法：实现VLAN间互通</p>
+<p>[SW1]VLAN batch 10 20 30</p>
+<p>[SW1-GigabitEthernet0/0/1]port hybrid pvid vlan 30</p>
+<p>[SW1-GigabitEthernet0/0/1]port hybrid untagged vlan 10 20 30</p>
+<p>[SW1-GigabitEthernet0/0/2]port hybrid pvid vlan 10</p>
+<p>[SW1-GigabitEthernet0/0/2]port hybrid untagged vlan  10 30</p>
+<p>[SW1-GigabitEthernet0/0/3]port hybrid pvid vlan 20</p>
+<p>[SW1-GigabitEthernet0/0/3]port hybrid untagged vlan 20 30</p>
+<h1 id="单臂路由："><a href="#单臂路由：" class="headerlink" title="单臂路由："></a><strong>单臂路由：</strong></h1><p>Vlan的虚拟子接口网关：</p>
+<p>[Huawei]int e0/0/0.1          创建子接口.1</p>
+<p>[Huawei-Ethernet0/0/0.1]ip add 192.168.10.1 24      子接口配置IP地址</p>
+<p>[Huawei-Ethernet0/0/0.1]dot1q termination vid 10    和vlan 10 关联</p>
+<p>[Huawei-Ethernet0/0/0.1]arp broadcast enable        开启ARP广播功能</p>
+<p>为不同的网段配置路由协议。</p>
+<h1 id="SVI"><a href="#SVI" class="headerlink" title="SVI:"></a><strong>SVI:</strong></h1><p>[SW1]int Vlanif 10                            创建虚拟接口vlanif 10 (svi)</p>
+<p>[SW1-Vlanif10]ip address 192.168.10.1 24      指定IP地址</p>
+<h1 id="ACL访问控制列表-应用于不同的网段"><a href="#ACL访问控制列表-应用于不同的网段" class="headerlink" title="ACL访问控制列表:  应用于不同的网段"></a><strong>ACL访问控制列表:  应用于不同的网段</strong></h1><p>同网段 可用端口隔离：port-isolate enable group 1</p>
+<p>基本acl（2000-2999）：只能匹配源ip地址。</p>
+<p>高级acl（3000-3999）：可以匹配源ip、目标ip、源端口、目标端口等三层和四层的字段。</p>
+<p>在R2上设置ACL拒绝PC1访问172.16.10.0网段</p>
+<p>[R2]acl 2000          启用基本acl      </p>
+<p>[R2-acl-basic-2000]rule deny source 192.168.10.1 0.0.0.0    设置一条拒绝规则</p>
+<p>[R2]int g0/0/1                                              </p>
+<p>[R2-GigabitEthernet0/0/1]traffic-filter outbound acl 2000    在g0/0/1口启用ACL2000规则</p>
+<p>[R2]dis acl 2000           查看ACL状态</p>
+<p>在R2上设置ACL拒绝192.168.10.0网段PING地址172.16.10.0，但允许HTTP访问</p>
+<p>[R2]acl 3000</p>
+<p>[R2-acl-adv-3000]rule deny icmp source 192.168.10.0 0.0.0.255 destination  172.16.10.2  0.0.0.0</p>
+<p>[R2]int g0/0/01</p>
+<p>[R2-GigabitEthernet0/0/1]traffic-filter outbound acl 3000</p>
+<p>[R2]dis acl 3000</p>
+<p>Advanced ACL 3000, 1 rule</p>
+<p>Acl’s step is 5</p>
+<p> rule 5 deny icmp source 192.168.10.0 0.0.0.255 destination 172.16.10.2 0 (7 matches)</p>
+<h1 id="NAT网络地址转换："><a href="#NAT网络地址转换：" class="headerlink" title="NAT网络地址转换："></a><strong>NAT网络地址转换：</strong></h1><p>[Huawei]ip route-static 0.0.0.0 0 12.1.1.6</p>
+<p>[Huawei]INT G0/0/1</p>
+<p> dis nat session all 查看NAT转换缓存列表</p>
+<h1 id="静态NAT-一对一"><a href="#静态NAT-一对一" class="headerlink" title="静态NAT(一对一) :"></a><strong>静态NAT(一对一) :</strong></h1><p>[Huawei-GigabitEthernet0/0/1]NAT static global 12.1.1.2 inside 192.168.1.2</p>
+<p>  允许192.168.1.2 转换为公网地址12.1.1.2访问外网（包括所有协议和端口）</p>
+<h1 id="easy-ip-nat"><a href="#easy-ip-nat" class="headerlink" title="easy ip nat"></a><strong>easy ip nat</strong></h1><p>** (一对多，对应一个或多个网段范围)：**（常用）</p>
+<p>[Huawei]acl 2000           启用ACL2000</p>
+<p>[Huawei-acl-basic-2000]rule permit source 192.168.1.0 0.0.0.255       匹配192.168.1.0网段</p>
+<p>[Huawei]int g0/0/1         进入公网接口</p>
+<p>[Huawei-GigabitEthernet0/0/1]nat outbound 2000      NAT调用ACL 2000 匹配网段     </p>
+<h1 id="使用公网地址池NAT"><a href="#使用公网地址池NAT" class="headerlink" title="使用公网地址池NAT:"></a><strong>使用公网地址池NAT:</strong></h1><p><strong>(可以自定义转换的公网地址，支持多个公网地址，支持更多用户)</strong></p>
+<p>[Huawei]nat address-group 1 12.1.1.2 12.1.1.3      地址池不能包含公网接口地址</p>
+<p>[Huawei]acl 2000</p>
+<p>[Huawei-acl-basic-2000]rule permit source 192.168.1.0 0.0.0.255</p>
+<p>[Huawei-GigabitEthernet0/0/1]nat outbound 2000 address-group 1   地址池与ACL池匹配</p>
+<h1 id="端口映射：（常用）"><a href="#端口映射：（常用）" class="headerlink" title="端口映射：（常用）"></a><strong>端口映射：（常用）</strong></h1><p>[Huawei-GigabitEthernet0/0/1]nat server protocol tcp global 12.1.1.5 80 inside 192.168.1.200 80</p>
+<p>​             将内网192.168.1.200的80端口映射成12.1.1.5的80端口</p>
+<p>[Huawei-GigabitEthernet0/0/1]nat server protocol tcp global 12.1.1.5 21 inside 192.168.1.200 21</p>
+<p>​             映射FTP端口</p>
+<p>[Huawei-GigabitEthernet0/0/1]nat server protocol icmp global 12.1.1.5 inside 192.168.1.200</p>
+<p>​             允许外网PING服务器192.168.1.200</p>
+<h1 id="VRRP"><a href="#VRRP" class="headerlink" title="VRRP:"></a><strong>VRRP:</strong></h1><p>双路由VRRP：</p>
+<p>MASTER</p>
+<p>[R1]int g0/0/0</p>
+<p>[R1-GigabitEthernet0/0/0]vrrp vrid 1 virtual-ip 192.168.10.1</p>
+<p>[R1-GigabitEthernet0/0/0]vrrp vrid 1 priority 105</p>
+<p>BACKUP</p>
+<p>[R2]int g0/0/0</p>
+<p>[R2-GigabitEthernet0/0/0]vrrp vrid 1 virtual-ip 192.168.10.1</p>
+<p>[sw1]dis vrrp brief </p>
+<p>可选配置：</p>
+<p>跟踪上连接口</p>
+<p>[R1-GigabitEthernet0/0/0]vrrp vrid 1 track interface gi 0/0/1</p>
+<p>配置VRRP认证</p>
+<p>vrrp vrid 1 authentication-mode simple 123</p>
+<p>双核心交换机VRRP:</p>
+<p>[sw1]int vlanif 10</p>
+<p>[sw1-Vlanif10]vrrp vrid 1 virtual-ip 192.168.10.1</p>
+<p>[sw1-Vlanif10]vrrp vrid 1 priority 105</p>
+<p>[SW2]int vlanif 10</p>
+<p>[Huawei-Vlanif10]vrrp vrid 1 virtual-ip 192.168.10.1</p>
+<p>[sw1]dis vrrp brief </p>
+<p>VLAN20</p>
+<p>[sw2-vlan20]int vlanif 20</p>
+<p>[sw2-Vlanif20]ip address 192.168.20.253 24</p>
+<p>[sw2-Vlanif20]vrrp vrid 2 virtual-ip 192.168.20.1</p>
+<p>[sw2-Vlanif20]vrrp vrid 2 priority 105</p>
+<h1 id="eth-trunk-二层链路聚合："><a href="#eth-trunk-二层链路聚合：" class="headerlink" title="eth-trunk 二层链路聚合："></a><strong>eth-trunk 二层链路聚合：</strong></h1><p><strong>（交换机TRUNK和ACCESS口）</strong></p>
+<p>[SW1]int Eth-Trunk 1     创建捆绑组1</p>
+<p>[SW1-Eth-Trunk1]mode manual load-balance     手工负载分担（默认）</p>
+<p>[SW1-Eth-Trunk1]int gi 0/0/1</p>
+<p>[SW1-GigabitEthernet0/0/1]eth-trunk 1      四个接口依次执行</p>
+<p>[SW1]dis eth-trunk 1                       检查捆绑状态</p>
+<p>[SW2]int Eth-Trunk 1</p>
+<p>[SW2-Eth-Trunk1]trunkport gi 0/0/1 to 0/0/4    将多个接口加入捆绑组1</p>
+<p>[SW1-Eth-Trunk1]load-balance ?              修改负载模式</p>
+<p>  dst-ip       According to destination IP hash arithmetic</p>
+<p>  dst-mac      According to destination MAC hash arithmetic</p>
+<p>  src-dst-ip   According to source/destination IP hash arithmetic</p>
+<p>  src-dst-mac  According to source/destination MAC hash arithmetic</p>
+<p>  src-ip       According to source IP hash arithmetic</p>
+<p>  src-mac      According to source MAC hash arithmetic</p>
+<h1 id="eth-trunk-三层链路聚合"><a href="#eth-trunk-三层链路聚合" class="headerlink" title="eth-trunk 三层链路聚合"></a><strong>eth-trunk 三层链路聚合</strong></h1><p><strong>（路由器之间，需提升聚合端口为三层接口）</strong></p>
+<p>[R1]int Eth-Trunk 1</p>
+<p>[R1-Eth-Trunk1]undo portswitch     将二层交换接口提升为三层接口</p>
+<p>[R1-Eth-Trunk1]ip address 12.1.1.1 24</p>
+<p>[R1-Eth-Trunk1]int gi 0/0/1</p>
+<p>[R1-GigabitEthernet0/0/1]eth-trunk 1</p>
+<p>[R1-GigabitEthernet0/0/1]int gi 0/0/2</p>
+<p>[R1-GigabitEthernet0/0/2]eth-trunk 1</p>
+<p>路由之间配置路由协议，使PC间可以通信</p>
+<p><strong>三层交换机聚合：</strong></p>
+<p>将接口捆绑加入VLAN，配置vlanif 的ip地址</p>
+<p>[SW1]int Eth-Trunk 1</p>
+<p>[SW1-Eth-Trunk1]trunkport gi 0/0/1  0/0/2</p>
+<p>[SW1]vlan  10</p>
+<p>[SW1]int Eth-Trunk 1</p>
+<p>[SW1-Eth-Trunk1]port link-type acc</p>
+<p>[SW1-Eth-Trunk1]port default vlan 10</p>
+<p>[SW1]int vlanif 10</p>
+<p>[SW1-Vlanif10]ip address 12.1.1.1 24</p>
+<p><strong>核心交换机与路由器链路聚合</strong></p>
+<p>[SW1]vlan 10</p>
+<p>[SW1]int Eth-Trunk 1</p>
+<p>[SW1-Eth-Trunk1]trunkport gi 0/0/1 0/0/2</p>
+<p>[SW1-Eth-Trunk1]port link-type access</p>
+<p>[SW1-Eth-Trunk1]port default vlan 10</p>
+<p>[SW1-vlan10]int vlanif 10</p>
+<p>[SW1-Vlanif10]ip address 12.1.1.1 24</p>
+<p>[R1]int Eth-Trunk 1</p>
+<p>[R1-Eth-Trunk1]undo portswitch</p>
+<p>[R1-Eth-Trunk1]trunkport gi 0/0/0 0/0/1</p>
+<p>[R1-Eth-Trunk1]ip address 12.1.1.2 24</p>
+<h1 id="LACP-模式链路聚合："><a href="#LACP-模式链路聚合：" class="headerlink" title="LACP 模式链路聚合："></a><strong>LACP 模式链路聚合：</strong></h1><p>二层链路聚合：（交换机TRUNK和ACCESS口）</p>
+<p>[SW1]int Eth-Trunk 1     创建捆绑组1</p>
+<p>[SW1-Eth-Trunk1]mode manual load-balance     手工负载分担（默认）</p>
+<p>[SW1-Eth-Trunk1]int gi 0/0/1</p>
+<p>[SW1-GigabitEthernet0/0/1]eth-trunk 1      四个接口依次执行</p>
+<p>[SW1]dis eth-trunk 1                       检查捆绑状态</p>
+<p>[SW2]int Eth-Trunk 1</p>
+<p>[SW2-Eth-Trunk1]trunkport gi 0/0/1 to 0/0/4    将多个接口加入捆绑组1</p>
+<p>[SW1-Eth-Trunk1]load-balance ?              修改负载模式</p>
+<p>  dst-ip       According to destination IP hash arithmetic</p>
+<p>  dst-mac      According to destination MAC hash arithmetic</p>
+<p>  src-dst-ip   According to source/destination IP hash arithmetic</p>
+<p>  src-dst-mac  According to source/destination MAC hash arithmetic</p>
+<p>  src-ip       According to source IP hash arithmetic</p>
+<p>  src-mac      According to source MAC hash arithmetic</p>
+<h1 id="STP"><a href="#STP" class="headerlink" title="STP:"></a><strong>STP:</strong></h1><p>核心交换机配置为根桥：</p>
+<p>[SW1] stp  priority  0        设置核心交换机STP优先级为0，默认32768.</p>
+<p>接入层用户接口配置为边缘端品，使接口收敛迅速：</p>
+<p>[Huawei] port-group group-member e0/0/2 to e0/0/22            群组端口</p>
+<p>[Huawei-port-group] stp edged-port enable </p>
+<p><strong>mstp:.</strong></p>
+<p>mstp:  各交换机使用相同配置每台交换机不同区域不同实例独立运行RSTP</p>
+<p>[SW1]stp region-configuration</p>
+<p>[SW1-mst-region]region-name aa               配置区域名称</p>
+<p>[SW1-mst-region]instance 1 vlan 10 20 30    将VLAN 10 20 30 划入实例1</p>
+<p>[SW1-mst-region]instance 2 vlan 40 50 60</p>
+<p>[SW1-mst-region]active region-configuration      激活配置，使之生效</p>
+<p>VLAN数据分流</p>
+<p>实例1：</p>
+<p>[SW1]STP instance 1 priority 0</p>
+<p>[SW2]stp instance 2 priority 4096</p>
+<p>实例2：</p>
+<p>[SW1]STP instance 2 priority 4096</p>
+<p>[SW2]stp instance 2 priority 0</p>
+<h1 id="BFD"><a href="#BFD" class="headerlink" title="BFD:"></a><strong>BFD:</strong></h1><p>静态路由调用BFD</p>
+<p>R1:</p>
+<p>bfd 1 bind peer-ip 12.1.1.2 source-ip 12.1.1.1</p>
+<p> discriminator local 1         本地</p>
+<p> discriminator remote 2        对端</p>
+<p> commit</p>
+<p>[R1]ip route-static 2.2.2.0 255.255.255.0 12.1.1.2 preference 55 track bfd-session 1</p>
+<p>#</p>
+<p>R2:</p>
+<p>bfd 1 bind peer-ip 12.1.1.1 source-ip 12.1.1.2</p>
+<p> discriminator local 2</p>
+<p> discriminator remote 1</p>
+<p> commit</p>
+<p>[R2]  ip route-static 1.1.1.0 255.255.255.0 12.1.1.1 preference 55 track bfd-session 1</p>
+<p>#</p>
+<p>调试命令：</p>
+<p>[R1]dis bfd session static</p>
+<p>[R1]dis bfd session static verbose </p>
+<p>OSPF下启用BFD检测路由链路</p>
+<p>[R1-ospf-1]dis thi</p>
+<p>#</p>
+<p>ospf 1</p>
+<p> bfd all-interfaces enable                 在OSPF进程下启用全部接口的BFD</p>
+<p> area 0.0.0.0</p>
+<p>  network 1.1.1.0 0.0.0.255</p>
+<p>  network 12.1.1.0 0.0.0.255</p>
+<p>VRRP使用BFD检测上行链路</p>
+<p>[R1]bfd rs bind peer-ip 21.1.1.3 source-ip 21.1.1.1 auto</p>
+<p>[R1-Ethernet0/0/0]vrrp vrid 1 track bfd-session session-name rs</p>
+<p>[R3]bfd rs bind peer-ip 21.1.1.1 source-ip 21.1.1.3 auto </p>
+<h1 id="端口安全："><a href="#端口安全：" class="headerlink" title="端口安全："></a><strong>端口安全：</strong></h1><p>[Huawei-GigabitEthernet0/0/1]port-security enable              开启端口安全</p>
+<p>[Huawei-GigabitEthernet0/0/1]port-security max-mac-num 2       允许MAC数量</p>
+<p>[Huawei-GigabitEthernet0/0/1]port-security mac-address sticky  开启MAC绑定</p>
+<p>[Huawei-GigabitEthernet0/0/1]port-security mac-address sticky 5489-981c-6e9a vlan 1    添加mac地址</p>
+<h1 id="端口镜像："><a href="#端口镜像：" class="headerlink" title="端口镜像："></a><strong>端口镜像：</strong></h1><p>[Huawei]observe-port 1 interface gi 0/0/3              设置观察端口</p>
+<p>[Huawei]int gi 0/0/2</p>
+<p>[Huawei-GigabitEthernet0/0/2]port-mirroring to observe-port 1 both   将接口数据镜像给观察组1</p>
+<p><strong>IP-PREFIX</strong></p>
+<p>a.   ip ip-prefix FILTER index 10 permit 1.1.1.0 24 </p>
+<p>该ip-prefix为精确匹配，只有1.1.1.1/24才能permit </p>
+<p>b.    ip ip-prefix FILTER index 10 permit 1.1.1.0 24 less-equal 32 </p>
+<p>掩码范围在24-32之间的网络1.1.1.0才能permit </p>
+<p>c.    ip ip-prefix FILTER index 10 permit 1.1.1.0 24 greater-equal 26 </p>
+<p>掩码范围在26-32之间的网络1.1.1.0才能permit </p>
+<p>d.    ip ip-prefix FILTER index 10 permit 1.1.1.0 24 greater-equal 26 less-equal 32 </p>
+<p>掩码范围在26-32之间的网络1.1.1.0才能permit </p>
+<p>e.    ip ip-prefix FILTER index 10 permit 0.0.0.0 8 less-equal 32 </p>
+<p>所有掩码长度在8到32的路由都被permit </p>
 
                 
             </div>
@@ -532,7 +843,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.xcjyc.top/2022/11/06/linux-chang-yong-ming-ling/">https://www.xcjyc.top/2022/11/06/linux-chang-yong-ming-ling/</a>
+                    <a href="https://www.xcjyc.top/2022/11/07/hua-wei-shu-tong-ming-ling-sui-ji/">https://www.xcjyc.top/2022/11/07/hua-wei-shu-tong-ming-ling-sui-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -570,8 +881,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/huawei-R-S/">
+                                    <span class="chip bg-color">huawei R&amp;S</span>
                                 </a>
                             
                         </div>
@@ -742,19 +1053,19 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/07/linux-zui-quan-ji-chu-ming-ling/">
+                <a href="/2022/11/07/hua-wei-shu-tong-ming-ling-qing-dan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Linux最全基础命令">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="华为数通命令清单">
                         
-                        <span class="card-title">Linux最全基础命令</span>
+                        <span class="card-title">华为数通命令清单</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux最全基础命令
+                            华为命令符
                         
                     </div>
                     <div class="publish-info">
@@ -765,8 +1076,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    Linux基础
+                            <a href="/categories/%E5%8D%8E%E4%B8%BA/" class="post-category">
+                                    华为
                                 </a>
                             
                             
@@ -776,8 +1087,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
+                    <a href="/tags/huawei-R-S/">
+                        <span class="chip bg-color">huawei R&amp;S</span>
                     </a>
                     
                 </div>
@@ -791,31 +1102,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/06/linux-chu-shi-hua-cao-zuo/">
+                <a href="/2022/11/07/typora-tu-chuang-pei-zhi-wen-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Linux安装初始化">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Typora图床配置文件">
                         
-                        <span class="card-title">Linux安装初始化</span>
+                        <span class="card-title">Typora图床配置文件</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux初始化
+                            Typora图床配置文件
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    Linux基础
+                            <a href="/categories/%E5%9B%BE%E5%BA%8A/" class="post-category">
+                                    图床
                                 </a>
                             
                             
@@ -825,8 +1136,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
+                    <a href="/tags/Typora/">
+                        <span class="chip bg-color">Typora</span>
                     </a>
                     
                 </div>

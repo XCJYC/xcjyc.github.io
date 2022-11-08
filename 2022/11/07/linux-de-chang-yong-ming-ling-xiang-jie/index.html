@@ -1,0 +1,1823 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Linux的常用命令详解, 令尹仙府">
+    <meta name="description" content="令尹的个人学习档案">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Linux的常用命令详解 | 令尹仙府</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="令尹仙府" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">令尹仙府</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">令尹仙府</div>
+        <div class="logo-desc">
+            
+            令尹的个人学习档案
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Linux的常用命令详解</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="post-category">
+                                Linux基础
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-11-07
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.3k
+                </div>
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/c4c1627cc457.png" alt="c4c1627cc457"></p>
+<h2 id="1-帮助命令"><a href="#1-帮助命令" class="headerlink" title="1.帮助命令"></a>1.帮助命令</h2><h3 id="1-1-help命令"><a href="#1-1-help命令" class="headerlink" title="1.1 help命令"></a>1.1 help命令</h3><p>语法格式： 命令 –help </p>
+<p>作用: 查看某个命令的帮助信息 </p>
+<p>示例: </p>
+<ul>
+<li>ls –help     查看ls命令的帮助信息 </li>
+<li>netstat –help    查看netstat命令的帮助信息</li>
+</ul>
+<h3 id="1-2-man命令"><a href="#1-2-man命令" class="headerlink" title="1.2 man命令"></a>1.2 man命令</h3><p>语法格式： man 命令  </p>
+<p>作用: 查看某个命令的帮助手册   </p>
+<p>示例:       </p>
+<ul>
+<li><p>man ls         查看ls命令的帮助手册      </p>
+</li>
+<li><p>man netstat    查看netstat命令的帮助手册</p>
+</li>
+</ul>
+<h2 id="2-路径切换及查看"><a href="#2-路径切换及查看" class="headerlink" title="2.路径切换及查看"></a>2.路径切换及查看</h2><h3 id="2-1-cd命令"><a href="#2-1-cd命令" class="headerlink" title="2.1 cd命令"></a>2.1 cd命令</h3><p>语法格式： cd 目录  </p>
+<p>作用: 切换到目录中   </p>
+<p>示例:       </p>
+<ul>
+<li>cd /opt       切换到/opt目录下      </li>
+<li>cd ~  切换到用户目录      </li>
+<li>cd -  切换到上一次访问的目录      </li>
+<li>cd .. 切换到上一次所在的目录</li>
+</ul>
+<h3 id="2-2-pwd命令"><a href="#2-2-pwd命令" class="headerlink" title="2.2 pwd命令"></a>2.2 pwd命令</h3><p>语法格式： pwd  </p>
+<p>作用: 查看当前所在路径   </p>
+<p>示例:       </p>
+<ul>
+<li>pwd  查看当前路径，会将当前路径回显</li>
+</ul>
+<h3 id="2-3-ls命令"><a href="#2-3-ls命令" class="headerlink" title="2.3 ls命令"></a>2.3 ls命令</h3><p>语法格式： ls [-la] [文件/目录]  </p>
+<p>作用: 查看当前路径下的文件和目录，若后带有文件或目录，则只查看当前文件或目录   </p>
+<p>示例:       </p>
+<ul>
+<li>ls  查看当前路径下所有的文件或目录      </li>
+<li>ls -l 查看当前路径下所有的文件或目录的详细信息      </li>
+<li>ls -a 查看当前路径下所有的文件或目录,将隐藏文件显示出来      </li>
+<li>ls -l a.log  查看当前路径下a.log下的详细信息</li>
+</ul>
+<h3 id="2-4-find命令"><a href="#2-4-find命令" class="headerlink" title="2.4 find命令"></a>2.4 find命令</h3><p>语法格式： find [路径] [参数] [匹配模式]  </p>
+<p>作用: 可以根据给定的路径和表达式查找的文件或目录   </p>
+<p>示例:       </p>
+<ul>
+<li><p>find / -name “*.txt”   查询根目录下所有以.txt结尾的文件 。      </p>
+</li>
+<li><p>find /test -perm  644  查询/test目录下权限为644的所有文件      </p>
+</li>
+<li><p>find . -type f     查询当前目录下所有的文件      </p>
+</li>
+<li><p>find . -type f -name “abc”   查询当前目录下所有文件中包含abc字符的文件      </p>
+</li>
+<li><p>find . -type f | sort     查询当前目录下所有文件并排序      </p>
+</li>
+<li><p>find . -type d         查询当前目录下所有目录      find . -size 10M</p>
+</li>
+</ul>
+<h2 id="3-文件-目录操作"><a href="#3-文件-目录操作" class="headerlink" title="3.文件|目录操作"></a>3.文件|目录操作</h2><h3 id="3-1-文件和目录的基本操作"><a href="#3-1-文件和目录的基本操作" class="headerlink" title="3.1 文件和目录的基本操作"></a>3.1 文件和目录的基本操作</h3><h4 id="3-1-1-touch命令"><a href="#3-1-1-touch命令" class="headerlink" title="3.1.1 touch命令"></a>3.1.1 touch命令</h4><p>语法格式： touch 文件名  </p>
+<p>作用: 创建一个文件   </p>
+<p>示例:       </p>
+<ul>
+<li>touch a.log   创建一个a.log文件。</li>
+</ul>
+<h4 id="3-1-2-ln命令"><a href="#3-1-2-ln命令" class="headerlink" title="3.1.2 ln命令"></a>3.1.2 ln命令</h4><p>语法格式：     ln 源文件名 硬链接文件名    ln -s 源文件名 软连接文件名  </p>
+<p>作用: 创建文件链接   </p>
+<p>示例:       </p>
+<ul>
+<li>ln a.txt a.txt.link   为a.txt创建一个硬链接文件a.txt.link。      </li>
+<li>ln -s a.txt a.txt.link  为a.txt创建一个软连接文件 。       </li>
+</ul>
+<p>备注：    </p>
+<ul>
+<li>软链接文件：就像Windows中快捷方式一样，只是源文件的一个指向，删除软连接文件，源文件任存在。    </li>
+<li>硬链接文件：比如当前目录下有2个文件，这2个文件除了名字不一样其他的一模一样，但是占用的实际磁盘空间还是只有1M，改变任何一个文件的内容另一个文件也会跟着改变；</li>
+</ul>
+<h4 id="3-1-3-mkdir-命令"><a href="#3-1-3-mkdir-命令" class="headerlink" title="3.1.3 mkdir 命令"></a>3.1.3 mkdir 命令</h4><p>语法格式： mkdir 目录名  </p>
+<p>作用: 创建一个目录   </p>
+<p>示例:       </p>
+<ul>
+<li>mkdir test   创建一个test的目录。      </li>
+<li>mkdir -p test  若存在test，则不创建；若不存在，则创建      </li>
+<li>mkidr -p test/a/b  创建test目录，其下再创建a目录，a目录再创建b目录 。</li>
+</ul>
+<h4 id="3-1-4-rm命令"><a href="#3-1-4-rm命令" class="headerlink" title="3.1.4 rm命令"></a>3.1.4 rm命令</h4><p>语法格式： rm [-rf] 文件|目录  </p>
+<p>作用: 删除文件或目录   </p>
+<p>示例:      </p>
+<ul>
+<li>rm a.txt   删除a.txt,删除前询问 。      </li>
+<li>rm -f a.txt  直接删除a.txt ,不在询问 。      </li>
+<li>rm -r test  删除test目录，删除前询问      </li>
+<li>rm -rf test  直接删除test目录，不在询问 。   </li>
+</ul>
+<p>备注：任何的删除操作都是危险的动作，慎用 。</p>
+<h4 id="3-1-5-mv命令"><a href="#3-1-5-mv命令" class="headerlink" title="3.1.5 mv命令"></a>3.1.5 mv命令</h4><p>语法格式： mv 源文件|目录 目标文件|目标目录  </p>
+<p>作用: 有两层意思，分别为：    </p>
+<ul>
+<li>进行重命名文件或目录    </li>
+<li>进行移动文件或目录到目的目录 。       </li>
+</ul>
+<p>示例:       </p>
+<ul>
+<li>mv a.txt b.txt   修改文件名a.txt为b.txt 。      </li>
+<li>mv a.txt test/   移动a.txt 到test目录下      </li>
+<li>mv abc bcd       重命名目录abc为bcd .      </li>
+<li>mv abc bcd/       移动abc目录到bcd下 。</li>
+</ul>
+<h4 id="3-1-6-cp命令"><a href="#3-1-6-cp命令" class="headerlink" title="3.1.6 cp命令"></a>3.1.6 cp命令</h4><p>语法格式： cp [-rf] 源文件|目录 目标文件|目录  </p>
+<p>作用: 拷贝文件或目录为另一个文件或目录 。       </p>
+<p>示例:       </p>
+<ul>
+<li>cp a.txt b.txt  拷贝a.txt为b.txt ,若b.txt以存在，则提示是否继续拷贝 。      </li>
+<li>cp -f a.txt b.txt 拷贝a.txt为b.txt ,即使b.txt以前就存在，也是直接覆盖 。      </li>
+<li>cp -r abc bcd 拷贝abc目录为bcd ,若abc存在，则提示是否继续拷贝 。      </li>
+<li>cp -rf abc bcd 拷贝abc目录为bcd ,即使abc存在，则也是直接覆盖 。</li>
+</ul>
+<h3 id="3-2-文件压缩与解压缩"><a href="#3-2-文件压缩与解压缩" class="headerlink" title="3.2 文件压缩与解压缩"></a>3.2 文件压缩与解压缩</h3><h4 id="3-2-1-zipinfo命令"><a href="#3-2-1-zipinfo命令" class="headerlink" title="3.2.1 zipinfo命令"></a>3.2.1 zipinfo命令</h4><p>语法格式： zipinfo zip文件  </p>
+<p>作用:  查看zip文件里的信息。       </p>
+<p>示例:       </p>
+<ul>
+<li>zipinfo  abc.zip  查看abc.zip里的文件信息 。      </li>
+<li>zipinfo -v abc.zip 显示abc.zip里的每个文件的信息 。</li>
+</ul>
+<h4 id="3-2-2-zip命令"><a href="#3-2-2-zip命令" class="headerlink" title="3.2.2 zip命令"></a>3.2.2 zip命令</h4><p>语法格式： zip 压缩文件 文件|目录  </p>
+<p>作用:  将目标文件或目录进行压缩。       </p>
+<p>示例:       </p>
+<ul>
+<li>zip a.zip a.txt  将a.txt进行压缩形成a.zip 。      </li>
+<li>zip a.zip test/ 将test目录下的所有文件和目录压缩到a.zip 。</li>
+</ul>
+<h4 id="3-2-3-gzip命令"><a href="#3-2-3-gzip命令" class="headerlink" title="3.2.3. gzip命令"></a>3.2.3. gzip命令</h4><p>语法格式： gzip [-d] 文件|目录  </p>
+<p>作用:  压缩|解压缩文件或目录       </p>
+<p>示例:       </p>
+<ul>
+<li>gzip a.txt  将a.txt压缩为a.txt.gz ,注意压缩后源文件已不存在。      </li>
+<li>gzip -d a.txt.gz 解压a.txt.gz文件</li>
+</ul>
+<h4 id="3-2-4-unzip命令"><a href="#3-2-4-unzip命令" class="headerlink" title="3.2.4 unzip命令"></a>3.2.4 unzip命令</h4><p>语法格式： unzip  文件  </p>
+<p>作用:  解压缩文件       </p>
+<p>示例:       </p>
+<ul>
+<li>unzip  a.zip       解压文件      </li>
+</ul>
+<h4 id="3-2-5-gunzip命令"><a href="#3-2-5-gunzip命令" class="headerlink" title="3.2.5 gunzip命令"></a>3.2.5 gunzip命令</h4><p>语法格式： gunzip 压缩文件  </p>
+<p>作用:  解压压缩文件       </p>
+<p>示例:       </p>
+<ul>
+<li>gunzip a.txt.gz  解压a.txt.gz     guzip  test.tar.gz  解压test.tar.gz</li>
+</ul>
+<h4 id="3-2-6-tar命令"><a href="#3-2-6-tar命令" class="headerlink" title="3.2.6 tar命令"></a>3.2.6 tar命令</h4><p>语法格式： tar [-c|xzvf] 文件|压缩文件  </p>
+<p>作用:  进行归档并创建压缩文件 或 进行解压归档压缩文档         </p>
+<p>示例:       </p>
+<ul>
+<li>tar -cvzf a.tar  a.txt     将文件a.txt进行压缩并归档      </li>
+<li>tar -xvzf a.tar .   解压a.tar文件到当前目录 。</li>
+</ul>
+<h3 id="3-3-文件传输"><a href="#3-3-文件传输" class="headerlink" title="3.3 文件传输"></a>3.3 文件传输</h3><h4 id="3-3-1-tftp命令"><a href="#3-3-1-tftp命令" class="headerlink" title="3.3.1 tftp命令"></a>3.3.1 tftp命令</h4><p>语法格式： tftp 远程主机  </p>
+<p>作用:  连接远程主机，上传或下载文件       </p>
+<p>示例:     (需连接到远程主机)      </p>
+<ul>
+<li>get a.txt     下载a.txt文件     </li>
+<li>put a.txt     上传a.txt到远程主机</li>
+</ul>
+<h4 id="3-3-2-curl命令"><a href="#3-3-2-curl命令" class="headerlink" title="3.3.2 curl命令"></a>3.3.2 curl命令</h4><p>语法格式： curl url  </p>
+<p>作用:  进行文件下载或者请求http协议数据       </p>
+<p>示例:       </p>
+<ul>
+<li>curl  <a target="_blank" rel="noopener" href="http://www.baidu.com/">http://www.baidu.com</a>    请求百度      </li>
+<li>curl -o baidu.html <a target="_blank" rel="noopener" href="http://www.baidu.com/">http://www.baidu.com</a>    将请求到的数据保存到baidu.html中 。</li>
+</ul>
+<h4 id="3-3-3-scp命令"><a href="#3-3-3-scp命令" class="headerlink" title="3.3.3 scp命令"></a>3.3.3 scp命令</h4><p>语法格式： scp 远程主机账号@远程IP地址 本地目录  </p>
+<p>作用:  登录远程主机进行拷贝文件或目录       </p>
+<p>示例:       </p>
+<ul>
+<li>scp <a href="mailto:root@192.168.12.11">root@192.168.12.11</a>:/soft/test.tar.gz /tools/   将远程主机目录下的/soft/test.tar.gz 拷贝到本地目录下的tools/下      </li>
+<li>scp <a href="mailto:root@192.168.12.11">root@192.168.12.11</a>:/soft/ /tools/  将远程主机目录soft 拷贝到本地目录的tools/下 。</li>
+</ul>
+<h4 id="3-3-4-rcp命令"><a href="#3-3-4-rcp命令" class="headerlink" title="3.3.4 rcp命令"></a>3.3.4 rcp命令</h4><p>语法格式： scp 主机1 主机2  </p>
+<p>作用:  远程主机间的文件或目录相互拷贝       </p>
+<p>示例:        </p>
+<ul>
+<li>rcp test 192.168.128.169:/test   拷贝当前目录下的test 到192.168.128.169的/test目录下       </li>
+<li>rcp <a href="mailto:root@192.168.128.169">root@192.168.128.169</a>:./test  /test 复制远程目录到本地的/test下</li>
+</ul>
+<h3 id="3-4-文件属性查看"><a href="#3-4-文件属性查看" class="headerlink" title="3.4 文件属性查看"></a>3.4 文件属性查看</h3><h4 id="3-4-1-file命令"><a href="#3-4-1-file命令" class="headerlink" title="3.4.1 file命令"></a>3.4.1 file命令</h4><p>语法格式： file 文件名  </p>
+<p>作用:  查看文件的类型       </p>
+<p>示例:        </p>
+<ul>
+<li>file a.txt    查看a.txt是什么类型       </li>
+<li>file abc      查看abc是什么类型 </li>
+</ul>
+<h4 id="3-4-2-du命令"><a href="#3-4-2-du命令" class="headerlink" title="3.4.2 du命令"></a>3.4.2 du命令</h4><p>语法格式： du 文件名  </p>
+<p>作用:  查看文件的大小       </p>
+<p>示例:        </p>
+<ul>
+<li>du a.txt    查看a.txt的文件大小，以k为单位      </li>
+<li>du -h a.txt       查看a.txt的文件大小，以M为单位 </li>
+</ul>
+<h3 id="3-5-文件目录权限设置"><a href="#3-5-文件目录权限设置" class="headerlink" title="3.5 文件目录权限设置"></a>3.5 文件目录权限设置</h3><h4 id="3-5-1-chmod命令"><a href="#3-5-1-chmod命令" class="headerlink" title="3.5.1 chmod命令"></a>3.5.1 chmod命令</h4><p>语法格式： 有两种用法    </p>
+<ul>
+<li>chmod [u/g/o/a][+/-/=] rwx 文件/目录   +:增加权限，-取消权限， =设定权限    </li>
+<li>chmod 数字 文件/目录      作用:  为文件或目录设置权限。       </li>
+</ul>
+<p>示例:        </p>
+<ul>
+<li>chmod a=rw a.txt  为所有者设置读写权限 。      </li>
+<li>chmod 644 a.txt  为所有者设置读权限，为用户设置写权限。</li>
+<li></li>
+</ul>
+<h2 id="4-文本内容查看及过滤"><a href="#4-文本内容查看及过滤" class="headerlink" title="4.文本内容查看及过滤"></a>4.文本内容查看及过滤</h2><h3 id="4-1-文本内容查看"><a href="#4-1-文本内容查看" class="headerlink" title="4.1 文本内容查看"></a>4.1 文本内容查看</h3><h4 id="4-1-1-cat命令"><a href="#4-1-1-cat命令" class="headerlink" title="4.1.1 cat命令"></a>4.1.1 cat命令</h4><p>语法格式： cat 文件名  </p>
+<p>作用:  查看文本内容，会将内容全部显示。       </p>
+<p>示例:        </p>
+<ul>
+<li>cat a.txt  显示a.txt里的内容。</li>
+</ul>
+<h4 id="4-1-2-more命令"><a href="#4-1-2-more命令" class="headerlink" title="4.1.2 more命令"></a>4.1.2 more命令</h4><p>语法格式： more 文件名  </p>
+<p>作用:  百分比显示文件内容，按Enter继续。       </p>
+<p>示例:        </p>
+<ul>
+<li>more a.txt  若只有一页，则全部显示，否则按百分比显示。</li>
+</ul>
+<h4 id="4-1-3-tail命令"><a href="#4-1-3-tail命令" class="headerlink" title="4.1.3 tail命令"></a>4.1.3 tail命令</h4><p>语法格式：        </p>
+<ul>
+<li>tail 文件名         查看文本内容        </li>
+<li>tail -n 数量 文件名       只显示倒数的几行        </li>
+<li>tail -f 文件名           实时的查看文件写入的信息  </li>
+</ul>
+<p>作用:  查看文本内容，       </p>
+<p>示例:        </p>
+<ul>
+<li>tail a.txt  查看文件内容，和cat效果一样 。       </li>
+<li>tail -n 2 a.txt  显示a.txt最后两行        </li>
+<li>tail -f a.txt    实时监控a.txt文本内容。</li>
+</ul>
+<h4 id="4-1-4-head命令"><a href="#4-1-4-head命令" class="headerlink" title="4.1.4 head命令"></a>4.1.4 head命令</h4><p>语法格式：     </p>
+<ul>
+<li>head 文件名    </li>
+<li>head -n 数量 文件名  </li>
+</ul>
+<p>作用:  查看文本内容。      </p>
+<p>示例:        </p>
+<ul>
+<li>head a.txt   查看文本内容，和cat效果一样。       </li>
+<li>head -n 2 a.txt  查看文本的前两行 。</li>
+</ul>
+<h3 id="4-2-文本内容筛选过滤"><a href="#4-2-文本内容筛选过滤" class="headerlink" title="4.2 文本内容筛选过滤"></a>4.2 文本内容筛选过滤</h3><h4 id="4-2-1-grep命令"><a href="#4-2-1-grep命令" class="headerlink" title="4.2.1 grep命令"></a>4.2.1 grep命令</h4><p>语法格式： grep [选项] [模式] 文件  </p>
+<p>作用:  文本搜索工具。       </p>
+<p>示例:       </p>
+<ul>
+<li>grep “aaa” a.txt   从a.txt中搜索aaa字符的行       </li>
+<li>grep -v “aaa” a.txt  从a.txt中不包含aaa的行        </li>
+<li>grep -n “aaa” a.txt  从a.txt中搜索aaa字符的行,并在前面加上行号       </li>
+<li>grep -i “aaa” a.txt  从a.txt中搜索aaa字符的行,其中忽略aaa的大小写       </li>
+<li>grep -e “a*” a.txt  从a.txt中搜索匹配a字符的行       </li>
+<li>ps -ef |grep “mysql”  查看mysql的进程      </li>
+</ul>
+<h4 id="4-2-2-sed命令"><a href="#4-2-2-sed命令" class="headerlink" title="4.2.2 sed命令"></a>4.2.2 sed命令</h4><p>语法格式： sed [选项]  文件  </p>
+<p>作用:  文本编辑工具。       </p>
+<p>示例:        </p>
+<ul>
+<li>sed -n ‘2p’ a.txt   从a.txt中的第二行内容       </li>
+<li>sed ‘3,5d’ a.txt     删除a.txt中第3到5行的内容，(注：源文件内容不变，只是回显内容会删除)       </li>
+<li>sed ‘/aaa/d’ a.txt  删除匹配aaa的行，从a.txt中 。     </li>
+</ul>
+<h4 id="4-2-3-awk命令"><a href="#4-2-3-awk命令" class="headerlink" title="4.2.3 awk命令"></a>4.2.3 awk命令</h4><p>语法格式： awk [选项]  文件  </p>
+<p>作用:  文本分析工具。       </p>
+<p>示例:        </p>
+<ul>
+<li>awk ‘{print $5}’ a.txt   显示a.txt中第5列的内容       </li>
+<li>awk ‘NR &lt;=2 {print $1,$3,$5}’ a.txt  显示前两行内容，每行只显示第1,3,5列 。       </li>
+<li>awk ‘/^d/ {print $1,$9}’ a.txt 显示以d开头的行，每行只显示第一，九列 。      </li>
+</ul>
+<h4 id="4-2-4-cut命令"><a href="#4-2-4-cut命令" class="headerlink" title="4.2.4 cut命令"></a>4.2.4 cut命令</h4><p>语法格式： cut 选项 文件  </p>
+<p>作用:  用于剪切字符。       </p>
+<p>示例:        </p>
+<ul>
+<li>cut -c 1-3 a.txt 只输出每行第一到第三的字符       </li>
+<li>cut -f4 -d” “ a.txt 显示第四列，以空格为分隔符 </li>
+</ul>
+<h4 id="4-2-5-col命令"><a href="#4-2-5-col命令" class="headerlink" title="4.2.5 col命令"></a>4.2.5 col命令</h4><p>语法格式： col 选项 文件  </p>
+<p>作用:  用于过滤字符。       </p>
+<p>示例:        </p>
+<ul>
+<li>man ls | col-b &gt; ls_help  过滤掉ls手册中的控制字符并输出到文件</li>
+</ul>
+<h3 id="4-3-文本编辑"><a href="#4-3-文本编辑" class="headerlink" title="4.3 文本编辑"></a>4.3 文本编辑</h3><h4 id="4-3-1-vi-vim命令"><a href="#4-3-1-vi-vim命令" class="headerlink" title="4.3.1 vi/vim命令"></a>4.3.1 vi/vim命令</h4><p>语法格式： vi/vim  文件  </p>
+<p>作用:  用于编辑文件。       </p>
+<p>示例:         </p>
+<ul>
+<li>vi a.txt  编辑a.txt,可以进行修改里面的内容       </li>
+<li>vim a.txt  编辑a.txt,可以进行修改里面的内容 </li>
+</ul>
+<h3 id="4-4-输出重定向"><a href="#4-4-输出重定向" class="headerlink" title="4.4 输出重定向"></a>4.4 输出重定向</h3><h4 id="4-4-1-gt-命令"><a href="#4-4-1-gt-命令" class="headerlink" title="4.4.1 >命令"></a>4.4.1 &gt;命令</h4><p>语法格式： &gt;  文件  </p>
+<p>作用:  将内容输出到文件，若文件中有内容则覆盖。若文件不存在，则创建文件       </p>
+<p>示例:         </p>
+<ul>
+<li>ll &gt; a.txt  查看详细后输出到a.txt 。       </li>
+<li>cat a.txt &gt; b.txt  将a.txt中的内容添加到b.txt中 。</li>
+</ul>
+<h4 id="4-4-2-gt-gt-命令"><a href="#4-4-2-gt-gt-命令" class="headerlink" title="4.4.2 >>命令"></a>4.4.2 &gt;&gt;命令</h4><p>语法格式： &gt;&gt;  文件  </p>
+<p>作用:  将内容追加到文件，若文件中有内容则追加。若文件不存在，则创建文件       </p>
+<p>示例:         </p>
+<ul>
+<li>ll &gt;&gt; a.txt  查看详细后追加到a.txt 。       </li>
+<li>cat a.txt &gt;&gt; b.txt  将a.txt中的内容添加到b.txt中 。</li>
+</ul>
+<h4 id="4-4-3-tee命令"><a href="#4-4-3-tee命令" class="headerlink" title="4.4.3 tee命令"></a>4.4.3 tee命令</h4><p>语法格式： tee  文件  </p>
+<p>作用:  将内容输出到文件并输出内容显示在控制台上。若文件不存在，则创建文件，一般需要和管道符(|)一起使用。       </p>
+<p>示例:         </p>
+<ul>
+<li>cat a.txt | tee b.txt  将a.txt中的内容添加到b.txt中，同时将添加内容回显到控制台上 。</li>
+</ul>
+<h3 id="4-5-文本内容处理"><a href="#4-5-文本内容处理" class="headerlink" title="4.5 文本内容处理"></a>4.5 文本内容处理</h3><h4 id="4-5-1-join命令"><a href="#4-5-1-join命令" class="headerlink" title="4.5.1 join命令"></a>4.5.1 join命令</h4><p>语法格式： join  文件1 文件2  </p>
+<p>作用:  用于将两个文件中，指定栏目内容相同的行连接起来       </p>
+<p>示例:         </p>
+<ul>
+<li>join a.txt b.txt  若第一行相同，将后面的内容连接起来 。</li>
+</ul>
+<h4 id="4-5-2-split命令"><a href="#4-5-2-split命令" class="headerlink" title="4.5.2 split命令"></a>4.5.2 split命令</h4><p>语法格式： split 数量 文件  </p>
+<p>作用:  用于将一个文件分割成数个       </p>
+<p>示例:        </p>
+<ul>
+<li>split -5 c.txt  按每5行显示分隔出一个文件。</li>
+</ul>
+<h4 id="4-5-3-uniq命令"><a href="#4-5-3-uniq命令" class="headerlink" title="4.5.3 uniq命令"></a>4.5.3 uniq命令</h4><p>语法格式： uniq  文件  </p>
+<p>作用:  用于检查及删除文本文件中重复出现的行列，注意：重复的行一定是相邻的行，若不相邻不会删除       </p>
+<p>示例:         </p>
+<ul>
+<li>uniq d.txt  将d.txt中相邻重复的行去掉 。       </li>
+<li>uniq d.txt | sort  将d.txt中相邻重复的行去掉并排序   </li>
+</ul>
+<p>备注： 此命令经常和sort命令结合使用，用于去重和排序。</p>
+<h4 id="4-5-4-sort命令"><a href="#4-5-4-sort命令" class="headerlink" title="4.5.4 sort命令"></a>4.5.4 sort命令</h4><p>语法格式： sort  文件  </p>
+<p>作用:  对文本内容进行排序       </p>
+<p>示例:         </p>
+<ul>
+<li>sort a.txt  将a.txt中的内容进行排序，默认为升序。      </li>
+<li>sort -r a.txt 将a.txt中的内容进行相反顺序排序       </li>
+<li>uniq d.txt | sort -r 将d.txt中相邻重复的行去掉并倒序排序</li>
+</ul>
+<h4 id="4-5-5-paste命令"><a href="#4-5-5-paste命令" class="headerlink" title="4.5.5 paste命令"></a>4.5.5 paste命令</h4><p>语法格式： paste  文件1 文件2 …  </p>
+<p>作用:  用于合并文件的列。       </p>
+<p>示例:         </p>
+<ul>
+<li>cat a.txt b.txt  将两个文件的列合并起来显示 。</li>
+</ul>
+<h2 id="5-用户-组操作"><a href="#5-用户-组操作" class="headerlink" title="5.用户|组操作"></a>5.用户|组操作</h2><h3 id="5-1-用户增删改"><a href="#5-1-用户增删改" class="headerlink" title="5.1 用户增删改"></a>5.1 用户增删改</h3><h4 id="5-1-1-useradd命令"><a href="#5-1-1-useradd命令" class="headerlink" title="5.1.1 useradd命令"></a>5.1.1 useradd命令</h4><p>语法格式： useradd 新用户  </p>
+<p>作用:  创建用户       </p>
+<p>示例:         </p>
+<ul>
+<li>useradd test   创建test用户       </li>
+<li>useradd -d /home/test  test  创建test用户，并指定test用户的家目录为home/test       </li>
+<li>useradd -u 666 test  为test用户指定uid为666</li>
+</ul>
+<h4 id="5-1-2-adduser命令"><a href="#5-1-2-adduser命令" class="headerlink" title="5.1.2 adduser命令"></a>5.1.2 adduser命令</h4><p>语法格式： adduser 新用户  </p>
+<p>作用:  创建用户       </p>
+<p>示例:         </p>
+<ul>
+<li>adduser test   创建test用户       </li>
+<li>adduser -d /home/test  test  创建test用户，并指定test用户的家目录为home/test       </li>
+<li>adduser -u 666 test  为test用户指定uid为666   </li>
+</ul>
+<h4 id="5-1-3-userdel命令"><a href="#5-1-3-userdel命令" class="headerlink" title="5.1.3 userdel命令"></a>5.1.3 userdel命令</h4><p>语法格式： userdel 用户  </p>
+<p>作用:  删除用户       </p>
+<p>示例:         </p>
+<ul>
+<li>userdel test  删除test用户       </li>
+<li>userdel -r test  删除test用户及其家目录</li>
+</ul>
+<h4 id="5-1-4-usermod命令"><a href="#5-1-4-usermod命令" class="headerlink" title="5.1.4 usermod命令"></a>5.1.4 usermod命令</h4><p>语法格式： usermod 用户  </p>
+<p>作用:  修改用户       </p>
+<p>示例:         </p>
+<ul>
+<li>usermod -l test1 test   将用户test修改为test1       </li>
+<li>usermod -d /home/test00  test  将用户test的家目录修改为/home/test00       </li>
+<li>usermod -L test    锁定test用户的密码       usermod -U test    解锁test用户的密码</li>
+</ul>
+<h3 id="5-2-用户设置密码"><a href="#5-2-用户设置密码" class="headerlink" title="5.2 用户设置密码"></a>5.2 用户设置密码</h3><h4 id="5-2-1-passwd命令"><a href="#5-2-1-passwd命令" class="headerlink" title="5.2.1 passwd命令"></a>5.2.1 passwd命令</h4><p>语法格式： passwd 用户  </p>
+<p>作用:  修改用户密码，输入命令回车后会引到用户设置新密码 。       </p>
+<p>示例:         </p>
+<ul>
+<li>passwd test   修改用户密码</li>
+</ul>
+<h3 id="5-3-组的增删改"><a href="#5-3-组的增删改" class="headerlink" title="5.3 组的增删改"></a>5.3 组的增删改</h3><h4 id="5-3-1-groupadd命令"><a href="#5-3-1-groupadd命令" class="headerlink" title="5.3.1 groupadd命令"></a>5.3.1 groupadd命令</h4><p>语法格式： groupadd 用户组  </p>
+<p>作用:  添加用户组       </p>
+<p>示例:         </p>
+<ul>
+<li>groupadd  test  添加用户组为test       </li>
+<li>groupadd -g 9999 test  为创建用户组test并设置gid为9999</li>
+</ul>
+<h4 id="5-3-2-groupdel命令"><a href="#5-3-2-groupdel命令" class="headerlink" title="5.3.2 groupdel命令"></a>5.3.2 groupdel命令</h4><p>语法格式： groupdel 用户组  </p>
+<p>作用:  删除用户组       </p>
+<p>示例:         </p>
+<ul>
+<li>groupdel test  删除用户组test</li>
+</ul>
+<h4 id="5-3-3-groupmod"><a href="#5-3-3-groupmod" class="headerlink" title="5.3.3 groupmod"></a>5.3.3 groupmod</h4><p>语法格式： groupmod 用户组  </p>
+<p>作用:  修改用户组       </p>
+<p>示例:         </p>
+<ul>
+<li>groupmod -n root test   更改test用户组为root</li>
+</ul>
+<h3 id="5-4-文件设置用户权限"><a href="#5-4-文件设置用户权限" class="headerlink" title="5.4 文件设置用户权限"></a>5.4 文件设置用户权限</h3><h4 id="5-4-1-chown命令"><a href="#5-4-1-chown命令" class="headerlink" title="5.4.1 chown命令"></a>5.4.1 chown命令</h4><p>语法格式： chown 文件|目录 用户|用户组  </p>
+<p>作用:  更改文件目录的用户或用户组       </p>
+<p>示例:         </p>
+<ul>
+<li>chown root /test/a.txt  把a.txt的所有者设置为root       </li>
+<li>chown root:root /test/a.txt  把a.txt的所有者设置为root,组设置为root       </li>
+<li>chown -R test:test *   把当前目录下的所有文件都设置为test用户和test用户组</li>
+</ul>
+<h3 id="5-5-切换用户"><a href="#5-5-切换用户" class="headerlink" title="5.5 切换用户"></a>5.5 切换用户</h3><h4 id="5-5-1-su命令"><a href="#5-5-1-su命令" class="headerlink" title="5.5.1 su命令"></a>5.5.1 su命令</h4><p>语法格式： su [-] 用户  </p>
+<p>作用:  切换用户       </p>
+<p>示例:         </p>
+<ul>
+<li>su test  切换当前用户为test用户         </li>
+<li>su - test 切换当前用户为test用户   备注： 第一次切换时需要输入密码</li>
+</ul>
+<h2 id="6-任务管理器"><a href="#6-任务管理器" class="headerlink" title="6.任务管理器"></a>6.任务管理器</h2><h3 id="6-1-进程"><a href="#6-1-进程" class="headerlink" title="6.1 进程"></a>6.1 进程</h3><h4 id="6-1-ps命令"><a href="#6-1-ps命令" class="headerlink" title="6.1 ps命令"></a>6.1 ps命令</h4><p>语法格式： ps [参数]  </p>
+<p>作用:  显示当前系统的进程状态       </p>
+<p>示例:         </p>
+<ul>
+<li>ps -ef  显示所有进程       </li>
+<li>ps -aux  显示所有进程       </li>
+<li>ps -ef | grep mysql  查看mysql进程       </li>
+<li>ps -u root 显示root用户进程。</li>
+</ul>
+<h4 id="6-2-kill-命令"><a href="#6-2-kill-命令" class="headerlink" title="6.2 kill 命令"></a>6.2 kill 命令</h4><p>语法格式： kill [参数]  </p>
+<p>作用:  杀掉系统中执行的程序(进程)       </p>
+<p>示例:         </p>
+<ul>
+<li>kill 319877  杀掉进程319877       </li>
+<li>kill -9  319877  强制杀掉进程319877</li>
+</ul>
+<h3 id="6-2-系统资源"><a href="#6-2-系统资源" class="headerlink" title="6.2 系统资源"></a>6.2 系统资源</h3><h4 id="6-2-1-top命令"><a href="#6-2-1-top命令" class="headerlink" title="6.2.1 top命令"></a>6.2.1 top命令</h4><p>语法格式： top [参数]  </p>
+<p>作用:  显示系统中各个进程的资源占用情况       </p>
+<p>示例:         </p>
+<ul>
+<li>top   查看系统各个进程的资源占用，比如CPU ，内存信息。         </li>
+<li>top -n 5  动态更新5次结束       top -d 5  每隔5秒更新一次</li>
+</ul>
+<h4 id="6-2-2-vmstat命令"><a href="#6-2-2-vmstat命令" class="headerlink" title="6.2.2 vmstat命令"></a>6.2.2 vmstat命令</h4><p>语法格式： vmstat [参数]  </p>
+<p>作用:  显示虚拟内存状态       </p>
+<p>示例:          </p>
+<ul>
+<li>vmstat   显示内存信息          </li>
+<li>vmstat  -s  以列表形式显示内存        </li>
+<li>vmstat 2  每隔2秒刷新一次</li>
+</ul>
+<h4 id="6-2-3-free命令"><a href="#6-2-3-free命令" class="headerlink" title="6.2.3 free命令"></a>6.2.3 free命令</h4><p>语法格式： free [参数]  </p>
+<p>作用:  查看系统内存信息       </p>
+<p>示例:         </p>
+<ul>
+<li>free  显示内存信息，默认以kb为单位         </li>
+<li>free -m  显示内存信息，以mb为单位       </li>
+<li>free -g  显示内存信息，以gb为单位</li>
+</ul>
+<h4 id="6-2-4-df命令"><a href="#6-2-4-df命令" class="headerlink" title="6.2.4 df命令"></a>6.2.4 df命令</h4><p>语法格式：  df [参数] 分区  </p>
+<p>作用:  查看磁盘占用空间       </p>
+<p>示例:          </p>
+<ul>
+<li>df   查看各分区在磁盘占用情况        </li>
+<li>df -h  以比较容易阅读方式查看磁盘使用情况        </li>
+<li>df /dev/shm  查看该挂载点下的使用情况</li>
+</ul>
+<h4 id="6-2-5-fdisk命令"><a href="#6-2-5-fdisk命令" class="headerlink" title="6.2.5 fdisk命令"></a>6.2.5 fdisk命令</h4><p>语法格式： fdisk [参数]  </p>
+<p>作用:  进行磁盘分区管理       </p>
+<p>示例:         </p>
+<ul>
+<li>fdisk -l  查看所有分区情况  </li>
+</ul>
+<h4 id="6-2-6-netstat命令"><a href="#6-2-6-netstat命令" class="headerlink" title="6.2.6 netstat命令"></a>6.2.6 netstat命令</h4><p>语法格式： netstat [参数]  </p>
+<p>作用:  显示各种网络信息       </p>
+<p>示例:         </p>
+<ul>
+<li>netstat   查看各网络信息        </li>
+<li>netstat -an | grep 3306  查看3306端口的使用情况</li>
+</ul>
+<h3 id="6-3-服务"><a href="#6-3-服务" class="headerlink" title="6.3 服务"></a>6.3 服务</h3><h4 id="6-3-1-service命令（RHEL6）"><a href="#6-3-1-service命令（RHEL6）" class="headerlink" title="6.3.1 service命令（RHEL6）"></a>6.3.1 service命令（RHEL6）</h4><p>语法格式： service [参数]  </p>
+<p>作用:  服务管理       </p>
+<p>示例:         </p>
+<ul>
+<li>service –status-all   查看所有服务的运行状态         </li>
+<li>service  mysql  start  启动mysql       </li>
+<li>service  mysql  stop   停止mysql       </li>
+<li>service  mysql  restart  重启mysql</li>
+</ul>
+<h4 id="6-3-2-systemctl命令（RHEL7）"><a href="#6-3-2-systemctl命令（RHEL7）" class="headerlink" title="6.3.2 systemctl命令（RHEL7）"></a>6.3.2 systemctl命令（RHEL7）</h4><p>语法格式： systemctl [选项] [服务]  </p>
+<p>作用:  对服务进行管理，如启动/重启/停止/查看服务       </p>
+<p>示例:         </p>
+<ul>
+<li>systemctl status httpd.service  查看http服务状态       </li>
+<li>systemctl start httpd.service   启动http服务       </li>
+<li>systemctl stop  httpd.service   停止http服务       </li>
+<li>systemctl restart httpd.service  重启http服务       </li>
+<li>systemctl status firewalld  查看防火墙状态       </li>
+<li>systemctl start firewalld  开启防火墙       </li>
+<li>systemctl stop firewalld   关闭防火墙</li>
+</ul>
+<h4 id="6-3-3-chkconfig命令"><a href="#6-3-3-chkconfig命令" class="headerlink" title="6.3.3 chkconfig命令"></a>6.3.3 chkconfig命令</h4><p>语法格式： chkconfig [参数]  </p>
+<p>作用:  更新（启动或停止）和查询系统服务的运行级信息       </p>
+<p>示例:          </p>
+<ul>
+<li>chkconfig -list  显示所有运行级系统服务的运行状态信息（on或off）        </li>
+<li>chkconfig –add httpd     增加httpd服务       </li>
+<li>chkconfig –del httpd     删除httpd服务</li>
+</ul>
+<h2 id="7-网络管理"><a href="#7-网络管理" class="headerlink" title="7.网络管理"></a>7.网络管理</h2><h3 id="7-1-ifconfig命令"><a href="#7-1-ifconfig命令" class="headerlink" title="7.1 ifconfig命令"></a>7.1 ifconfig命令</h3><p>语法格式：ifconfig   </p>
+<p>作用:  查看或设置网络设备      </p>
+<p>示例:         </p>
+<ul>
+<li>ifconfig  查看网络信息，比如IP地址       </li>
+<li>ifconfig eth0 down   关闭eth0的网卡        </li>
+<li>ifconfig eth0 up      开启eth0的网卡       </li>
+<li>ifconfig eth0 hw ether 00:AA:BB:CC:DD:EE  修改Mac地址       </li>
+<li>ifconfig eth0 add 32ffe:3840:320:2007::2/64      为网卡配置IPV6地址      </li>
+<li>ifconfig eth0 del 32ffe:3840:320:2007::2/64    删除网卡的IPV6地址     </li>
+<li>ifconfig eth0 192.168.128.169   修改ip地址为192.168.128.169      </li>
+<li>ifconfig eth0 192.168.128.169 netmask 255.255.255.0   修改IP和子网掩码     </li>
+<li>ifconfig eth0 192.168.1.56 netmask 255.255.255.0 broadcast 192.168.1.255  修改ip，子网掩码及网关</li>
+</ul>
+<h3 id="7-2-ping命令"><a href="#7-2-ping命令" class="headerlink" title="7.2 ping命令"></a>7.2 ping命令</h3><p>语法格式： ping IP地址  </p>
+<p>作用:  确认是否和某主机的网络相同       </p>
+<p>示例:         </p>
+<ul>
+<li>ping 192.168.12.12  确认是否能连通到192.168.12.12       </li>
+<li>ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a>  确认是否能正常访问百度       </li>
+<li>ping -c 4 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a>  只ping四次      </li>
+<li>ping -c 4 -i 2 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a>  只ping四次，每次间隔2s</li>
+</ul>
+<h3 id="7-3-firewall-cmd命令"><a href="#7-3-firewall-cmd命令" class="headerlink" title="7.3 firewall-cmd命令"></a>7.3 firewall-cmd命令</h3><p>语法格式： firewall-cmd [参数]  </p>
+<p>作用:  防火墙端口管理       </p>
+<p>示例:         </p>
+<ul>
+<li>firewall-cmd –state  查看当前防火墙的运行状态       </li>
+<li>firewall-cmd –zone=public –list-ports  查看所有放行的端口       </li>
+<li>firewall-cmd –reload  重新加载修改的配置       </li>
+<li>firewall-cmd –query-port=8888/tcp  查询端口8888是否被开放       </li>
+<li>firewall-cmd –add-port=8888/tcp   开启8888端口通过防火墙       </li>
+<li>firewall-cmd –permanent –remove-port=123/tcp  关闭123端口        </li>
+<li>firewall-cmd –add-port=8888/tcp   开启8888端口通过防火墙       </li>
+<li>firewall-cmd –permanent –remove-port=123/tcp  关闭123端口</li>
+</ul>
+<h2 id="8-安装更新配置"><a href="#8-安装更新配置" class="headerlink" title="8.安装更新配置"></a>8.安装更新配置</h2><h3 id="8-1-yum命令"><a href="#8-1-yum命令" class="headerlink" title="8.1 yum命令"></a>8.1 yum命令</h3><p>语法格式： yum [选项]  </p>
+<p>作用:  rpm的软件包管理器       </p>
+<p>示例:         </p>
+<ul>
+<li>yum install mysql   安装mysql       </li>
+<li>yum remove mysql    卸载mysql        </li>
+<li>yum clean  mysql    清除缓存目录下的安装包       </li>
+<li>yum install      全部安装       </li>
+<li>yum update       全部更新       </li>
+<li>yum update mysql    更新mysql       </li>
+<li>yum info  mysql    显示mysql安装包信息       </li>
+<li>yum list  mysql    显示mysql安装包信息       </li>
+<li>yum list        显示所有已安装包和可安装包</li>
+</ul>
+<h3 id="8-2-sh命令"><a href="#8-2-sh命令" class="headerlink" title="8.2 sh命令"></a>8.2 sh命令</h3><p>语法格式： sh  可执行文件  </p>
+<p>作用:  运行可执行文件，一般都是shell脚本       </p>
+<p>示例:         </p>
+<ul>
+<li>sh a.sh    运行a.sh文件，       </li>
+<li>sh -x a.sh  运行并调试a.sh脚本</li>
+</ul>
+<h2 id="9-系统相关"><a href="#9-系统相关" class="headerlink" title="9.系统相关"></a>9.系统相关</h2><h3 id="9-1-环境变量"><a href="#9-1-环境变量" class="headerlink" title="9.1 环境变量"></a>9.1 环境变量</h3><h4 id="9-1-1-set命令"><a href="#9-1-1-set命令" class="headerlink" title="9.1.1 set命令"></a>9.1.1 set命令</h4><p>语法格式： set [参数]  </p>
+<p>作用:  显示当前shell的变量，包括当前用户的变量;       </p>
+<p>示例:         </p>
+<ul>
+<li>abcd=100       </li>
+<li>set | grep abcd   显示abcd的变量值</li>
+</ul>
+<h4 id="9-1-2-unset命令"><a href="#9-1-2-unset命令" class="headerlink" title="9.1.2 unset命令"></a>9.1.2 unset命令</h4><p>语法格式： unset [参数]  </p>
+<p>作用:  删除shell变量的值       </p>
+<p>示例:         </p>
+<ul>
+<li>abcd=100       </li>
+<li>unset abcd   删除abcd的变量值</li>
+</ul>
+<h4 id="9-1-3-env命令"><a href="#9-1-3-env命令" class="headerlink" title="9.1.3 env命令"></a>9.1.3 env命令</h4><p>语法格式： env [参数]  </p>
+<p>作用:  设置或显示当前环境变量       </p>
+<p>示例:         </p>
+<ul>
+<li>env   显示当前环境变量       </li>
+<li>env abcd=10   定义环境变量       </li>
+<li>env -u  abcd  删除已经定义的环境变量abcd</li>
+</ul>
+<h4 id="9-1-4-export命令"><a href="#9-1-4-export命令" class="headerlink" title="9.1.4 export命令"></a>9.1.4 export命令</h4><p>语法格式： export [参数]  </p>
+<p>作用:  设置或显示环境变量       </p>
+<p>示例:         </p>
+<ul>
+<li>export  显示当前环境变量       </li>
+<li>export abcd=101  定义环境变量</li>
+</ul>
+<h3 id="9-2-重启与关机"><a href="#9-2-重启与关机" class="headerlink" title="9.2 重启与关机"></a>9.2 重启与关机</h3><h4 id="9-2-1-shutdown命令"><a href="#9-2-1-shutdown命令" class="headerlink" title="9.2.1 shutdown命令"></a>9.2.1 shutdown命令</h4><p>语法格式： shutdown [参数]  </p>
+<p>作用:  关闭或重启       </p>
+<p>示例:         </p>
+<ul>
+<li>shutdown -h now     立即关机       </li>
+<li>shutdown -r now      立即重启       </li>
+<li>shutdown -h 22:30   22:30关机</li>
+</ul>
+<h4 id="9-2-2-reboot命令"><a href="#9-2-2-reboot命令" class="headerlink" title="9.2.2 reboot命令"></a>9.2.2 reboot命令</h4><p>语法格式： reboot [参数]  </p>
+<p>作用:  重启计算机       </p>
+<p>示例:         </p>
+<ul>
+<li>reboot  重启</li>
+</ul>
+<h4 id="9-2-3-poweroff命令"><a href="#9-2-3-poweroff命令" class="headerlink" title="9.2.3 poweroff命令"></a>9.2.3 poweroff命令</h4><p>语法格式： poweroff [参数]  </p>
+<p>作用:  关闭计算机       </p>
+<p>示例:         </p>
+<ul>
+<li>poweroff   关闭计算机及电源</li>
+</ul>
+<h4 id="9-2-4-halt命令"><a href="#9-2-4-halt命令" class="headerlink" title="9.2.4 halt命令"></a>9.2.4 halt命令</h4><p>语法格式： halt   </p>
+<p>作用:  关闭操作系统       </p>
+<p>示例:         </p>
+<ul>
+<li>halt    关闭系统       </li>
+<li>halt -p  关闭计算机及电源，等同于poweroff       </li>
+<li>halt -f  强制关机</li>
+</ul>
+<h4 id="9-2-5-exit命令"><a href="#9-2-5-exit命令" class="headerlink" title="9.2.5 exit命令"></a>9.2.5 exit命令</h4><p>语法格式： exit  </p>
+<p>作用:  退出当前执行的shell       </p>
+<p>示例:         </p>
+<ul>
+<li>exit  退出当前shell </li>
+</ul>
+<h3 id="9-3-查看系统信息"><a href="#9-3-查看系统信息" class="headerlink" title="9.3 查看系统信息"></a>9.3 查看系统信息</h3><h4 id="9-3-1-uname命令"><a href="#9-3-1-uname命令" class="headerlink" title="9.3.1 uname命令"></a>9.3.1 uname命令</h4><p>语法格式： uname [参数]  </p>
+<p>作用:  显示系统相关信息       </p>
+<p>示例:         </p>
+<ul>
+<li>uname    显示当前系统       </li>
+<li>uname -an  显示系统的详细信息       </li>
+<li>uname -r   显示内核信息       </li>
+<li>uname -i   显示当前架构</li>
+</ul>
+<h4 id="9-3-2-date命令"><a href="#9-3-2-date命令" class="headerlink" title="9.3.2 date命令"></a>9.3.2 date命令</h4><p>语法格式： date [参数]  </p>
+<p>作用:  显示或设定时间       </p>
+<p>示例:         </p>
+<ul>
+<li>date   查看当前时间       </li>
+<li>date -s “2021-04-04 22:38:56”  设置时间为2021-04-04 22:38:56</li>
+</ul>
+<h4 id="9-3-3-last命令"><a href="#9-3-3-last命令" class="headerlink" title="9.3.3 last命令"></a>9.3.3 last命令</h4><p>语法格式： last   </p>
+<p>作用:  显示最近用户或终端的登录情况       </p>
+<p>示例:         </p>
+<ul>
+<li>last   显示最近用户的登录情况</li>
+</ul>
+<h4 id="9-3-4-history命令"><a href="#9-3-4-history命令" class="headerlink" title="9.3.4 history命令"></a>9.3.4 history命令</h4><p>语法格式： history [参数]  </p>
+<p>作用:  查看历史输入命令       </p>
+<p>示例:         </p>
+<ul>
+<li>history  查看历史命令       </li>
+<li>history  | grep “sed”   查看输入过sed命令       </li>
+<li>history -5  查看最近的5条命令</li>
+</ul>
+<h4 id="9-3-5-who命令"><a href="#9-3-5-who命令" class="headerlink" title="9.3.5 who命令"></a>9.3.5 who命令</h4><p>语法格式： who [参数]  </p>
+<p>作用:  查看当前登录用户信息       </p>
+<p>示例:         </p>
+<ul>
+<li>who   查看登录用户信息       </li>
+<li>who -H  带标题显示        </li>
+<li>who -b  输出系统最近启动时间</li>
+</ul>
+<h3 id="9-4-定时任务"><a href="#9-4-定时任务" class="headerlink" title="9.4 定时任务"></a>9.4 定时任务</h3><h4 id="9-4-1-crontab命令"><a href="#9-4-1-crontab命令" class="headerlink" title="9.4.1 crontab命令"></a>9.4.1 crontab命令</h4><p>语法格式：crontab [参数]   </p>
+<p>作用:  任务调度       </p>
+<p>示例:         </p>
+<ul>
+<li>crontab -l  查看当前计划任务       </li>
+<li>crontab -e  创建计划任务，打开后，需要以按照如下格式编辑      </li>
+</ul>
+<p>备注  </p>
+<p>设置格式： minute(分)  hour(小时)  day(天)  month(月)  week(周)  command(命令)     </p>
+<p>设置范围： </p>
+<ul>
+<li>minute   是从0到59之间的任何整数 </li>
+<li>hour     是从0到23之间的任何整数 </li>
+<li>day    是从1到31之间的任何整数 </li>
+<li>month    是从1到12之间的任何整数 </li>
+<li>week     是从0到7之间的任何整数，其中0或7代表星期日 </li>
+<li>command  要执行的命令，可以是系统命令，也可以是自己编写的脚本文件 若某列没有设置，则使用*代替 。   </li>
+</ul>
+<p>举例： </p>
+<ul>
+<li><ul>
+<li>1 * *  tar -czvf bk.tar.gz /log_bakup      每天进行一次归档备份</li>
+</ul>
+</li>
+</ul>
+<h3 id="9-5-运行管理员权限"><a href="#9-5-运行管理员权限" class="headerlink" title="9.5 运行管理员权限"></a>9.5 运行管理员权限</h3><h4 id="9-5-1-sudo命令"><a href="#9-5-1-sudo命令" class="headerlink" title="9.5.1 sudo命令"></a>9.5.1 sudo命令</h4><p>语法格式： sudo [命令]  </p>
+<p>作用:  运行以管理员权限运行命令,一般是非root用户进行操作       </p>
+<p>示例:  (假设当前账号为test)       </p>
+<ul>
+<li>sudo mkdir abc  创建abc目录 。</li>
+</ul>
+<h3 id="9-6-其它"><a href="#9-6-其它" class="headerlink" title="9.6 其它"></a>9.6 其它</h3><h4 id="9-6-1-clear命令"><a href="#9-6-1-clear命令" class="headerlink" title="9.6.1 clear命令"></a>9.6.1 clear命令</h4><p>语法格式： clear  </p>
+<p>作用:  清屏操作，也可以使用快捷键Ctrl + L       </p>
+<p>示例:         </p>
+<ul>
+<li>clear  清屏</li>
+</ul>
+<h4 id="9-6-2-echo命令"><a href="#9-6-2-echo命令" class="headerlink" title="9.6.2 echo命令"></a>9.6.2 echo命令</h4><p>语法格式： echo [变量]  </p>
+<p>作用:  输出变量值       </p>
+<p>示例:         </p>
+<ul>
+<li>echo  $abc  输出变量abc的值，需要提前定义abc的值       </li>
+<li>echo  <code>pwd</code>  显示当前路径</li>
+</ul>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">XCJYC</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.xcjyc.top/2022/11/07/linux-de-chang-yong-ming-ling-xiang-jie/">https://www.xcjyc.top/2022/11/07/linux-de-chang-yong-ming-ling-xiang-jie/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">XCJYC</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/11/07/shell-bian-cheng-shi-yong-shi-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="shell编程实用实例">
+                        
+                        <span class="card-title">shell编程实用实例</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            shell编程实用实例
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-07
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/shell%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    shell编程
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/shell/">
+                        <span class="chip bg-color">shell</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/11/07/linux-zui-quan-ji-chu-ming-ling/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Linux最全基础命令">
+                        
+                        <span class="card-title">Linux最全基础命令</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Linux最全基础命令
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    Linux基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('1'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            
+            <a href="/about" target="_blank">XCJYC</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">31.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2022";
+                    var startMonth = "11";
+                    var startDate = "5";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:321510@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=321510" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 321510" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
