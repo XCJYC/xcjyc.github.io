@@ -6,7 +6,7 @@
   <link href="https://www.xcjyc.top/atom.xml" rel="self"/>
   
   <link href="https://www.xcjyc.top/"/>
-  <updated>2022-11-09T08:18:18.225Z</updated>
+  <updated>2022-11-09T08:26:00.151Z</updated>
   <id>https://www.xcjyc.top/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>100个windows命令</title>
+    <link href="https://www.xcjyc.top/2022/11/09/100-ge-windows-ming-ling/"/>
+    <id>https://www.xcjyc.top/2022/11/09/100-ge-windows-ming-ling/</id>
+    <published>2022-11-09T08:24:20.000Z</published>
+    <updated>2022-11-09T08:26:00.151Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;​       1.gpedit.msc—–组策略　　&lt;/p&gt;
+&lt;p&gt;​       2. sndrec32——-录音机&lt;/p&gt;
+&lt;p&gt;　　3. Nslookup——-IP地址侦测器 &lt;/p&gt;
+&lt;p&gt;　　4. explorer——-打开资源管理器&lt;/p&gt;
+&lt;p&gt;　　5.</summary>
+        
+      
+    
+    
+    
+    <category term="windows" scheme="https://www.xcjyc.top/categories/windows/"/>
+    
+    
+    <category term="windows" scheme="https://www.xcjyc.top/tags/windows/"/>
+    
+  </entry>
   
   <entry>
     <title>听说你精通运维</title>

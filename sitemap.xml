@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.xcjyc.top/2022/11/09/100-ge-windows-ming-ling/</loc>
+    
+    <lastmod>2022-11-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.xcjyc.top/2022/11/07/pei-zhi-k8s-ming-ling-bu-quan/</loc>
     
     <lastmod>2022-11-09</lastmod>
@@ -221,6 +230,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://www.xcjyc.top/tags/windows/</loc>
+    <lastmod>2022-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -267,6 +283,13 @@
   
   <url>
     <loc>https://www.xcjyc.top/categories/K8S/</loc>
+    <lastmod>2022-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.xcjyc.top/categories/windows/</loc>
     <lastmod>2022-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
