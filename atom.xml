@@ -6,7 +6,7 @@
   <link href="https://www.xcjyc.top/atom.xml" rel="self"/>
   
   <link href="https://www.xcjyc.top/"/>
-  <updated>2022-11-09T08:26:00.151Z</updated>
+  <updated>2022-11-09T08:38:14.998Z</updated>
   <id>https://www.xcjyc.top/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Shell快捷键</title>
+    <link href="https://www.xcjyc.top/2022/11/09/shell-kuai-jie-jian/"/>
+    <id>https://www.xcjyc.top/2022/11/09/shell-kuai-jie-jian/</id>
+    <published>2022-11-09T08:29:08.000Z</published>
+    <updated>2022-11-09T08:38:14.998Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Shell快捷键：&quot;&gt;&lt;a href=&quot;#Shell快捷键：&quot; class=&quot;headerlink&quot; title=&quot;Shell快捷键：&quot;&gt;&lt;/a&gt;Shell快捷键：&lt;/h1&gt;&lt;p&gt;Ctrl + a   ————切换到命令行开始&lt;/p&gt;
+&lt;p&gt;Ctrl + e  </summary>
+        
+      
+    
+    
+    
+    <category term="Linux基础" scheme="https://www.xcjyc.top/categories/Linux%E5%9F%BA%E7%A1%80/"/>
+    
+    
+    <category term="shell" scheme="https://www.xcjyc.top/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
     <title>100个windows命令</title>
     <link href="https://www.xcjyc.top/2022/11/09/100-ge-windows-ming-ling/"/>
     <id>https://www.xcjyc.top/2022/11/09/100-ge-windows-ming-ling/</id>
     <published>2022-11-09T08:24:20.000Z</published>
-    <updated>2022-11-09T08:26:00.151Z</updated>
+    <updated>2022-11-09T08:26:08.592Z</updated>
     
     
       

@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Shell快捷键</title>
+      <link href="/2022/11/09/shell-kuai-jie-jian/"/>
+      <url>/2022/11/09/shell-kuai-jie-jian/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Shell快捷键："><a href="#Shell快捷键：" class="headerlink" title="Shell快捷键："></a>Shell快捷键：</h1><p>Ctrl + a   ————切换到命令行开始</p><p>Ctrl + e   ————切换到命令行末尾</p><p>Ctrl + l    ————清除屏幕内容，等同于clear命令</p><p>Ctrl + u   ————清除/剪切光标之前的内容</p><p>Ctrl + k   ————清除/剪切光标之后的内容</p><p>Ctrl + y   ————粘贴刚才所删除的字符</p><p>Ctrl + r   ————在历史命令中查找，输入关键字就能调出以前的命令</p><p>Ctrl + c   ————终止命令</p><p>Ctrl + d   ————退出shell，相当于logout命令</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> shell </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>100个windows命令</title>
       <link href="/2022/11/09/100-ge-windows-ming-ling/"/>
       <url>/2022/11/09/100-ge-windows-ming-ling/</url>
