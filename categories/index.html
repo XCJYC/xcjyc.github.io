@@ -12,6 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="令尹">
   <meta name="keywords" content="">
@@ -62,7 +64,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -184,7 +186,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/bg/01.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -484,22 +486,22 @@
     
     <div class="category row nomargin-x">
       <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="K8S"
-        id="heading-97452006dd1cdcd5beb286d2656dea33" role="tab" data-toggle="collapse" href="#collapse-97452006dd1cdcd5beb286d2656dea33"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="运维知识"
+        id="heading-d3dfd795bdfa6990f0aab26c91636041" role="tab" data-toggle="collapse" href="#collapse-d3dfd795bdfa6990f0aab26c91636041"
         aria-expanded="false"
       >
-        K8S
+        运维知识
         <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-        <a href="/categories/K8S/" class="category-count col-2 col-md-1 col-xm-1">
+        <a href="/categories/%E8%BF%90%E7%BB%B4%E7%9F%A5%E8%AF%86/" class="category-count col-2 col-md-1 col-xm-1">
           <i class="iconfont icon-articles"></i>
           <span>1</span>
         </a>
       
-      <div class="category-collapse collapse " id="collapse-97452006dd1cdcd5beb286d2656dea33"
-           role="tabpanel" aria-labelledby="heading-97452006dd1cdcd5beb286d2656dea33">
+      <div class="category-collapse collapse " id="collapse-d3dfd795bdfa6990f0aab26c91636041"
+           role="tabpanel" aria-labelledby="heading-d3dfd795bdfa6990f0aab26c91636041">
         
         
           
@@ -508,10 +510,10 @@
     
       
       
-        <a href="/2022/11/07/%E9%85%8D%E7%BD%AEK8S%E5%91%BD%E4%BB%A4%E8%A1%A5%E5%85%A8/" title="配置K8S命令补全"
+        <a href="/2022/11/08/%E5%90%AC%E8%AF%B4%E4%BD%A0%E7%B2%BE%E9%80%9A%E8%BF%90%E7%BB%B4/" title="听说你精通运维"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">配置K8S命令补全</span>
+          <span class="category-post">听说你精通运维</span>
         </a>
       
     
@@ -568,22 +570,22 @@
     
     <div class="category row nomargin-x">
       <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="运维知识"
-        id="heading-d3dfd795bdfa6990f0aab26c91636041" role="tab" data-toggle="collapse" href="#collapse-d3dfd795bdfa6990f0aab26c91636041"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="K8S"
+        id="heading-97452006dd1cdcd5beb286d2656dea33" role="tab" data-toggle="collapse" href="#collapse-97452006dd1cdcd5beb286d2656dea33"
         aria-expanded="false"
       >
-        运维知识
+        K8S
         <span class="list-group-count"></span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-        <a href="/categories/%E8%BF%90%E7%BB%B4%E7%9F%A5%E8%AF%86/" class="category-count col-2 col-md-1 col-xm-1">
+        <a href="/categories/K8S/" class="category-count col-2 col-md-1 col-xm-1">
           <i class="iconfont icon-articles"></i>
           <span>1</span>
         </a>
       
-      <div class="category-collapse collapse " id="collapse-d3dfd795bdfa6990f0aab26c91636041"
-           role="tabpanel" aria-labelledby="heading-d3dfd795bdfa6990f0aab26c91636041">
+      <div class="category-collapse collapse " id="collapse-97452006dd1cdcd5beb286d2656dea33"
+           role="tabpanel" aria-labelledby="heading-97452006dd1cdcd5beb286d2656dea33">
         
         
           
@@ -592,10 +594,10 @@
     
       
       
-        <a href="/2022/11/08/%E5%90%AC%E8%AF%B4%E4%BD%A0%E7%B2%BE%E9%80%9A%E8%BF%90%E7%BB%B4/" title="听说你精通运维"
+        <a href="/2022/11/07/%E9%85%8D%E7%BD%AEK8S%E5%91%BD%E4%BB%A4%E8%A1%A5%E5%85%A8/" title="配置K8S命令补全"
            class="list-group-item list-group-item-action
            ">
-          <span class="category-post">听说你精通运维</span>
+          <span class="category-post">配置K8S命令补全</span>
         </a>
       
     
