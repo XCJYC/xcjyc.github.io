@@ -1,107 +1,138 @@
-extends includes/layout.pug
-
-block top_img
-  - var top_img = page.top_img || theme.post_meta.top_img || theme.top_img || config.top_img
-  if (top_img && page.top_img !== false)
-    - var bg_img = top_img !== true ? `background-image: url(${top_img})` : ''
-    - var flag = top_img === true ? 'no-bg' : ''
-    div#top-container(style=bg_img class=flag)
-      include ./includes/header.pug
-      #post-info
-        #post-title= page.title || _p('no_title')
-        #post-meta
-          if (theme.post_meta.date_type)
-            if (theme.post_meta.date_type === 'both')
-              time.post-meta__date
-                i.fa.fa-calendar(aria-hidden="true")
-                =' '+_p('post.created')+' '+date(page.date, config.date_format)
-                span.post-meta__separator |
-                i.fa.fa-calendar-check-o(aria-hidden="true")
-                =' '+_p('post.updated')+' '+date(page.updated, config.date_format)
-            else
-              - var date_type = theme.post_meta.date_type === 'updated' ? 'updated' : 'date'
-              time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)]
-          if (theme.post_meta.categories && page.categories.data.length > 0)
-            if (theme.post_meta.date_type)
-              span.post-meta__separator |
-            each item, index in page.categories.data
-              i.fa.fa-inbox.post-meta__icon(aria-hidden="true")
-              a(href=url_for(item.path)).post-meta__categories #[=item.name]
-              if (index < page.categories.data.length - 1)
-                 i.fa.fa-angle-right(aria-hidden="true")
-          if (theme.disqus.enable && theme.disqus.count)
-            if (theme.post_meta.date_type || theme.post_meta.categories && page.categories.data.length > 0)
-              span.post-meta__separator |
-            i.fa.fa-comment-o.post-meta__icon(aria-hidden="true")
-            a(href=url_for(page.path) + '#disqus_thread')
-              span.disqus-comment-count(data-disqus-identifier=page.path)
-          if (theme.wordcount && theme.wordcount.enable)
-            .post-meta-wordcount
-              span= _p('post.wordcount') + ': '
-              span.word-count= wordcount(page.content)
-              span.post-meta__separator |
-              span= _p('post.min2read', min2read(page.content, {cn: 350, en: 160}))
-  else
-    div#top-container.plain
-      include ./includes/header.pug
-
-block content
-  article#post(class="")
-    if (!top_img)
-      #post-title.plain= page.title || _p('no_title')
-      #post-meta
-        if (theme.post_meta.date_type)
-          - var date_type = theme.post_meta.date_type === 'updated' ? '' : 'date'
-          time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)]
-        if (theme.post_meta.categories && page.categories.data.length > 0)
-          if (theme.post_meta.date_type)
-            span.post-meta__separator |
-          each item, index in page.categories.data
-            i.fa.fa-inbox(aria-hidden="true")
-            a(href=url_for(item.path)).post-meta__categories  #[=item.name]
-            if (index < page.categories.data.length - 1)
-                i.fa.fa-angle-right.post-meta__separator(aria-hidden="true")
-        if (theme.disqus.enable && theme.disqus.count)
-          if (theme.post_meta.date_type || theme.post_meta.categories && page.categories.data.length > 0)
-            span.post-meta__separator |
-          i.fa.fa-comment-o(aria-hidden="true")
-          a(href=url_for(page.path) + '#disqus_thread')
-            span.disqus-comment-count(data-disqus-identifier=page.path)
-        if (theme.wordcount && theme.wordcount.enable)
-          span.post-meta__separator |
-          span.post-meta-wordcount
-            span= _p('post.wordcount') + ': '
-            span.word-count= wordcount(page.content)
-            span.post-meta__separator |
-            span= _p('post.min2read', min2read(page.content, {cn: 350, en: 160}))
-    #post-content.article-container!= page.content
-  if (theme.post_copyright && theme.post_copyright.enable)
-    .post-copyright
-      .post-copyright__author
-        span.post-copyright-meta= _p('post.copyright.author') + ": "
-        span.post-copyright-info
-          a(href=`mailto:${config.email}`) #[=config.author]
-      .post-copyright__type
-        span.post-copyright-meta= _p('post.copyright.link') + ": "
-        span.post-copyright-info
-          a(href=url_for(decodeURI(page.permalink))) #[=decodeURI(page.permalink)]
-      .post-copyright__notice
-        span.post-copyright-meta= _p('post.copyright.copyright_notice') + ": "
-        span.post-copyright-info!= _p('post.copyright.copyright_content', theme.post_copyright.license_url, theme.post_copyright.license, config.url, config.title)
-  if (theme.post_meta.tags)
-    .post-meta__tag-list
-      each item, index in page.tags.data
-        a(href=url_for(item.path)).post-meta__tags #[=item.name]
-  if (theme.QR_code)
-    if (theme.QR_code.length > 0)
-      .post-qr-code
-        each item in theme.QR_code
-          .post-qr-code-item
-            img.post-qr-code__img(src=(item.itemlist||item).img)
-            .post-qr-code__desc=(item.itemlist||item).text
-  include includes/share/index.pug
-  include includes/pagination.pug
-  if (theme.adv && theme.adv.enable)
-    .post-adv!= theme.adv.info
-  if page.comments !== false
-    include includes/comments/index.pug
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Linux常用命令"><meta name="keywords" content="Linux"><meta name="author" content="令尹"><meta name="copyright" content="令尹"><title>Linux常用命令 | xcjyc.top</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">Linux常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E7%9B%AE%E5%BD%95%E5%88%87%E6%8D%A2"><span class="toc-number">1.1.</span> <span class="toc-text">1、目录切换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E7%9B%AE%E5%BD%95%E7%9A%84%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4%EF%BC%88%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">2、目录的操作命令（增删改查）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%96%B0%E5%A2%9E%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">（1）新增目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">（2）查看目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%90%9C%E7%B4%A2%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">（3）搜索目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E4%BF%AE%E6%94%B9%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">（4）修改目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E7%A7%BB%E5%8A%A8%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.0.5.</span> <span class="toc-text">（5）移动目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%886%EF%BC%89%E5%A4%8D%E5%88%B6%E7%9B%AE%E5%BD%95%E5%8F%8A%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.0.6.</span> <span class="toc-text">（6）复制目录及文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%887%EF%BC%89%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.0.7.</span> <span class="toc-text">（7）删除目录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E6%96%87%E4%BB%B6%E7%9A%84%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.</span> <span class="toc-text">3、文件的操作命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">（1）新建文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">（2）查看文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">（3）修改文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.0.4.</span> <span class="toc-text">（4）删除文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E7%9A%84%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.4.</span> <span class="toc-text">4、压缩文件的操作命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">（1）压缩</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E8%A7%A3%E5%8E%8B"><span class="toc-number">1.4.0.2.</span> <span class="toc-text">（2）解压</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.5.</span> <span class="toc-text">5、安装软件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89yam"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">（1）yam</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89rpm"><span class="toc-number">1.5.0.2.</span> <span class="toc-text">（2）rpm</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.6.</span> <span class="toc-text">6、其他常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="toc-number">1.6.0.1.</span> <span class="toc-text">（1）显示当前目录的路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%90%9C%E7%B4%A2%E5%91%BD%E4%BB%A4"><span class="toc-number">1.6.0.2.</span> <span class="toc-text">（2）搜索命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4"><span class="toc-number">1.6.0.3.</span> <span class="toc-text">（3）管道命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.6.0.4.</span> <span class="toc-text">（4）查看进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E6%9D%80%E6%AD%BB%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.6.0.5.</span> <span class="toc-text">（5）杀死进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%886%EF%BC%89%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">1.6.0.6.</span> <span class="toc-text">（6）网络配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81Linux-%E7%9A%84%E6%9D%83%E9%99%90%E5%91%BD%E4%BB%A4"><span class="toc-number">1.7.</span> <span class="toc-text">7、Linux 的权限命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90"><span class="toc-number">1.7.0.1.</span> <span class="toc-text">（1）修改权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E4%BF%AE%E6%94%B9%E6%89%80%E5%B1%9E%E4%B8%BB%EF%BC%8C%E7%BB%84"><span class="toc-number">1.7.0.2.</span> <span class="toc-text">（2）修改所属主，组</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E3%80%81%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E3%80%81%E7%94%A8%E6%88%B7"><span class="toc-number">1.8.</span> <span class="toc-text">8、系统信息、用户</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC"><span class="toc-number">1.8.0.1.</span> <span class="toc-text">（1）查看系统版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%9F%A5%E7%9C%8B%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E7%9A%84%E6%9C%8D%E5%8A%A1%E4%BD%BF%E7%94%A8chkconfig%E5%91%BD%E4%BB%A4"><span class="toc-number">1.8.0.2.</span> <span class="toc-text">（2）查看开机自动启动的服务使用chkconfig命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="toc-number">1.8.0.3.</span> <span class="toc-text">（3）修改密码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9%E3%80%81%E9%85%8D%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">1.9.</span> <span class="toc-text">9、配置防火墙</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%AE%89%E8%A3%85%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">1.9.0.1.</span> <span class="toc-text">（1）安装防火墙</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%90%AF%E5%8A%A8%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">1.9.0.2.</span> <span class="toc-text">（2）启动防火墙</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="toc-number">1.9.0.3.</span> <span class="toc-text">（3）开机自启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">1.9.0.4.</span> <span class="toc-text">（4）关闭防火墙</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E5%85%B3%E9%97%AD%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="toc-number">1.9.0.5.</span> <span class="toc-text">（5）关闭开机自启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%886%EF%BC%89%E6%9F%A5%E7%9C%8B%E9%98%B2%E7%81%AB%E5%A2%99%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81"><span class="toc-number">1.9.0.6.</span> <span class="toc-text">（6）查看防火墙运行状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%887%EF%BC%89%E9%87%8D%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">1.9.0.7.</span> <span class="toc-text">（7）重启防火墙</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%888%EF%BC%89%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9"><span class="toc-number">1.9.0.8.</span> <span class="toc-text">（8）查看帮助</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10%E3%80%81%E9%85%8D%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.10.</span> <span class="toc-text">10、配置防火墙端口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.10.0.1.</span> <span class="toc-text">（1）开放端口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%85%B3%E9%97%AD%E7%AB%AF%E5%8F%A3%EF%BC%88%E6%89%A7%E8%A1%8C%E6%88%90%E5%8A%9F%EF%BC%89"><span class="toc-number">1.10.0.2.</span> <span class="toc-text">（2）关闭端口（执行成功）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%9F%A5%E8%AF%A2%E7%AB%AF%E5%8F%A3%E6%98%AF%E5%90%A6%E5%BC%80%E6%94%BE"><span class="toc-number">1.10.0.3.</span> <span class="toc-text">（3）查询端口是否开放</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E7%94%A8%E6%88%B7%E5%BC%80%E6%94%BE%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.10.0.4.</span> <span class="toc-text">（4）查询所有用户开放的端口</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">令尹</div><div class="author-info__description text-center">xcjyc</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">13</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">8</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">xcjyc.top</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Linux常用命令</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-11-06</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="Linux常用命令"><a href="#Linux常用命令" class="headerlink" title="Linux常用命令"></a><strong>Linux常用命令</strong></h1><p>在开发中常用的一些命令。</p>
+<p>1）目录切换</p>
+<p>2）对目录（文件夹）的操作</p>
+<p>3）对文件的操作</p>
+<p>4）文件的压缩、解压</p>
+<p>5）软件的安装</p>
+<p>6）权限的操作</p>
+<p>7）防火墙端口的开启</p>
+<p>8）一些其他的命令</p>
+<p>执行以下命令时需要注意自己对应系统的版本，不同的版本会稍有差别。</p>
+<h2 id="1、目录切换"><a href="#1、目录切换" class="headerlink" title="1、目录切换"></a><strong>1、目录切换</strong></h2><p>cd &#x2F; 	切换到根目录</p>
+<p>cd ~ 切换到用户跟目录</p>
+<p>cd ..&#x2F;    切换到上一级目录</p>
+<p>cd - 	切换到上次访问目录</p>
+<p>cd etc   切换到当前目录下的etc目录</p>
+<h2 id="2、目录的操作命令（增删改查）"><a href="#2、目录的操作命令（增删改查）" class="headerlink" title="2、目录的操作命令（增删改查）"></a><strong>2、目录的操作命令（增删改查）</strong></h2><h4 id="（1）新增目录"><a href="#（1）新增目录" class="headerlink" title="（1）新增目录"></a><strong>（1）新增目录</strong></h4><p>​    mkdir xxx (xxx为自己为目录取的名字)</p>
+<p>​       mkdir  -p   xxx 		递归创建</p>
+<h4 id="（2）查看目录"><a href="#（2）查看目录" class="headerlink" title="（2）查看目录"></a><strong>（2）查看目录</strong></h4><p>​    ls[-a|-l]</p>
+<p>​    ls -a 查看当前目录下的所有目录，以及隐藏目录</p>
+<p>​    ls -l 查看当前目录下的所有目录的详细信息    缩写成ll</p>
+<h4 id="（3）搜索目录"><a href="#（3）搜索目录" class="headerlink" title="（3）搜索目录"></a><strong>（3）搜索目录</strong></h4><p>​     find &#x2F;root -name <em>test</em></p>
+<h4 id="（4）修改目录"><a href="#（4）修改目录" class="headerlink" title="（4）修改目录"></a><strong>（4）修改目录</strong></h4><p>​     mv xxx aaa  (xxx 旧目录名，aaa新目录名) mv同样可以修改文件及压缩包的名字</p>
+<h4 id="（5）移动目录"><a href="#（5）移动目录" class="headerlink" title="（5）移动目录"></a><strong>（5）移动目录</strong></h4><p>​     mv yyy &#x2F;root (yyy需要修改目录。&#x2F;root 剪切到的位置)</p>
+<h4 id="（6）复制目录及文件"><a href="#（6）复制目录及文件" class="headerlink" title="（6）复制目录及文件"></a><strong>（6）复制目录及文件</strong></h4><p>​     cp -r aaa &#x2F;  (将aaa目录复制到根目录下)</p>
+<p>  cp tt.zip &#x2F;  (将tt.zip复制到根目录下)</p>
+<h4 id="（7）删除目录"><a href="#（7）删除目录" class="headerlink" title="（7）删除目录"></a><strong>（7）删除目录</strong></h4><p>​    rm删除文件</p>
+<p>​    rm -r   删除目录</p>
+<p>​     <strong>rm-rf   强制删除目录 （就可以用本句去删除任何东西，常用这句就行了）</strong></p>
+<h2 id="3、文件的操作命令"><a href="#3、文件的操作命令" class="headerlink" title="3、文件的操作命令"></a><strong>3、文件的操作命令</strong></h2><h4 id="（1）新建文件"><a href="#（1）新建文件" class="headerlink" title="（1）新建文件"></a><strong>（1）新建文件</strong></h4><p>​     touch test.txt (Linux 下是可以不加文件的后缀名的，加上文件名是为了开发者分辨文件)</p>
+<h4 id="（2）查看文件"><a href="#（2）查看文件" class="headerlink" title="（2）查看文件"></a><strong>（2）查看文件</strong></h4><p>​     cat&#x2F;more&#x2F;less&#x2F;tail</p>
+<p>​     cat  使用cat可以比较方便的查看较小的文件。用cat查看文件直接显示的文件的最后一屏</p>
+<p>​     more  使用more查看文件，回车翻一行，空格翻一页，Q结束查看，只能往下查看</p>
+<p>​     less 使用less可以用more的方式查看，但是可以使用pg up ,pg down 向上向下翻</p>
+<p>​     tail  使用tail查看文件的后几行</p>
+<p>​       tail -10 xxx.txt 查看文件的后10行</p>
+<p>​       tail -f xxx.txt 动态监控文件 crtl+ c 退出</p>
+<h4 id="（3）修改文件"><a href="#（3）修改文件" class="headerlink" title="（3）修改文件"></a><strong>（3）修改文件</strong></h4><p>​     vim       按 i  a  o （I  A  O）进入编辑模式</p>
+<p>​     vim文件名–&gt;进入文件–&gt;命令模式–&gt;按i进入编辑模式–&gt;编辑文件–&gt;按Esc进入底行模式–&gt;输入:–&gt;</p>
+<p>​     输入命令 wq（保存并退出） 输入q! (不保存，强制退出)</p>
+<h4 id="（4）删除文件"><a href="#（4）删除文件" class="headerlink" title="（4）删除文件"></a><strong>（4）删除文件</strong></h4><p>​     rm -rf   xxx.txt</p>
+<h2 id="4、压缩文件的操作命令"><a href="#4、压缩文件的操作命令" class="headerlink" title="4、压缩文件的操作命令"></a><strong>4、压缩文件的操作命令</strong></h2><h4 id="（1）压缩"><a href="#（1）压缩" class="headerlink" title="（1）压缩"></a><strong>（1）压缩</strong></h4><p>​     tar -zcvf 打包后的名称 打包前的名称</p>
+<p>​     tar -zcvf xxx.tar.gz .&#x2F;*    (.&#x2F;*表示当前目录下的所有文件)</p>
+<h4 id="（2）解压"><a href="#（2）解压" class="headerlink" title="（2）解压"></a><strong>（2）解压</strong></h4><p>​     tar-xvf 包名    解压到当前的目录</p>
+<p>​     tar-xvf 包名 -C 目标目录  解压到指定的目标目录</p>
+<h2 id="5、安装软件"><a href="#5、安装软件" class="headerlink" title="5、安装软件"></a><strong>5、安装软件</strong></h2><h4 id="（1）yam"><a href="#（1）yam" class="headerlink" title="（1）yam"></a><strong>（1）yam</strong></h4><p><strong>1）安装Linux的源包软件</strong></p>
+<p>yum install packagexx</p>
+<p><strong>2）查看所有安装的软件</strong></p>
+<p>yum list</p>
+<p><strong>3）卸载软件</strong></p>
+<p>yum remove xx(xx为查询看到的结果)</p>
+<h4 id="（2）rpm"><a href="#（2）rpm" class="headerlink" title="（2）rpm"></a><strong>（2）rpm</strong></h4><p><strong>1）安装</strong></p>
+<p>rpm -ivh package</p>
+<p><strong>2） 查询</strong></p>
+<p>rpm -qa | grep str(str为需要查询的字符串)</p>
+<p><strong>3） 卸载</strong></p>
+<p>rpm -e –nodeps xxx（xxx为上面查询到的结果）</p>
+<p>ps：一般也卸载了之后也需要删除相应的文件夹（目录）</p>
+<p>find &#x2F; -name str查看残留的文件夹</p>
+<h2 id="6、其他常用命令"><a href="#6、其他常用命令" class="headerlink" title="6、其他常用命令"></a><strong>6、其他常用命令</strong></h2><h4 id="（1）显示当前目录的路径"><a href="#（1）显示当前目录的路径" class="headerlink" title="（1）显示当前目录的路径"></a><strong>（1）显示当前目录的路径</strong></h4><p>​     pwd</p>
+<h4 id="（2）搜索命令"><a href="#（2）搜索命令" class="headerlink" title="（2）搜索命令"></a><strong>（2）搜索命令</strong></h4><p>​     grep xx  要搜索的字符串，要搜索的文件</p>
+<p>​     grep xx test.txt    在test.txt中搜索xx字符串</p>
+<h4 id="（3）管道命令"><a href="#（3）管道命令" class="headerlink" title="（3）管道命令"></a><strong>（3）管道命令</strong></h4><p>​     |</p>
+<p>​     将上次一的命令作为下一次的输入</p>
+<h4 id="（4）查看进程"><a href="#（4）查看进程" class="headerlink" title="（4）查看进程"></a><strong>（4）查看进程</strong></h4><p>​     ps- ef</p>
+<p>​     与管道结合</p>
+<p>​     ps-ef | grep mysql  从所有进程中搜索包含mysql的内容</p>
+<h4 id="（5）杀死进程"><a href="#（5）杀死进程" class="headerlink" title="（5）杀死进程"></a><strong>（5）杀死进程</strong></h4><p>​     kill -9 pid       （pid为进程ID）</p>
+<h4 id="（6）网络配置"><a href="#（6）网络配置" class="headerlink" title="（6）网络配置"></a><strong>（6）网络配置</strong></h4><p>​     1）查看ip地址</p>
+<p>​     ifconfig</p>
+<p>​     2）查看端口状态</p>
+<p>​     netstat -a</p>
+<p>​      3）查询端口占用情况</p>
+<p>​     netstat -tulpn</p>
+<h2 id="7、Linux-的权限命令"><a href="#7、Linux-的权限命令" class="headerlink" title="7、Linux 的权限命令"></a><strong>7、Linux 的权限命令</strong></h2><p>​    -rwxrwxr–</p>
+<p>​    一共10个位</p>
+<p>​    第一个类型</p>
+<p>​    第一个3位 属主权限</p>
+<p>​    第二个3位 属组权限</p>
+<p>​    第三个3位 其他权限用户</p>
+<p>​    r 读取权</p>
+<p>​    w写入权</p>
+<p>​    x 执行权</p>
+<h4 id="（1）修改权限"><a href="#（1）修改权限" class="headerlink" title="（1）修改权限"></a><strong>（1）修改权限</strong></h4><p>​    chmod u&#x3D;rwx,g&#x3D;rw,o&#x3D;r sudo.conf   (sudo.conf为文件名)</p>
+<p>u		主权限</p>
+<p>g 	组权限</p>
+<p>o		其他权限</p>
+<h4 id="（2）修改所属主，组"><a href="#（2）修改所属主，组" class="headerlink" title="（2）修改所属主，组"></a><strong>（2）修改所属主，组</strong></h4><p>​    chown -R mysql mysql&#x2F; 将mysql文件下的所有文件及文件夹的所属主修改为mysql</p>
+<p>​    chgrp -R mysql mysql&#x2F; 	将mysql文件下的所有文件及文件夹的所属组修改为mysql</p>
+<h2 id="8、系统信息、用户"><a href="#8、系统信息、用户" class="headerlink" title="8、系统信息、用户"></a><strong>8、系统信息、用户</strong></h2><h4 id="（1）查看系统版本"><a href="#（1）查看系统版本" class="headerlink" title="（1）查看系统版本"></a><strong>（1）查看系统版本</strong></h4><p>​     cat &#x2F;proc&#x2F;version    cat &#x2F;etc&#x2F;os-release</p>
+<p>[root@x-z ~]# cat &#x2F;etc&#x2F;os-release </p>
+<p>NAME&#x3D;”CentOS Stream”</p>
+<p>VERSION&#x3D;”8”</p>
+<p>ID&#x3D;”centos”</p>
+<p>ID_LIKE&#x3D;”rhel fedora”</p>
+<p>VERSION_ID&#x3D;”8”</p>
+<p>PLATFORM_ID&#x3D;”platform:el8”</p>
+<p>PRETTY_NAME&#x3D;”CentOS Stream 8”</p>
+<p>ANSI_COLOR&#x3D;”0;31”</p>
+<p>CPE_NAME&#x3D;”cpe:&#x2F;o:centos:centos:8”</p>
+<p>HOME_URL&#x3D;”<a target="_blank" rel="noopener" href="https://centos.org/">https://centos.org/</a>“</p>
+<p>BUG_REPORT_URL&#x3D;”<a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>“</p>
+<p>REDHAT_SUPPORT_PRODUCT&#x3D;”Red Hat Enterprise Linux 8”</p>
+<p>REDHAT_SUPPORT_PRODUCT_VERSION&#x3D;”CentOS Stream”</p>
+<h4 id="（2）查看开机自动启动的服务使用chkconfig命令"><a href="#（2）查看开机自动启动的服务使用chkconfig命令" class="headerlink" title="（2）查看开机自动启动的服务使用chkconfig命令"></a><strong>（2）查看开机自动启动的服务使用chkconfig命令</strong></h4><p>​     chkconfig –list</p>
+<h4 id="（3）修改密码"><a href="#（3）修改密码" class="headerlink" title="（3）修改密码"></a><strong>（3）修改密码</strong></h4><p>​     passwd</p>
+<h2 id="9、配置防火墙"><a href="#9、配置防火墙" class="headerlink" title="9、配置防火墙"></a><strong>9、配置防火墙</strong></h2><h4 id="（1）安装防火墙"><a href="#（1）安装防火墙" class="headerlink" title="（1）安装防火墙"></a><strong>（1）安装防火墙</strong></h4><p>​     yum install firewalld</p>
+<h4 id="（2）启动防火墙"><a href="#（2）启动防火墙" class="headerlink" title="（2）启动防火墙"></a><strong>（2）启动防火墙</strong></h4><p>​    systemctl start firewalld</p>
+<h4 id="（3）开机自启动"><a href="#（3）开机自启动" class="headerlink" title="（3）开机自启动"></a><strong>（3）开机自启动</strong></h4><p>​    systemctl enable firewalld</p>
+<h4 id="（4）关闭防火墙"><a href="#（4）关闭防火墙" class="headerlink" title="（4）关闭防火墙"></a><strong>（4）关闭防火墙</strong></h4><p>​    systemctl stop firewalld</p>
+<h4 id="（5）关闭开机自启动"><a href="#（5）关闭开机自启动" class="headerlink" title="（5）关闭开机自启动"></a><strong>（5）关闭开机自启动</strong></h4><p>​    systemctl disable firewalld</p>
+<h4 id="（6）查看防火墙运行状态"><a href="#（6）查看防火墙运行状态" class="headerlink" title="（6）查看防火墙运行状态"></a><strong>（6）查看防火墙运行状态</strong></h4><p>​    firewall-cmd –state  或者 systemctl status firewalld.service</p>
+<h4 id="（7）重启防火墙"><a href="#（7）重启防火墙" class="headerlink" title="（7）重启防火墙"></a><strong>（7）重启防火墙</strong></h4><p>​    firewall-cmd –reload 或者systemctl [start|stop|restart] firewalld.service </p>
+<h4 id="（8）查看帮助"><a href="#（8）查看帮助" class="headerlink" title="（8）查看帮助"></a><strong>（8）查看帮助</strong></h4><p>​    firewall-cmd –help</p>
+<h2 id="10、配置防火墙端口"><a href="#10、配置防火墙端口" class="headerlink" title="10、配置防火墙端口"></a><strong>10、配置防火墙端口</strong></h2><h4 id="（1）开放端口"><a href="#（1）开放端口" class="headerlink" title="（1）开放端口"></a><strong>（1）开放端口</strong></h4><p>​    firewall-cmd –permanent –zone&#x3D;public –add-port&#x3D;8080&#x2F;tcp</p>
+<p>​    –permanent永久开放8080端口</p>
+<h4 id="（2）关闭端口（执行成功）"><a href="#（2）关闭端口（执行成功）" class="headerlink" title="（2）关闭端口（执行成功）"></a><strong>（2）关闭端口（执行成功）</strong></h4><p>​    firewall-cmd –zone&#x3D;public –remove-port&#x3D;8080&#x2F;tcp</p>
+<h4 id="（3）查询端口是否开放"><a href="#（3）查询端口是否开放" class="headerlink" title="（3）查询端口是否开放"></a><strong>（3）查询端口是否开放</strong></h4><p>​    firewall-cmd –query-port&#x3D;8080&#x2F;tcp</p>
+<h4 id="（4）查询所有用户开放的端口"><a href="#（4）查询所有用户开放的端口" class="headerlink" title="（4）查询所有用户开放的端口"></a><strong>（4）查询所有用户开放的端口</strong></h4><p>firewall-cmd –list-ports</p>
+<p><strong>–zone #作用域</strong></p>
+<p><strong>–add-port&#x3D;80&#x2F;tcp  #添加端口，格式为：端口&#x2F;通讯协议</strong></p>
+<p><strong>–permanent  #永久生效，没有此参数重启后失效</strong></p>
+<p>每次关闭开启就需要reload</p>
+<p>firewall-cmd –reload</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">令尹</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://www.xcjyc.top/2022/11/06/Linux常用命令/">https://www.xcjyc.top/2022/11/06/Linux常用命令/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/11/07/Linux%E6%9C%80%E5%85%A8%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"><i class="fa fa-chevron-left">  </i><span>Linux最全基础命令</span></a></div><div class="next-post pull-right"><a href="/2022/11/06/linux%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C/"><span>Linux安装初始化</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2023 By 令尹</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

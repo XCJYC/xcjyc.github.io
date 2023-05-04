@@ -1,107 +1,114 @@
-extends includes/layout.pug
-
-block top_img
-  - var top_img = page.top_img || theme.post_meta.top_img || theme.top_img || config.top_img
-  if (top_img && page.top_img !== false)
-    - var bg_img = top_img !== true ? `background-image: url(${top_img})` : ''
-    - var flag = top_img === true ? 'no-bg' : ''
-    div#top-container(style=bg_img class=flag)
-      include ./includes/header.pug
-      #post-info
-        #post-title= page.title || _p('no_title')
-        #post-meta
-          if (theme.post_meta.date_type)
-            if (theme.post_meta.date_type === 'both')
-              time.post-meta__date
-                i.fa.fa-calendar(aria-hidden="true")
-                =' '+_p('post.created')+' '+date(page.date, config.date_format)
-                span.post-meta__separator |
-                i.fa.fa-calendar-check-o(aria-hidden="true")
-                =' '+_p('post.updated')+' '+date(page.updated, config.date_format)
-            else
-              - var date_type = theme.post_meta.date_type === 'updated' ? 'updated' : 'date'
-              time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)]
-          if (theme.post_meta.categories && page.categories.data.length > 0)
-            if (theme.post_meta.date_type)
-              span.post-meta__separator |
-            each item, index in page.categories.data
-              i.fa.fa-inbox.post-meta__icon(aria-hidden="true")
-              a(href=url_for(item.path)).post-meta__categories #[=item.name]
-              if (index < page.categories.data.length - 1)
-                 i.fa.fa-angle-right(aria-hidden="true")
-          if (theme.disqus.enable && theme.disqus.count)
-            if (theme.post_meta.date_type || theme.post_meta.categories && page.categories.data.length > 0)
-              span.post-meta__separator |
-            i.fa.fa-comment-o.post-meta__icon(aria-hidden="true")
-            a(href=url_for(page.path) + '#disqus_thread')
-              span.disqus-comment-count(data-disqus-identifier=page.path)
-          if (theme.wordcount && theme.wordcount.enable)
-            .post-meta-wordcount
-              span= _p('post.wordcount') + ': '
-              span.word-count= wordcount(page.content)
-              span.post-meta__separator |
-              span= _p('post.min2read', min2read(page.content, {cn: 350, en: 160}))
-  else
-    div#top-container.plain
-      include ./includes/header.pug
-
-block content
-  article#post(class="")
-    if (!top_img)
-      #post-title.plain= page.title || _p('no_title')
-      #post-meta
-        if (theme.post_meta.date_type)
-          - var date_type = theme.post_meta.date_type === 'updated' ? '' : 'date'
-          time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)]
-        if (theme.post_meta.categories && page.categories.data.length > 0)
-          if (theme.post_meta.date_type)
-            span.post-meta__separator |
-          each item, index in page.categories.data
-            i.fa.fa-inbox(aria-hidden="true")
-            a(href=url_for(item.path)).post-meta__categories  #[=item.name]
-            if (index < page.categories.data.length - 1)
-                i.fa.fa-angle-right.post-meta__separator(aria-hidden="true")
-        if (theme.disqus.enable && theme.disqus.count)
-          if (theme.post_meta.date_type || theme.post_meta.categories && page.categories.data.length > 0)
-            span.post-meta__separator |
-          i.fa.fa-comment-o(aria-hidden="true")
-          a(href=url_for(page.path) + '#disqus_thread')
-            span.disqus-comment-count(data-disqus-identifier=page.path)
-        if (theme.wordcount && theme.wordcount.enable)
-          span.post-meta__separator |
-          span.post-meta-wordcount
-            span= _p('post.wordcount') + ': '
-            span.word-count= wordcount(page.content)
-            span.post-meta__separator |
-            span= _p('post.min2read', min2read(page.content, {cn: 350, en: 160}))
-    #post-content.article-container!= page.content
-  if (theme.post_copyright && theme.post_copyright.enable)
-    .post-copyright
-      .post-copyright__author
-        span.post-copyright-meta= _p('post.copyright.author') + ": "
-        span.post-copyright-info
-          a(href=`mailto:${config.email}`) #[=config.author]
-      .post-copyright__type
-        span.post-copyright-meta= _p('post.copyright.link') + ": "
-        span.post-copyright-info
-          a(href=url_for(decodeURI(page.permalink))) #[=decodeURI(page.permalink)]
-      .post-copyright__notice
-        span.post-copyright-meta= _p('post.copyright.copyright_notice') + ": "
-        span.post-copyright-info!= _p('post.copyright.copyright_content', theme.post_copyright.license_url, theme.post_copyright.license, config.url, config.title)
-  if (theme.post_meta.tags)
-    .post-meta__tag-list
-      each item, index in page.tags.data
-        a(href=url_for(item.path)).post-meta__tags #[=item.name]
-  if (theme.QR_code)
-    if (theme.QR_code.length > 0)
-      .post-qr-code
-        each item in theme.QR_code
-          .post-qr-code-item
-            img.post-qr-code__img(src=(item.itemlist||item).img)
-            .post-qr-code__desc=(item.itemlist||item).text
-  include includes/share/index.pug
-  include includes/pagination.pug
-  if (theme.adv && theme.adv.enable)
-    .post-adv!= theme.adv.info
-  if page.comments !== false
-    include includes/comments/index.pug
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="100个windows命令"><meta name="keywords" content="windows"><meta name="author" content="令尹"><meta name="copyright" content="令尹"><title>100个windows命令 | xcjyc.top</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.1"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">令尹</div><div class="author-info__description text-center">xcjyc</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">13</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">8</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">xcjyc.top</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right"></span></div><div id="post-info"><div id="post-title">100个windows命令</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-11-09</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/windows/">windows</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>​       1.gpedit.msc—–组策略　　</p>
+<p>​       2. sndrec32——-录音机</p>
+<p>　　3. Nslookup——-IP地址侦测器 </p>
+<p>　　4. explorer——-打开资源管理器</p>
+<p>　　5. logoff———注销命令</p>
+<p>　　6. shutdown——-60秒倒计时关机命令</p>
+<p>　　7. lusrmgr.msc—-本机用户和组</p>
+<p>　　8. services.msc—本地服务设置</p>
+<p>　　9. oobe&#x2F;msoobe &#x2F;a—-检查XP是否激活</p>
+<p>　　10. notepad——–打开记事本</p>
+<p>　　11. cleanmgr——-垃圾整理</p>
+<p>　　12. net start messenger—-开始信使服务</p>
+<p>　　13. compmgmt.msc—计算机管理</p>
+<p>　　14. net stop messenger—–停止信使服务</p>
+<p>　　15. conf———–启动netmeeting</p>
+<p>　　16. dvdplay——–DVD播放器</p>
+<p>　　17. charmap——–启动字符映射表</p>
+<p>　　18. diskmgmt.msc—磁盘管理实用程序</p>
+<p>　　19. calc———–启动计算器</p>
+<p>　　20. dfrg.msc——-磁盘碎片整理程序</p>
+<p>　　21. chkdsk.exe—–Chkdsk磁盘检查</p>
+<p>　　22. devmgmt.msc— 设备管理器</p>
+<p>　　23. regsvr32 &#x2F;u *.dll—-停止dll文件运行</p>
+<p>　　24. drwtsn32—— 系统医生</p>
+<p>　　25. rononce -p—-15秒关机</p>
+<p>　　26. dxdiag———检查DirectX信息</p>
+<p>　　27. regedt32——-注册表编辑器</p>
+<p>　　28. Msconfig.exe—系统配置实用程序</p>
+<p>　　29. rsop.msc——-组策略结果集</p>
+<p>　　30. mem.exe——–显示内存使用情况</p>
+<p>　　31. regedit.exe—-注册表</p>
+<p>　　32. winchat——–XP自带局域网聊天</p>
+<p>　　33. progman——–程序管理器</p>
+<p>　　34. winmsd———系统信息</p>
+<p>　　35. perfmon.msc—-计算机性能监测程序</p>
+<p>　　36. winver———检查Windows版本</p>
+<p>　　37. sfc &#x2F;scannow—–扫描错误并复原</p>
+<p>　　38. taskmgr—–任务管理器（2000&#x2F;xp&#x2F;2003</p>
+<p>　　39. winver———检查Windows版本</p>
+<p>　　40. wmimgmt.msc—-打开windows管理体系结构(WMI)</p>
+<p>　　41. wupdmgr——–windows更新程序</p>
+<p>　　42. wscript——–windows脚本宿主设置</p>
+<p>　　43. write———-写字板</p>
+<p>　　44. winmsd———系统信息</p>
+<p>　　45. wiaacmgr——-扫描仪和照相机向导</p>
+<p>　　46. winchat——–XP自带局域网聊天</p>
+<p>　　47. mem.exe——–显示内存使用情况</p>
+<p>　　48. Msconfig.exe—系统配置实用程序</p>
+<p>　　49. mplayer2——-简易widnows media player</p>
+<p>　　50. mspaint——–画图板</p>
+<p>　　51. mstsc———-远程桌面连接</p>
+<p>　　52. mplayer2——-媒体播放机</p>
+<p>　　53. magnify——–放大镜实用程序</p>
+<p>　　54. mmc————打开控制台</p>
+<p>　　55. mobsync——–同步命令</p>
+<p>　　56. dxdiag———检查DirectX信息</p>
+<p>　　57. iexpress——-木马捆绑工具，系统自带 58. fsmgmt.msc—–共享文件夹管理器</p>
+<p>　　59. utilman——–辅助工具管理器</p>
+<p>　　60. diskmgmt.msc—磁盘管理实用程序</p>
+<p>　　61. dcomcnfg——-打开系统组件服务</p>
+<p>　　62. ddeshare——-打开DDE共享设置</p>
+<p>　　63. osk————打开屏幕键盘</p>
+<p>　　64. odbcad32——-ODBC数据源管理器</p>
+<p>　　65. oobe&#x2F;msoobe &#x2F;a—-检查XP是否激活 114. logoff———注销命令</p>
+<p>　　66. notepad——–打开记事本</p>
+<p>　　67. nslookup——-网络管理的工具向导</p>
+<p>　　68. ntbackup——-系统备份和还原</p>
+<p>　　69. narrator——-屏幕“讲述人”</p>
+<p>　　70. ntmsmgr.msc—-移动存储管理器</p>
+<p>　　71. ntmsoprq.msc—移动存储管理员操作请求</p>
+<p>　　72. netstat -an—-(TC)命令检查接口</p>
+<p>　　73. syncapp——–创建一个公文包</p>
+<p>　　74. sysedit——–系统配置编辑器</p>
+<p>　　75. sigverif——-文件签名验证程序</p>
+<p>　　76. ciadv.msc——索引服务程序</p>
+<p>　　77. shrpubw——–创建共享文件夹</p>
+<p>　　78. secpol.msc—–本地安全策略</p>
+<p>　　79. syskey———系统加密，一旦加密就不能解开，保护windows xp系统的双重密码</p>
+<p>　　80. services.msc—本地服务设置</p>
+<p>　　81. Sndvol32——-音量控制程序</p>
+<p>　　82. sfc.exe——–系统文件检查器</p>
+<p>　　83. sfc &#x2F;scannow—windows文件保护</p>
+<p>　　84. ciadv.msc——索引服务程序</p>
+<p>　　85. tourstart——xp简介（安装完成后出现的漫游xp程序）</p>
+<p>　　86. taskmgr——–任务管理器</p>
+<p>　　87. eventvwr——-事件查看器</p>
+<p>　　88. eudcedit——-造字程序</p>
+<p>　　89. compmgmt.msc—计算机管理</p>
+<p>　　90. packager——-对象包装程序</p>
+<p>　　91. perfmon.msc—-计算机性能监测程序</p>
+<p>　　92. charmap——–启动字符映射表</p>
+<p>　　93. cliconfg——-SQL SERVER 客户端网络实用程序</p>
+<p>　　94. Clipbrd——–剪贴板查看器</p>
+<p>　　95. conf———–启动netmeeting</p>
+<p>　　96. certmgr.msc—-证书管理实用程序</p>
+<p>　　97. regsvr32 &#x2F;u *.dll—-停止dll文件运行</p>
+<p>　　98. regsvr32 &#x2F;u zipfldr.dll——取消ZIP支持</p>
+<p>　　99. cmd.exe——–CMD命令提示符</p>
+<p>　　100. chkdsk.exe—–Chkdsk磁盘检查  </p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">令尹</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://www.xcjyc.top/2022/11/09/100个windows命令/">https://www.xcjyc.top/2022/11/09/100个windows命令/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/windows/">windows</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2022/11/09/Shell%E5%BF%AB%E6%8D%B7%E9%94%AE/"><i class="fa fa-chevron-left">  </i><span>Shell快捷键</span></a></div><div class="next-post pull-right"><a href="/2022/11/08/%E5%90%AC%E8%AF%B4%E4%BD%A0%E7%B2%BE%E9%80%9A%E8%BF%90%E7%BB%B4/"><span>听说你精通运维</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2023 By 令尹</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/lib/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.1"></script><script src="/js/fancybox.js?version=1.9.1"></script><script src="/js/sidebar.js?version=1.9.1"></script><script src="/js/copy.js?version=1.9.1"></script><script src="/js/fireworks.js?version=1.9.1"></script><script src="/js/transition.js?version=1.9.1"></script><script src="/js/scroll.js?version=1.9.1"></script><script src="/js/head.js?version=1.9.1"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
