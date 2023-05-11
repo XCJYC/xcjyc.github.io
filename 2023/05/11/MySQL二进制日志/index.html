@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.xcjyc.top/img/mysql.png">
 <meta property="article:published_time" content="2023-05-11T14:58:51.000Z">
-<meta property="article:modified_time" content="2023-05-11T15:05:34.782Z">
+<meta property="article:modified_time" content="2023-05-11T15:10:08.142Z">
 <meta property="article:author" content="令尹">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="MariaDB">
@@ -314,8 +314,7 @@
 <p>功能：通过重放日志文件中的事件来生成数据副本</p>
 <p>注意：建议二进制日志与数据文件分开存放</p>
 </blockquote>
-<p>三种格式：</p>
-<ul>
+<h4 id="三种格式："><a href="#三种格式：" class="headerlink" title="三种格式："></a>三种格式：</h4><ul>
 <li>基于‘语句’记录：statement，记录语句，日志量较少。（MariaDB 10.2.3版以下默认）</li>
 <li>基于‘行’记录：row，记录数据，日志量较大，更加安全，建议使用的格式。（MySQL 8.0默认格式）</li>
 <li>混合模式：mixed，让系统自行判定该基于哪种方式进行。（MariaDB 10.2.4及以上默认）</li>
@@ -325,15 +324,13 @@
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">MariaDB [(none)]&gt; show variables like <span class="hljs-string">&#x27;binlog_format&#x27;</span>;<br>+---------------+-------+<br>| Variable_name | Value |<br>+---------------+-------+<br>| binlog_format | MIXED |<br>+---------------+-------+<br>1 row <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.001 sec)<br></code></pre></td></tr></table></figure>
 
-<p>文件构成:</p>
-<blockquote>
+<h4 id="文件构成"><a href="#文件构成" class="headerlink" title="文件构成:"></a>文件构成:</h4><blockquote>
 <p>日志文件：mysql-bin.000001,mysql-bin.000002, 二进制格式</p>
 <p>索引文件：mysql-bin.index 文本格式，记录已有的二进制日志文件列表</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-11 ~]<span class="hljs-comment"># ll /var/lib/mysql/binlog*</span><br>-rw-r----- 1 mysql mysql   180 May 10 20:43 /var/lib/mysql/binlog.000001<br>-rw-r----- 1 mysql mysql   180 May 10 20:52 /var/lib/mysql/binlog.000002<br>-rw-r----- 1 mysql mysql   180 May 10 20:52 /var/lib/mysql/binlog.000003<br>-rw-r----- 1 mysql mysql 11866 May 10 21:37 /var/lib/mysql/binlog.000004<br>-rw-r----- 1 mysql mysql   157 May 11 17:03 /var/lib/mysql/binlog.000005<br>-rw-r----- 1 mysql mysql    80 May 11 17:03 /var/lib/mysql/binlog.index<br></code></pre></td></tr></table></figure>
 
-<p>二进制日志相关变量：</p>
-<blockquote>
+<h4 id="二进制日志相关变量："><a href="#二进制日志相关变量：" class="headerlink" title="二进制日志相关变量："></a>二进制日志相关变量：</h4><blockquote>
 <p>sql_log_bin&#x3D;ON|OFF：是否记录二进制日志，默认on,支持动态修改，系统变量</p>
 <p>log_bin&#x3D;&#x2F;PATH&#x2F;BIN_LOG_FILE：指定文件位置，默认off,表示不启用二进制日志功能</p>
 <p>上述两项都开启才可以启用二进制日志</p>
