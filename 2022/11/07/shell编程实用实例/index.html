@@ -18,16 +18,16 @@
   <meta name="author" content="XCJYC">
   <meta name="keywords" content="">
   
-    <meta name="description" content="shell编程实用实例">
+    <meta name="description" content="shell编程实用实例(收集整理)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shell编程实用实例">
 <meta property="og:url" content="https://www.xcjyc.top/2022/11/07/shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%94%A8%E5%AE%9E%E4%BE%8B/index.html">
 <meta property="og:site_name" content="xcjyc.top">
-<meta property="og:description" content="shell编程实用实例">
+<meta property="og:description" content="shell编程实用实例(收集整理)">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.xcjyc.top/img/linux-bash.png">
 <meta property="article:published_time" content="2022-11-07T12:06:45.000Z">
-<meta property="article:modified_time" content="2023-05-11T13:43:09.771Z">
+<meta property="article:modified_time" content="2023-05-12T05:53:41.907Z">
 <meta property="article:author" content="令尹">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -298,7 +298,7 @@
             
               <div class="markdown-body">
                 
-                <p>本页所列脚本只做学习之用，请自行测试。盲目使用产生后果与作者无关。</p>
+                <p>(收集整理)本页所列脚本只做学习之用，请自行测试。盲目使用产生后果与作者无关。</p>
 <h1 id="Linux实用运维脚本"><a href="#Linux实用运维脚本" class="headerlink" title="Linux实用运维脚本"></a>Linux实用运维脚本</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#列出系统中的开放端口以及运行在端口上的服务</span><br>lsof -i <br><br><span class="hljs-comment">#nc命令建立socket连接</span><br><br><span class="hljs-comment">#设置监听　nc -l 5555</span><br><span class="hljs-comment">#连接到套接字 nc 192.0.0.1 5555</span><br><br><span class="hljs-comment">#快速文件传输</span><br><span class="hljs-comment">#接收端　nc -l 5555 &gt; destination_filename</span><br><span class="hljs-comment">#发送端　nc 192.0.0.1 5555 &lt; source_filename</span><br><br><span class="hljs-comment">#找出指定目录最大的n个文件</span><br><span class="hljs-built_in">du</span> -ak target_dir | <span class="hljs-built_in">sort</span> -nrk 1 | <span class="hljs-built_in">head</span> -n 4<br><span class="hljs-comment"># du中a为递归,k为kb；sort中n为数字,r为降序,k指定列</span><br><br><span class="hljs-comment">#向终端中的所有登陆用户发送广播信息</span><br><span class="hljs-built_in">cat</span> message.txt | wall<br><br><span class="hljs-comment">#创建新的screen窗口</span><br>screen<br><br><span class="hljs-comment">#打印所有的.txt和.pdf文件</span><br>find . \( -name <span class="hljs-string">&quot;*.txt&quot;</span> -o -name <span class="hljs-string">&quot;*.pdf&quot;</span> \) -<span class="hljs-built_in">print</span><br><br><span class="hljs-comment"># -exec command &#123;&#125; \;是连用的，所有符合的都会放置在&#123;&#125;中，去执行command </span><br><br><span class="hljs-comment">#将文件分割成多个大小为10kb的文件</span><br><span class="hljs-built_in">split</span> -b 10k data.file <br><br><span class="hljs-comment">#打印两个文件的交集</span><br><span class="hljs-built_in">comm</span> A.txt B.txt -3 | sed <span class="hljs-string">&#x27;s/^\t//&#x27;</span><br><br><span class="hljs-comment">#sed移除空白行</span><br>sed <span class="hljs-string">&#x27;/^$/d&#x27;</span> file<br></code></pre></td></tr></table></figure>
 
 
