@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.xcjyc.top/img/mysql.png">
 <meta property="article:published_time" content="2023-05-11T12:52:38.000Z">
-<meta property="article:modified_time" content="2023-05-11T13:46:40.055Z">
+<meta property="article:modified_time" content="2023-05-17T07:24:24.887Z">
 <meta property="article:author" content="令尹">
 <meta property="article:tag" content="MariaDB">
 <meta property="article:tag" content="MySQL">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          14k 字
+          16k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          116 分钟
+          130 分钟
         
       </span>
     
@@ -325,7 +325,7 @@
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@<span class="hljs-string">&#x27;localhost&#x27;</span>          <span class="hljs-comment">## 本地登录账号</span><br>xcjyc@<span class="hljs-string">&#x27;10.0.0.11&#x27;</span>         <span class="hljs-comment">## 指定IP</span><br>xcjyc@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span>          <span class="hljs-comment">## 匹配指定网段 </span><br>xcjyc@<span class="hljs-string">&#x27;%&#x27;</span>                 <span class="hljs-comment">## 匹配所有地址</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="8、创建用户"><a href="#8、创建用户" class="headerlink" title="8、创建用户"></a>8、创建用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt;  create user <span class="hljs-built_in">test</span>@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span> identified by <span class="hljs-string">&#x27;123456&#x27;</span>;<br>Query OK, 0 rows affected (0.03 sec)<br></code></pre></td></tr></table></figure>
+<h3 id="8、创建用户-x2F-授权"><a href="#8、创建用户-x2F-授权" class="headerlink" title="8、创建用户&#x2F;授权"></a>8、创建用户&#x2F;授权</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">04:39:29(root@localhost) [(none)]  create user <span class="hljs-built_in">test</span>@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span> identified by <span class="hljs-string">&#x27;123456&#x27;</span>;<br>Query OK, 0 rows affected (0.03 sec)<br><br>04:39:44(root@localhost) [(none)] grant all on hellodb.* to <span class="hljs-built_in">test</span>@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span>;<br>Query OK, 0 rows affected (0.01 sec)<br><br>早期版本一条命令创建+授权：<br>grant all on hellodb.* to <span class="hljs-built_in">test</span>@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span> identified by <span class="hljs-string">&#x27;123456&#x27;</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="9、修改密码"><a href="#9、修改密码" class="headerlink" title="9、修改密码"></a>9、修改密码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt; <span class="hljs-built_in">set</span> password <span class="hljs-keyword">for</span> root@<span class="hljs-string">&#x27;localhost&#x27;</span>=<span class="hljs-string">&#x27;654321&#x27;</span>;<br>Query OK, 0 rows affected (0.01 sec)<br><br>mysql&gt; ALTER USER root@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="hljs-string">&#x27;123456&#x27;</span>;<br>Query OK, 0 rows affected (0.00 sec)<br></code></pre></td></tr></table></figure>
 
@@ -371,6 +371,7 @@
 <p>redo log：记录某数据块被修改后的值，数据更新前先记录redolog，可以用来恢复未写入datafile的已成功事务更新的数据</p>
 <p>undo log：保存与执行的操作相反的操作，即记录某数据被修改前的值，可以用来在事务失败时进行rollback(回退)</p>
 <p>事务型存储引擎自行管理和使用，建议与数据文件分开存放</p>
+<p>事务日志文件根据设置的日志组文件成员个数和日志文件大小，循环覆盖写入日志文件</p>
 </blockquote>
 <p>事务日志相关配置：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">05:07:25(root@localhost) [(none)] show variables like <span class="hljs-string">&#x27;%innodb_log%&#x27;</span>;<br>+------------------------------------+----------+<br>| Variable_name                      | Value    |<br>+------------------------------------+----------+<br>| innodb_log_buffer_size             | 16777216 |<br>| innodb_log_checksums               | ON       |<br>| innodb_log_compressed_pages        | ON       |<br>| innodb_log_file_size               | 50331648 |      <span class="hljs-comment">## 每个日志文件大小</span><br>| innodb_log_files_in_group          | 2        |      <span class="hljs-comment">## 日志组文件成员个数</span><br>| innodb_log_group_home_dir          | ./       |      <span class="hljs-comment">## 事务日志文件路径</span><br>| innodb_log_spin_cpu_abs_lwm        | 80       |<br>| innodb_log_spin_cpu_pct_hwm        | 50       |<br>| innodb_log_wait_for_flush_spin_hwm | 400      |<br>| innodb_log_write_ahead_size        | 8192     |<br>| innodb_log_writer_threads          | ON       |<br>+------------------------------------+----------+<br>11 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br></code></pre></td></tr></table></figure>
@@ -407,6 +408,34 @@
 
 <p>示例：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-11 ~]<span class="hljs-comment"># mysqldumpslow -s c -t 2 /var/lib/mysql/slow.log</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="21、MySQL可用选项列表及当前值"><a href="#21、MySQL可用选项列表及当前值" class="headerlink" title="21、MySQL可用选项列表及当前值"></a>21、MySQL可用选项列表及当前值</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-attr">[root@Rocky8-11 ~]</span># mysqld <span class="hljs-attr">--verbose</span> <span class="hljs-attr">--help</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="22、MySQL当前服务启动选项"><a href="#22、MySQL当前服务启动选项" class="headerlink" title="22、MySQL当前服务启动选项"></a>22、MySQL当前服务启动选项</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">[root@Rocky8-<span class="hljs-number">11</span> ~]<span class="hljs-comment"># mysqld --print-defaults</span><br><span class="hljs-regexp">/usr/</span>libexec/mysqld would have been started with the following arguments:<br>--default_authentication_plugin=mysql_native_password --datadir=<span class="hljs-regexp">/var/</span>lib<span class="hljs-regexp">/mysql --socket=/</span>var<span class="hljs-regexp">/lib/my</span>sql<span class="hljs-regexp">/mysql.sock --log-error=/</span>var<span class="hljs-regexp">/log/my</span>sql<span class="hljs-regexp">/mysqld.log --pid-file=/</span>run<span class="hljs-regexp">/mysqld/my</span>sqld.pid --max_connections=<span class="hljs-number">8000</span> <br></code></pre></td></tr></table></figure>
+
+<p>命令行中设置：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">[root@Rocky8-<span class="hljs-number">11</span> ~]# <span class="hljs-regexp">/usr/</span>bin/mysqld_safe --skip-name-resolve=<span class="hljs-number">1</span><br>[root@Rocky8-<span class="hljs-number">11</span> ~]# <span class="hljs-regexp">/usr/</span>libexec<span class="hljs-regexp">/myslqd --basedir=/u</span>sr<br></code></pre></td></tr></table></figure>
+
+<p>配置文件设置：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs csharp">[<span class="hljs-meta">root@Rocky8-11 ~</span>]<span class="hljs-meta"># vim /etc/my.cnf</span><br>[<span class="hljs-meta">mysqld</span>]<br>skip_name_resolve=<span class="hljs-number">1</span><br>skip-grant-tables<br></code></pre></td></tr></table></figure>
+
+<h3 id="23、查看global系统变量"><a href="#23、查看global系统变量" class="headerlink" title="23、查看global系统变量"></a>23、查看global系统变量</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-number">02</span>:<span class="hljs-number">16</span>:<span class="hljs-number">22</span>(root<span class="hljs-variable">@localhost</span>) [(<span class="hljs-keyword">none</span>)] <span class="hljs-keyword">show</span> <span class="hljs-keyword">global</span> variables;<br></code></pre></td></tr></table></figure>
+
+<p>查看指定变量</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs less">02:18:36(root@localhost) [(<span class="hljs-attribute">none)] show variables like &#x27;变量&#x27;;</span><br><span class="hljs-attribute">02</span>:<span class="hljs-number">20</span>:<span class="hljs-number">01</span>(root<span class="hljs-variable">@localhost</span>) [(none)] select @@变量;<br></code></pre></td></tr></table></figure>
+
+<p>查看选项和部分变量：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@Rocky8</span><span class="hljs-number">-11</span> ~]<span class="hljs-meta"># mysqladmin variables</span><br></code></pre></td></tr></table></figure>
+
+<p>修改变量：set</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs coq">help <span class="hljs-built_in">set</span><br>SET variable = expr [, variable = expr] ...<br><br>variable: &#123;<br>    user_var_name<br>  | <span class="hljs-type">param_name</span><br>  | <span class="hljs-type">local_var_name</span><br>  | <span class="hljs-type">&#123;GLOBAL</span> | <span class="hljs-type">@@GLOBAL</span>.&#125; system_var_name<br>  | <span class="hljs-type">&#123;PERSIST</span> | <span class="hljs-type">@@PERSIST</span>.&#125; system_var_name<br>  | <span class="hljs-type">&#123;PERSIST_ONLY</span> | <span class="hljs-type">@@PERSIST_ONLY</span>.&#125; system_var_name<br>  | <span class="hljs-type">[SESSION</span> | <span class="hljs-type">@@SESSION</span>. | <span class="hljs-type">@@] system_var_name</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">02:24:45(root@localhost) [(none)] <span class="hljs-built_in">set</span> <span class="hljs-attribute">character_set_results</span>=<span class="hljs-string">&#x27;utf8mb4&#x27;</span>;<br>Query OK, 0 rows affected (0.01 sec)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>character_set_results不是服务器选项，写入配置文件将导致服务无法启动</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">vim /etc/my<span class="hljs-selector-class">.cnf</span>.d/mysql-server<span class="hljs-selector-class">.cnf</span><br><span class="hljs-selector-attr">[mysqld]</span><br>character_set_results=utf8mb4<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -549,7 +578,7 @@
         aria-expanded="true"
       >
         MySQL
-        <span class="list-group-count">(3)</span>
+        <span class="list-group-count">(4)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -576,6 +605,15 @@
            class="list-group-item list-group-item-action
            active">
           <span class="category-post">MySQL基础知识</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="MySQL备份与恢复"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL备份与恢复</span>
         </a>
       
     
