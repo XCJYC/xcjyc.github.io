@@ -15,28 +15,40 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="令尹">
+  <meta name="author" content="XCJYC">
   <meta name="keywords" content="">
   
-    <meta name="description" content="xcjyc">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="https://www.xcjyc.top/categories/index.html">
+    <meta name="description" content="MySQL备份与恢复,mysqldump备份工具，xtrabackup备份工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL备份与恢复">
+<meta property="og:url" content="https://www.xcjyc.top/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/index.html">
 <meta property="og:site_name" content="xcjyc.top">
-<meta property="og:description" content="xcjyc">
+<meta property="og:description" content="MySQL备份与恢复,mysqldump备份工具，xtrabackup备份工具">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/mysql.png">
+<meta property="article:published_time" content="2023-05-17T06:59:42.000Z">
+<meta property="article:modified_time" content="2023-05-17T08:54:26.389Z">
 <meta property="article:author" content="令尹">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/mysql.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>分类 - xcjyc.top</title>
+  <title>MySQL备份与恢复 - xcjyc.top</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -86,7 +98,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 50vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -186,15 +198,60 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/bg/03.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="分类"></span>
+            <span id="subtitle" data-typed-text="MySQL备份与恢复"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-17 14:59" pubdate>
+          2023年5月17日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          107 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          1 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
 
         
       </div>
@@ -210,14 +267,159 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MySQL备份与恢复</h1>
+            
+            
+              <div class="markdown-body">
                 
+                <h3 id="备份类型"><a href="#备份类型" class="headerlink" title="备份类型"></a>备份类型</h3><p>完全备份：备份整个数据集</p>
+<p>部分备份：只备份数据子集（如部分库或表）</p>
+<p>增量备份：仅备份最近一次完全备份或增量备份以来变化的数据，备份较快，还原复杂</p>
+<p>差异备份：仅备份最近一次完全备份以来变化的数据，备份较恒，还原简单</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MySQL/" class="category-chain-item">MySQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/MariaDB/">#MariaDB</a>
+      
+        <a href="/tags/MySQL/">#MySQL</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MySQL备份与恢复</div>
+      <div>https://www.xcjyc.top/2023/05/17/MySQL备份与恢复/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/11/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97/" title="MySQL二进制日志">
+                        <span class="hidden-mobile">MySQL二进制日志</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
 
 
 
@@ -230,133 +432,23 @@
     
     
     <div class="category row nomargin-x">
-      <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Linux基础"
-        id="heading-7f7b9d0769e6c459c4809c61cc3175d7" role="tab" data-toggle="collapse" href="#collapse-7f7b9d0769e6c459c4809c61cc3175d7"
-        aria-expanded="false"
-      >
-        Linux基础
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>7</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-7f7b9d0769e6c459c4809c61cc3175d7"
-           role="tabpanel" aria-labelledby="heading-7f7b9d0769e6c459c4809c61cc3175d7">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2022/11/09/Shell%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="Shell快捷键"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Shell快捷键</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/11/08/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="正则表达式"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">正则表达式</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/11/07/Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%94%A8%E5%AE%9E%E4%BE%8B/" title="shell编程实用实例"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">shell编程实用实例</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/11/07/Linux%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" title="Linux的常用命令详解"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Linux的常用命令详解</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/11/07/Linux%E6%9C%80%E5%85%A8%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" title="Linux最全基础命令"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Linux最全基础命令</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/11/06/Linux%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Linux安装初始化"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Linux安装初始化</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/11/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Linux常用命令"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Linux常用命令</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item collapsed
+      <a class="category-item 
           list-group-item category-item-action col-10 col-md-11 col-xm-11" title="MySQL"
         id="heading-62a004b95946bb97541afa471dcca73a" role="tab" data-toggle="collapse" href="#collapse-62a004b95946bb97541afa471dcca73a"
-        aria-expanded="false"
+        aria-expanded="true"
       >
         MySQL
-        <span class="list-group-count"></span>
+        <span class="list-group-count">(4)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-        <a href="/categories/MySQL/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>4</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-62a004b95946bb97541afa471dcca73a"
+      <div class="category-collapse collapse show" id="collapse-62a004b95946bb97541afa471dcca73a"
            role="tabpanel" aria-labelledby="heading-62a004b95946bb97541afa471dcca73a">
         
         
           
   <div class="category-post-list">
     
-    
-      
-      
-        <a href="/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="MySQL备份与恢复"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">MySQL备份与恢复</span>
-        </a>
-      
     
       
       
@@ -378,6 +470,15 @@
     
       
       
+        <a href="/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="MySQL备份与恢复"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">MySQL备份与恢复</span>
+        </a>
+      
+    
+      
+      
         <a href="/2023/05/05/MySQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/" title="MySQL安装初始化"
            class="list-group-item list-group-item-action
            ">
@@ -391,107 +492,44 @@
       </div>
     </div>
   
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="华为数通"
-        id="heading-fd28f91b6c6bf1c8458e84e07db48dea" role="tab" data-toggle="collapse" href="#collapse-fd28f91b6c6bf1c8458e84e07db48dea"
-        aria-expanded="false"
-      >
-        华为数通
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/categories/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>2</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-fd28f91b6c6bf1c8458e84e07db48dea"
-           role="tabpanel" aria-labelledby="heading-fd28f91b6c6bf1c8458e84e07db48dea">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2022/06/12/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A%E5%91%BD%E4%BB%A4%E6%B8%85%E5%8D%95/" title="华为数通命令清单"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">华为数通命令清单</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2022/05/12/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A%E8%BE%B9%E5%AD%A6%E8%BE%B9%E8%AE%B0/" title="华为数通边学边记"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">华为数通边学边记</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item collapsed
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="MarkDown"
-        id="heading-20c25ceeb481433fb68eb36ba4730e27" role="tab" data-toggle="collapse" href="#collapse-20c25ceeb481433fb68eb36ba4730e27"
-        aria-expanded="false"
-      >
-        MarkDown
-        <span class="list-group-count"></span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-        <a href="/categories/MarkDown/" class="category-count col-2 col-md-1 col-xm-1">
-          <i class="iconfont icon-articles"></i>
-          <span>1</span>
-        </a>
-      
-      <div class="category-collapse collapse " id="collapse-20c25ceeb481433fb68eb36ba4730e27"
-           role="tabpanel" aria-labelledby="heading-20c25ceeb481433fb68eb36ba4730e27">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2022/08/12/Typora%E5%9B%BE%E5%BA%8A%E9%85%8D%E7%BD%AE/" title="Typora图床配置"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Typora图床配置</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
 </div>
 
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
     
@@ -609,6 +647,99 @@
 
 
 
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
 
