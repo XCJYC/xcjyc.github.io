@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.xcjyc.top/img/mysql.png">
 <meta property="article:published_time" content="2023-05-17T06:59:42.000Z">
-<meta property="article:modified_time" content="2023-05-17T08:54:26.389Z">
+<meta property="article:modified_time" content="2023-05-25T07:49:38.755Z">
 <meta property="article:author" content="令尹">
 <meta property="article:tag" content="MariaDB">
 <meta property="article:tag" content="MySQL">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          107 字
+          4.4k 字
         
       </span>
     
@@ -243,7 +243,7 @@
         
         
         
-          1 分钟
+          37 分钟
         
       </span>
     
@@ -302,7 +302,56 @@
                 <h3 id="备份类型"><a href="#备份类型" class="headerlink" title="备份类型"></a>备份类型</h3><p>完全备份：备份整个数据集</p>
 <p>部分备份：只备份数据子集（如部分库或表）</p>
 <p>增量备份：仅备份最近一次完全备份或增量备份以来变化的数据，备份较快，还原复杂</p>
-<p>差异备份：仅备份最近一次完全备份以来变化的数据，备份较恒，还原简单</p>
+<p>差异备份：仅备份最近一次完全备份以来变化的数据，备份较快，还原简单</p>
+<h3 id="冷备份与还原"><a href="#冷备份与还原" class="headerlink" title="冷备份与还原"></a>冷备份与还原</h3><blockquote>
+<p>需要停止数据库服务</p>
+</blockquote>
+<p>备份步骤：停止数据库服务–&gt;备份数据库文件、配置、日志</p>
+<p>还原步骤：安装数据库服务（最好版本一致）–&gt;复制相应文件（数据文件、配置文件、日志文件）并保留属性–&gt;启动服务</p>
+<h4 id="mysql-8-0"><a href="#mysql-8-0" class="headerlink" title="mysql 8.0:"></a>mysql 8.0:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## 备份</span><br>[root@Rocky8-11 ~]<span class="hljs-comment"># systemctl stop mysqld</span><br>[root@Rocky8-11 ~]<span class="hljs-comment"># mkdir /backup</span><br>[root@Rocky8-11 ~]<span class="hljs-comment"># rsync -av /var/lib/mysql 10.0.0.11:/backup/</span><br>[root@Rocky8-11 ~]<span class="hljs-comment"># rsync -arv /etc/my*  10.0.0.11:/backup/</span><br>[root@Rocky8-11 ~]<span class="hljs-comment"># rsync -arv /data/binlog  10.0.0.11:/backup/</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## 还原</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># yum install -y mysql-server</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># rsync -arv 10.0.0.11:/backup/mysql/ /var/lib/mysql/</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># rsync -arv 10.0.0.11:/backup/my.cnf* /etc/</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># rsync -arv 10.0.0.11:/backup/binlog /data/</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># systemctl enable --now mysqld</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># ss -ntl </span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># mysql </span><br>01:43:07(root@localhost) [(none)] show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| hellodb            |<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| sys                |<br>| <span class="hljs-built_in">test</span>               |<br>+--------------------+<br>6 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.01 sec)<br></code></pre></td></tr></table></figure>
+
+<h4 id="mariadb-10-3"><a href="#mariadb-10-3" class="headerlink" title="mariadb 10.3"></a>mariadb 10.3</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## 备份+还原（源主机：Rocky8-12  目标主机：Rocky8-13）</span><br>[root@Rocky8-13 ~]<span class="hljs-comment"># dnf install -y  mariadb-server</span><br>[root@Rocky8-13 ~]<span class="hljs-comment"># mkdir -p /data/binlog</span><br><br>[root@Rocky8-12 ~]<span class="hljs-comment"># systemctl stop mariadb</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># rsync -arv /etc/my.cnf*  10.0.0.13:/etc/</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># rsync -arv /var/lib/mysql/ 10.0.0.13:/var/lib/mysql/</span><br>[root@Rocky8-12 ~]<span class="hljs-comment"># rsync -arv /data/binlog/ 10.0.0.13:/data/binlog</span><br><br>[root@Rocky8-13 data]<span class="hljs-comment"># chown -R mysql.mysql /var/lib/mysql/</span><br>[root@Rocky8-13 data]<span class="hljs-comment"># chown -R mysql.mysql /data/binlog/</span><br>[root@Rocky8-13 data]<span class="hljs-comment"># systemctl start mariadb</span><br>[root@Rocky8-13 data]<span class="hljs-comment"># mysql </span><br>Welcome to the MariaDB monitor.  Commands end with ; or \g.<br>Your MariaDB connection <span class="hljs-built_in">id</span> is 9<br>Server version: 10.3.35-MariaDB-<span class="hljs-built_in">log</span> MariaDB Server<br><br>Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.<br><br>Type <span class="hljs-string">&#x27;help;&#x27;</span> or <span class="hljs-string">&#x27;\h&#x27;</span> <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>. Type <span class="hljs-string">&#x27;\c&#x27;</span> to clear the current input statement.<br><br>MariaDB [(none)]&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="MysqlDump工具"><a href="#MysqlDump工具" class="headerlink" title="MysqlDump工具"></a>MysqlDump工具</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Dumping structure <span class="hljs-keyword">and</span> contents <span class="hljs-keyword">of</span> MySQL databases <span class="hljs-keyword">and</span> <span class="hljs-keyword">tables</span>.<br><span class="hljs-keyword">Usage</span>: mysqldump [<span class="hljs-keyword">OPTIONS</span>] <span class="hljs-keyword">database</span> [<span class="hljs-keyword">tables</span>]<br><span class="hljs-keyword">OR</span>     mysqldump [<span class="hljs-keyword">OPTIONS</span>] <span class="hljs-comment">--databases DB1 [DB2 DB3...]</span><br><span class="hljs-keyword">OR</span>     mysqldump [<span class="hljs-keyword">OPTIONS</span>] <span class="hljs-comment">--all-databases</span><br><span class="hljs-keyword">OR</span>     mysqldump [<span class="hljs-keyword">OPTIONS</span>] <span class="hljs-comment">--system=[SYSTEMOPTIONS]]</span><br></code></pre></td></tr></table></figure>
+
+<p>常用参数：</p>
+<p>  -u, –user&#x3D;name     		登录用户名</p>
+<p>  -p, –password[&#x3D;name] 	  登录密码</p>
+<p>  -A, –all-databases 		备份所有数据库</p>
+<p>  -B, –databases     		备份指定数据库</p>
+<p>  -E, –events        		备份相关的所有事件调度器（计划任务）</p>
+<p>  -R, –routines      		备份存储过程和自定义函数</p>
+<p>  –master-data[&#x3D;#]   		默认为&#x3D;1，&#x3D;1 适合于主从复制（数据之前加一个非注释的CHANGE MASTER TO语句） &#x3D;2适合于单机备份还原（记录为被注释的CHANGE MASTER TO语句）CHANGE MASTER TO 记录的为备份时间点的二进制日志位置				 </p>
+<p>  -F, –flush-logs    		备份前生成新的二进制文件</p>
+<h4 id="建议备份策略："><a href="#建议备份策略：" class="headerlink" title="建议备份策略："></a>建议备份策略：</h4><p>innoDB</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysqldump -uroot -p -A -F -E -R --triggers --single-transaction --master-data=1 --flush-privileges --default-character-set=utf8 --hex-blob&gt;<span class="hljs-variable">$&#123;BACKuP&#125;</span>/fu11bak_<span class="hljs-variable">$&#123;BACKUP_TIME&#125;</span>.sql<br></code></pre></td></tr></table></figure>
+
+<p>myisam</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysqldump -uroot -p -A -F -E -R -x --master-data=1 --flush-privileges  --triggers --defau1t-character-set=utf8 --hex-b1ob &gt;<span class="hljs-variable">$&#123;BACKUP&#125;</span>/fu11bak_<span class="hljs-variable">$&#123;BACKUP_TIME&#125;</span>.sql<br></code></pre></td></tr></table></figure>
+
+<h4 id="例一：完全备份和还原"><a href="#例一：完全备份和还原" class="headerlink" title="例一：完全备份和还原"></a>例一：完全备份和还原</h4><p>备份</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-11 ~]<span class="hljs-comment"># cat /etc/my.cnf</span><br>[mysqld]<br>log_bin=/data/binlog/mysql-bin<br>[root@Rocky8-11 ~]<span class="hljs-comment"># mkdir /backup</span><br>[root@Rocky8-11 ~]<span class="hljs-comment"># mysqldump -u root -A -F --single-transaction --master-data=2 | gzip &gt; /backup/all-`date +%F`.sql.gz</span><br>WARNING: --master-data is deprecated and will be removed <span class="hljs-keyword">in</span> a future version. Use --source-data instead.<br>[root@Rocky8-11 ~]<span class="hljs-comment"># scp /backup/all-2023-05-25.sql.gz 10.0.0.16:/backup</span><br></code></pre></td></tr></table></figure>
+
+<p>还原</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-16 ~]<span class="hljs-comment"># yum -y install mysql-server</span><br>[root@Rocky8-16 ~]<span class="hljs-comment"># systemctl start mysqld</span><br>[root@Rocky8-16 ~]<span class="hljs-comment"># gzip -d /backup/all-2023-05-25.sql.gz</span><br>[root@Rocky8-16 ~]<span class="hljs-comment"># mysql </span><br>mysql&gt; <span class="hljs-built_in">set</span> sql_log_bin=off;<br>mysql&gt; <span class="hljs-built_in">source</span> /backup/all-2023-05-25.sql<br>mysql&gt; <span class="hljs-built_in">set</span> sql_log_bin=on;<br>mysql&gt; show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| hellodb            |<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| sys                |<br>| <span class="hljs-built_in">test</span>               |<br>+--------------------+<br>6 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.01 sec)<br></code></pre></td></tr></table></figure>
+
+<h4 id="例二：利用二进制日志，还原数据库最新状态"><a href="#例二：利用二进制日志，还原数据库最新状态" class="headerlink" title="例二：利用二进制日志，还原数据库最新状态"></a>例二：利用二进制日志，还原数据库最新状态</h4><p>二进制日志文件独立位置</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[root@Rocky8-11 ~]</span><span class="hljs-comment"># cat /etc/my.cnf</span><br><span class="hljs-section">[mysqld]</span><br><span class="hljs-attr">log_bin</span>=/data/binlog/mysql-bin<br></code></pre></td></tr></table></figure>
+
+<p>完全备份，记录二进制位置</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs fortran">[root@Rocky8-<span class="hljs-number">11</span> ~]# mysqldump -uroot -A -F --<span class="hljs-keyword">default</span>-<span class="hljs-keyword">character</span>-set=utf8 --single-transaction --master-<span class="hljs-keyword">data</span>=<span class="hljs-number">2</span> | gzip &gt; /backup/<span class="hljs-built_in">all</span>-`date +%F`.sql.gz<br></code></pre></td></tr></table></figure>
+
+<p>数据库更新</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs less">02:50:11(root@localhost) [hellodb] insert students (name,age,gender) value (&#x27;x1&#x27;,20,&#x27;m&#x27;);<br><span class="hljs-selector-tag">Query</span> <span class="hljs-selector-tag">OK</span>, <span class="hljs-number">1</span> <span class="hljs-selector-tag">row</span> <span class="hljs-selector-tag">affected</span> (<span class="hljs-number">0.02</span> sec)<br><br><span class="hljs-number">02</span>:<span class="hljs-number">52</span>:<span class="hljs-number">13</span>(root<span class="hljs-variable">@localhost</span>) <span class="hljs-selector-attr">[hellodb]</span> <span class="hljs-selector-tag">insert</span> <span class="hljs-selector-tag">students</span> (name,age,gender) <span class="hljs-selector-tag">value</span> (<span class="hljs-string">&#x27;y2&#x27;</span>,<span class="hljs-number">22</span>,<span class="hljs-string">&#x27;m&#x27;</span>);<br><span class="hljs-selector-tag">Query</span> <span class="hljs-selector-tag">OK</span>, <span class="hljs-number">1</span> <span class="hljs-selector-tag">row</span> <span class="hljs-selector-tag">affected</span> (<span class="hljs-number">0.00</span> sec)<br></code></pre></td></tr></table></figure>
+
+<p>破坏数据库</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gradle">[root@Rocky8-<span class="hljs-number">11</span> ~]# rm -rf <span class="hljs-regexp">/var/</span>lib<span class="hljs-regexp">/mysql/</span>*<br>[root@Rocky8-<span class="hljs-number">11</span> ~]# ls <span class="hljs-regexp">/var/</span>lib<span class="hljs-regexp">/mysql/</span>*<br>ls: cannot access <span class="hljs-string">&#x27;/var/lib/mysql/*&#x27;</span>: No such <span class="hljs-keyword">file</span> or directory<br></code></pre></td></tr></table></figure>
+
+<p>还原</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@Rocky8</span><span class="hljs-number">-11</span> ~]<span class="hljs-meta"># cd /backup/</span><br>[root<span class="hljs-symbol">@Rocky8</span><span class="hljs-number">-11</span> backup]<span class="hljs-meta"># gzip -d all-2023-05-25.sql.gz </span><br><span class="hljs-meta">## 生成数据库相关文件</span><br><br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
