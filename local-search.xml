@@ -55,6 +55,8 @@
       
       <tag>MySQL</tag>
       
+      <tag>Cluster</tag>
+      
     </tags>
     
   </entry>
@@ -80,7 +82,13 @@
       
       <tag>MariaDB</tag>
       
+      <tag>init</tag>
+      
       <tag>MySQL</tag>
+      
+      <tag>Cluster</tag>
+      
+      <tag>Mycat</tag>
       
     </tags>
     
@@ -135,6 +143,12 @@
       <tag>MariaDB</tag>
       
       <tag>MySQL</tag>
+      
+      <tag>Backup</tag>
+      
+      <tag>XtraBackup</tag>
+      
+      <tag>MysqlDump</tag>
       
     </tags>
     
