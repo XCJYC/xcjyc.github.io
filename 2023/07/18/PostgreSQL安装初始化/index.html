@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>PostgreSQL安装初始化 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="PostgreSQL安装初始化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL安装初始化">
+<meta property="og:url" content="http://example.com/2023/07/18/PostgreSQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PostgreSQL安装初始化">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-18T07:08:56.000Z">
+<meta property="article:modified_time" content="2024-01-15T08:47:41.725Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="init">
+<meta property="article:tag" content="PostgreSQL">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-PostgreSQL安装初始化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/18/PostgreSQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2023-07-18T07:08:56.000Z" itemprop="datePublished">2023-07-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PostgreSQL/">PostgreSQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      PostgreSQL安装初始化
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>PostgreSQL 是一个免费的对象-关系数据库服务器(ORDBMS)，在灵活的BSD许可证下发行。</p>
+<p>PostgreSQL 开发者把它念作 post-gress-Q-L。</p>
+<p>PostgreSQL 的 Slogan 是 “世界上最先进的开源关系型数据库”。</p>
+<blockquote>
+<p>数据库排名：<a target="_blank" rel="noopener" href="https://db-engines.com/en/ranking">DB-Engines Ranking - popularity ranking of database management systems</a></p>
+</blockquote>
+<blockquote>
+<p>PostgreSQL 与 MySQL 对比：<a target="_blank" rel="noopener" href="http://bbs.chinaunix.net/thread-1688208-1-1.html">PostgreSQL与MySQL比较 - PostgreSQL-Chinaunix</a></p>
+</blockquote>
+<h3 id="PostgreSQL-安装初始化"><a href="#PostgreSQL-安装初始化" class="headerlink" title="PostgreSQL 安装初始化"></a>PostgreSQL 安装初始化</h3><h4 id="二进制安装包"><a href="#二进制安装包" class="headerlink" title="二进制安装包"></a>二进制安装包</h4><blockquote>
+<p>Rocky8 用官方源安装 PostgreSQL 15，参考官方文档：<a target="_blank" rel="noopener" href="https://www.postgresql.org/download/">PostgreSQL: Downloads</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##  安装仓库 repository RPM</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span></span><br><span class="line">Installed:</span><br><span class="line">  pgdg-redhat-repo-42.0-32.noarch                                                                                                                     </span><br><span class="line">Complete!</span><br><span class="line"></span><br><span class="line"><span class="comment">##  禁用内置的postgresql</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># dnf -qy module disable postgresql</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##  安装postgresql</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># dnf install -y postgresql15-server</span></span><br><span class="line">Installed:</span><br><span class="line">  lz4-1.8.3-3.el8_4.x86_64  postgresql15-15.3-2PGDG.rhel8.x86_64  postgresql15-libs-15.3-2PGDG.rhel8.x86_64  postgresql15-server-15.3-2PGDG.rhel8.x86_64 </span><br><span class="line">Complete!</span><br><span class="line"></span><br><span class="line"><span class="comment">##  初始化数据库并设置自动启动</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># /usr/pgsql-15/bin/postgresql-15-setup initdb</span></span><br><span class="line">Initializing database ... OK</span><br><span class="line"></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># systemctl enable postgresql-15</span></span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/postgresql-15.service → /usr/lib/systemd/system/postgresql-15.service.</span><br><span class="line"></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># systemctl start postgresql-15</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##  验证</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># sudo -u postgres psql -c &quot;select version();&quot;</span></span><br><span class="line">could not change directory to <span class="string">&quot;/root&quot;</span>: Permission denied</span><br><span class="line">                                                 version                                                 </span><br><span class="line">---------------------------------------------------------------------------------------------------------</span><br><span class="line"> PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-18), 64-bit</span><br><span class="line">(1 row)</span><br><span class="line"></span><br><span class="line"><span class="comment">##  切换postgres用户，进入数据库</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># su - postgres</span></span><br><span class="line">[postgres@Rocky8-1 ~]$ psql</span><br><span class="line">psql (15.3)</span><br><span class="line">Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> <span class="built_in">help</span>.</span><br><span class="line"></span><br><span class="line">postgres=<span class="comment"># help </span></span><br><span class="line">You are using psql, the command-line interface to PostgreSQL.</span><br><span class="line">Type:  \copyright <span class="keyword">for</span> distribution terms</span><br><span class="line">       \h <span class="keyword">for</span> <span class="built_in">help</span> with SQL commands</span><br><span class="line">       \? <span class="keyword">for</span> <span class="built_in">help</span> with psql commands</span><br><span class="line">       \g or terminate with semicolon to execute query</span><br><span class="line">       \q to quit</span><br><span class="line">postgres=<span class="comment"># </span></span><br><span class="line"></span><br><span class="line"><span class="comment">##  PostgreSQL数据库目录</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># ls /var/lib/pgsql/15/data/</span></span><br><span class="line">base              <span class="built_in">log</span>           pg_hba.conf    pg_multixact  pg_serial     pg_stat_tmp  pg_twophase  pg_xact               postmaster.opts</span><br><span class="line">current_logfiles  pg_commit_ts  pg_ident.conf  pg_notify     pg_snapshots  pg_subtrans  PG_VERSION   postgresql.auto.conf  postmaster.pid</span><br><span class="line">global            pg_dynshmem   pg_logical     pg_replslot   pg_stat       pg_tblspc    pg_wal       postgresql.conf</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="源码编译安装"><a href="#源码编译安装" class="headerlink" title="源码编译安装"></a>源码编译安装</h4><blockquote>
+<p>参考官方文档：<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/current/install-procedure.html">PostgreSQL: Documentation: 15: 17.4. Installation Procedure</a></p>
+</blockquote>
+<h5 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h5><blockquote>
+<ol>
+<li>下载源码：<a target="_blank" rel="noopener" href="https://www.postgresql.org/ftp/source/">https://www.postgresql.org/ftp/source/</a></li>
+<li>编译：<ul>
+<li>.&#x2F;configure</li>
+<li>make</li>
+<li>makeinstall</li>
+</ul>
+</li>
+<li>初始化数据库，创建启动服务</li>
+</ol>
+</blockquote>
+<h5 id="环境初始化"><a href="#环境初始化" class="headerlink" title="环境初始化"></a>环境初始化</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##  关闭防火强和SElinux</span></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># systemctl status firewalld</span></span><br><span class="line">● firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)</span><br><span class="line">   Active: inactive (dead)</span><br><span class="line">     Docs: man:firewalld(1)</span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># getenforce </span></span><br><span class="line">Disabled</span><br><span class="line"></span><br><span class="line"><span class="comment">##  内核优化</span></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+<h5 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]# yum install -y  gcc make readline-devel zlib-devel</span><br></pre></td></tr></table></figure>
+
+<h5 id="下载解压"><a href="#下载解压" class="headerlink" title="下载解压"></a>下载解压</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]# wget https://ftp.postgresql.org/pub/source/v15.3/postgresql-15.3.tar.gz</span><br><span class="line">[root@Rocky8-2 ~]# tar xf postgresql-15.3.tar.gz </span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]# cd postgresql-15.3/</span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# ll</span><br><span class="line">total 780</span><br><span class="line">-rw-r--r--  1 1107 1107    397 May  9 05:13 aclocal.m4</span><br><span class="line">drwxrwxrwx  2 1107 1107   4096 May  9 05:25 config</span><br><span class="line">-rwxr-xr-x  1 1107 1107 601977 May  9 05:13 configure</span><br><span class="line">-rw-r--r--  1 1107 1107  89369 May  9 05:13 configure.ac</span><br><span class="line">drwxrwxrwx 61 1107 1107   4096 May  9 05:24 contrib</span><br><span class="line">-rw-r--r--  1 1107 1107   1192 May  9 05:13 COPYRIGHT</span><br><span class="line">drwxrwxrwx  3 1107 1107     87 May  9 05:25 doc</span><br><span class="line">-rw-r--r--  1 1107 1107   4264 May  9 05:13 GNUmakefile.in</span><br><span class="line">-rw-r--r--  1 1107 1107    277 May  9 05:13 HISTORY</span><br><span class="line">-rw-r--r--  1 1107 1107  63842 May  9 05:26 INSTALL</span><br><span class="line">-rw-r--r--  1 1107 1107   1875 May  9 05:13 Makefile</span><br><span class="line">-rw-r--r--  1 1107 1107   1213 May  9 05:13 README</span><br><span class="line">drwxrwxrwx 16 1107 1107   4096 May  9 05:26 src</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看官方安装说明"><a href="#查看官方安装说明" class="headerlink" title="查看官方安装说明"></a>查看官方安装说明</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 postgresql-15.3]# cat INSTALL | less</span><br><span class="line">....</span><br><span class="line">Short Version</span><br><span class="line"></span><br><span class="line">    ./configure</span><br><span class="line">    make</span><br><span class="line">    su</span><br><span class="line">    make install</span><br><span class="line">    adduser postgres</span><br><span class="line">    mkdir -p /usr/local/pgsql/data</span><br><span class="line">    chown postgres /usr/local/pgsql/data</span><br><span class="line">    su - postgres</span><br><span class="line">    /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data</span><br><span class="line">    /usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start</span><br><span class="line">    /usr/local/pgsql/bin/createdb test</span><br><span class="line">    /usr/local/pgsql/bin/psql test</span><br><span class="line"></span><br><span class="line">The long version is the rest of this document.</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<h5 id="开始编译安装三步曲"><a href="#开始编译安装三步曲" class="headerlink" title="开始编译安装三步曲"></a>开始编译安装三步曲</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  编译时加上安装路径（默认安装在/usr/local/pgsql下）、端口等设置（默认端口5432，也可在编译后修改配置文件）</span></span></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# ./configure --prefix=/apps/pgsql --with-pgport=5432</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  查看CPU个数，-j指定编译的CPU数量，world 同时编译帮助文档</span></span></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# lscpu</span><br><span class="line">Architecture:        x86_64</span><br><span class="line">CPU op-mode(s):      32-bit, 64-bit</span><br><span class="line">Byte Order:          Little Endian</span><br><span class="line">CPU(s):              4</span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# make -j 4 world</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  安装时同步安装帮助文档</span></span></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# make install-world </span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# tree /apps/pgsql</span><br></pre></td></tr></table></figure>
+
+<h5 id="创建pgsql的数据库用户和组"><a href="#创建pgsql的数据库用户和组" class="headerlink" title="创建pgsql的数据库用户和组"></a>创建pgsql的数据库用户和组</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  注意用户需要可以交互登录</span></span></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# useradd -s /bin/bash -m -d /home/postgres postgres</span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# echo -e &#x27;123456\n123456&#x27; | passwd postgres</span><br></pre></td></tr></table></figure>
+
+<h5 id="创建数据目录并授权"><a href="#创建数据目录并授权" class="headerlink" title="创建数据目录并授权"></a>创建数据目录并授权</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  数据目录</span></span></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# mkdir -pv /pgsql/data/</span><br><span class="line">mkdir: created directory &#x27;/pgsql&#x27;</span><br><span class="line">mkdir: created directory &#x27;/pgsql/data/&#x27;</span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# chown postgres.postgres /pgsql/data/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  日志目录</span></span></span><br><span class="line">[root@Rocky8-2 ~]# mkdir -pv /pgsql/log</span><br><span class="line">[root@Rocky8-2 ~]# chown postgres.postgres /pgsql/log/</span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]# ll /pgsql/</span><br><span class="line">total 4</span><br><span class="line">drwx------ 19 postgres postgres 4096 Aug  7 14:06 data</span><br><span class="line">drwxr-xr-x  2 postgres postgres    6 Aug  7 14:12 log</span><br></pre></td></tr></table></figure>
+
+<h5 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 postgresql-15.3]# vim /etc/profile.d/pgsql.sh</span><br><span class="line">export PGHOME=/apps/pgsql</span><br><span class="line">export PATH=$PGHOME/bin/:$PATH</span><br><span class="line">export PGDATA=/pgsql/data</span><br><span class="line">export PGUSER=postgres</span><br><span class="line">export MANPATH=/apps/pgsql/share/man:$MANPATH</span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# . /etc/profile.d/pgsql.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 验证</span></span></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# psql --version</span><br><span class="line">psql (PostgreSQL) 15.3</span><br></pre></td></tr></table></figure>
+
+<h5 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  生产环境建议初始化方式</span></span></span><br><span class="line">[root@Rocky8-2 postgresql-15.3]# su - postgres </span><br><span class="line">[postgres@Rocky8-2 ~]$ initdb  -A md5  -D $PGDATA  -E utf8  --locale=C  -U postgres -W </span><br><span class="line">The files belonging to this database system will be owned by user &quot;postgres&quot;.</span><br><span class="line">This user must also own the server process.</span><br><span class="line"></span><br><span class="line">The database cluster will be initialized with locale &quot;C&quot;.</span><br><span class="line">The default text search configuration will be set to &quot;english&quot;.</span><br><span class="line"></span><br><span class="line">Data page checksums are disabled.</span><br><span class="line"></span><br><span class="line">Enter new superuser password: </span><br><span class="line">Enter it again: </span><br><span class="line"></span><br><span class="line">fixing permissions on existing directory /pgsql/data ... ok</span><br><span class="line">creating subdirectories ... ok</span><br><span class="line">selecting dynamic shared memory implementation ... posix</span><br><span class="line">selecting default max_connections ... 100</span><br><span class="line">selecting default shared_buffers ... 128MB</span><br><span class="line">selecting default time zone ... Asia/Shanghai</span><br><span class="line">creating configuration files ... ok</span><br><span class="line">running bootstrap script ... ok</span><br><span class="line">performing post-bootstrap initialization ... ok</span><br><span class="line">syncing data to disk ... ok</span><br><span class="line"></span><br><span class="line">Success. You can now start the database server using:</span><br><span class="line"></span><br><span class="line">    pg_ctl -D /pgsql/data -l logfile start</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-A			指定local connections默认的身份验证方法</p>
+<p>-D			指定数据目录</p>
+<p>-E			指定字符集</p>
+<p>–local&#x3D;C	 	指定语言环境</p>
+<p>-U			指定数据库superuser用户名</p>
+<p>-W			指定数据库superuser密码</p>
+</blockquote>
+<h5 id="启动和关闭服务"><a href="#启动和关闭服务" class="headerlink" title="启动和关闭服务"></a>启动和关闭服务</h5><blockquote>
+<p>需要使用 postgres 用户</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  启动数据库</span></span></span><br><span class="line">[postgres@Rocky8-2 ~]$ pg_ctl -D /pgsql/data -l /pgsql/log/logfile  start</span><br><span class="line">waiting for server to start.... done</span><br><span class="line">server started</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  关闭数据库</span></span></span><br><span class="line">1、smart 关闭：等所有连接中止后，关闭数据库。如果客户端连接不终止，则无法关闭数据库</span><br><span class="line">[postgres@Rocky8-2 ~]$ pg_ctl  stop  -D /pgsql/data/ -ms</span><br><span class="line"></span><br><span class="line">2、fast 关闭：快速关闭数据库，断开客户端的连接，让已有的事务回滚，然后正常关闭数据库。此项为默认值，建议使用</span><br><span class="line">[postgres@Rocky8-2 ~]$ pg_ctl  stop  -D /pgsql/data/ -mf</span><br><span class="line">waiting for server to shut down.... done</span><br><span class="line">server stopped</span><br><span class="line"></span><br><span class="line">3、immediate: 相当于 kill -9,立即关闭数据库，数据库进程立即停止，直接退出，下次启动数据库需要进行恢复。</span><br><span class="line">[postgres@Rocky8-2 ~]$ pg_ctl  stop  -D /pgsql/data/ -mi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  重启数据库</span></span> </span><br><span class="line">[postgres@Rocky8-2 ~]$ pg_ctl  restart  -l /pgsql/log/logfile  -mf</span><br><span class="line">pg_ctl: PID file &quot;/pgsql/data/postmaster.pid&quot; does not exist</span><br><span class="line">Is server running?</span><br><span class="line">trying to start server anyway</span><br><span class="line">waiting for server to start.... done</span><br><span class="line">server started</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  修改配置后重新加载配置</span></span></span><br><span class="line">[postgres@Rocky8-2 ~]$ pg_ctl  reload  -D /pgsql/data </span><br></pre></td></tr></table></figure>
+
+<h5 id="开机启动脚本"><a href="#开机启动脚本" class="headerlink" title="开机启动脚本"></a>开机启动脚本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  源码包中自带的启动服务脚本</span></span></span><br><span class="line">[root@Rocky8-2 ~]# cat ./postgresql-15.3/contrib/start-scripts/linux </span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]# cp ./postgresql-15.3/contrib/start-scripts/linux /etc/init.d/postgresql</span><br><span class="line">[root@Rocky8-2 ~]# ll /etc/init.d/postgresql</span><br><span class="line">-rw-r--r-- 1 root root 3552 Aug  7 14:54 /etc/init.d/postgresql</span><br><span class="line">[root@Rocky8-2 ~]# chmod +x /etc/init.d/postgresql</span><br><span class="line">[root@Rocky8-2 ~]# chkconfig --add postgresql </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  修改启动参数</span></span></span><br><span class="line">[root@Rocky8-2 ~]# vim /etc/init.d/postgresql</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Installation prefix</span></span><br><span class="line">prefix=/apps/pgsql</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Data directory</span></span><br><span class="line">PGDATA=&quot;/pgsql/data&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Who to run the postmaster as, usually <span class="string">&quot;postgres&quot;</span>.  (NOT <span class="string">&quot;root&quot;</span>)</span></span><br><span class="line">PGUSER=postgres</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Where to keep a <span class="built_in">log</span> file</span></span><br><span class="line">PGLOG=&quot;/pgsql/log/logfile&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]# service postgresql start </span><br><span class="line">Starting PostgreSQL: ok</span><br></pre></td></tr></table></figure>
+
+<h5 id="service-启动文件"><a href="#service-启动文件" class="headerlink" title="service 启动文件"></a>service 启动文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]# cat  &gt; /lib/systemd/system/postgresql.service &lt;&lt;EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=PostgreSQL database server</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">User=postgres</span><br><span class="line">Group=postgres</span><br><span class="line">ExecStart=/apps/pgsql/bin/pg_ctl start -D /pgsql/data -l /pgsql/log/logfile  -s -w -t 300</span><br><span class="line">ExecStop=/apps/pgsql/bin/pg_ctl stop -D /pgsql/data -s -m fast</span><br><span class="line">ExecReload=/apps/pgsql/bin/pg_ctl reload -D /pgsql/data -s</span><br><span class="line">TimeoutSec=300</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]# cat /usr/lib/systemd/system/postgresql.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=PostgreSQL database server</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">User=postgres</span><br><span class="line">Group=postgres</span><br><span class="line">ExecStart=/apps/pgsql/bin/pg_ctl start -D /pgsql/data -l /pgsql/log/logfile  -s -w -t 300</span><br><span class="line">ExecStop=/apps/pgsql/bin/pg_ctl stop -D /pgsql/data -s -m fast</span><br><span class="line">ExecReload=/apps/pgsql/bin/pg_ctl reload -D /pgsql/data -s</span><br><span class="line">TimeoutSec=300</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]# systemctl daemon-reload </span><br><span class="line">[root@Rocky8-2 ~]# ss -ntl </span><br><span class="line">State                 Recv-Q                Send-Q                               Local Address:Port                                Peer Address:Port                Process                </span><br><span class="line">LISTEN                0                     128                                        0.0.0.0:111                                      0.0.0.0:*                                          </span><br><span class="line">LISTEN                0                     128                                        0.0.0.0:22                                       0.0.0.0:*                                          </span><br><span class="line">LISTEN                0                     128                                           [::]:111                                         [::]:*                                          </span><br><span class="line">LISTEN                0                     128                                           [::]:22                                          [::]:*                                          </span><br><span class="line">[root@Rocky8-2 ~]# systemctl start postgresql.service </span><br><span class="line">[root@Rocky8-2 ~]# systemctl status  postgresql.service </span><br><span class="line">● postgresql.service - PostgreSQL database server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/postgresql.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Wed 2023-08-16 17:09:56 CST; 10s ago</span><br><span class="line">  Process: 2433 ExecStop=/apps/pgsql/bin/pg_ctl stop -D /pgsql/data -s -m fast (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 2430 ExecReload=/apps/pgsql/bin/pg_ctl reload -D /pgsql/data -s (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 2439 ExecStart=/apps/pgsql/bin/pg_ctl start -D /pgsql/data -l /pgsql/log/logfile -s -w -t 300 (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 2441 (postgres)</span><br><span class="line">    Tasks: 6 (limit: 12160)</span><br><span class="line">   Memory: 14.8M</span><br><span class="line">   CGroup: /system.slice/postgresql.service</span><br><span class="line">           ├─2441 /apps/pgsql/bin/postgres -D /pgsql/data</span><br><span class="line">           ├─2442 postgres: checkpointer </span><br><span class="line">           ├─2443 postgres: background writer </span><br><span class="line">           ├─2445 postgres: walwriter </span><br><span class="line">           ├─2446 postgres: autovacuum launcher </span><br><span class="line">           └─2447 postgres: logical replication launcher </span><br><span class="line"></span><br><span class="line">Aug 16 17:09:56 Rocky8-2.xcjyc.top systemd[1]: Starting PostgreSQL database server...</span><br><span class="line">Aug 16 17:09:56 Rocky8-2.xcjyc.top systemd[1]: Started PostgreSQL database server.</span><br><span class="line">[root@Rocky8-2 ~]# ss -ntlp </span><br><span class="line">State           Recv-Q          Send-Q                   Local Address:Port                   Peer Address:Port         Process                       </span><br><span class="line">LISTEN          0               128                            0.0.0.0:111                         0.0.0.0:*             users:((&quot;rpcbind&quot;,pid=832,fd=4),(&quot;systemd&quot;,pid=1,fd=88))          </span><br><span class="line">LISTEN          0               128                            0.0.0.0:22                          0.0.0.0:*             users:((&quot;sshd&quot;,pid=900,fd=3))                                     </span><br><span class="line">LISTEN          0               244                          127.0.0.1:5432                        0.0.0.0:*             users:((&quot;postgres&quot;,pid=2441,fd=6))                                </span><br><span class="line">LISTEN          0               128                               [::]:111                            [::]:*             users:((&quot;rpcbind&quot;,pid=832,fd=6),(&quot;systemd&quot;,pid=1,fd=90))          </span><br><span class="line">LISTEN          0               128                               [::]:22                             [::]:*             users:((&quot;sshd&quot;,pid=900,fd=4))                                     </span><br><span class="line">LISTEN          0               244                              [::1]:5432                           [::]:*             users:((&quot;postgres&quot;,pid=2441,fd=5))                                </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="查看编译参数"><a href="#查看编译参数" class="headerlink" title="查看编译参数"></a>查看编译参数</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]# pg_config </span><br><span class="line">BINDIR = /apps/pgsql/bin</span><br><span class="line">DOCDIR = /apps/pgsql/share/doc</span><br><span class="line">HTMLDIR = /apps/pgsql/share/doc</span><br><span class="line">INCLUDEDIR = /apps/pgsql/include</span><br><span class="line">PKGINCLUDEDIR = /apps/pgsql/include</span><br><span class="line">INCLUDEDIR-SERVER = /apps/pgsql/include/server</span><br><span class="line">LIBDIR = /apps/pgsql/lib</span><br><span class="line">PKGLIBDIR = /apps/pgsql/lib</span><br><span class="line">LOCALEDIR = /apps/pgsql/share/locale</span><br><span class="line">MANDIR = /apps/pgsql/share/man</span><br><span class="line">SHAREDIR = /apps/pgsql/share</span><br><span class="line">SYSCONFDIR = /apps/pgsql/etc</span><br><span class="line">PGXS = /apps/pgsql/lib/pgxs/src/makefiles/pgxs.mk</span><br><span class="line">CONFIGURE =  &#x27;--prefix=/apps/pgsql&#x27; &#x27;--with-pgport=5432&#x27;</span><br><span class="line">CC = gcc</span><br><span class="line">CPPFLAGS = -D_GNU_SOURCE</span><br><span class="line">CFLAGS = -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wimplicit-fallthrough=3 -Wcast-function-type -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -O2</span><br><span class="line">CFLAGS_SL = -fPIC</span><br><span class="line">LDFLAGS = -Wl,--as-needed -Wl,-rpath,&#x27;/apps/pgsql/lib&#x27;,--enable-new-dtags</span><br><span class="line">LDFLAGS_EX = </span><br><span class="line">LDFLAGS_SL = </span><br><span class="line">LIBS = -lpgcommon -lpgport -lz -lreadline -lpthread -lrt -ldl -lm </span><br><span class="line">VERSION = PostgreSQL 15.3</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/18/PostgreSQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/" data-id="clvujh4dp001co0h95y365r8m" data-title="PostgreSQL安装初始化" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/init/" rel="tag">init</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/22/PostgreSQL%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          PostgreSQL体系架构
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/07/14/MySQl%E5%A4%9A%E4%B8%BB%E9%9B%86%E7%BE%A4PXC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">PXC(Percona XtraDB Cluster)8.0.32集群</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/">华为数通</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conf/" rel="tag">.conf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster/" rel="tag">Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/" rel="tag">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MarkDown/" rel="tag">MarkDown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mycat/" rel="tag">Mycat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenVPN/" rel="tag">OpenVPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PXC/" rel="tag">PXC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RockyLinux/" rel="tag">RockyLinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typora/" rel="tag">Typora</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/init/" rel="tag">init</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pg-dump/" rel="tag">pg_dump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" rel="tag">华为数通</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/conf/" style="font-size: 10px;">.conf</a> <a href="/tags/Backup/" style="font-size: 12.86px;">Backup</a> <a href="/tags/Cluster/" style="font-size: 12.86px;">Cluster</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/MariaDB/" style="font-size: 20px;">MariaDB</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/MySQL/" style="font-size: 18.57px;">MySQL</a> <a href="/tags/Mycat/" style="font-size: 10px;">Mycat</a> <a href="/tags/MysqlDump/" style="font-size: 10px;">MysqlDump</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OpenVPN/" style="font-size: 10px;">OpenVPN</a> <a href="/tags/PXC/" style="font-size: 10px;">PXC</a> <a href="/tags/PostgreSQL/" style="font-size: 14.29px;">PostgreSQL</a> <a href="/tags/RockyLinux/" style="font-size: 10px;">RockyLinux</a> <a href="/tags/Typora/" style="font-size: 10px;">Typora</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/XtraBackup/" style="font-size: 10px;">XtraBackup</a> <a href="/tags/init/" style="font-size: 17.14px;">init</a> <a href="/tags/pg-dump/" style="font-size: 11.43px;">pg_dump</a> <a href="/tags/shell/" style="font-size: 11.43px;">shell</a> <a href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" style="font-size: 11.43px;">华为数通</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">OpenVPN安装与配置</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/">Ubuntu2204初始化</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/">Rocky9初始化</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6nginx-conf/">Nginx配置文件nginx.conf</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">PostgreSQL日志管理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

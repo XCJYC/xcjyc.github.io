@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Linux常用命令 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Linux常用命令(收集整理)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用命令">
+<meta property="og:url" content="http://example.com/2022/11/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Linux常用命令(收集整理)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-06T10:52:38.000Z">
+<meta property="article:modified_time" content="2023-05-12T05:52:42.503Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Linux常用命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/11/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time class="dt-published" datetime="2022-11-06T10:52:38.000Z" itemprop="datePublished">2022-11-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux常用命令
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>在开发中常用的一些命令。</p>
+<p>1）目录切换</p>
+<p>2）对目录（文件夹）的操作</p>
+<p>3）对文件的操作</p>
+<p>4）文件的压缩、解压</p>
+<p>5）软件的安装</p>
+<p>6）权限的操作</p>
+<p>7）防火墙端口的开启</p>
+<p>8）一些其他的命令</p>
+<p>执行以下命令时需要注意自己对应系统的版本，不同的版本会稍有差别。</p>
+<h2 id="1、目录切换"><a href="#1、目录切换" class="headerlink" title="1、目录切换"></a><strong>1、目录切换</strong></h2><p>cd &#x2F; 	切换到根目录</p>
+<p>cd ~ 切换到用户跟目录</p>
+<p>cd ..&#x2F;    切换到上一级目录</p>
+<p>cd - 	切换到上次访问目录</p>
+<p>cd etc   切换到当前目录下的etc目录</p>
+<h2 id="2、目录的操作命令（增删改查）"><a href="#2、目录的操作命令（增删改查）" class="headerlink" title="2、目录的操作命令（增删改查）"></a><strong>2、目录的操作命令（增删改查）</strong></h2><h4 id="（1）新增目录"><a href="#（1）新增目录" class="headerlink" title="（1）新增目录"></a><strong>（1）新增目录</strong></h4><p>​    mkdir xxx (xxx为自己为目录取的名字)</p>
+<p>​       mkdir  -p   xxx 		递归创建</p>
+<h4 id="（2）查看目录"><a href="#（2）查看目录" class="headerlink" title="（2）查看目录"></a><strong>（2）查看目录</strong></h4><p>​    ls[-a|-l]</p>
+<p>​    ls -a 查看当前目录下的所有目录，以及隐藏目录</p>
+<p>​    ls -l 查看当前目录下的所有目录的详细信息    缩写成ll</p>
+<h4 id="（3）搜索目录"><a href="#（3）搜索目录" class="headerlink" title="（3）搜索目录"></a><strong>（3）搜索目录</strong></h4><p>​     find &#x2F;root -name <em>test</em></p>
+<h4 id="（4）修改目录"><a href="#（4）修改目录" class="headerlink" title="（4）修改目录"></a><strong>（4）修改目录</strong></h4><p>​     mv xxx aaa  (xxx 旧目录名，aaa新目录名) mv同样可以修改文件及压缩包的名字</p>
+<h4 id="（5）移动目录"><a href="#（5）移动目录" class="headerlink" title="（5）移动目录"></a><strong>（5）移动目录</strong></h4><p>​     mv yyy &#x2F;root (yyy需要修改目录。&#x2F;root 剪切到的位置)</p>
+<h4 id="（6）复制目录及文件"><a href="#（6）复制目录及文件" class="headerlink" title="（6）复制目录及文件"></a><strong>（6）复制目录及文件</strong></h4><p>​     cp -r aaa &#x2F;  (将aaa目录复制到根目录下)</p>
+<p>  cp tt.zip &#x2F;  (将tt.zip复制到根目录下)</p>
+<h4 id="（7）删除目录"><a href="#（7）删除目录" class="headerlink" title="（7）删除目录"></a><strong>（7）删除目录</strong></h4><p>​    rm删除文件</p>
+<p>​    rm -r   删除目录</p>
+<p>​     <strong>rm-rf   强制删除目录 （就可以用本句去删除任何东西，常用这句就行了）</strong></p>
+<h2 id="3、文件的操作命令"><a href="#3、文件的操作命令" class="headerlink" title="3、文件的操作命令"></a><strong>3、文件的操作命令</strong></h2><h4 id="（1）新建文件"><a href="#（1）新建文件" class="headerlink" title="（1）新建文件"></a><strong>（1）新建文件</strong></h4><p>​     touch test.txt (Linux 下是可以不加文件的后缀名的，加上文件名是为了开发者分辨文件)</p>
+<h4 id="（2）查看文件"><a href="#（2）查看文件" class="headerlink" title="（2）查看文件"></a><strong>（2）查看文件</strong></h4><p>​     cat&#x2F;more&#x2F;less&#x2F;tail</p>
+<p>​     cat  使用cat可以比较方便的查看较小的文件。用cat查看文件直接显示的文件的最后一屏</p>
+<p>​     more  使用more查看文件，回车翻一行，空格翻一页，Q结束查看，只能往下查看</p>
+<p>​     less 使用less可以用more的方式查看，但是可以使用pg up ,pg down 向上向下翻</p>
+<p>​     tail  使用tail查看文件的后几行</p>
+<p>​       tail -10 xxx.txt 查看文件的后10行</p>
+<p>​       tail -f xxx.txt 动态监控文件 crtl+ c 退出</p>
+<h4 id="（3）修改文件"><a href="#（3）修改文件" class="headerlink" title="（3）修改文件"></a><strong>（3）修改文件</strong></h4><p>​     vim       按 i  a  o （I  A  O）进入编辑模式</p>
+<p>​     vim文件名–&gt;进入文件–&gt;命令模式–&gt;按i进入编辑模式–&gt;编辑文件–&gt;按Esc进入底行模式–&gt;输入:–&gt;</p>
+<p>​     输入命令 wq（保存并退出） 输入q! (不保存，强制退出)</p>
+<h4 id="（4）删除文件"><a href="#（4）删除文件" class="headerlink" title="（4）删除文件"></a><strong>（4）删除文件</strong></h4><p>​     rm -rf   xxx.txt</p>
+<h2 id="4、压缩文件的操作命令"><a href="#4、压缩文件的操作命令" class="headerlink" title="4、压缩文件的操作命令"></a><strong>4、压缩文件的操作命令</strong></h2><h4 id="（1）压缩"><a href="#（1）压缩" class="headerlink" title="（1）压缩"></a><strong>（1）压缩</strong></h4><p>​     tar -zcvf 打包后的名称 打包前的名称</p>
+<p>​     tar -zcvf xxx.tar.gz .&#x2F;*    (.&#x2F;*表示当前目录下的所有文件)</p>
+<h4 id="（2）解压"><a href="#（2）解压" class="headerlink" title="（2）解压"></a><strong>（2）解压</strong></h4><p>​     tar-xvf 包名    解压到当前的目录</p>
+<p>​     tar-xvf 包名 -C 目标目录  解压到指定的目标目录</p>
+<h2 id="5、安装软件"><a href="#5、安装软件" class="headerlink" title="5、安装软件"></a><strong>5、安装软件</strong></h2><h4 id="（1）yam"><a href="#（1）yam" class="headerlink" title="（1）yam"></a><strong>（1）yam</strong></h4><p><strong>1）安装Linux的源包软件</strong></p>
+<p>yum install packagexx</p>
+<p><strong>2）查看所有安装的软件</strong></p>
+<p>yum list</p>
+<p><strong>3）卸载软件</strong></p>
+<p>yum remove xx(xx为查询看到的结果)</p>
+<h4 id="（2）rpm"><a href="#（2）rpm" class="headerlink" title="（2）rpm"></a><strong>（2）rpm</strong></h4><p><strong>1）安装</strong></p>
+<p>rpm -ivh package</p>
+<p><strong>2） 查询</strong></p>
+<p>rpm -qa | grep str(str为需要查询的字符串)</p>
+<p><strong>3） 卸载</strong></p>
+<p>rpm -e –nodeps xxx（xxx为上面查询到的结果）</p>
+<p>ps：一般也卸载了之后也需要删除相应的文件夹（目录）</p>
+<p>find &#x2F; -name str查看残留的文件夹</p>
+<h2 id="6、其他常用命令"><a href="#6、其他常用命令" class="headerlink" title="6、其他常用命令"></a><strong>6、其他常用命令</strong></h2><h4 id="（1）显示当前目录的路径"><a href="#（1）显示当前目录的路径" class="headerlink" title="（1）显示当前目录的路径"></a><strong>（1）显示当前目录的路径</strong></h4><p>​     pwd</p>
+<h4 id="（2）搜索命令"><a href="#（2）搜索命令" class="headerlink" title="（2）搜索命令"></a><strong>（2）搜索命令</strong></h4><p>​     grep xx  要搜索的字符串，要搜索的文件</p>
+<p>​     grep xx test.txt    在test.txt中搜索xx字符串</p>
+<h4 id="（3）管道命令"><a href="#（3）管道命令" class="headerlink" title="（3）管道命令"></a><strong>（3）管道命令</strong></h4><p>​     |</p>
+<p>​     将上次一的命令作为下一次的输入</p>
+<h4 id="（4）查看进程"><a href="#（4）查看进程" class="headerlink" title="（4）查看进程"></a><strong>（4）查看进程</strong></h4><p>​     ps- ef</p>
+<p>​     与管道结合</p>
+<p>​     ps-ef | grep mysql  从所有进程中搜索包含mysql的内容</p>
+<h4 id="（5）杀死进程"><a href="#（5）杀死进程" class="headerlink" title="（5）杀死进程"></a><strong>（5）杀死进程</strong></h4><p>​     kill -9 pid       （pid为进程ID）</p>
+<h4 id="（6）网络配置"><a href="#（6）网络配置" class="headerlink" title="（6）网络配置"></a><strong>（6）网络配置</strong></h4><p>​     1）查看ip地址</p>
+<p>​     ifconfig</p>
+<p>​     2）查看端口状态</p>
+<p>​     netstat -a</p>
+<p>​      3）查询端口占用情况</p>
+<p>​     netstat -tulpn</p>
+<h2 id="7、Linux-的权限命令"><a href="#7、Linux-的权限命令" class="headerlink" title="7、Linux 的权限命令"></a><strong>7、Linux 的权限命令</strong></h2><p>​    -rwxrwxr–</p>
+<p>​    一共10个位</p>
+<p>​    第一个类型</p>
+<p>​    第一个3位 属主权限</p>
+<p>​    第二个3位 属组权限</p>
+<p>​    第三个3位 其他权限用户</p>
+<p>​    r 读取权</p>
+<p>​    w写入权</p>
+<p>​    x 执行权</p>
+<h4 id="（1）修改权限"><a href="#（1）修改权限" class="headerlink" title="（1）修改权限"></a><strong>（1）修改权限</strong></h4><p>​    chmod u&#x3D;rwx,g&#x3D;rw,o&#x3D;r sudo.conf   (sudo.conf为文件名)</p>
+<p>u		主权限</p>
+<p>g 	组权限</p>
+<p>o		其他权限</p>
+<h4 id="（2）修改所属主，组"><a href="#（2）修改所属主，组" class="headerlink" title="（2）修改所属主，组"></a><strong>（2）修改所属主，组</strong></h4><p>​    chown -R mysql mysql&#x2F; 将mysql文件下的所有文件及文件夹的所属主修改为mysql</p>
+<p>​    chgrp -R mysql mysql&#x2F; 	将mysql文件下的所有文件及文件夹的所属组修改为mysql</p>
+<h2 id="8、系统信息、用户"><a href="#8、系统信息、用户" class="headerlink" title="8、系统信息、用户"></a><strong>8、系统信息、用户</strong></h2><h4 id="（1）查看系统版本"><a href="#（1）查看系统版本" class="headerlink" title="（1）查看系统版本"></a><strong>（1）查看系统版本</strong></h4><p>​     cat &#x2F;proc&#x2F;version    cat &#x2F;etc&#x2F;os-release</p>
+<p>[root@x-z ~]# cat &#x2F;etc&#x2F;os-release </p>
+<p>NAME&#x3D;”CentOS Stream”</p>
+<p>VERSION&#x3D;”8”</p>
+<p>ID&#x3D;”centos”</p>
+<p>ID_LIKE&#x3D;”rhel fedora”</p>
+<p>VERSION_ID&#x3D;”8”</p>
+<p>PLATFORM_ID&#x3D;”platform:el8”</p>
+<p>PRETTY_NAME&#x3D;”CentOS Stream 8”</p>
+<p>ANSI_COLOR&#x3D;”0;31”</p>
+<p>CPE_NAME&#x3D;”cpe:&#x2F;o:centos:centos:8”</p>
+<p>HOME_URL&#x3D;”<a target="_blank" rel="noopener" href="https://centos.org/">https://centos.org/</a>“</p>
+<p>BUG_REPORT_URL&#x3D;”<a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>“</p>
+<p>REDHAT_SUPPORT_PRODUCT&#x3D;”Red Hat Enterprise Linux 8”</p>
+<p>REDHAT_SUPPORT_PRODUCT_VERSION&#x3D;”CentOS Stream”</p>
+<h4 id="（2）查看开机自动启动的服务使用chkconfig命令"><a href="#（2）查看开机自动启动的服务使用chkconfig命令" class="headerlink" title="（2）查看开机自动启动的服务使用chkconfig命令"></a><strong>（2）查看开机自动启动的服务使用chkconfig命令</strong></h4><p>​     chkconfig –list</p>
+<h4 id="（3）修改密码"><a href="#（3）修改密码" class="headerlink" title="（3）修改密码"></a><strong>（3）修改密码</strong></h4><p>​     passwd</p>
+<h2 id="9、配置防火墙"><a href="#9、配置防火墙" class="headerlink" title="9、配置防火墙"></a><strong>9、配置防火墙</strong></h2><h4 id="（1）安装防火墙"><a href="#（1）安装防火墙" class="headerlink" title="（1）安装防火墙"></a><strong>（1）安装防火墙</strong></h4><p>​     yum install firewalld</p>
+<h4 id="（2）启动防火墙"><a href="#（2）启动防火墙" class="headerlink" title="（2）启动防火墙"></a><strong>（2）启动防火墙</strong></h4><p>​    systemctl start firewalld</p>
+<h4 id="（3）开机自启动"><a href="#（3）开机自启动" class="headerlink" title="（3）开机自启动"></a><strong>（3）开机自启动</strong></h4><p>​    systemctl enable firewalld</p>
+<h4 id="（4）关闭防火墙"><a href="#（4）关闭防火墙" class="headerlink" title="（4）关闭防火墙"></a><strong>（4）关闭防火墙</strong></h4><p>​    systemctl stop firewalld</p>
+<h4 id="（5）关闭开机自启动"><a href="#（5）关闭开机自启动" class="headerlink" title="（5）关闭开机自启动"></a><strong>（5）关闭开机自启动</strong></h4><p>​    systemctl disable firewalld</p>
+<h4 id="（6）查看防火墙运行状态"><a href="#（6）查看防火墙运行状态" class="headerlink" title="（6）查看防火墙运行状态"></a><strong>（6）查看防火墙运行状态</strong></h4><p>​    firewall-cmd –state  或者 systemctl status firewalld.service</p>
+<h4 id="（7）重启防火墙"><a href="#（7）重启防火墙" class="headerlink" title="（7）重启防火墙"></a><strong>（7）重启防火墙</strong></h4><p>​    firewall-cmd –reload 或者systemctl [start|stop|restart] firewalld.service </p>
+<h4 id="（8）查看帮助"><a href="#（8）查看帮助" class="headerlink" title="（8）查看帮助"></a><strong>（8）查看帮助</strong></h4><p>​    firewall-cmd –help</p>
+<h2 id="10、配置防火墙端口"><a href="#10、配置防火墙端口" class="headerlink" title="10、配置防火墙端口"></a><strong>10、配置防火墙端口</strong></h2><h4 id="（1）开放端口"><a href="#（1）开放端口" class="headerlink" title="（1）开放端口"></a><strong>（1）开放端口</strong></h4><p>​    firewall-cmd –permanent –zone&#x3D;public –add-port&#x3D;8080&#x2F;tcp</p>
+<p>​    –permanent永久开放8080端口</p>
+<h4 id="（2）关闭端口（执行成功）"><a href="#（2）关闭端口（执行成功）" class="headerlink" title="（2）关闭端口（执行成功）"></a><strong>（2）关闭端口（执行成功）</strong></h4><p>​    firewall-cmd –zone&#x3D;public –remove-port&#x3D;8080&#x2F;tcp</p>
+<h4 id="（3）查询端口是否开放"><a href="#（3）查询端口是否开放" class="headerlink" title="（3）查询端口是否开放"></a><strong>（3）查询端口是否开放</strong></h4><p>​    firewall-cmd –query-port&#x3D;8080&#x2F;tcp</p>
+<h4 id="（4）查询所有用户开放的端口"><a href="#（4）查询所有用户开放的端口" class="headerlink" title="（4）查询所有用户开放的端口"></a><strong>（4）查询所有用户开放的端口</strong></h4><p>firewall-cmd –list-ports</p>
+<p><strong>–zone #作用域</strong></p>
+<p><strong>–add-port&#x3D;80&#x2F;tcp  #添加端口，格式为：端口&#x2F;通讯协议</strong></p>
+<p><strong>–permanent  #永久生效，没有此参数重启后失效</strong></p>
+<p>每次关闭开启就需要reload</p>
+<p>firewall-cmd –reload</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" data-id="clvujh4cx0003o0h91vjhehi6" data-title="Linux常用命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/11/06/Linux%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Linux安装初始化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/08/12/Typora%E5%9B%BE%E5%BA%8A%E9%85%8D%E7%BD%AE/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Typora图床配置</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/">华为数通</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conf/" rel="tag">.conf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster/" rel="tag">Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/" rel="tag">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MarkDown/" rel="tag">MarkDown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mycat/" rel="tag">Mycat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenVPN/" rel="tag">OpenVPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PXC/" rel="tag">PXC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RockyLinux/" rel="tag">RockyLinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typora/" rel="tag">Typora</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/init/" rel="tag">init</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pg-dump/" rel="tag">pg_dump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" rel="tag">华为数通</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/conf/" style="font-size: 10px;">.conf</a> <a href="/tags/Backup/" style="font-size: 12.86px;">Backup</a> <a href="/tags/Cluster/" style="font-size: 12.86px;">Cluster</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/MariaDB/" style="font-size: 20px;">MariaDB</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/MySQL/" style="font-size: 18.57px;">MySQL</a> <a href="/tags/Mycat/" style="font-size: 10px;">Mycat</a> <a href="/tags/MysqlDump/" style="font-size: 10px;">MysqlDump</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OpenVPN/" style="font-size: 10px;">OpenVPN</a> <a href="/tags/PXC/" style="font-size: 10px;">PXC</a> <a href="/tags/PostgreSQL/" style="font-size: 14.29px;">PostgreSQL</a> <a href="/tags/RockyLinux/" style="font-size: 10px;">RockyLinux</a> <a href="/tags/Typora/" style="font-size: 10px;">Typora</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/XtraBackup/" style="font-size: 10px;">XtraBackup</a> <a href="/tags/init/" style="font-size: 17.14px;">init</a> <a href="/tags/pg-dump/" style="font-size: 11.43px;">pg_dump</a> <a href="/tags/shell/" style="font-size: 11.43px;">shell</a> <a href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" style="font-size: 11.43px;">华为数通</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">OpenVPN安装与配置</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/">Ubuntu2204初始化</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/">Rocky9初始化</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6nginx-conf/">Nginx配置文件nginx.conf</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">PostgreSQL日志管理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

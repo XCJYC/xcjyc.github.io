@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Mycat实现MySQL读写分离 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="利用Mycat实现MySQL读写分离">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mycat实现MySQL读写分离">
+<meta property="og:url" content="http://example.com/2023/07/11/Mycat%E5%AE%9E%E7%8E%B0MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="利用Mycat实现MySQL读写分离">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/mycat.png">
+<meta property="og:image" content="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20230712110202.png">
+<meta property="og:image" content="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20230712114436.png">
+<meta property="article:published_time" content="2023-07-11T05:48:36.000Z">
+<meta property="article:modified_time" content="2023-07-18T05:31:52.801Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="init">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="Cluster">
+<meta property="article:tag" content="Mycat">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/mycat.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Mycat实现MySQL读写分离" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/11/Mycat%E5%AE%9E%E7%8E%B0MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" class="article-date">
+  <time class="dt-published" datetime="2023-07-11T05:48:36.000Z" itemprop="datePublished">2023-07-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Mycat实现MySQL读写分离
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Mycat-数据库中间件，开源、面向企业的数据库集群。高可用集群方式有："><a href="#Mycat-数据库中间件，开源、面向企业的数据库集群。高可用集群方式有：" class="headerlink" title="Mycat:数据库中间件，开源、面向企业的数据库集群。高可用集群方式有："></a>Mycat:数据库中间件，开源、面向企业的数据库集群。高可用集群方式有：</h2><ul>
+<li>keepalived + mycat + mysql</li>
+<li>keepalived + lvs + mycat + mysql</li>
+<li>keepalived + haproxy + mycat + mysql</li>
+</ul>
+<h2 id="实验：mycat-mysql实现数据库集群（mycat-1-6-7-6-release-版本）"><a href="#实验：mycat-mysql实现数据库集群（mycat-1-6-7-6-release-版本）" class="headerlink" title="实验：mycat + mysql实现数据库集群（mycat 1.6.7.6 release 版本）"></a>实验：mycat + mysql实现数据库集群（mycat 1.6.7.6 release 版本）</h2><p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/mycat.png" alt="mycat"></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="安装数据库环境："><a href="#安装数据库环境：" class="headerlink" title="安装数据库环境："></a>安装数据库环境：</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]<span class="comment"># systemctl  status firewalld.service</span></span><br><span class="line">● firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)</span><br><span class="line">   Active: inactive (dead)</span><br><span class="line">     Docs: man:firewalld(1)</span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># getenforce </span></span><br><span class="line">Disabled</span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># yum install -y mysql-server</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-master-和-slave-上的配置，配置主从数据库："><a href="#修改-master-和-slave-上的配置，配置主从数据库：" class="headerlink" title="修改 master 和 slave 上的配置，配置主从数据库："></a>修改 master 和 slave 上的配置，配置主从数据库：</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##  master</span></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># mkdir /binlog</span></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># chown mysql. /binlog/</span></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># vim /etc/my.cnf.d/mysql.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">server-id=12</span><br><span class="line">log-bin=/binlog/mysql-bin</span><br><span class="line"></span><br><span class="line"><span class="comment">## 完全备份</span></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># mkdir /data</span></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># mysqldump -A -F --master-data=1 --single-transaction &gt; /data/all.sql</span></span><br><span class="line">WARNING: --master-data is deprecated and will be removed <span class="keyword">in</span> a future version. Use --source-data instead.</span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># ll /data/</span></span><br><span class="line">total 1264</span><br><span class="line">-rw-r--r-- 1 root root 1292872 Jul 11 14:33 all.sql</span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># scp /data/all.sql  10.0.0.13:/data/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 创建用户与授权</span></span><br><span class="line">mysql&gt; create user repluser@<span class="string">&#x27;10.0.0.%&#x27;</span> identified by <span class="string">&quot;123456&quot;</span>;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;  grant replication slave on *.* to repluser@<span class="string">&#x27;10.0.0.%&#x27;</span>;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## slave</span></span><br><span class="line">[root@Rocky8-3 ~]<span class="comment"># mkdir /binlog</span></span><br><span class="line">[root@Rocky8-3 ~]<span class="comment"># chown mysql. /binlog/</span></span><br><span class="line">[root@Rocky8-3 ~]<span class="comment"># vim /etc/my.cnf.d/mysql.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">server-id=13</span><br><span class="line">log-bin=/binlog/mysql-bin</span><br><span class="line">read-only</span><br><span class="line"></span><br><span class="line"><span class="comment">## 修改备份文件</span></span><br><span class="line">[root@Rocky8-12 ~]<span class="comment"># vim /data/all.sql</span></span><br><span class="line">CHANGE MASTER TO </span><br><span class="line">    MASTER_HOST=<span class="string">&#x27;10.0.0.12&#x27;</span>,</span><br><span class="line">    MASTER_PORT=3306,</span><br><span class="line">    MASTER_USER=<span class="string">&#x27;repluser&#x27;</span>,</span><br><span class="line">    MASTER_PASSWORD=<span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">    MASTER_LOG_FILE=<span class="string">&#x27;mysql-bin.000003&#x27;</span>, </span><br><span class="line">    MASTER_LOG_POS=157;</span><br><span class="line">    </span><br><span class="line"><span class="comment">## 还原数据库</span></span><br><span class="line">[root@Rocky8-12 ~]<span class="comment"># mysql </span></span><br><span class="line">mysql&gt; <span class="built_in">set</span> sql_log_bin=0;</span><br><span class="line">mysql&gt; <span class="built_in">set</span> sql_log_bin=1;</span><br><span class="line">mysql&gt; start slave;</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看主从状态</span></span><br><span class="line">mysql&gt; show slave status\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">               Slave_IO_State: Waiting <span class="keyword">for</span> <span class="built_in">source</span> to send event</span><br><span class="line">                  Master_Host: 10.0.0.12</span><br><span class="line">                  Master_User: repluser</span><br><span class="line">                  Master_Port: 3306</span><br><span class="line">                Connect_Retry: 60</span><br><span class="line">              Master_Log_File: mysql-bin.000003</span><br><span class="line">          Read_Master_Log_Pos: 682</span><br><span class="line">               Relay_Log_File: Rocky8-3-relay-bin.000002</span><br><span class="line">                Relay_Log_Pos: 851</span><br><span class="line">        Relay_Master_Log_File: mysql-bin.000003</span><br><span class="line">             Slave_IO_Running: Yes</span><br><span class="line">            Slave_SQL_Running: Yes</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装mycat-1-6-7-6"><a href="#安装mycat-1-6-7-6" class="headerlink" title="安装mycat 1.6.7.6"></a>安装mycat 1.6.7.6</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 安装java环境</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># yum install -y java</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># java -version</span></span><br><span class="line">openjdk version <span class="string">&quot;1.8.0_372&quot;</span></span><br><span class="line">OpenJDK Runtime Environment (build 1.8.0_372-b07)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 25.372-b07, mixed mode)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 下载准备 mycat</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># wget http://dl.mycat.org.cn/1.6.7.6/20220524101549/Mycat-server-1.6.7.6-release-20220524173810-linux.tar.gz</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># mkdir /apps</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># tar xvf Mycat-server-1.6.7.6-release-20220524173810-linux.tar.gz -C /apps/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 准备环境变量</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># echo &#x27;PATH=/apps/mycat/bin:$PATH&#x27; &gt; /etc/profile.d/mycat.sh</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># source /etc/profile.d/mycat.sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 启动mycat </span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># ll /apps/mycat/bin/mycat</span></span><br><span class="line">-rwxr-xr-x 1 root root 15678 May 24  2022 /apps/mycat/bin/mycat</span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># mycat</span></span><br><span class="line">Usage: /apps/mycat/bin/mycat &#123; console | start | stop | restart | status | dump &#125;</span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># mycat start</span></span><br><span class="line">Starting Mycat-server...</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看监听端口与日志</span></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># ss -ntlp</span></span><br><span class="line">State         Recv-Q        Send-Q               Local Address:Port                Peer Address:Port       Process                                                         </span><br><span class="line">LISTEN        0             128                        0.0.0.0:22                       0.0.0.0:*           <span class="built_in">users</span>:((&quot;sshd&quot;,pid=<span class="number">874</span>,fd=<span class="number">3</span>))                                  </span><br><span class="line">LISTEN        0             1                        127.0.0.1:32000                    0.0.0.0:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2239</span>,fd=<span class="number">4</span>))                                 </span><br><span class="line">LISTEN        0             128                        0.0.0.0:111                      0.0.0.0:*           <span class="built_in">users</span>:((&quot;rpcbind&quot;,pid=<span class="number">804</span>,fd=<span class="number">4</span>),(&quot;systemd&quot;,pid=<span class="number">1</span>,fd=<span class="number">37</span>))       </span><br><span class="line">LISTEN        0             50                               *:37425                          *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2239</span>,fd=<span class="number">78</span>))                                </span><br><span class="line">LISTEN        0             128                           [::]:22                          [::]:*           <span class="built_in">users</span>:((&quot;sshd&quot;,pid=<span class="number">874</span>,fd=<span class="number">4</span>))                                  </span><br><span class="line">LISTEN        0             50                               *:1984                           *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2239</span>,fd=<span class="number">77</span>))                                </span><br><span class="line">LISTEN        0             2048                             *:8066                           *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2239</span>,fd=<span class="number">104</span>))                               </span><br><span class="line">LISTEN        0             50                               *:34085                          *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2239</span>,fd=<span class="number">76</span>))                                </span><br><span class="line">LISTEN        0             2048                             *:9066                           *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2239</span>,fd=<span class="number">102</span>))                               </span><br><span class="line">LISTEN        0             128                           [::]:111                         [::]:*           <span class="built_in">users</span>:((&quot;rpcbind&quot;,pid=<span class="number">804</span>,fd=<span class="number">6</span>),(&quot;systemd&quot;,pid=<span class="number">1</span>,fd=<span class="number">39</span>))       </span><br><span class="line"></span><br><span class="line">[root@Rocky8-1 ~]<span class="comment"># tail /apps/mycat/logs/wrapper.log </span></span><br><span class="line">STATUS | wrapper  | 2023/07/11 16:58:28 | --&gt; Wrapper Started as Daemon</span><br><span class="line">STATUS | wrapper  | 2023/07/11 16:58:28 | Launching a JVM...</span><br><span class="line">INFO   | jvm 1    | 2023/07/11 16:58:29 | Wrapper (Version 3.2.3) http://wrapper.tanukisoftware.org</span><br><span class="line">INFO   | jvm 1    | 2023/07/11 16:58:29 |   Copyright 1999-2006 Tanuki Software, Inc.  All Rights Reserved.</span><br><span class="line">INFO   | jvm 1    | 2023/07/11 16:58:29 | </span><br><span class="line">INFO   | jvm 1    | 2023/07/11 16:58:29 | Loading class `com.mysql.jdbc.Driver<span class="string">&#x27;. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver&#x27;</span>. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.</span><br><span class="line">INFO   | jvm 1    | 2023/07/11 16:58:31 | MyCAT Server startup successfully. see logs <span class="keyword">in</span> logs/mycat.log</span><br><span class="line"></span><br><span class="line">观察是否出现  MyCAT Server startup successfully. see logs <span class="keyword">in</span> logs/mycat.log</span><br></pre></td></tr></table></figure>
+
+<h4 id="停止mycat-修改-apps-mycat-conf-server-xml服务端口号为3306"><a href="#停止mycat-修改-apps-mycat-conf-server-xml服务端口号为3306" class="headerlink" title="停止mycat ,修改&#x2F;apps&#x2F;mycat&#x2F;conf&#x2F;server.xml服务端口号为3306"></a>停止mycat ,修改&#x2F;apps&#x2F;mycat&#x2F;conf&#x2F;server.xml服务端口号为3306</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-1 conf]# vim /apps/mycat/conf/server.xml </span><br></pre></td></tr></table></figure>
+
+<h4 id="端口号：复制注释的配置行，修改端口号为3306："><a href="#端口号：复制注释的配置行，修改端口号为3306：" class="headerlink" title="端口号：复制注释的配置行，修改端口号为3306："></a>端口号：复制注释的配置行，修改端口号为3306：</h4><p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20230712110202.png" alt="20230712110202"></p>
+<h4 id="创建-mycat-连接到-mysql-数据库的用户名和密码（在mysql-主服务器上创建账号并授权）"><a href="#创建-mycat-连接到-mysql-数据库的用户名和密码（在mysql-主服务器上创建账号并授权）" class="headerlink" title="创建 mycat 连接到 mysql 数据库的用户名和密码（在mysql 主服务器上创建账号并授权）"></a>创建 mycat 连接到 mysql 数据库的用户名和密码（在mysql 主服务器上创建账号并授权）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create user admin@&#x27;10.0.0.%&#x27; identified by &#x27;123456&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.23 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; grant all on hellodb.* to admin@&#x27;10.0.0.%&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-apps-mycat-conf-schema-xml-配置文件："><a href="#修改-apps-mycat-conf-schema-xml-配置文件：" class="headerlink" title="修改&#x2F;apps&#x2F;mycat&#x2F;conf&#x2F;schema.xml 配置文件："></a>修改&#x2F;apps&#x2F;mycat&#x2F;conf&#x2F;schema.xml 配置文件：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-1 conf]# vim /apps/mycat/conf/schema.xml </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20230712114436.png" alt="20230712114436"></p>
+<h4 id="启动mycat-查看端口和日志"><a href="#启动mycat-查看端口和日志" class="headerlink" title="启动mycat ,查看端口和日志"></a>启动mycat ,查看端口和日志</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-1 conf]<span class="comment"># mycat start </span></span><br><span class="line">Starting Mycat-server...</span><br><span class="line"></span><br><span class="line">[root@Rocky8-1 conf]<span class="comment"># ss -ntlp</span></span><br><span class="line">State         Recv-Q        Send-Q               Local Address:Port                Peer Address:Port       Process                                                         </span><br><span class="line">LISTEN        0             128                        0.0.0.0:22                       0.0.0.0:*           <span class="built_in">users</span>:((&quot;sshd&quot;,pid=<span class="number">874</span>,fd=<span class="number">3</span>))                                  </span><br><span class="line">LISTEN        0             1                        127.0.0.1:32000                    0.0.0.0:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2760</span>,fd=<span class="number">4</span>))                                 </span><br><span class="line">LISTEN        0             128                        0.0.0.0:111                      0.0.0.0:*           <span class="built_in">users</span>:((&quot;rpcbind&quot;,pid=<span class="number">804</span>,fd=<span class="number">4</span>),(&quot;systemd&quot;,pid=<span class="number">1</span>,fd=<span class="number">37</span>))       </span><br><span class="line">LISTEN        0             50                               *:41649                          *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2760</span>,fd=<span class="number">76</span>))                                </span><br><span class="line">LISTEN        0             50                               *:37107                          *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2760</span>,fd=<span class="number">78</span>))                                </span><br><span class="line">LISTEN        0             128                           [::]:22                          [::]:*           <span class="built_in">users</span>:((&quot;sshd&quot;,pid=<span class="number">874</span>,fd=<span class="number">4</span>))                                  </span><br><span class="line">LISTEN        0             50                               *:1984                           *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2760</span>,fd=<span class="number">77</span>))                                </span><br><span class="line">LISTEN        0             2048                             *:3306                           *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2760</span>,fd=<span class="number">107</span>))                               </span><br><span class="line">LISTEN        0             2048                             *:9066                           *:*           <span class="built_in">users</span>:((&quot;java&quot;,pid=<span class="number">2760</span>,fd=<span class="number">103</span>))                               </span><br><span class="line">LISTEN        0             128                           [::]:111                         [::]:*           <span class="built_in">users</span>:((&quot;rpcbind&quot;,pid=<span class="number">804</span>,fd=<span class="number">6</span>),(&quot;systemd&quot;,pid=<span class="number">1</span>,fd=<span class="number">39</span>))</span><br><span class="line"></span><br><span class="line">[root@Rocky8-1 conf]<span class="comment"># cat /apps/mycat/logs/wrapper.log </span></span><br><span class="line">STATUS | wrapper  | 2023/07/12 11:48:34 | --&gt; Wrapper Started as Daemon</span><br><span class="line">STATUS | wrapper  | 2023/07/12 11:48:35 | Launching a JVM...</span><br><span class="line">INFO   | jvm 1    | 2023/07/12 11:48:37 | Wrapper (Version 3.2.3) http://wrapper.tanukisoftware.org</span><br><span class="line">INFO   | jvm 1    | 2023/07/12 11:48:37 |   Copyright 1999-2006 Tanuki Software, Inc.  All Rights Reserved.</span><br><span class="line">INFO   | jvm 1    | 2023/07/12 11:48:37 | </span><br><span class="line">INFO   | jvm 1    | 2023/07/12 11:48:40 | MyCAT Server startup successfully. see logs <span class="keyword">in</span> logs/mycat.log</span><br><span class="line">[root@Rocky8-1 conf]<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="连接-mycat-验证服务"><a href="#连接-mycat-验证服务" class="headerlink" title="连接 mycat ,验证服务"></a>连接 mycat ,验证服务</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-3 ~]# mysql -uroot -p123456 -h 10.0.0.11</span><br><span class="line">mysql&gt; show databases;</span><br><span class="line">+----------+</span><br><span class="line">| DATABASE |</span><br><span class="line">+----------+</span><br><span class="line">| TESTDB   |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; use TESTDB;</span><br><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql&gt; SHOW TABLES;</span><br><span class="line">+-------------------+</span><br><span class="line">| Tables_in_hellodb |</span><br><span class="line">+-------------------+</span><br><span class="line">| classes           |</span><br><span class="line">| coc               |</span><br><span class="line">| courses           |</span><br><span class="line">| scores            |</span><br><span class="line">| students          |</span><br><span class="line">| teachers          |</span><br><span class="line">| toc               |</span><br><span class="line">+-------------------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="验证读写分离，开启-mysql-主、从节点的通用用志，并跟踪目志"><a href="#验证读写分离，开启-mysql-主、从节点的通用用志，并跟踪目志" class="headerlink" title="验证读写分离，开启 mysql 主、从节点的通用用志，并跟踪目志"></a>验证读写分离，开启 mysql 主、从节点的通用用志，并跟踪目志</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">select</span> @@general_log;</span><br><span class="line">+---------------+</span><br><span class="line">| @@general_log |</span><br><span class="line">+---------------+</span><br><span class="line">|             0 |</span><br><span class="line">+---------------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="built_in">set</span> global general_log=ON;</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 主节点</span></span><br><span class="line">[root@Rocky8-2 ~]<span class="comment"># tail -f /var/lib/mysql/Rocky8-2.log </span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 从节点</span></span><br><span class="line">[root@Rocky8-3 ~]<span class="comment"># tail -f /var/lib/mysql/Rocky8-3.log </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查询数据库表在从节点看到"><a href="#查询数据库表在从节点看到" class="headerlink" title="查询数据库表在从节点看到"></a>查询数据库表在从节点看到</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-3 ~]# tail -f /var/lib/mysql/Rocky8-3.log </span><br><span class="line">2023-07-12T04:46:04.218262Z	   21 Query	select user()</span><br><span class="line">2023-07-12T04:45:56.918773Z	   23 Query	SELECT * FROM teachers</span><br><span class="line">2023-07-12T04:46:04.218262Z	   21 Query	select user()</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加记录在主节点看到"><a href="#添加记录在主节点看到" class="headerlink" title="添加记录在主节点看到"></a>添加记录在主节点看到</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]# tail -f /var/lib/mysql/Rocky8-2.log </span><br><span class="line">2023-07-12T04:49:44.219452Z	   19 Query	select user()</span><br><span class="line">2023-07-12T04:49:45.114385Z	   17 Query	insert teachers(name,age,gender) values(&#x27;B1&#x27;,33,&#x27;M&#x27;)</span><br><span class="line">2023-07-12T04:49:54.217873Z	   23 Query	select user()</span><br></pre></td></tr></table></figure>
+
+<h4 id="注：select-user-为-mycat-服务检测数据库存活性产生的记录，通过select-user-指令，查询当前用户身份"><a href="#注：select-user-为-mycat-服务检测数据库存活性产生的记录，通过select-user-指令，查询当前用户身份" class="headerlink" title="注：select user() 为 mycat 服务检测数据库存活性产生的记录，通过select user()指令，查询当前用户身份"></a>注：select user() 为 mycat 服务检测数据库存活性产生的记录，通过select user()指令，查询当前用户身份</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select user() ;</span><br><span class="line">+----------------+</span><br><span class="line">| USER()         |</span><br><span class="line">+----------------+</span><br><span class="line">| root@10.0.0.13 |</span><br><span class="line">+----------------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<h4 id="注：停止从节点，自动将读操作转到主节点；停止主节点，不会将写操作转到从节点。"><a href="#注：停止从节点，自动将读操作转到主节点；停止主节点，不会将写操作转到从节点。" class="headerlink" title="注：停止从节点，自动将读操作转到主节点；停止主节点，不会将写操作转到从节点。"></a>注：停止从节点，自动将读操作转到主节点；停止主节点，不会将写操作转到从节点。</h4>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/11/Mycat%E5%AE%9E%E7%8E%B0MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" data-id="clvujh4df000ro0h97mve7y8g" data-title="Mycat实现MySQL读写分离" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cluster/" rel="tag">Cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MariaDB/" rel="tag">MariaDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mycat/" rel="tag">Mycat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/init/" rel="tag">init</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/12/Mysql%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84GTID%E5%A4%8D%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          MySQL主从架构GTID复制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/05/25/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MySQL主从复制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/">华为数通</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conf/" rel="tag">.conf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster/" rel="tag">Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/" rel="tag">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MarkDown/" rel="tag">MarkDown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mycat/" rel="tag">Mycat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenVPN/" rel="tag">OpenVPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PXC/" rel="tag">PXC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RockyLinux/" rel="tag">RockyLinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typora/" rel="tag">Typora</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/init/" rel="tag">init</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pg-dump/" rel="tag">pg_dump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" rel="tag">华为数通</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/conf/" style="font-size: 10px;">.conf</a> <a href="/tags/Backup/" style="font-size: 12.86px;">Backup</a> <a href="/tags/Cluster/" style="font-size: 12.86px;">Cluster</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/MariaDB/" style="font-size: 20px;">MariaDB</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/MySQL/" style="font-size: 18.57px;">MySQL</a> <a href="/tags/Mycat/" style="font-size: 10px;">Mycat</a> <a href="/tags/MysqlDump/" style="font-size: 10px;">MysqlDump</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OpenVPN/" style="font-size: 10px;">OpenVPN</a> <a href="/tags/PXC/" style="font-size: 10px;">PXC</a> <a href="/tags/PostgreSQL/" style="font-size: 14.29px;">PostgreSQL</a> <a href="/tags/RockyLinux/" style="font-size: 10px;">RockyLinux</a> <a href="/tags/Typora/" style="font-size: 10px;">Typora</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/XtraBackup/" style="font-size: 10px;">XtraBackup</a> <a href="/tags/init/" style="font-size: 17.14px;">init</a> <a href="/tags/pg-dump/" style="font-size: 11.43px;">pg_dump</a> <a href="/tags/shell/" style="font-size: 11.43px;">shell</a> <a href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" style="font-size: 11.43px;">华为数通</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">OpenVPN安装与配置</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/">Ubuntu2204初始化</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/">Rocky9初始化</a>
+          </li>
+        
+          <li>
+            <a href="/2024/04/18/Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6nginx-conf/">Nginx配置文件nginx.conf</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">PostgreSQL日志管理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
