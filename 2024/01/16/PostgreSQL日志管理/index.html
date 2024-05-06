@@ -1,290 +1,800 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
-  <title>PostgreSQL日志管理 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="PostgreSQL日志管理">
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="PostgreSQL日志管理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL日志管理">
-<meta property="og:url" content="http://example.com/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="https://www.xcjyc.top/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="xcjyc.top">
 <meta property="og:description" content="PostgreSQL日志管理">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/postgresql.png">
 <meta property="article:published_time" content="2024-01-16T02:47:02.000Z">
 <meta property="article:modified_time" content="2024-01-25T08:52:37.156Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="XCJYC">
 <meta property="article:tag" content="Backup">
 <meta property="article:tag" content="PostgreSQL">
 <meta property="article:tag" content="pg_dump">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/postgresql.png">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
-<link rel="stylesheet" href="/css/style.css">
+  
+  <title>PostgreSQL日志管理 - xcjyc.top</title>
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
   
 <meta name="generator" content="Hexo 7.2.0"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-PostgreSQL日志管理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" class="article-date">
-  <time class="dt-published" datetime="2024-01-16T02:47:02.000Z" itemprop="datePublished">2024-01-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/PostgreSQL/">PostgreSQL</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      PostgreSQL日志管理
-    </h1>
   
 
-      </header>
+  <header>
     
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="PostgreSQL日志分类："><a href="#PostgreSQL日志分类：" class="headerlink" title="PostgreSQL日志分类："></a>PostgreSQL日志分类：</h3><ul>
-<li>运行日志：$PGDATA&#x2F;log 默认未开启，需在配置文件中关掉注释开启</li>
-<li>在线重做日志：$PGDATA&#x2F;pg_wal </li>
-<li>事务提交日志：$PGDATA&#x2F;pg_xact</li>
-<li>服务器日志：启动服务时指定日志文件生成的日志</li>
-</ul>
-<h3 id="运行日志"><a href="#运行日志" class="headerlink" title="运行日志"></a>运行日志</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">运行日志默认未开启，修改配置文开启日志</span></span><br><span class="line">[root@Rocky8-2 ~]# vim /pgsql/data/postgresql.conf </span><br><span class="line">logging_collector = on                  # Enable capturing of stderr, jsonlog,</span><br><span class="line">                                        # and csvlog into log files. Required</span><br><span class="line">                                        # to be on for csvlogs and jsonlogs.</span><br><span class="line">                                        # (change requires restart)</span><br><span class="line">[root@Rocky8-2 ~]# systemctl restart postgresql.service </span><br><span class="line">[root@Rocky8-2 ~]# ll $PGDATA/log</span><br><span class="line">total 4</span><br><span class="line">-rw------- 1 postgres postgres 919 Jan 16 14:24 postgresql-2024-01-16_141938.log</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">主要记录数据库的运行状况和监听端口</span></span><br><span class="line">[root@Rocky8-2 ~]# tail $PGDATA/log/postgresql-2024-01-16_141938.log </span><br><span class="line">2024-01-16 14:19:38.032 CST [2980] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-18), 64-bit</span><br><span class="line">2024-01-16 14:19:38.035 CST [2980] LOG:  listening on IPv6 address &quot;::1&quot;, port 5432</span><br><span class="line">2024-01-16 14:19:38.035 CST [2980] LOG:  listening on IPv4 address &quot;127.0.0.1&quot;, port 5432</span><br><span class="line">2024-01-16 14:19:38.042 CST [2980] LOG:  listening on Unix socket &quot;/tmp/.s.PGSQL.5432&quot;</span><br><span class="line">2024-01-16 14:19:38.061 CST [2984] LOG:  database system was shut down at 2024-01-16 14:19:37 CST</span><br><span class="line">2024-01-16 14:19:38.078 CST [2980] LOG:  database system is ready to accept connections</span><br><span class="line">2024-01-16 14:24:38.073 CST [2982] LOG:  checkpoint starting: time</span><br><span class="line">2024-01-16 14:24:38.092 CST [2982] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.004 s, total=0.020 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=0 kB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启系统日志后，多了一个logger进程</span></span><br><span class="line">[root@Rocky8-2 ~]# ps aux |grep postgres</span><br><span class="line">postgres    2980  1.0  0.8 175808 17760 ?        Ss   14:19   0:00 /apps/pgsql/bin/postgres -D /pgsql/data</span><br><span class="line">postgres    2981  0.0  0.1  27684  2856 ?        Ss   14:19   0:00 postgres: logger </span><br><span class="line">postgres    2982  0.0  0.1 175808  2744 ?        Ss   14:19   0:00 postgres: checkpointer </span><br><span class="line">postgres    2983  0.0  0.2 175948  4248 ?        Ss   14:19   0:00 postgres: background writer </span><br><span class="line">postgres    2985  0.0  0.4 175808  8116 ?        Ss   14:19   0:00 postgres: walwriter </span><br><span class="line">postgres    2986  0.0  0.2 177396  5244 ?        Ss   14:19   0:00 postgres: autovacuum launcher </span><br><span class="line">postgres    2987  0.0  0.2 177376  5104 ?        Ss   14:19   0:00 postgres: logical replication launcher </span><br><span class="line">root        2991  0.0  0.0  12144  1200 pts/5    S+   14:19   0:00 grep --color=auto postgres</span><br></pre></td></tr></table></figure>
 
-<h3 id="在线WAL日志"><a href="#在线WAL日志" class="headerlink" title="在线WAL日志"></a>在线WAL日志</h3><p>WAL日志是为了保证数据库崩溃后的数据安全，如果系统崩溃，可以“重放”从最后一次检查以来的日志项来恢复数据库的一致性。</p>
-<p>WAL日志文件存放在$PGDATA&#x2F;pg_wal下</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]# ll $PGDATA/pg_wal</span><br><span class="line">total 16384</span><br><span class="line">-rw------- 1 postgres postgres 16777216 Jan 16 14:24 000000010000000000000001</span><br><span class="line">drwx------ 2 postgres postgres        6 Aug  7 14:06 archive_status</span><br></pre></td></tr></table></figure>
-
-<p>WAL日志相关配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">日志文件总大小（默认值）</span></span><br><span class="line">[root@Rocky8-2 ~]# vim /pgsql/data/postgresql.conf </span><br><span class="line">max_wal_size = 1GB</span><br><span class="line">min_wal_size = 80MB</span><br></pre></td></tr></table></figure>
-
-<p>LSN:Log Sequence Number 用于记录WAL文件当前的位置，是WAL日志的唯一的、全局的标识。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前LSN号：</span></span><br><span class="line">postgres=# select pg_current_wal_lsn();</span><br><span class="line"> pg_current_wal_lsn </span><br><span class="line">--------------------</span><br><span class="line"> 0/18D6FD8</span><br><span class="line">(1 row)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看光前LSN对应的WAL日志文件</span></span><br><span class="line">postgres=# select pg_walfile_name(pg_current_wal_lsn());</span><br><span class="line">     pg_walfile_name      </span><br><span class="line">--------------------------</span><br><span class="line"> 000000010000000000000001</span><br><span class="line">(1 row)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前事务ID</span></span><br><span class="line">postgres=# select txid_current();</span><br><span class="line"> txid_current </span><br><span class="line">--------------</span><br><span class="line">          749</span><br><span class="line">(1 row)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前WAL日志偏移量</span></span><br><span class="line">postgres=# select pg_walfile_NAME_OFFSET(pg_current_wal_lsn());</span><br><span class="line">       pg_walfile_name_offset       </span><br><span class="line">------------------------------------</span><br><span class="line"> (000000010000000000000001,9269536)</span><br><span class="line">(1 row)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换wal日志（默认文件达到16M时会自动切换wal日志）</span></span><br><span class="line">postgres=# select pg_switch_wal();</span><br><span class="line"> pg_switch_wal </span><br><span class="line">---------------</span><br><span class="line"> 0/18D7138</span><br><span class="line">(1 row)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">按时间顺序显示wal文件</span></span><br><span class="line">postgres=# select * from pg_ls_waldir() order by modification asc;</span><br><span class="line">           name           |   size   |      modification      </span><br><span class="line">--------------------------+----------+------------------------</span><br><span class="line"> 000000010000000000000003 | 16777216 | 2024-01-22 11:39:38+08</span><br><span class="line"> 000000010000000000000002 | 16777216 | 2024-01-22 11:41:10+08</span><br><span class="line">(2 rows)</span><br></pre></td></tr></table></figure>
-
-<p>使用命令pg_waldump查看wal日志内容，执行结果中 tx: 后面的数字即事务id,同一个事务的id是相同的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]# pg_waldump /pgsql/data/pg_wal/000000010000000000000002</span><br><span class="line">rmgr: Standby     len (rec/tot):     50/    50, tx:          0, lsn: 0/02000028, prev 0/018D7120, desc: RUNNING_XACTS nextXid 750 latestCompletedXid 749 oldestRunningXid 750</span><br><span class="line">rmgr: Standby     len (rec/tot):     50/    50, tx:          0, lsn: 0/02000060, prev 0/02000028, desc: RUNNING_XACTS nextXid 750 latestCompletedXid 749 oldestRunningXid 750</span><br><span class="line">rmgr: XLOG        len (rec/tot):    114/   114, tx:          0, lsn: 0/02000098, prev 0/02000060, desc: CHECKPOINT_ONLINE redo 0/2000060; tli 1; prev tli 1; fpw true; xid 0:750; oid 16426; multi 1; offset 0; oldest xid 717 in DB 1; oldest multi 1 in DB 1; oldest/newest commit timestamp xid: 0/0; oldest running xid 750; online</span><br><span class="line">rmgr: Standby     len (rec/tot):     50/    50, tx:          0, lsn: 0/02000110, prev 0/02000098, desc: RUNNING_XACTS nextXid 750 latestCompletedXid 749 oldestRunningXid 750</span><br></pre></td></tr></table></figure>
-
-<p>创建恢复点（相当于快照，可用于还原）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_create_restore_point(&#x27;test-restore-point&#x27;);</span><br><span class="line"> pg_create_restore_point </span><br><span class="line">-------------------------</span><br><span class="line"> 0/20001B0</span><br><span class="line">(1 row)</span><br></pre></td></tr></table></figure>
-
-<h3 id="归档wal日志"><a href="#归档wal日志" class="headerlink" title="归档wal日志"></a>归档wal日志</h3><p>归档日志记录的是checkpoint前的WAL日志，即数据的历史日志，把pg_wal里面的在线日志备份出来，相当于mysql的二进制日志。为了保证数据高可用性，需要开启归档，当系统故障后可以通过归档的日志文件恢复数据。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 配置wal归档</span><br><span class="line"></span><br><span class="line"># 开启日志级别，建议使用默认replica级别（10版本以上）</span><br><span class="line">wal_level = replica                     # minimal, replica, or logical  日志建议使用默认replica级别（10版本以上）</span><br><span class="line">                                        # (change requires restart)</span><br><span class="line"># 开启归档，默认值为off                                        </span><br><span class="line">archive_mode = on               		# enables archiving; off, on, or always</span><br><span class="line">                                		# (change requires restart)</span><br><span class="line">                                		</span><br><span class="line"># 配置archive_command,可以是一个命令，此命令把日志文档拷贝到其它地方</span><br><span class="line">archive_command = &#x27;&#x27;</span><br><span class="line"># archive_command = &#x27;&#x27;           # command to use to archive a logfile segment</span><br><span class="line">                                 # placeholders: %p = path of file to archive  </span><br><span class="line">                                 # %p 表示包含完整路径信息的文件名</span><br><span class="line">                                 #               %f = file name only</span><br><span class="line">                                 # %f 表示不包含路径信息的文件名</span><br><span class="line">                                 # e.g. &#x27;test ! -f /mnt/server/archivedir/%f &amp;&amp; cp %p /mnt/server/archivedir/%f&#x27;</span><br></pre></td></tr></table></figure>
-
-<h4 id="archive-command-配置示例："><a href="#archive-command-配置示例：" class="headerlink" title="archive_command 配置示例："></a>archive_command 配置示例：</h4><p><strong>1、本地归档</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@Rocky8-2 ~]# mkdir /archive</span><br><span class="line">[root@Rocky8-2 ~]# chown -R postgres. /archive</span><br><span class="line">[root@Rocky8-2 ~]# ll -d /archive</span><br><span class="line">drwxr-xr-x 2 postgres postgres 6 Jan 22 13:32 /archive</span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]# vim /pgsql/data/postgresql.conf </span><br><span class="line">archive_mode = on</span><br><span class="line">archive_command = &#x27;DIR=/archive/`date +%F`; [ -d $DIR ] || mkdir -p $DIR; cp %p $DIR/%f&#x27;</span><br><span class="line"></span><br><span class="line">[root@Rocky8-2 ~]# systemctl restart postgresql.service </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">插入数据</span></span><br><span class="line">postgres=#  \c testdb1</span><br><span class="line">testdb1=# create table t1(id int);</span><br><span class="line">testdb1=# insert into t1 values(generate_series(1,100000));</span><br><span class="line">testdb1=# select ctid,* from t1;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">触发检查点，切换日志，自动触发归档</span></span><br><span class="line">testdb1=# checkpoint;</span><br><span class="line">CHECKPOINT</span><br><span class="line">testdb1=# select pg_switch_wal();</span><br><span class="line"> pg_switch_wal </span><br><span class="line">---------------</span><br><span class="line"> 0/92046D0</span><br><span class="line">(1 row)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查归档文件</span></span><br><span class="line">[root@Rocky8-2 ~]# tree /archive/</span><br><span class="line">/archive/</span><br><span class="line">└── 2024-01-22</span><br><span class="line">    └── 00000001000000000000000B</span><br><span class="line"></span><br><span class="line">1 directory, 1 file</span><br></pre></td></tr></table></figure>
-
-<p><strong>2、远程归档（在10.0.0.13保存归档）</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建归档保存目录，并授权postgres</span></span><br><span class="line">[root@Rocky8-3 ~]# mkdir -p /pgsql/backup</span><br><span class="line">[root@Rocky8-3 ~]# chown postgres. /pgsql/backup/</span><br><span class="line">[root@Rocky8-3 ~]# ll -d /pgsql/backup/</span><br><span class="line">drwxr-xr-x 2 postgres postgres 6 Jan 22 14:40 /pgsql/backup/</span><br><span class="line"></span><br><span class="line">[postgres@postgres ~]# ssh-keygen </span><br><span class="line">[postgres@postgres ~]# ssh-copy-id postgres@10.0.0.13</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改配置</span></span><br><span class="line">[root@postgres ~]# vim /pgsql/data/postgresql.conf </span><br><span class="line">archive_mode = on  </span><br><span class="line">archive_command = &#x27;scp %p 10.0.0.13:/pgspl/backup/%f&#x27;</span><br><span class="line"></span><br><span class="line">[root@postgres ~]# systemctl restart postgresql.service </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" data-id="clvujh4dr001go0h97cnt4szq" data-title="PostgreSQL日志管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pg-dump/" rel="tag">pg_dump</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2024/04/18/Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6nginx-conf/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Nginx配置文件nginx.conf
-        
-      </div>
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYCのBLOG</strong>
     </a>
-  
-  
-    <a href="/2023/07/31/PostgreSQL%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">PostgreSQL备份恢复</div>
-    </a>
-  
-</nav>
 
-  
-</article>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-
-</section>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/">华为数通</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conf/" rel="tag">.conf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster/" rel="tag">Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/" rel="tag">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MarkDown/" rel="tag">MarkDown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mycat/" rel="tag">Mycat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenVPN/" rel="tag">OpenVPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PXC/" rel="tag">PXC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RockyLinux/" rel="tag">RockyLinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typora/" rel="tag">Typora</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/init/" rel="tag">init</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pg-dump/" rel="tag">pg_dump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" rel="tag">华为数通</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/conf/" style="font-size: 10px;">.conf</a> <a href="/tags/Backup/" style="font-size: 12.86px;">Backup</a> <a href="/tags/Cluster/" style="font-size: 12.86px;">Cluster</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/MariaDB/" style="font-size: 20px;">MariaDB</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/MySQL/" style="font-size: 18.57px;">MySQL</a> <a href="/tags/Mycat/" style="font-size: 10px;">Mycat</a> <a href="/tags/MysqlDump/" style="font-size: 10px;">MysqlDump</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OpenVPN/" style="font-size: 10px;">OpenVPN</a> <a href="/tags/PXC/" style="font-size: 10px;">PXC</a> <a href="/tags/PostgreSQL/" style="font-size: 14.29px;">PostgreSQL</a> <a href="/tags/RockyLinux/" style="font-size: 10px;">RockyLinux</a> <a href="/tags/Typora/" style="font-size: 10px;">Typora</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/XtraBackup/" style="font-size: 10px;">XtraBackup</a> <a href="/tags/init/" style="font-size: 17.14px;">init</a> <a href="/tags/pg-dump/" style="font-size: 11.43px;">pg_dump</a> <a href="/tags/shell/" style="font-size: 11.43px;">shell</a> <a href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" style="font-size: 11.43px;">华为数通</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
         
-          <li>
-            <a href="/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">OpenVPN安装与配置</a>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
           </li>
+          
         
-          <li>
-            <a href="/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/">Ubuntu2204初始化</a>
-          </li>
         
-          <li>
-            <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/">Rocky9初始化</a>
-          </li>
-        
-          <li>
-            <a href="/2024/04/18/Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6nginx-conf/">Nginx配置文件nginx.conf</a>
-          </li>
-        
-          <li>
-            <a href="/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">PostgreSQL日志管理</a>
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
           </li>
         
       </ul>
     </div>
   </div>
+</nav>
 
   
-</aside>
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="PostgreSQL日志管理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-16 10:47" pubdate>
+          2024年1月16日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
         
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+
       
-      &copy; 2024 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
-</footer>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
-    <nav id="mobile-nav">
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">PostgreSQL日志管理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="PostgreSQL日志分类："><a href="#PostgreSQL日志分类：" class="headerlink" title="PostgreSQL日志分类："></a>PostgreSQL日志分类：</h3><ul>
+<li>运行日志：$PGDATA&#x2F;log 默认未开启，需在配置文件中关掉注释开启</li>
+<li>在线重做日志：$PGDATA&#x2F;pg_wal </li>
+<li>事务提交日志：$PGDATA&#x2F;pg_xact</li>
+<li>服务器日志：启动服务时指定日志文件生成的日志</li>
+</ul>
+<h3 id="运行日志"><a href="#运行日志" class="headerlink" title="运行日志"></a>运行日志</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">运行日志默认未开启，修改配置文开启日志</span><br>[root@Rocky8-2 ~]# vim /pgsql/data/postgresql.conf <br>logging_collector = on                  # Enable capturing of stderr, jsonlog,<br>                                        # and csvlog into log files. Required<br>                                        # to be on for csvlogs and jsonlogs.<br>                                        # (change requires restart)<br>[root@Rocky8-2 ~]# systemctl restart postgresql.service <br>[root@Rocky8-2 ~]# ll $PGDATA/log<br>total 4<br>-rw------- 1 postgres postgres 919 Jan 16 14:24 postgresql-2024-01-16_141938.log<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">主要记录数据库的运行状况和监听端口</span><br>[root@Rocky8-2 ~]# tail $PGDATA/log/postgresql-2024-01-16_141938.log <br>2024-01-16 14:19:38.032 CST [2980] LOG:  starting PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-18), 64-bit<br>2024-01-16 14:19:38.035 CST [2980] LOG:  listening on IPv6 address &quot;::1&quot;, port 5432<br>2024-01-16 14:19:38.035 CST [2980] LOG:  listening on IPv4 address &quot;127.0.0.1&quot;, port 5432<br>2024-01-16 14:19:38.042 CST [2980] LOG:  listening on Unix socket &quot;/tmp/.s.PGSQL.5432&quot;<br>2024-01-16 14:19:38.061 CST [2984] LOG:  database system was shut down at 2024-01-16 14:19:37 CST<br>2024-01-16 14:19:38.078 CST [2980] LOG:  database system is ready to accept connections<br>2024-01-16 14:24:38.073 CST [2982] LOG:  checkpoint starting: time<br>2024-01-16 14:24:38.092 CST [2982] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.004 s, total=0.020 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=0 kB<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">开启系统日志后，多了一个logger进程</span><br>[root@Rocky8-2 ~]# ps aux |grep postgres<br>postgres    2980  1.0  0.8 175808 17760 ?        Ss   14:19   0:00 /apps/pgsql/bin/postgres -D /pgsql/data<br>postgres    2981  0.0  0.1  27684  2856 ?        Ss   14:19   0:00 postgres: logger <br>postgres    2982  0.0  0.1 175808  2744 ?        Ss   14:19   0:00 postgres: checkpointer <br>postgres    2983  0.0  0.2 175948  4248 ?        Ss   14:19   0:00 postgres: background writer <br>postgres    2985  0.0  0.4 175808  8116 ?        Ss   14:19   0:00 postgres: walwriter <br>postgres    2986  0.0  0.2 177396  5244 ?        Ss   14:19   0:00 postgres: autovacuum launcher <br>postgres    2987  0.0  0.2 177376  5104 ?        Ss   14:19   0:00 postgres: logical replication launcher <br>root        2991  0.0  0.0  12144  1200 pts/5    S+   14:19   0:00 grep --color=auto postgres<br></code></pre></td></tr></table></figure>
+
+<h3 id="在线WAL日志"><a href="#在线WAL日志" class="headerlink" title="在线WAL日志"></a>在线WAL日志</h3><p>WAL日志是为了保证数据库崩溃后的数据安全，如果系统崩溃，可以“重放”从最后一次检查以来的日志项来恢复数据库的一致性。</p>
+<p>WAL日志文件存放在$PGDATA&#x2F;pg_wal下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 ~]# ll $PGDATA/pg_wal<br>total 16384<br>-rw------- 1 postgres postgres 16777216 Jan 16 14:24 000000010000000000000001<br>drwx------ 2 postgres postgres        6 Aug  7 14:06 archive_status<br></code></pre></td></tr></table></figure>
+
+<p>WAL日志相关配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">日志文件总大小（默认值）</span><br>[root@Rocky8-2 ~]# vim /pgsql/data/postgresql.conf <br>max_wal_size = 1GB<br>min_wal_size = 80MB<br></code></pre></td></tr></table></figure>
+
+<p>LSN:Log Sequence Number 用于记录WAL文件当前的位置，是WAL日志的唯一的、全局的标识。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前LSN号：</span><br>postgres=# select pg_current_wal_lsn();<br> pg_current_wal_lsn <br>--------------------<br> 0/18D6FD8<br>(1 row)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看光前LSN对应的WAL日志文件</span><br>postgres=# select pg_walfile_name(pg_current_wal_lsn());<br>     pg_walfile_name      <br>--------------------------<br> 000000010000000000000001<br>(1 row)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前事务ID</span><br>postgres=# select txid_current();<br> txid_current <br>--------------<br>          749<br>(1 row)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前WAL日志偏移量</span><br>postgres=# select pg_walfile_NAME_OFFSET(pg_current_wal_lsn());<br>       pg_walfile_name_offset       <br>------------------------------------<br> (000000010000000000000001,9269536)<br>(1 row)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">切换wal日志（默认文件达到16M时会自动切换wal日志）</span><br>postgres=# select pg_switch_wal();<br> pg_switch_wal <br>---------------<br> 0/18D7138<br>(1 row)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">按时间顺序显示wal文件</span><br>postgres=# select * from pg_ls_waldir() order by modification asc;<br>           name           |   size   |      modification      <br>--------------------------+----------+------------------------<br> 000000010000000000000003 | 16777216 | 2024-01-22 11:39:38+08<br> 000000010000000000000002 | 16777216 | 2024-01-22 11:41:10+08<br>(2 rows)<br></code></pre></td></tr></table></figure>
+
+<p>使用命令pg_waldump查看wal日志内容，执行结果中 tx: 后面的数字即事务id,同一个事务的id是相同的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 ~]# pg_waldump /pgsql/data/pg_wal/000000010000000000000002<br>rmgr: Standby     len (rec/tot):     50/    50, tx:          0, lsn: 0/02000028, prev 0/018D7120, desc: RUNNING_XACTS nextXid 750 latestCompletedXid 749 oldestRunningXid 750<br>rmgr: Standby     len (rec/tot):     50/    50, tx:          0, lsn: 0/02000060, prev 0/02000028, desc: RUNNING_XACTS nextXid 750 latestCompletedXid 749 oldestRunningXid 750<br>rmgr: XLOG        len (rec/tot):    114/   114, tx:          0, lsn: 0/02000098, prev 0/02000060, desc: CHECKPOINT_ONLINE redo 0/2000060; tli 1; prev tli 1; fpw true; xid 0:750; oid 16426; multi 1; offset 0; oldest xid 717 in DB 1; oldest multi 1 in DB 1; oldest/newest commit timestamp xid: 0/0; oldest running xid 750; online<br>rmgr: Standby     len (rec/tot):     50/    50, tx:          0, lsn: 0/02000110, prev 0/02000098, desc: RUNNING_XACTS nextXid 750 latestCompletedXid 749 oldestRunningXid 750<br></code></pre></td></tr></table></figure>
+
+<p>创建恢复点（相当于快照，可用于还原）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">postgres=# select pg_create_restore_point(&#x27;test-restore-point&#x27;);<br> pg_create_restore_point <br>-------------------------<br> 0/20001B0<br>(1 row)<br></code></pre></td></tr></table></figure>
+
+<h3 id="归档wal日志"><a href="#归档wal日志" class="headerlink" title="归档wal日志"></a>归档wal日志</h3><p>归档日志记录的是checkpoint前的WAL日志，即数据的历史日志，把pg_wal里面的在线日志备份出来，相当于mysql的二进制日志。为了保证数据高可用性，需要开启归档，当系统故障后可以通过归档的日志文件恢复数据。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># 配置wal归档<br><br># 开启日志级别，建议使用默认<span class="hljs-keyword">replica</span>级别（<span class="hljs-number">10</span>版本以上）<br>wal_level = <span class="hljs-keyword">replica</span>                     # minimal, <span class="hljs-keyword">replica</span>, <span class="hljs-keyword">or</span> logical  日志建议使用默认<span class="hljs-keyword">replica</span>级别（<span class="hljs-number">10</span>版本以上）<br>                                        # (change requires <span class="hljs-keyword">restart</span>)<br># 开启归档，默认值为<span class="hljs-keyword">off</span>                                        <br>archive_mode = <span class="hljs-keyword">on</span>               		# enables archiving; <span class="hljs-keyword">off</span>, <span class="hljs-keyword">on</span>, <span class="hljs-keyword">or</span> <span class="hljs-keyword">always</span><br>                                		# (change requires <span class="hljs-keyword">restart</span>)<br>                                		<br># 配置archive_command,可以是一个命令，此命令把日志文档拷贝到其它地方<br>archive_command = <span class="hljs-string">&#x27;&#x27;</span><br># archive_command = <span class="hljs-string">&#x27;&#x27;</span>           # command <span class="hljs-keyword">to</span> use <span class="hljs-keyword">to</span> archive a logfile segment<br>                                 # placeholders: %p = <span class="hljs-type">path</span> <span class="hljs-keyword">of</span> file <span class="hljs-keyword">to</span> archive  <br>                                 # %p 表示包含完整路径信息的文件名<br>                                 #               %f = file <span class="hljs-type">name</span> <span class="hljs-keyword">only</span><br>                                 # %f 表示不包含路径信息的文件名<br>                                 # e.g. <span class="hljs-string">&#x27;test ! -f /mnt/server/archivedir/%f &amp;&amp; cp %p /mnt/server/archivedir/%f&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="archive-command-配置示例："><a href="#archive-command-配置示例：" class="headerlink" title="archive_command 配置示例："></a>archive_command 配置示例：</h4><p><strong>1、本地归档</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 ~]# mkdir /archive<br>[root@Rocky8-2 ~]# chown -R postgres. /archive<br>[root@Rocky8-2 ~]# ll -d /archive<br>drwxr-xr-x 2 postgres postgres 6 Jan 22 13:32 /archive<br><br>[root@Rocky8-2 ~]# vim /pgsql/data/postgresql.conf <br>archive_mode = on<br>archive_command = &#x27;DIR=/archive/`date +%F`; [ -d $DIR ] || mkdir -p $DIR; cp %p $DIR/%f&#x27;<br><br>[root@Rocky8-2 ~]# systemctl restart postgresql.service <br><span class="hljs-meta prompt_"># </span><span class="language-bash">插入数据</span><br>postgres=#  \c testdb1<br>testdb1=# create table t1(id int);<br>testdb1=# insert into t1 values(generate_series(1,100000));<br>testdb1=# select ctid,* from t1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">触发检查点，切换日志，自动触发归档</span><br>testdb1=# checkpoint;<br>CHECKPOINT<br>testdb1=# select pg_switch_wal();<br> pg_switch_wal <br>---------------<br> 0/92046D0<br>(1 row)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">检查归档文件</span><br>[root@Rocky8-2 ~]# tree /archive/<br>/archive/<br>└── 2024-01-22<br>    └── 00000001000000000000000B<br><br>1 directory, 1 file<br></code></pre></td></tr></table></figure>
+
+<p><strong>2、远程归档（在10.0.0.13保存归档）</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建归档保存目录，并授权postgres</span><br>[root@Rocky8-3 ~]# mkdir -p /pgsql/backup<br>[root@Rocky8-3 ~]# chown postgres. /pgsql/backup/<br>[root@Rocky8-3 ~]# ll -d /pgsql/backup/<br>drwxr-xr-x 2 postgres postgres 6 Jan 22 14:40 /pgsql/backup/<br><br>[postgres@postgres ~]# ssh-keygen <br>[postgres@postgres ~]# ssh-copy-id postgres@10.0.0.13<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改配置</span><br>[root@postgres ~]# vim /pgsql/data/postgresql.conf <br>archive_mode = on  <br>archive_command = &#x27;scp %p 10.0.0.13:/pgspl/backup/%f&#x27;<br><br>[root@postgres ~]# systemctl restart postgresql.service <br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
   
-    <a href="/" class="mobile-nav-link">Home</a>
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
   
-</nav>
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PostgreSQL/" class="category-chain-item">PostgreSQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Backup/" class="print-no-link">#Backup</a>
+      
+        <a href="/tags/PostgreSQL/" class="print-no-link">#PostgreSQL</a>
+      
+        <a href="/tags/pg-dump/" class="print-no-link">#pg_dump</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>PostgreSQL日志管理</div>
+      <div>https://www.xcjyc.top/2024/01/16/PostgreSQL日志管理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/04/18/Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6nginx-conf/" title="Nginx配置文件nginx.conf">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Nginx配置文件nginx.conf</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/31/PostgreSQL%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" title="PostgreSQL备份恢复">
+                        <span class="hidden-mobile">PostgreSQL备份恢复</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
     
 
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="PostgreSQL"
+        id="heading-399bd1ee587245ecac6f39beaa99886f" role="tab" data-toggle="collapse" href="#collapse-399bd1ee587245ecac6f39beaa99886f"
+        aria-expanded="true"
+      >
+        PostgreSQL
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-399bd1ee587245ecac6f39beaa99886f"
+           role="tabpanel" aria-labelledby="heading-399bd1ee587245ecac6f39beaa99886f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/22/PostgreSQL%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/" title="PostgreSQL体系架构"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PostgreSQL体系架构</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/31/PostgreSQL%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" title="PostgreSQL备份恢复"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PostgreSQL备份恢复</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/18/PostgreSQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/" title="PostgreSQL安装初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PostgreSQL安装初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" title="PostgreSQL日志管理"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">PostgreSQL日志管理</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
 
 
 
 
-<script src="/js/script.js"></script>
 
 
 
+    
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
   </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

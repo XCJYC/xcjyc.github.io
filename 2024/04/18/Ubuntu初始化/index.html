@@ -1,284 +1,837 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
-  <title>Ubuntu2204初始化 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Ubuntu2204初始化">
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Ubuntu2204初始化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu2204初始化">
-<meta property="og:url" content="http://example.com/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="https://www.xcjyc.top/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/index.html">
+<meta property="og:site_name" content="xcjyc.top">
 <meta property="og:description" content="Ubuntu2204初始化">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/ubuntu.png">
 <meta property="article:published_time" content="2024-04-18T03:40:53.000Z">
 <meta property="article:modified_time" content="2024-04-18T08:54:09.223Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="XCJYC">
 <meta property="article:tag" content="init">
 <meta property="article:tag" content="Ubuntu">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/ubuntu.png">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
-<link rel="stylesheet" href="/css/style.css">
+  
+  <title>Ubuntu2204初始化 - xcjyc.top</title>
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
   
 <meta name="generator" content="Hexo 7.2.0"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-Ubuntu初始化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/" class="article-date">
-  <time class="dt-published" datetime="2024-04-18T03:40:53.000Z" itemprop="datePublished">2024-04-18</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      Ubuntu2204初始化
-    </h1>
   
 
-      </header>
+  <header>
     
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="配置允许root登录"><a href="#配置允许root登录" class="headerlink" title="配置允许root登录"></a>配置允许root登录</h3><p>Ubuntu安装后默认root不允许登录，需要使用普通用户登录后配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># sudo 切换到root</span></span></span><br><span class="line">xcjyc@ubuntu2204:~$ sudo -i</span><br><span class="line">[sudo] password for xcjyc: </span><br><span class="line">root@ubuntu2204:~# </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 设置root密码</span></span></span><br><span class="line">root@ubuntu2204:~# passwd root</span><br><span class="line">New password: </span><br><span class="line">Retype new password: </span><br><span class="line">passwd: password updated successfully</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 修改ssh配置，允许root ssh登录</span></span></span><br><span class="line">root@ubuntu2204:~# vim /etc/ssh/sshd_config</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br></pre></td></tr></table></figure>
 
-
-
-<h3 id="更改软件安装源"><a href="#更改软件安装源" class="headerlink" title="更改软件安装源"></a>更改软件安装源</h3><p>Ubuntu 默认使用的软件源位于国外，如果要获得更快的下载速度，我们可以通过更改软件源来解决这个问题。打开<a target="_blank" rel="noopener" href="https://developer.aliyun.com/mirror/ubuntu">https://developer.aliyun.com/mirror/ubuntu</a> ，根据ubuntu版本，复制相应的源配置。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2204:~# cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"></span><br><span class="line">root@ubuntu2204:~# vim /etc/apt/sources.list</span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb https://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>更新源列表,运行 “apt update”</p>
-<p>&#x3D;&#x3D;安装软件前，更新源后再安装！&#x3D;&#x3D;</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2204:~# apt update</span><br><span class="line">Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease</span><br><span class="line">Get:2 https://mirrors.aliyun.com/ubuntu jammy-security InRelease [110 kB]</span><br><span class="line">Get:3 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [119 kB]</span><br><span class="line">Hit:4 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease</span><br><span class="line">Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted Sources [65.0 kB]</span><br><span class="line">Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse Sources [19.0 kB]</span><br><span class="line">Ign:7 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages</span><br><span class="line">Get:8 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted amd64 Packages [1754 kB]</span><br><span class="line">Get:9 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted Translation-en [295 kB]</span><br><span class="line">Ign:10 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages</span><br><span class="line">Get:11 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse amd64 Packages [42.7 kB]</span><br><span class="line">Get:12 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse Translation-en [10.4 kB]</span><br><span class="line">Get:7 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [1562 kB]</span><br><span class="line">Get:10 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1075 kB]                                               </span><br><span class="line">Fetched 5053 kB in 9s (561 kB/s)                                                                                                       </span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree... Done</span><br><span class="line">Reading state information... Done</span><br><span class="line">52 packages can be upgraded. Run &#x27;apt list --upgradable&#x27; to see them.</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="修改网卡名称为eth0"><a href="#修改网卡名称为eth0" class="headerlink" title="修改网卡名称为eth0"></a>修改网卡名称为eth0</h3><p>修改&#x2F;etc&#x2F;default&#x2F;grub文件，在GRUB_CMDLINE_LINUX增加“net.ifnames&#x3D;0”</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2204:~# vim /etc/default/grub</span><br><span class="line">GRUB_DEFAULT=0</span><br><span class="line">GRUB_TIMEOUT_STYLE=hidden</span><br><span class="line">GRUB_TIMEOUT=0</span><br><span class="line">GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`</span><br><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;&quot;</span><br><span class="line">GRUB_CMDLINE_LINUX=&quot;net.ifnames=0&quot;</span><br><span class="line"></span><br><span class="line">root@ubuntu2204:~# grub-mkconfig -o /boot/grub/grub.cfg </span><br><span class="line">Sourcing file `/etc/default/grub&#x27;</span><br><span class="line">Sourcing file `/etc/default/grub.d/init-select.cfg&#x27;</span><br><span class="line">Generating grub configuration file ...</span><br><span class="line">Found linux image: /boot/vmlinuz-5.15.0-102-generic</span><br><span class="line">Found initrd image: /boot/initrd.img-5.15.0-102-generic</span><br><span class="line">Warning: os-prober will not be executed to detect other bootable partitions.</span><br><span class="line">Systems on them will not be added to the GRUB boot configuration.</span><br><span class="line">Check GRUB_DISABLE_OS_PROBER documentation entry.</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">root@ubuntu2204:~# reboot</span><br><span class="line"></span><br><span class="line">root@ubuntu2204:~# ip addr</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:fb:bc:2d brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    altname enp2s1</span><br><span class="line">    altname ens33</span><br><span class="line">    inet 10.0.0.131/24 metric 100 brd 10.0.0.255 scope global dynamic eth0</span><br><span class="line">       valid_lft 1782sec preferred_lft 1782sec</span><br><span class="line">    inet6 fe80::20c:29ff:fefb:bc2d/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="配置IP地址"><a href="#配置IP地址" class="headerlink" title="配置IP地址"></a>配置IP地址</h3><p>网上配置文件为YAML格式，存放在&#x2F;etc&#x2F;netplan&#x2F;**.yaml文件中</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2204:~# ls /etc/netplan/</span><br><span class="line">00-installer-config.yaml</span><br><span class="line"></span><br><span class="line">root@ubuntu2204:~# vim /etc/netplan/00-installer-config.yaml</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This is the network config written by <span class="string">&#x27;subiquity&#x27;</span></span></span><br><span class="line">network:</span><br><span class="line">  ethernets:</span><br><span class="line">    eth0:</span><br><span class="line">      dhcp4: false</span><br><span class="line">      addresses:</span><br><span class="line">        - 10.0.0.7/24</span><br><span class="line">      gateway4: 10.0.0.2</span><br><span class="line">      nameservers:</span><br><span class="line">        addresses:</span><br><span class="line">          - 10.0.0.2</span><br><span class="line">          - 223.5.5.5</span><br><span class="line">  version: 2</span><br></pre></td></tr></table></figure>
-
-<p>检查配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  DNS检查</span></span></span><br><span class="line">root@ubuntu2204:~# resolvectl status</span><br><span class="line">Global</span><br><span class="line">       Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported</span><br><span class="line">resolv.conf mode: stub</span><br><span class="line"></span><br><span class="line">Link 2 (eth0)</span><br><span class="line">    Current Scopes: DNS</span><br><span class="line">         Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported</span><br><span class="line">Current DNS Server: 10.0.0.2</span><br><span class="line">       DNS Servers: 10.0.0.2 223.5.5.5</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#  网关检查</span></span></span><br><span class="line">root@ubuntu2204:~# route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         10.0.0.2        0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">10.0.0.0        0.0.0.0         255.255.255.0   U     0      0        0 eth0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>若找不到ping命令，先安装net-toools,inetutils-ping工具包</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu2204:~# apt update </span><br><span class="line"></span><br><span class="line">root@ubuntu2204:~# apt search net-tools</span><br><span class="line">Sorting... Done</span><br><span class="line">Full Text Search... Done</span><br><span class="line">atm-tools/jammy 1:2.5.1-4build2 amd64</span><br><span class="line">  Base programs for ATM in Linux, the net-tools for ATM</span><br><span class="line"></span><br><span class="line">ddnet-tools/jammy 15.9.1-1 amd64</span><br><span class="line">  Tools for DDNet</span><br><span class="line"></span><br><span class="line">hobbit-plugins/jammy 20201127 all</span><br><span class="line">  plugins for the Xymon network monitor</span><br><span class="line"></span><br><span class="line">iproute2/jammy,now 5.15.0-1ubuntu2 amd64 [installed,automatic]</span><br><span class="line">  networking and traffic control tools</span><br><span class="line"></span><br><span class="line">net-tools/jammy,now 1.60+git20181103.0eebece-1ubuntu5 amd64 [installed]</span><br><span class="line">  NET-3 networking toolkit</span><br><span class="line"></span><br><span class="line">root@ubuntu2204:~# apt search inetutils-ping</span><br><span class="line">Sorting... Done</span><br><span class="line">Full Text Search... Done</span><br><span class="line">inetutils-ping/jammy-security,jammy-updates,now 2:2.2-2ubuntu0.1 amd64 [installed]</span><br><span class="line">  ICMP echo tool</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">root@ubuntu2204:~# ping www.baidu.com</span><br><span class="line">PING www.a.shifen.com (183.2.172.42): 56 data bytes</span><br><span class="line">64 bytes from 183.2.172.42: icmp_seq=0 ttl=128 time=57.860 ms</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/" data-id="clvujh4dw001yo0h9651n4m6o" data-title="Ubuntu2204初始化" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/init/" rel="tag">init</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          OpenVPN安装与配置
-        
-      </div>
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYCのBLOG</strong>
     </a>
-  
-  
-    <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Rocky9初始化</div>
-    </a>
-  
-</nav>
 
-  
-</article>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-
-</section>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MySQL/">MySQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/">华为数通</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/conf/" rel="tag">.conf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Backup/" rel="tag">Backup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster/" rel="tag">Cluster</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MariaDB/" rel="tag">MariaDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MarkDown/" rel="tag">MarkDown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mycat/" rel="tag">Mycat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MysqlDump/" rel="tag">MysqlDump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenVPN/" rel="tag">OpenVPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PXC/" rel="tag">PXC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RockyLinux/" rel="tag">RockyLinux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typora/" rel="tag">Typora</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XtraBackup/" rel="tag">XtraBackup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/init/" rel="tag">init</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pg-dump/" rel="tag">pg_dump</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" rel="tag">华为数通</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/conf/" style="font-size: 10px;">.conf</a> <a href="/tags/Backup/" style="font-size: 12.86px;">Backup</a> <a href="/tags/Cluster/" style="font-size: 12.86px;">Cluster</a> <a href="/tags/Linux/" style="font-size: 15.71px;">Linux</a> <a href="/tags/MariaDB/" style="font-size: 20px;">MariaDB</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/MySQL/" style="font-size: 18.57px;">MySQL</a> <a href="/tags/Mycat/" style="font-size: 10px;">Mycat</a> <a href="/tags/MysqlDump/" style="font-size: 10px;">MysqlDump</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OpenVPN/" style="font-size: 10px;">OpenVPN</a> <a href="/tags/PXC/" style="font-size: 10px;">PXC</a> <a href="/tags/PostgreSQL/" style="font-size: 14.29px;">PostgreSQL</a> <a href="/tags/RockyLinux/" style="font-size: 10px;">RockyLinux</a> <a href="/tags/Typora/" style="font-size: 10px;">Typora</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/XtraBackup/" style="font-size: 10px;">XtraBackup</a> <a href="/tags/init/" style="font-size: 17.14px;">init</a> <a href="/tags/pg-dump/" style="font-size: 11.43px;">pg_dump</a> <a href="/tags/shell/" style="font-size: 11.43px;">shell</a> <a href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" style="font-size: 11.43px;">华为数通</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">April 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">August 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
         
-          <li>
-            <a href="/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">OpenVPN安装与配置</a>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
           </li>
+          
         
-          <li>
-            <a href="/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/">Ubuntu2204初始化</a>
-          </li>
         
-          <li>
-            <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/">Rocky9初始化</a>
-          </li>
-        
-          <li>
-            <a href="/2024/04/18/Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6nginx-conf/">Nginx配置文件nginx.conf</a>
-          </li>
-        
-          <li>
-            <a href="/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/">PostgreSQL日志管理</a>
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
           </li>
         
       </ul>
     </div>
   </div>
+</nav>
 
   
-</aside>
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Ubuntu2204初始化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-18 11:40" pubdate>
+          2024年4月18日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          757 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
         
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+
       
-      &copy; 2024 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
-</footer>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
-    <nav id="mobile-nav">
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Ubuntu2204初始化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="配置允许root登录"><a href="#配置允许root登录" class="headerlink" title="配置允许root登录"></a>配置允许root登录</h3><p>Ubuntu安装后默认root不允许登录，需要使用普通用户登录后配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># sudo 切换到root</span></span><br>xcjyc@ubuntu2204:~$ sudo -i<br>[sudo] password for xcjyc: <br>root@ubuntu2204:~# <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 设置root密码</span></span><br>root@ubuntu2204:~# passwd root<br>New password: <br>Retype new password: <br>passwd: password updated successfully<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 修改ssh配置，允许root ssh登录</span></span><br>root@ubuntu2204:~# vim /etc/ssh/sshd_config<br>PermitRootLogin yes<br>PasswordAuthentication yes<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="更改软件安装源"><a href="#更改软件安装源" class="headerlink" title="更改软件安装源"></a>更改软件安装源</h3><p>Ubuntu 默认使用的软件源位于国外，如果要获得更快的下载速度，我们可以通过更改软件源来解决这个问题。打开<a target="_blank" rel="noopener" href="https://developer.aliyun.com/mirror/ubuntu">https://developer.aliyun.com/mirror/ubuntu</a> ，根据ubuntu版本，复制相应的源配置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# cp /etc/apt/sources.list /etc/apt/sources.list.bak<br><br>root@ubuntu2204:~# vim /etc/apt/sources.list<br>deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse<br>deb-src https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse<br><br>deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse<br>deb-src https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse<br><br>deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse<br>deb-src https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">deb https://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><br>deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse<br>deb-src https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse<br><br></code></pre></td></tr></table></figure>
+
+<p>更新源列表,运行 “apt update”</p>
+<p>&#x3D;&#x3D;安装软件前，更新源后再安装！&#x3D;&#x3D;</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# apt update<br>Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease<br>Get:2 https://mirrors.aliyun.com/ubuntu jammy-security InRelease [110 kB]<br>Get:3 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [119 kB]<br>Hit:4 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease<br>Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted Sources [65.0 kB]<br>Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse Sources [19.0 kB]<br>Ign:7 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages<br>Get:8 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted amd64 Packages [1754 kB]<br>Get:9 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted Translation-en [295 kB]<br>Ign:10 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages<br>Get:11 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse amd64 Packages [42.7 kB]<br>Get:12 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse Translation-en [10.4 kB]<br>Get:7 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [1562 kB]<br>Get:10 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1075 kB]                                               <br>Fetched 5053 kB in 9s (561 kB/s)                                                                                                       <br>Reading package lists... Done<br>Building dependency tree... Done<br>Reading state information... Done<br>52 packages can be upgraded. Run &#x27;apt list --upgradable&#x27; to see them.<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="修改网卡名称为eth0"><a href="#修改网卡名称为eth0" class="headerlink" title="修改网卡名称为eth0"></a>修改网卡名称为eth0</h3><p>修改&#x2F;etc&#x2F;default&#x2F;grub文件，在GRUB_CMDLINE_LINUX增加“net.ifnames&#x3D;0”</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# vim /etc/default/grub<br>GRUB_DEFAULT=0<br>GRUB_TIMEOUT_STYLE=hidden<br>GRUB_TIMEOUT=0<br>GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`<br>GRUB_CMDLINE_LINUX_DEFAULT=&quot;&quot;<br>GRUB_CMDLINE_LINUX=&quot;net.ifnames=0&quot;<br><br>root@ubuntu2204:~# grub-mkconfig -o /boot/grub/grub.cfg <br>Sourcing file `/etc/default/grub&#x27;<br>Sourcing file `/etc/default/grub.d/init-select.cfg&#x27;<br>Generating grub configuration file ...<br>Found linux image: /boot/vmlinuz-5.15.0-102-generic<br>Found initrd image: /boot/initrd.img-5.15.0-102-generic<br>Warning: os-prober will not be executed to detect other bootable partitions.<br>Systems on them will not be added to the GRUB boot configuration.<br>Check GRUB_DISABLE_OS_PROBER documentation entry.<br>done<br><br>root@ubuntu2204:~# reboot<br><br>root@ubuntu2204:~# ip addr<br>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000<br>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00<br>    inet 127.0.0.1/8 scope host lo<br>       valid_lft forever preferred_lft forever<br>    inet6 ::1/128 scope host <br>       valid_lft forever preferred_lft forever<br>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000<br>    link/ether 00:0c:29:fb:bc:2d brd ff:ff:ff:ff:ff:ff<br>    altname enp2s1<br>    altname ens33<br>    inet 10.0.0.131/24 metric 100 brd 10.0.0.255 scope global dynamic eth0<br>       valid_lft 1782sec preferred_lft 1782sec<br>    inet6 fe80::20c:29ff:fefb:bc2d/64 scope link <br>       valid_lft forever preferred_lft forever<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="配置IP地址"><a href="#配置IP地址" class="headerlink" title="配置IP地址"></a>配置IP地址</h3><p>网上配置文件为YAML格式，存放在&#x2F;etc&#x2F;netplan&#x2F;**.yaml文件中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# ls /etc/netplan/<br>00-installer-config.yaml<br><br>root@ubuntu2204:~# vim /etc/netplan/00-installer-config.yaml<br><span class="hljs-meta prompt_"># </span><span class="language-bash">This is the network config written by <span class="hljs-string">&#x27;subiquity&#x27;</span></span><br>network:<br>  ethernets:<br>    eth0:<br>      dhcp4: false<br>      addresses:<br>        - 10.0.0.7/24<br>      gateway4: 10.0.0.2<br>      nameservers:<br>        addresses:<br>          - 10.0.0.2<br>          - 223.5.5.5<br>  version: 2<br></code></pre></td></tr></table></figure>
+
+<p>检查配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  DNS检查</span></span><br>root@ubuntu2204:~# resolvectl status<br>Global<br>       Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported<br>resolv.conf mode: stub<br><br>Link 2 (eth0)<br>    Current Scopes: DNS<br>         Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported<br>Current DNS Server: 10.0.0.2<br>       DNS Servers: 10.0.0.2 223.5.5.5<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  网关检查</span></span><br>root@ubuntu2204:~# route -n<br>Kernel IP routing table<br>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface<br>0.0.0.0         10.0.0.2        0.0.0.0         UG    0      0        0 eth0<br>10.0.0.0        0.0.0.0         255.255.255.0   U     0      0        0 eth0<br><br></code></pre></td></tr></table></figure>
+
+<p>若找不到ping命令，先安装net-toools,inetutils-ping工具包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# apt update <br><br>root@ubuntu2204:~# apt search net-tools<br>Sorting... Done<br>Full Text Search... Done<br>atm-tools/jammy 1:2.5.1-4build2 amd64<br>  Base programs for ATM in Linux, the net-tools for ATM<br><br>ddnet-tools/jammy 15.9.1-1 amd64<br>  Tools for DDNet<br><br>hobbit-plugins/jammy 20201127 all<br>  plugins for the Xymon network monitor<br><br>iproute2/jammy,now 5.15.0-1ubuntu2 amd64 [installed,automatic]<br>  networking and traffic control tools<br><br>net-tools/jammy,now 1.60+git20181103.0eebece-1ubuntu5 amd64 [installed]<br>  NET-3 networking toolkit<br><br>root@ubuntu2204:~# apt search inetutils-ping<br>Sorting... Done<br>Full Text Search... Done<br>inetutils-ping/jammy-security,jammy-updates,now 2:2.2-2ubuntu0.1 amd64 [installed]<br>  ICMP echo tool<br><br><br><br>root@ubuntu2204:~# ping www.baidu.com<br>PING www.a.shifen.com (183.2.172.42): 56 data bytes<br>64 bytes from 183.2.172.42: icmp_seq=0 ttl=128 time=57.860 ms<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
   
-    <a href="/" class="mobile-nav-link">Home</a>
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
   
-</nav>
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="category-chain-item">Linux基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/init/" class="print-no-link">#init</a>
+      
+        <a href="/tags/Ubuntu/" class="print-no-link">#Ubuntu</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Ubuntu2204初始化</div>
+      <div>https://www.xcjyc.top/2024/04/18/Ubuntu初始化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年4月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" title="OpenVPN安装与配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">OpenVPN安装与配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/" title="Rocky9初始化">
+                        <span class="hidden-mobile">Rocky9初始化</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
     
 
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Linux基础"
+        id="heading-7f7b9d0769e6c459c4809c61cc3175d7" role="tab" data-toggle="collapse" href="#collapse-7f7b9d0769e6c459c4809c61cc3175d7"
+        aria-expanded="true"
+      >
+        Linux基础
+        <span class="list-group-count">(9)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-7f7b9d0769e6c459c4809c61cc3175d7"
+           role="tabpanel" aria-labelledby="heading-7f7b9d0769e6c459c4809c61cc3175d7">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/11/06/Linux%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Linux安装初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux安装初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Linux常用命令"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux常用命令</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/07/Linux%E6%9C%80%E5%85%A8%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" title="Linux最全基础命令"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux最全基础命令</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/07/Linux%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" title="Linux的常用命令详解"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux的常用命令详解</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/" title="Rocky9初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Rocky9初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/09/Shell%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="Shell快捷键"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Shell快捷键</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/18/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/" title="Ubuntu2204初始化"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Ubuntu2204初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/07/Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%94%A8%E5%AE%9E%E4%BE%8B/" title="shell编程实用实例"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">shell编程实用实例</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/08/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="正则表达式"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">正则表达式</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
 
 
 
 
-<script src="/js/script.js"></script>
 
 
 
+    
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
   </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
