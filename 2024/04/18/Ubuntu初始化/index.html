@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.xcjyc.top/img/ubuntu.png">
 <meta property="article:published_time" content="2024-04-18T03:40:53.000Z">
-<meta property="article:modified_time" content="2024-05-09T06:07:52.441Z">
+<meta property="article:modified_time" content="2024-05-15T08:09:02.201Z">
 <meta property="article:author" content="XCJYC">
 <meta property="article:tag" content="init">
 <meta property="article:tag" content="Ubuntu">
@@ -232,7 +232,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          786 字
+          794 字
         
       </span>
     
@@ -325,6 +325,8 @@
 
 <p>若找不到ping命令，先安装net-toools,inetutils-ping工具包</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# apt update <br><br>root@ubuntu2204:~# apt search net-tools<br>Sorting... Done<br>Full Text Search... Done<br>atm-tools/jammy 1:2.5.1-4build2 amd64<br>  Base programs for ATM in Linux, the net-tools for ATM<br><br>ddnet-tools/jammy 15.9.1-1 amd64<br>  Tools for DDNet<br><br>hobbit-plugins/jammy 20201127 all<br>  plugins for the Xymon network monitor<br><br>iproute2/jammy,now 5.15.0-1ubuntu2 amd64 [installed,automatic]<br>  networking and traffic control tools<br><br>net-tools/jammy,now 1.60+git20181103.0eebece-1ubuntu5 amd64 [installed]<br>  NET-3 networking toolkit<br><br>root@ubuntu2204:~# apt search inetutils-ping<br>Sorting... Done<br>Full Text Search... Done<br>inetutils-ping/jammy-security,jammy-updates,now 2:2.2-2ubuntu0.1 amd64 [installed]<br>  ICMP echo tool<br><br><br><br>root@ubuntu2204:~# ping www.baidu.com<br>PING www.a.shifen.com (183.2.172.42): 56 data bytes<br>64 bytes from 183.2.172.42: icmp_seq=0 ttl=128 time=57.860 ms<br></code></pre></td></tr></table></figure>
+
+<h3 id="修改时区"><a href="#修改时区" class="headerlink" title="修改时区"></a>修改时区</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# timedatectl set-timezone Asia/Shanghai<br></code></pre></td></tr></table></figure>
 
 
                 
