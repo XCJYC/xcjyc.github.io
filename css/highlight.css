@@ -6,71 +6,79 @@ pre code.hljs {
 code.hljs {
   padding: 3px 5px
 }
-/*
-
-Qt Creator dark color scheme
-
-*/
+/**
+ * Shades of Purple Theme — for Highlightjs.
+ *
+ * @author (c) Ahmad Awais <https://twitter.com/mrahmadawais/>
+ * @link GitHub Repo → https://github.com/ahmadawais/Shades-of-Purple-HighlightJS
+ * @version 1.5.0
+ */
 .hljs {
-  color: #aaaaaa;
-  background: #000000
+  background: #2d2b57;
+  color: #e3dfff;
+  font-weight: normal
 }
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2
+.hljs-subst {
+  color: #e3dfff
 }
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal {
-  color: #ff55ff
+.hljs-title {
+  color: #fad000;
+  font-weight: normal
 }
-.hljs-code
-.hljs-selector-class {
-  color: #aaaaff
+.hljs-name {
+  color: #a1feff
 }
-.hljs-emphasis,
-.hljs-stronge,
-.hljs-type {
+.hljs-tag {
+  color: #ffffff
+}
+.hljs-attr {
+  color: #f8d000;
   font-style: italic
+}
+.hljs-built_in,
+.hljs-selector-tag,
+.hljs-section {
+  color: #fb9e00
+}
+.hljs-keyword {
+  color: #fb9e00
+}
+.hljs-string,
+.hljs-attribute,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition,
+.hljs-code,
+.hljs-regexp,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-template-tag,
+.hljs-quote,
+.hljs-deletion {
+  color: #4cd213
+}
+.hljs-meta,
+.hljs-meta .hljs-string {
+  color: #fb9e00
+}
+.hljs-comment {
+  color: #ac65ff
 }
 .hljs-keyword,
 .hljs-selector-tag,
-.hljs-function,
-.hljs-section,
-.hljs-symbol,
-.hljs-name {
-  color: #ffff55
+.hljs-literal,
+.hljs-name,
+.hljs-strong {
+  font-weight: normal
 }
-.hljs-subst,
-.hljs-tag,
-.hljs-title {
-  color: #aaaaaa
+.hljs-literal,
+.hljs-number {
+  color: #fa658d
 }
-.hljs-attribute {
-  color: #ff5555
+.hljs-emphasis {
+  font-style: italic
 }
-.hljs-variable,
-.hljs-params,
-.hljs-title.class_,
-.hljs-class .hljs-title {
-  color: #8888ff
-}
-.hljs-string,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-type,
-.hljs-built_in,
-.hljs-template-tag,
-.hljs-template-variable,
-.hljs-addition,
-.hljs-link {
-  color: #ff55ff
-}
-.hljs-comment,
-.hljs-meta,
-.hljs-deletion {
-  color: #55ffff
+.hljs-strong {
+  font-weight: bold
 }
