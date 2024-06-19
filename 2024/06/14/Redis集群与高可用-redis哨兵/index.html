@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.xcjyc.top/img/redis.png">
 <meta property="article:published_time" content="2024-06-14T01:26:29.000Z">
-<meta property="article:modified_time" content="2024-06-19T03:35:22.720Z">
+<meta property="article:modified_time" content="2024-06-19T03:44:10.528Z">
 <meta property="article:author" content="XCJYC">
 <meta property="article:tag" content="NoSQL">
 <meta property="article:tag" content="Redis">
@@ -325,13 +325,25 @@
 </ul>
 <h5 id="实现哨兵配置案例："><a href="#实现哨兵配置案例：" class="headerlink" title="实现哨兵配置案例："></a>实现哨兵配置案例：</h5><p>前提：实现哨兵的前提是已经实现了redis的主从复制。master 配置文件中 masterauth 和 slave都必须相同，哨兵节点必须大于等于3，最好为奇数</p>
 <p>使用脚本编译安装：</p>
-<ul>
-<li><p>master	host41    192.168.23.41;      </p>
-</li>
-<li><p>slave	 host42    192.168.23.42;</p>
-<p>​	      host43    192.168.23.43;</p>
-</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>master</th>
+<th>host41</th>
+<th>192.168.23.41</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>slave</td>
+<td>host42</td>
+<td>192.168.23.42</td>
+</tr>
+<tr>
+<td>slave</td>
+<td>host43</td>
+<td>192.168.23.43</td>
+</tr>
+</tbody></table>
 <h6 id="1、实现主从复制"><a href="#1、实现主从复制" class="headerlink" title="1、实现主从复制"></a>1、实现主从复制</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># master 修改配置文件并重启服务 masterauth 和 requirepass 必须一致</span><br>sed -i -e <span class="hljs-string">&#x27;s/bind 127.0.0.1/bind 0.0.0.0/&#x27;</span> \<br>       -e <span class="hljs-string">&#x27;s/^# masterauth .*$/masterauth 12345678/&#x27;</span> \<br>       -e <span class="hljs-string">&#x27;s/^# requirepass .*$/requirepass 12345678/&#x27;</span> \<br>/apps/redis/etc/redis.conf <br><span class="hljs-comment"># slave 修改配置文件并重启服务 （在两台slave执行下面命令）masterauth 和 requirepass 必须一致</span><br>sed -i -e <span class="hljs-string">&#x27;s/bind 127.0.0.1/bind 0.0.0.0/&#x27;</span> \<br>       -e <span class="hljs-string">&#x27;s/^# masterauth .*$/masterauth 12345678/&#x27;</span> \<br>       -e <span class="hljs-string">&#x27;s/^# requirepass .*$/requirepass 12345678/&#x27;</span> \<br>       -e <span class="hljs-string">&#x27;s/^# replicaof .*$/replicaof 192.168.23.41 6379/&#x27;</span> \<br>/apps/redis/etc/redis.conf ；\<br>systemctl restart redis<br><br><span class="hljs-comment"># 检查slave</span><br>192.168.23.42:6379&gt; INFO REPLICATION<br><span class="hljs-comment"># Replication</span><br>role:slave<br>master_host:192.168.23.41<br>master_port:6379<br>master_link_status:up<br>master_last_io_seconds_ago:8<br>master_sync_in_progress:0<br>slave_read_repl_offset:98<br>slave_repl_offset:98<br>slave_priority:100<br>slave_read_only:1<br>replica_announced:1<br>connected_slaves:0<br>master_failover_state:no-failover<br>master_replid:91831adacc78acd95246d7bf4a38c048c37b0931<br>master_replid2:0000000000000000000000000000000000000000<br>master_repl_offset:98<br>second_repl_offset:-1<br>repl_backlog_active:1<br>repl_backlog_size:1048576<br>repl_backlog_first_byte_offset:1<br>repl_backlog_histlen:98<br><br><span class="hljs-comment"># 检查master</span><br>192.168.23.41:6379&gt; INFO REPLICATION<br><span class="hljs-comment"># Replication</span><br>role:master<br>connected_slaves:2<br>slave0:ip=192.168.23.42,port=6379,state=online,offset=70,lag=0<br>slave1:ip=192.168.23.43,port=6379,state=online,offset=70,lag=0<br>master_failover_state:no-failover<br>master_replid:91831adacc78acd95246d7bf4a38c048c37b0931<br>master_replid2:0000000000000000000000000000000000000000<br>master_repl_offset:70<br>second_repl_offset:-1<br>repl_backlog_active:1<br>repl_backlog_size:1048576<br>repl_backlog_first_byte_offset:1<br>repl_backlog_histlen:70<br></code></pre></td></tr></table></figure>
 
 <h6 id="2、配置哨兵配置文件，在所有节点执行"><a href="#2、配置哨兵配置文件，在所有节点执行" class="headerlink" title="2、配置哨兵配置文件，在所有节点执行"></a>2、配置哨兵配置文件，在所有节点执行</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 把编译源码目录中的 setinel.conf 复制到安装目录</span><br>root@host41:~<span class="hljs-comment"># cp /usr/local/src/redis-7.2.4/sentinel.conf /apps/redis/etc/</span><br>root@host41:~<span class="hljs-comment"># chown redis.redis /apps/redis/etc/sentinel.conf</span><br><br><span class="hljs-comment"># 修改如下配置基</span><br>sed -i -e <span class="hljs-string">&#x27;s/^sentinel monitor mymaster .*$/sentinel monitor mymaster 192.168.23.41 6379 2/&#x27;</span> \<br>       -e <span class="hljs-string">&#x27;s/^# sentinel auth-pass mymaster .*$/sentinel auth-pass mymaster 12345678/&#x27;</span> \<br>       -e <span class="hljs-string">&#x27;s/^sentinel down-after-milliseconds .*$/sentinel down-after-milliseconds mymaster 3000/&#x27;</span> \<br>/apps/redis/etc/sentinel.conf<br><br><span class="hljs-comment"># 编译安装修改为如下配置项</span><br>daemonize <span class="hljs-built_in">yes</span>										<span class="hljs-comment"># 后台守护进程运行</span><br>pidfile /apps/redis/run/redis-sentinel.pid<br>logfile /apps/redis/log/redis-sentinel.log<br><span class="hljs-built_in">dir</span> /apps/redis/data/<br>sentinel monitor mymaster 192.168.23.41 6379 2		<span class="hljs-comment"># sentinel哨兵集群初始配置的主节点、端口、法定人数限制</span><br>sentinel auth-pass mymaster 12345678				<span class="hljs-comment"># sentinel哨兵集群master密码</span><br>sentinel down-after-milliseconds mymaster 3000		<span class="hljs-comment"># 判断主观下线时间</span><br><br><span class="hljs-comment"># 将配置文件复制到其余节点</span><br>root@host41:~<span class="hljs-comment"># scp /apps/redis/etc/sentinel.conf 192.168.23.42:/apps/redis/etc/</span><br>root@host41:~<span class="hljs-comment"># scp /apps/redis/etc/sentinel.conf 192.168.23.43:/apps/redis/etc/</span><br></code></pre></td></tr></table></figure>
