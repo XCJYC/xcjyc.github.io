@@ -18,16 +18,16 @@
   <meta name="author" content="XCJYC">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Docker的镜像制作小试验">
+    <meta name="description" content="Docker环境安装">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker的镜像制作小试验">
-<meta property="og:url" content="https://www.xcjyc.top/2024/06/04/Docker%E7%9A%84%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C%E5%B0%8F%E8%AF%95%E9%AA%8C/index.html">
+<meta property="og:title" content="Docker环境安装">
+<meta property="og:url" content="https://www.xcjyc.top/2024/09/28/Docker%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="xcjyc.top">
-<meta property="og:description" content="Docker的镜像制作小试验">
+<meta property="og:description" content="Docker环境安装">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.xcjyc.top/img/docker.jpg">
-<meta property="article:published_time" content="2024-06-04T08:17:23.000Z">
-<meta property="article:modified_time" content="2024-06-04T08:32:38.096Z">
+<meta property="article:published_time" content="2024-09-28T10:17:39.000Z">
+<meta property="article:modified_time" content="2024-09-28T10:22:29.094Z">
 <meta property="article:author" content="XCJYC">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,7 +37,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Docker的镜像制作小试验 - xcjyc.top</title>
+  <title>Docker环境安装 - xcjyc.top</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Docker的镜像制作小试验"></span>
+            <span id="subtitle" data-typed-text="Docker环境安装"></span>
           
         </div>
 
@@ -219,8 +219,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-06-04 16:17" pubdate>
-          2024年6月4日 下午
+        <time datetime="2024-09-28 18:17" pubdate>
+          2024年9月28日 晚上
         </time>
       </span>
     
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          241 字
+          359 字
         
       </span>
     
@@ -292,22 +292,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Docker的镜像制作小试验</h1>
+            <h1 id="seo-header">Docker环境安装</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="1-用docker-commit-制作一个nginx镜像，定制主页文件"><a href="#1-用docker-commit-制作一个nginx镜像，定制主页文件" class="headerlink" title="1) 用docker commit 制作一个nginx镜像，定制主页文件"></a>1) 用docker commit 制作一个nginx镜像，定制主页文件</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs sh">root@ubuntu2204:~<span class="hljs-comment"># apt update </span><br>root@ubuntu2204:~<span class="hljs-comment"># apt install -y docker.io </span><br>root@ubuntu2204:~<span class="hljs-comment"># docker pull nginx:1.24.0</span><br><br>root@ubuntu2204:~<span class="hljs-comment"># docker images</span><br>REPOSITORY   TAG       IMAGE ID       CREATED         SIZE<br>nginx        1.24.0    6c0218f16876   13 months ago   142MBtu2204:~<span class="hljs-comment"># docker pull nginx:1.24.0</span><br><br>root@ubuntu2204:~<span class="hljs-comment"># docker run -d --name nginx -p 80:80 nginx:1.24.0</span><br>9d8f1f98879be8b561f29dd78aa4291e3e8c3adc44b3313fc909bb6ecb12fee6<br><br>root@ubuntu2204:~<span class="hljs-comment"># docker ps</span><br>CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                               NAMES<br>9d8f1f98879b   nginx:1.24.0   <span class="hljs-string">&quot;/docker-entrypoint.…&quot;</span>   2 minutes ago   Up 2 minutes   0.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp   nginx<br><br>root@ubuntu2204:~<span class="hljs-comment"># docker exec -it nginx bash</span><br>root@9d8f1f98879b:/<span class="hljs-comment"># nginx -T</span><br>root@9d8f1f98879b:/<span class="hljs-comment"># echo &quot;My Nginx images with nginx:1.24.0&quot; &gt; /usr/share/nginx/html/index.html </span><br>root@9d8f1f98879b:/<span class="hljs-comment"># cat /usr/share/nginx/html/index.html</span><br>My Nginx images with nginx:1.24.0<br>root@9d8f1f98879b:/<span class="hljs-comment"># exit</span><br><br>root@ubuntu2204:~<span class="hljs-comment"># curl 10.0.0.7</span><br>My Nginx images with nginx:1.24.0<br><br>root@ubuntu2204:~<span class="hljs-comment"># docker commit  nginx mynginx:1.24.0</span><br>sha256:6cdae199f0ed257a7725af4f11a33a962fe7d23eb72db849b5755d62f7cb13b8<br><br>root@ubuntu2204:~<span class="hljs-comment"># docker images</span><br>REPOSITORY   TAG       IMAGE ID       CREATED         SIZE<br>mynginx      1.24.0    6cdae199f0ed   8 seconds ago   142MB<br>nginx        1.24.0    6c0218f16876   13 months ago   142MB<br></code></pre></td></tr></table></figure>
+                <h3 id="删除旧的docker"><a href="#删除旧的docker" class="headerlink" title="删除旧的docker"></a>删除旧的docker</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done<br></code></pre></td></tr></table></figure>
 
 
 
-<h4 id="2-用docker-build-基于alpine镜像-自定义镜像Label"><a href="#2-用docker-build-基于alpine镜像-自定义镜像Label" class="headerlink" title="2) 用docker build 基于alpine镜像,自定义镜像Label\"></a>2) 用docker build 基于alpine镜像,自定义镜像Label\</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sh">root@ubuntu2204:~<span class="hljs-comment"># mkdir -p /data/dockerfile/alpine</span><br>root@ubuntu2204:~<span class="hljs-comment"># cd /data/dockerfile/alpine</span><br><br>root@ubuntu2204:/data/dockerfile/alpine<span class="hljs-comment"># vim Dockerfile</span><br>FROM alpine:20240329<br>LABEL Author=xcjyc Description=<span class="hljs-string">&quot;docker build&quot;</span> Data=<span class="hljs-string">&quot;2024-05-22&quot;</span> <br><br>root@ubuntu2204:/data/dockerfile/alpine<span class="hljs-comment"># docker build -t myalpine:for20240329 .</span><br>DEPRECATED: The legacy builder is deprecated and will be removed <span class="hljs-keyword">in</span> a future release.<br>            Install the buildx component to build images with BuildKit:<br>            https://docs.docker.com/go/buildx/<br><br>Sending build context to Docker daemon  2.048kB<br>Step 1/2 : FROM alpine:20240329<br>20240329: Pulling from library/alpine<br>4edfc05e3af2: Pull complete <br>Digest: sha256:e31c3b1cd47718260e1b6163af0a05b3c428dc01fa410baf72ca8b8076e22e72<br>Status: Downloaded newer image <span class="hljs-keyword">for</span> alpine:20240329<br> ---&gt; 49b3cb3043cd<br>Step 2/2 : LABEL Author=xcjyc Description=<span class="hljs-string">&quot;docker build&quot;</span> Data=<span class="hljs-string">&quot;2024-05-22&quot;</span><br> ---&gt; Running <span class="hljs-keyword">in</span> 2fc73db792f6<br>Removing intermediate container 2fc73db792f6<br> ---&gt; d1a87b0d00c6<br>Successfully built d1a87b0d00c6<br>Successfully tagged myalpine:for20240329<br></code></pre></td></tr></table></figure>
+<h3 id="安装依赖环境"><a href="#安装依赖环境" class="headerlink" title="安装依赖环境"></a>安装依赖环境</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# apt-get update<br>root@ubuntu2204:~# apt-get install ca-certificates curl gnupg<br></code></pre></td></tr></table></figure>
 
 
 
-<h4 id="3）Dockerfile-加入一个前台持续执行的进程"><a href="#3）Dockerfile-加入一个前台持续执行的进程" class="headerlink" title="3）Dockerfile 加入一个前台持续执行的进程"></a>3）Dockerfile 加入一个前台持续执行的进程</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh">root@ubuntu2204:/data/dockerfile/alpine<span class="hljs-comment"># cat Dockerfile </span><br>FROM alpine:20240329<br>LABEL Author=xcjyc Description=<span class="hljs-string">&quot;docker build&quot;</span> Data=<span class="hljs-string">&quot;2024-05-22&quot;</span><br>CMD <span class="hljs-built_in">tail</span> -f /etc/hosts <br></code></pre></td></tr></table></figure>
+<h3 id="添加docker-ce软件源"><a href="#添加docker-ce软件源" class="headerlink" title="添加docker-ce软件源"></a>添加docker-ce软件源</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# install -m 0755 -d /etc/apt/keyrings<br>root@ubuntu2204:~# curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu//gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg<br>root@ubuntu2204:~# sudo chmod a+r /etc/apt/keyrings/docker.gpg<br>root@ubuntu2204:~# echo \<br>  &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu \<br>  &quot;$(. /etc/os-release &amp;&amp; echo &quot;$VERSION_CODENAME&quot;)&quot; stable&quot; | \<br>  tee /etc/apt/sources.list.d/docker.list &gt; /dev/null<br>root@ubuntu2204:~# apt update <br></code></pre></td></tr></table></figure>
 
 
+
+<h3 id="查看docker版本"><a href="#查看docker版本" class="headerlink" title="查看docker版本"></a>查看docker版本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# apt list docker-ce -a<br>Listing... Done<br>docker-ce-cli/jammy 5:27.3.1-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.3.0-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.2.1-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.2.0-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.1.2-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.1.1-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.1.0-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.0.3-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.0.2-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:27.0.1-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:26.1.4-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:26.1.3-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:26.1.2-1~ubuntu.22.04~jammy amd64<br>docker-ce-cli/jammy 5:26.1.1-1~ubuntu.22.04~jammy amd64<br>.....<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="安装特定docker-ce版本"><a href="#安装特定docker-ce版本" class="headerlink" title="安装特定docker-ce版本"></a>安装特定docker-ce版本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@ubuntu2204:~# apt-get install docker-ce=5:27.2.1-1~ubuntu.22.04~jammy docker-ce-cli=5:27.2.1-1~ubuntu.22.04~jammy containerd.io docker-buildx-plugin docker-compose-plugin<br><br>root@ubuntu2204:~# docker info <br>Client: Docker Engine - Community<br> Version:    27.2.1<br> Context:    default<br> Debug Mode: false<br> Plugins:<br>  buildx: Docker Buildx (Docker Inc.)<br>    Version:  v0.17.1<br>    Path:     /usr/libexec/docker/cli-plugins/docker-buildx<br>  compose: Docker Compose (Docker Inc.)<br>    Version:  v2.29.7<br>    Path:     /usr/libexec/docker/cli-plugins/docker-compose<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -354,8 +360,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Docker的镜像制作小试验</div>
-      <div>https://www.xcjyc.top/2024/06/04/Docker的镜像制作小试验/</div>
+      <div>Docker环境安装</div>
+      <div>https://www.xcjyc.top/2024/09/28/Docker环境安装/</div>
     </div>
     <div class="license-meta">
       
@@ -367,7 +373,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年6月4日</div>
+          <div>2024年9月28日</div>
         </div>
       
       
@@ -399,18 +405,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/06/14/Redis%E9%9B%86%E7%BE%A4%E4%B8%8E%E9%AB%98%E5%8F%AF%E7%94%A8-redis%E5%93%A8%E5%85%B5/" title="Redis集群与高可用-redis哨兵">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Redis集群与高可用-redis哨兵</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/05/29/%E9%83%A8%E7%BD%B2edosoho%E4%BC%81%E5%9F%B9%E7%B3%BB%E7%BB%9F/" title="部署edosoho企培系统">
-                        <span class="hidden-mobile">部署edosoho企培系统</span>
+                      <a href="/2024/07/09/Nginx%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%E5%8F%8A%E4%BC%98%E5%8C%96/" title="Nginx配置详解及优化">
+                        <span class="hidden-mobile">Nginx配置详解及优化</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -464,7 +464,7 @@
       
         <a href="/2024/09/28/Docker%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/" title="Docker环境安装"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">Docker环境安装</span>
         </a>
       
@@ -473,7 +473,7 @@
       
         <a href="/2024/06/04/Docker%E7%9A%84%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C%E5%B0%8F%E8%AF%95%E9%AA%8C/" title="Docker的镜像制作小试验"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">Docker的镜像制作小试验</span>
         </a>
       
