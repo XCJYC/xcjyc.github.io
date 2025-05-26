@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.xcjyc.top/img/windows.jpg">
 <meta property="article:published_time" content="2025-05-26T02:31:22.000Z">
-<meta property="article:modified_time" content="2025-05-26T03:42:00.057Z">
+<meta property="article:modified_time" content="2025-05-26T04:24:39.046Z">
 <meta property="article:author" content="XCJYC">
 <meta property="article:tag" content="Windows">
 <meta name="twitter:card" content="summary_large_image">
@@ -333,7 +333,8 @@
 <p>**2.按顺序给出以下命令（在每个命令后按 <strong>Enter</strong>）：</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmd">reg add &quot;HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC&quot; /v RpcUseNamedPipeProtocol /t REG_DWORD /d <span class="hljs-number">1</span> /f<br><br>reg add &quot;HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC&quot; /v RpcProtocols /t REG_DWORD /d <span class="hljs-number">0</span>x7 /f<br><br>reg add &quot;HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers&quot; /v ServerThread /t REG_DWORD /d <span class="hljs-number">1</span> /f<br></code></pre></td></tr></table></figure>
 
-<p><img src="d:/Desktop/image_thumb-67.png" srcset="/img/loading.gif" lazyload alt="image_thumb-67"></p>
+
+
 <p>3.关闭注册表编辑器，并<strong>重新启动</strong>计算机。</p>
 <h5 id="方法-3-使用本地端口添加共享打印机。"><a href="#方法-3-使用本地端口添加共享打印机。" class="headerlink" title="方法 3. 使用本地端口添加共享打印机。"></a>方法 3. 使用本地端口添加共享打印机。</h5><p>修复常见打印机错误（例如本文中提到的错误（0x00000709 或 0x00000bc））的另一种方法是使用本地端口手动重新添加打印机。</p>
 <p>1.进入 设置–蓝牙和其它设备–打印机和扫描仪。</p>
