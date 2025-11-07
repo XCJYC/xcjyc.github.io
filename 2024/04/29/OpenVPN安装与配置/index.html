@@ -1,0 +1,851 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="OpenVPN安装与配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenVPN安装与配置">
+<meta property="og:url" content="https://www.xcjyc.top/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="OpenVPN安装与配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/openvpn.png">
+<meta property="article:published_time" content="2024-04-29T08:33:51.000Z">
+<meta property="article:modified_time" content="2024-05-07T08:38:22.025Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="OpenVPN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/openvpn.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>OpenVPN安装与配置 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="OpenVPN安装与配置"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-29 16:33" pubdate>
+          2024年4月29日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">OpenVPN安装与配置</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h5 id="采用Hyper-V虚拟机模拟环境，配置如下"><a href="#采用Hyper-V虚拟机模拟环境，配置如下" class="headerlink" title="采用Hyper-V虚拟机模拟环境，配置如下"></a>采用Hyper-V虚拟机模拟环境，配置如下</h5><p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20240507163511.png" srcset="/img/loading.gif" lazyload alt="20240507163511"></p>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>os版本</th>
+<th>网络链接</th>
+<th>ip</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>clients 客户端</td>
+<td>windows 11</td>
+<td>局域网</td>
+<td>192.168.23.220</td>
+<td>物理机</td>
+</tr>
+<tr>
+<td>openvpn 服务器</td>
+<td>rocky9</td>
+<td>局域网(桥接网络)</td>
+<td>192.168.23.40</td>
+<td>hyperv虚拟机</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>内部网络</td>
+<td>192.168.200.10</td>
+<td>hyperv虚拟机</td>
+</tr>
+<tr>
+<td>内部服务器1</td>
+<td>ubuntu2204</td>
+<td>内部网络</td>
+<td>192.168.200.20</td>
+<td>hyperv虚拟机</td>
+</tr>
+<tr>
+<td>内部服务器2</td>
+<td>windows server 2019</td>
+<td>内部网络</td>
+<td>192.168.200.30</td>
+<td>hyperv虚拟机</td>
+</tr>
+</tbody></table>
+<h3 id="查看并安装软件版本"><a href="#查看并安装软件版本" class="headerlink" title="查看并安装软件版本"></a>查看并安装软件版本</h3><ul>
+<li>openvpn: OpenVPN服务器端</li>
+<li>easy-rsa: 证书管理工具</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@rocky9 ~]# yum list openvpn easy-rsa<br>Last metadata expiration check: 0:01:03 ago on Mon 29 Apr 2024 04:56:08 PM CST.<br>Available Packages<br>easy-rsa.noarch                                                          3.1.6-1.el9                                                           epel<br>openvpn.x86_64                                                           2.5.9-2.el9                                                           epel<br><br>[root@rocky9 ~]# yum install -y openvpn easy-rsa<br></code></pre></td></tr></table></figure>
+
+<h3 id="准备证书生成环境"><a href="#准备证书生成环境" class="headerlink" title="准备证书生成环境"></a>准备证书生成环境</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@rocky9 ~]# rpm -ql easy-rsa<br>/usr/share/doc/easy-rsa<br>/usr/share/doc/easy-rsa/COPYING.md<br>/usr/share/doc/easy-rsa/ChangeLog<br>/usr/share/doc/easy-rsa/README.md<br>/usr/share/doc/easy-rsa/README.quickstart.md<br>/usr/share/doc/easy-rsa/vars.example<br>/usr/share/easy-rsa<br>/usr/share/easy-rsa/3<br>/usr/share/easy-rsa/3.0<br>/usr/share/easy-rsa/3.1.6<br>/usr/share/easy-rsa/3.1.6/easyrsa<br>/usr/share/easy-rsa/3.1.6/openssl-easyrsa.cnf<br>/usr/share/easy-rsa/3.1.6/x509-types<br>/usr/share/easy-rsa/3.1.6/x509-types/COMMON<br>/usr/share/easy-rsa/3.1.6/x509-types/ca<br>/usr/share/easy-rsa/3.1.6/x509-types/client<br>/usr/share/easy-rsa/3.1.6/x509-types/code-signing<br>/usr/share/easy-rsa/3.1.6/x509-types/email<br>/usr/share/easy-rsa/3.1.6/x509-types/kdc<br>/usr/share/easy-rsa/3.1.6/x509-types/server<br>/usr/share/easy-rsa/3.1.6/x509-types/serverClient<br>/usr/share/licenses/easy-rsa<br>/usr/share/licenses/easy-rsa/COPYING.md<br>/usr/share/licenses/easy-rsa/gpl-2.0.txt<br><br>[root@rocky9 ~]# ll /usr/share/easy-rsa/<br>total 0<br>lrwxrwxrwx 1 root root  5 Aug 24  2023 3 -&gt; 3.1.6<br>lrwxrwxrwx 1 root root  5 Aug 24  2023 3.0 -&gt; 3.1.6<br>drwxr-xr-x 3 root root 66 Apr 29 17:00 3.1.6<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 准备证书生成目录</span></span><br>[root@rocky9 3]# mkdir /etc/openvpn/easy-rsa-server<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 准备证书颁发文件</span></span><br>[root@rocky9 3]# cp -r /usr/share/easy-rsa/3/*  /etc/openvpn/easy-rsa-server<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 准备颁发证书相关变量配置文件</span></span><br>[root@rocky9 3]# cp /usr/share/doc/easy-rsa/vars.example  /etc/openvpn/easy-rsa-server/vars<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 修改CA证书和OpenVPN服务器证书有效期时长，可适当加长</span></span><br>[root@rocky9 3]# vim /etc/openvpn/easy-rsa-server/vars<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 可更改证书的默认签名配置信息（可选）</span></span><br>set_var EASYRSA_REQ_COUNTRY     &quot;CN&quot;<br>set_var EASYRSA_REQ_PROVINCE    &quot;HuBei&quot;<br>set_var EASYRSA_REQ_CITY        &quot;YC&quot;<br>set_var EASYRSA_REQ_ORG         &quot;xcjyc.top&quot;<br>set_var EASYRSA_REQ_EMAIL       &quot;mail@xcjyc.top&quot;<br>set_var EASYRSA_REQ_OU          &quot;My Website Unit&quot;<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># ca证书默认有效期3650，可适当延长</span></span><br>set_var EASYRSA_CA_EXPIRE       36500<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 服务器证书默认825天，可适当延长</span></span><br>set_var EASYRSA_CERT_EXPIRE     18250<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 生成openvpn服务器配置文件</span></span><br>[root@rocky9 3]# cp /usr/share/doc/openvpn/sample/sample-config-files/server.conf /etc/openvpn/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 目录结构如下</span></span><br>[root@rocky9 ~]# tree /etc/openvpn/<br>/etc/openvpn/<br>├── client<br>├── easy-rsa-server<br>│   ├── easyrsa<br>│   ├── openssl-easyrsa.cnf<br>│   ├── vars<br>│   └── x509-types<br>│       ├── COMMON<br>│       ├── ca<br>│       ├── client<br>│       ├── code-signing<br>│       ├── email<br>│       ├── kdc<br>│       ├── server<br>│       └── serverClient<br>├── server<br>└── server.conf<br><br>4 directories, 12 files<br></code></pre></td></tr></table></figure>
+
+<h3 id="初始化PKI环境"><a href="#初始化PKI环境" class="headerlink" title="初始化PKI环境"></a>初始化PKI环境</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 进入准备好的easyrsa目录</span></span><br>[root@rocky9 ~]# cd /etc/openvpn/easy-rsa-server/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># easyrsa脚本帮助</span></span><br>[root@rocky9 easy-rsa-server]# ./easyrsa <br><br>Easy-RSA 3 usage and overview<br><br>USAGE: easyrsa [global-options] COMMAND [command-options]<br><br>To get detailed usage and help for a command, use:<br>  ./easyrsa help COMMAND<br><br>For a list of global-options, use:<br>  ./easyrsa help options<br><br>A list of commands is shown below:<br>  init-pki [ cmd-opts ]<br>  build-ca [ cmd-opts ]<br>  gen-dh<br>  gen-req &lt;file_name_base&gt; [ cmd-opts ]<br>  sign-req &lt;type&gt; &lt;file_name_base&gt; [ cmd-opts ]<br>  build-client-full &lt;file_name_base&gt; [ cmd-opts ]<br>  build-server-full &lt;file_name_base&gt; [ cmd-opts ]<br>  build-serverClient-full &lt;file_name_base&gt; [ cmd-opts ]<br>  inline &lt;file_name_base&gt;<br>  revoke &lt;file_name_base&gt; [ cmd-opts ]<br>  renew &lt;file_name_base&gt;<br>  revoke-renewed &lt;file_name_base&gt; [ cmd-opts ]<br>  rewind-renew &lt;certificate_serial_number&gt;<br>  rebuild &lt;file_name_base&gt; [ cmd-opts ]<br>  gen-crl<br>  update-db<br>  make-safe-ssl<br>  show-req &lt;file_name_base&gt; [ cmd-opts ]<br>  show-cert &lt;file_name_base&gt; [ cmd-opts ]<br>  show-ca [ cmd-opts ]<br>  show-crl<br>  show-expire &lt;file_name_base&gt; (Optional)<br>  show-revoke &lt;file_name_base&gt; (Optional)<br>  show-renew &lt;file_name_base&gt; (Optional)<br>  verify-cert &lt;file_name_base&gt;<br>  import-req &lt;request_file_path&gt; &lt;short_name_base&gt;<br>  export-p1 &lt;file_name_base&gt; [ cmd-opts ]<br>  export-p7 &lt;file_name_base&gt; [ cmd-opts ]<br>  export-p8 &lt;file_name_base&gt; [ cmd-opts ]<br>  export-p12 &lt;file_name_base&gt; [ cmd-opts ]<br>  set-pass &lt;file_name_base&gt; [ cmd-opts ]<br>  upgrade &lt;type&gt;<br><br>DIRECTORY STATUS (commands would take effect on these locations)<br>     EASYRSA: /etc/openvpn/easy-rsa-server<br>         PKI: /etc/openvpn/easy-rsa-server/pki<br>   vars-file: /etc/openvpn/easy-rsa-server/vars<br>  x509-types: /etc/openvpn/easy-rsa-server/x509-types<br>   CA status: CA has not been built<br><br>IMPORTANT:<br>  The preferred location for &#x27;vars&#x27; is within the PKI folder.<br>  To silence this message move your &#x27;vars&#x27; file to your PKI<br>  or declare your &#x27;vars&#x27; file with option: --vars=&lt;FILE&gt;<br><span class="hljs-meta prompt_">  </span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 初始化PKI ，在当前目录下生成PKI目录及相关文件</span></span><br>[root@rocky9 easy-rsa-server]# ./easyrsa  init-pki<br><br>Notice<br>------<br>&#x27;init-pki&#x27; complete; you may now create a CA or requests.<br><br>Your newly created PKI dir is:<br>* /etc/openvpn/easy-rsa-server/pki<br><br>Using Easy-RSA configuration:<br>* /etc/openvpn/easy-rsa-server/vars<br><br>IMPORTANT:<br>  The preferred location for &#x27;vars&#x27; is within the PKI folder.<br>  To silence this message move your &#x27;vars&#x27; file to your PKI<br>  or declare your &#x27;vars&#x27; file with option: --vars=&lt;FILE&gt;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 生成的PKI</span></span><br>[root@rocky9 easy-rsa-server]# tree <br>.<br>├── easyrsa<br>├── openssl-easyrsa.cnf<br>├── pki<br>│   ├── inline<br>│   ├── openssl-easyrsa.cnf<br>│   ├── private<br>│   ├── reqs<br>│   └── vars.example<br>├── vars<br>└── x509-types<br>    ├── COMMON<br>    ├── ca<br>    ├── client<br>    ├── code-signing<br>    ├── email<br>    ├── kdc<br>    ├── server<br>    └── serverClient<br><br>5 directories, 13 files<br></code></pre></td></tr></table></figure>
+
+<h3 id="创建CA环境"><a href="#创建CA环境" class="headerlink" title="创建CA环境"></a>创建CA环境</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 创建CA ，若不想使用密码，可以添加 “nopass”参数，例：[root@rocky9 easy-rsa-server]# ./easyrsa build-ca nopass</span></span><br><br>[root@rocky9 easy-rsa-server]# ./easyrsa build-ca <br>Using Easy-RSA &#x27;vars&#x27; configuration:<br>* /etc/openvpn/easy-rsa-server/vars<br><br>IMPORTANT:<br>  The preferred location for &#x27;vars&#x27; is within the PKI folder.<br>  To silence this message move your &#x27;vars&#x27; file to your PKI<br>  or declare your &#x27;vars&#x27; file with option: --vars=&lt;FILE&gt;<br><br>Using SSL:<br>* openssl OpenSSL 3.0.7 1 Nov 2022 (Library: OpenSSL 3.0.7 1 Nov 2022)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># （在此处设置CA密码）</span></span><br>Enter New CA Key Passphrase:              <br><br>Confirm New CA Key Passphrase: <br>....+.+..............+.+...+..+....+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...........+.+..............+...+................+..+...+.+.........+......+.....+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+.....+......+.......+...+.....+.+........+......+....+...........+.+...+..+................+...+......+.....+.........................+......+..+................+..+.........+............................+...+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>.+.+.....+.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+...+..+.+.........+..+....+..+....+...+......+...........+....+......+......+..+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+...+...+...+.......+...+.....+...................+..+...+......+.+...........+....+......+...+...........+...+.+..............+...+.......+........+...............+.......+...............+.....+......+....+..+....+...........+.+..+.+............+........+.+...+..+................+............+..+......+...+.+........+.+......+..........................+....+...+.....+.......+...+..+.+...+...........+.+.........+...+..+................+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>-----<br>You are about to be asked to enter information that will be incorporated<br>into your certificate request.<br>What you are about to enter is what is called a Distinguished Name or a DN.<br>There are quite a few fields but you can leave some blank<br>For some fields there will be a default value,<br>If you enter &#x27;.&#x27;, the field will be left blank.<br>-----<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># （在此外回车接受默认值）</span></span><br>Common Name (eg: your user, host, or server name) [Easy-RSA CA]:<br><br>Notice<br>------<br>CA creation complete. Your new CA certificate is at:<br>* /etc/openvpn/easy-rsa-server/pki/ca.crt<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  查看创建的CA文件</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">## 自签名证书文件：./pki/ca.crt</span></span>   <br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">## 私钥文件：     ./pki/private/ca.key</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">## 证书索引信息：  ./pki/index.txt</span></span><br>[root@rocky9 easy-rsa-server]# tree <br>.<br>├── easyrsa<br>├── openssl-easyrsa.cnf<br>├── pki<br>│   ├── ca.crt<br>│   ├── certs_by_serial<br>│   ├── index.txt<br>│   ├── index.txt.attr<br>│   ├── inline<br>│   ├── issued<br>│   ├── openssl-easyrsa.cnf<br>│   ├── private<br>│   │   └── ca.key<br>│   ├── reqs<br>│   ├── revoked<br>│   │   ├── certs_by_serial<br>│   │   ├── private_by_serial<br>│   │   └── reqs_by_serial<br>│   ├── serial<br>│   └── vars.example<br>├── vars<br>└── x509-types<br>    ├── COMMON<br>    ├── ca<br>    ├── client<br>    ├── code-signing<br>    ├── email<br>    ├── kdc<br>    ├── server<br>    └── serverClient<br><br>11 directories, 18 files<br></code></pre></td></tr></table></figure>
+
+<h3 id="创建服务端证书"><a href="#创建服务端证书" class="headerlink" title="创建服务端证书"></a>创建服务端证书</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  创建服务器端证书申请，nopass表示不加密文件,server表示文件命名前缀为server。</span></span><br><br>[root@rocky9 easy-rsa-server]# ./easyrsa gen-req server nopass<br>Using Easy-RSA &#x27;vars&#x27; configuration:<br>* /etc/openvpn/easy-rsa-server/vars<br><br>IMPORTANT:<br>  The preferred location for &#x27;vars&#x27; is within the PKI folder.<br>  To silence this message move your &#x27;vars&#x27; file to your PKI<br>  or declare your &#x27;vars&#x27; file with option: --vars=&lt;FILE&gt;<br><br>Using SSL:<br>* openssl OpenSSL 3.0.7 1 Nov 2022 (Library: OpenSSL 3.0.7 1 Nov 2022)<br>......+.+......+........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+....+...+......+....................+.+.....+.+........+.+...+...............+..+.+........+....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+.+...+..+........................+......+..........+.....+....+..............+....+.....+...+....+...+...+........+......+......+.......+...+............+..+....+.....+......+.+.........+.....+...+...+.......+.....+.+...............+......+.....+.+.........+...+..+.+........+.+.....+......+.........+.............+..+...+...+..........+........+.+...+.....+.+...........+.+...+..............+......+.....................+.+..+...+....+........+..................+....+.....+....+......+........+.......+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>.....+......+...+.+......+.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+..............+.............+.....+....+.....+.+.....+...+.......+..+.+......+.........+.....+.........+.............+...+..............+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+...+..+......+...+....+..+.+............+.....+.+...............+..+.......+...+..+.+..+...+...............+.......+....................+..........+...............+..............+....+......+......+...+..+............+.......+.....+....+...........+......+....+..............+............+....+...+..+......+...+.......+..+.......+...+.....+............+...+...+....+.....+..........+.........+............+..+..........+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>-----<br>You are about to be asked to enter information that will be incorporated<br>into your certificate request.<br>What you are about to enter is what is called a Distinguished Name or a DN.<br>There are quite a few fields but you can leave some blank<br>For some fields there will be a default value,<br>If you enter &#x27;.&#x27;, the field will be left blank.<br>-----<br>Common Name (eg: your user, host, or server name) [server]:<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 回车确认</span></span><br>Notice<br>------<br>Private-Key and Public-Certificate-Request files created.<br>Your files are:<br>* req: /etc/openvpn/easy-rsa-server/pki/reqs/server.req<br>* key: /etc/openvpn/easy-rsa-server/pki/private/server.key<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  颁发服务器证书，第一个server表示证书类型，第二个server表示文件名前缀</span></span><br><br>[root@rocky9 easy-rsa-server]# ./easyrsa sign server server<br>Using Easy-RSA &#x27;vars&#x27; configuration:<br>* /etc/openvpn/easy-rsa-server/vars<br><br>IMPORTANT:<br>  The preferred location for &#x27;vars&#x27; is within the PKI folder.<br>  To silence this message move your &#x27;vars&#x27; file to your PKI<br>  or declare your &#x27;vars&#x27; file with option: --vars=&lt;FILE&gt;<br><br>Using SSL:<br>* openssl OpenSSL 3.0.7 1 Nov 2022 (Library: OpenSSL 3.0.7 1 Nov 2022)<br>You are about to sign the following certificate:<br>Please check over the details shown below for accuracy. Note that this request<br>has not been cryptographically verified. Please be sure it came from a trusted<br>source or that you have verified the request checksum with the sender.<br>Request subject, to be signed as a server certificate <br>for &#x27;18250&#x27; days:<br><br>subject=<br>    commonName                = server<br><br>Type the word &#x27;yes&#x27; to continue, or any other input to abort.<br>  Confirm request details: yes<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  输入yes确认</span></span><br>Using configuration from /etc/openvpn/easy-rsa-server/pki/openssl-easyrsa.cnf<br>Enter pass phrase for /etc/openvpn/easy-rsa-server/pki/private/ca.key:<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  输入设置的CA密码</span></span><br>Check that the request matches the signature<br>Signature ok<br>The Subject&#x27;s Distinguished Name is as follows<br>commonName            :ASN.1 12:&#x27;server&#x27;<br>Certificate is to be certified until Apr 18 05:24:37 2074 GMT (18250 days)<br><br>Write out database with 1 new entries<br>Data Base Updated<br><br>Notice<br>------<br>Certificate created at:<br>* /etc/openvpn/easy-rsa-server/pki/issued/server.crt<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@rocky9 easy-rsa-server]# tree pki<br>pki<br>├── ca.crt<br>├── certs_by_serial<br>│   └── ACF621E40DAD89940B729F78FAEA3824.pem<br>├── index.txt<br>├── index.txt.attr<br>├── index.txt.attr.old<br>├── index.txt.old<br>├── inline<br>├── issued<br>│   └── server.crt<br>├── openssl-easyrsa.cnf<br>├── private<br>│   ├── ca.key<br>│   └── server.key<br>├── reqs<br>│   └── server.req<br>├── revoked<br>│   ├── certs_by_serial<br>│   ├── private_by_serial<br>│   └── reqs_by_serial<br>├── serial<br>├── serial.old<br>└── vars.example<br><br>9 directories, 14 files<br></code></pre></td></tr></table></figure>
+
+<h3 id="创建Diffie-Hellman密钥"><a href="#创建Diffie-Hellman密钥" class="headerlink" title="创建Diffie-Hellman密钥"></a>创建Diffie-Hellman密钥</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@rocky9 easy-rsa-server]# ./easyrsa gen-dh<br>Using Easy-RSA &#x27;vars&#x27; configuration:<br>* /etc/openvpn/easy-rsa-server/vars<br><br>IMPORTANT:<br>  The preferred location for &#x27;vars&#x27; is within the PKI folder.<br>  To silence this message move your &#x27;vars&#x27; file to your PKI<br>  or declare your &#x27;vars&#x27; file with option: --vars=&lt;FILE&gt;<br><br>Using SSL:<br>* openssl OpenSSL 3.0.7 1 Nov 2022 (Library: OpenSSL 3.0.7 1 Nov 2022)<br>Generating DH parameters, 2048 bit long safe prime<br>......................................................+..................................+...........................................................................................................................+...............................................................................................................................................................................+....................................................................................+........................+.............+..................................+.......+......+.........................................................................................................................................................................+.............................+........................................+.......................................................+..........................................................................................................................................................+.............................................+......................................................................................................................................................................+........................................................................................................................................................................................................................+...........................................................................................................................................................................................................................+.........................+......................+....................................................................+..........................................................................................................+......................................................................................................................................................................+...........................................................................................................................................................................................................................................................................................................................................................+....+............................................................................................................................................+.................................................................................+..........+.....................................................................................................................................................................................................................+............++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*++*<br>DH parameters appear to be ok.<br><br>Notice<br>------<br><br>DH parameters of size 2048 created at:<br>* /etc/openvpn/easy-rsa-server/pki/dh.pem<br></code></pre></td></tr></table></figure>
+
+<h3 id="创建客户端证书和私钥"><a href="#创建客户端证书和私钥" class="headerlink" title="创建客户端证书和私钥"></a>创建客户端证书和私钥</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  修改客户端证书的有效期设置</span></span><br><br>[root@rocky9 easy-rsa-server]# vim vars <br>set_var EASYRSA_CERT_EXPIRE     180<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  创建客户端证书申请文件，</span></span><br>[root@rocky9 easy-rsa-server]# ./easyrsa gen-req xcjyc nopass<br>Using Easy-RSA &#x27;vars&#x27; configuration:<br>* /etc/openvpn/easy-rsa-server/vars<br><br>IMPORTANT:<br>  The preferred location for &#x27;vars&#x27; is within the PKI folder.<br>  To silence this message move your &#x27;vars&#x27; file to your PKI<br>  or declare your &#x27;vars&#x27; file with option: --vars=&lt;FILE&gt;<br><br>Using SSL:<br>* openssl OpenSSL 3.0.7 1 Nov 2022 (Library: OpenSSL 3.0.7 1 Nov 2022)<br>.+.........+..+.......+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+........+...+.+.....+.+...+...........+....+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+..................+...+....+...+...+..+..........+..+.......+.........+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>..+.+...+...+..+...+.............+..............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+.....+.......+.....+.......+..+....+.....+....+..+...+.+...........+.........+.+......+........................+......+...+..+...+.+...+.....+.......+......+.....+...+......+..........+...+......+..+....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..............+...+............+....+...+........+.............+.........+......+...........+...+..........+...+..+.......+...........+.........+...+...+....+...+.....+......+.+...........+....+.........+......+........+......+.......+..+..........+...+.....+.........+.+.....+............+.+.....+....+...+...+......+...+......+......+........+............+.+..+................+..+...+.......+............+.....+................+......+...+...+..+.+......+.....+....+..+.......+..+......+.......+...+...+.....+.......+...+..+......................+.....+...+...+......+..........+...........+...+.......+..+.......+.........+.........+.....+............+...................+.............................+.+..+....+.....+.+..+.......+...+..+.+.....+..............................+...+.......+.....+...+.+...+...+...+...........+...+.+...........+..........+...+...+.....+.........+...+.......+........+.+...............+......+.....+..........+...............+......+..+...+...+....+...+............+......+...............+..+...+....+...+.....+.......+..+...+......+.......+..............+................+.....+..........+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br>-----<br>You are about to be asked to enter information that will be incorporated<br>into your certificate request.<br>What you are about to enter is what is called a Distinguished Name or a DN.<br>There are quite a few fields but you can leave some blank<br>For some fields there will be a default value,<br>If you enter &#x27;.&#x27;, the field will be left blank.<br>-----<br>Common Name (eg: your user, host, or server name) [xcjyc]:<br><br>Notice<br>------<br>Private-Key and Public-Certificate-Request files created.<br>Your files are:<br>* req: /etc/openvpn/easy-rsa-server/pki/reqs/xcjyc.req<br>* key: /etc/openvpn/easy-rsa-server/pki/private/xcjyc.key<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  颁发客户端证书</span></span><br>[root@rocky9 easy-rsa-server]# ./easyrsa sign client xcjyc<br>Using Easy-RSA &#x27;vars&#x27; configuration:<br>* /etc/openvpn/easy-rsa-server/vars<br><br>IMPORTANT:<br>  The preferred location for &#x27;vars&#x27; is within the PKI folder.<br>  To silence this message move your &#x27;vars&#x27; file to your PKI<br>  or declare your &#x27;vars&#x27; file with option: --vars=&lt;FILE&gt;<br><br>Using SSL:<br>* openssl OpenSSL 3.0.7 1 Nov 2022 (Library: OpenSSL 3.0.7 1 Nov 2022)<br>You are about to sign the following certificate:<br>Please check over the details shown below for accuracy. Note that this request<br>has not been cryptographically verified. Please be sure it came from a trusted<br>source or that you have verified the request checksum with the sender.<br>Request subject, to be signed as a client certificate <br>for &#x27;180&#x27; days:<br><br>subject=<br>    commonName                = xcjyc<br><br>Type the word &#x27;yes&#x27; to continue, or any other input to abort.<br>  Confirm request details: yes<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 输入yes确认</span></span><br>Using configuration from /etc/openvpn/easy-rsa-server/pki/openssl-easyrsa.cnf<br>Enter pass phrase for /etc/openvpn/easy-rsa-server/pki/private/ca.key:<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 输入CA的密码</span></span><br>Check that the request matches the signature<br>Signature ok<br>The Subject&#x27;s Distinguished Name is as follows<br>commonName            :ASN.1 12:&#x27;xcjyc&#x27;<br>Certificate is to be certified until Oct 27 05:43:16 2024 GMT (180 days)<br><br>Write out database with 1 new entries<br>Data Base Updated<br><br>Notice<br>------<br>Certificate created at:<br>* /etc/openvpn/easy-rsa-server/pki/issued/xcjyc.crt<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  查看生成的文件树</span></span><br>[root@rocky9 easy-rsa-server]# tree<br>.<br>├── easyrsa                                                       ## 管理命令<br>├── openssl-easyrsa.cnf<br>├── pki<br>│   ├── ca.crt                                                    ## CA根证书，服务端和客户端都需要<br>│   ├── certs_by_serial<br>│   │   ├── 05C5204F013F6E6EF029F21E2D9ABFE6.pem<br>│   │   └── ACF621E40DAD89940B729F78FAEA3824.pem<br>│   ├── dh.pem                                                    ## 认证算法，服务端需要<br>│   ├── index.txt                                                 ## 证书索引文件<br>│   ├── index.txt.attr<br>│   ├── index.txt.attr.old<br>│   ├── index.txt.old<br>│   ├── inline<br>│   ├── issued<br>│   │   ├── server.crt                                            ## 服务端证书<br>│   │   └── xcjyc.crt                                             ## 客户端证书<br>│   ├── openssl-easyrsa.cnf<br>│   ├── private<br>│   │   ├── ca.key<br>│   │   ├── server.key                                            ## 服务端私钥<br>│   │   └── xcjyc.key                                             ## 客户端私钥<br>│   ├── reqs<br>│   │   ├── server.req<br>│   │   └── xcjyc.req<br>│   ├── revoked<br>│   │   ├── certs_by_serial<br>│   │   ├── private_by_serial<br>│   │   └── reqs_by_serial<br>│   ├── serial<br>│   ├── serial.old<br>│   └── vars.example<br>├── vars<br>└── x509-types<br>    ├── COMMON<br>    ├── ca<br>    ├── client<br>    ├── code-signing<br>    ├── email<br>    ├── kdc<br>    ├── server<br>    └── serverClient<br><br>11 directories, 30 files<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="将CA和服务端证书复制到OpenVPN相关目录"><a href="#将CA和服务端证书复制到OpenVPN相关目录" class="headerlink" title="将CA和服务端证书复制到OpenVPN相关目录"></a>将CA和服务端证书复制到OpenVPN相关目录</h3><p>&#x3D;&#x3D;此步骤也可省略而在OpenVPN配置文件中指定具体位置&#x3D;&#x3D;</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@rocky9 easy-rsa-server]# mkdir /etc/openvpn/server/certs<br>[root@rocky9 easy-rsa-server]# cp ./pki/ca.crt ./pki/issued/server.crt ./pki/private/server.key ./pki/dh.pem /etc/openvpn/server/certs<br><br>[root@rocky9 easy-rsa-server]# ll /etc/openvpn/server/certs/<br>total 20<br>-rw------- 1 root root 1204 Apr 30 13:58 ca.crt<br>-rw------- 1 root root  424 Apr 30 13:58 dh.pem<br>-rw------- 1 root root 4613 Apr 30 13:58 server.crt<br>-rw------- 1 root root 1704 Apr 30 13:58 server.key<br></code></pre></td></tr></table></figure>
+
+<h3 id="将客户端证书复制到OpenVPN相关目录统一管理"><a href="#将客户端证书复制到OpenVPN相关目录统一管理" class="headerlink" title="将客户端证书复制到OpenVPN相关目录统一管理"></a>将客户端证书复制到OpenVPN相关目录统一管理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@rocky9 easy-rsa-server]# mkdir /etc/openvpn/client/xcjyc<br>[root@rocky9 easy-rsa-server]# cp ./pki/ca.crt ./pki/issued/xcjyc.crt ./pki/private/xcjyc.key /etc/openvpn/client/xcjyc <br>[root@rocky9 easy-rsa-server]# ll /etc/openvpn/client/xcjyc<br>total 16<br>-rw------- 1 root root 1204 Apr 30 14:03 ca.crt<br>-rw------- 1 root root 4488 Apr 30 14:03 xcjyc.crt<br>-rw------- 1 root root 1704 Apr 30 14:03 xcjyc.key<br></code></pre></td></tr></table></figure>
+
+<h3 id="准备OpenVPN的配置文件"><a href="#准备OpenVPN的配置文件" class="headerlink" title="准备OpenVPN的配置文件"></a>准备OpenVPN的配置文件</h3><p>服务端配置文件范本：&#x2F;usr&#x2F;share&#x2F;doc&#x2F;openvpn&#x2F;sample&#x2F;sample-config-files&#x2F;server.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  主要配置项含义</span></span><br>port 1194                                  #端口<br>proto udp                                  #协议<br>dev tun                                    #采用路由隧道模式<br>ca /opt/easy-rsa/pki/ca.crt                #ca证书的位置<br>cert /opt/easy-rsa/pki/issued/server.crt   #服务端公钥的位置<br>key /opt/easy-rsa/pki/private/server.key   #服务端私钥的位置<br>dh /opt/easy-rsa/pki/dh.pem                #证书校验算法  <br>server 10.8.0.0 255.255.255.0              #给客户端分配的地址池<br>push &quot;route 172.16.1.0 255.255.255.0&quot;      #允许客户端访问的内网网段<br>ifconfig-pool-persist ipp.txt              #地址池记录文件位置，未来让openvpn客户端固定ip地址使用的<br>keepalive 10 120                           #存活时间，10秒ping一次，120秒如果未收到响应则视为短线<br>max-clients 100                            #最多允许100个客户端连接<br>status openvpn-status.log                  #日志位置，记录openvpn状态<br>log /var/log/openvpn.log                   #openvpn日志记录位置<br>verb 3                                     #openvpn版本<br>client-to-client                           #允许客户端与客户端之间通信<br>persist-key                                #通过keepalive检测超时后，重新启动VPN，不重新读取<br>persist-tun                                #检测超时后，重新启动VPN，一直保持tun是linkup的，否则网络会先linkdown然后再linkup<br>duplicate-cn                               #客户端密钥（证书和私钥）是否可以重复<br>comp-lzo                                   #启动lzo数据压缩格式<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  准备配置文件</span></span><br>[root@rocky9 ~]# cd /etc/openvpn/<br>[root@rocky9 openvpn]# vim server.conf <br><br>[root@rocky9 openvpn]# grep  &#x27;^[a-z,A-Z].*&#x27; server.conf<br>port 1194<br>proto tcp<br>dev tun<br>ca /etc/openvpn/server/certs/ca.crt<br>cert /etc/openvpn/server/certs/server.crt<br>key /etc/openvpn/server/certs/server.key  <br>dh /etc/openvpn/server/certs/dh.pem<br>server 10.8.0.0 255.255.255.0<br>ifconfig-pool-persist ipp.txt<br>push &quot;route 192.168.200.0 255.255.255.0&quot;<br>keepalive 10 120<br>cipher AES-256-CBC<br>compress lz4-v2<br>push &quot;compress lz4-v2&quot;<br>max-clients 2048<br>user openvpn<br>group openvpn<br>status /var/log/openvpn/openvpn-status.log<br>log-append  /var/log/openvpn/openvpn.log<br>verb 3<br>mute 20<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  准备日志目录</span></span><br>[root@rocky9 easy-rsa-server]# mkdir /var/log/openvpn<br>[root@rocky9 easy-rsa-server]# chown openvpn.openvpn /var/log/openvpn<br><br>[root@rocky9 openvpn]# ll /var/log/openvpn -d<br>drwxr-xr-x 2 openvpn openvpn 6 Apr 30 14:23 /var/log/openvpn<br></code></pre></td></tr></table></figure>
+
+<h3 id="准备systemd启动配置文件并启动"><a href="#准备systemd启动配置文件并启动" class="headerlink" title="准备systemd启动配置文件并启动"></a>准备systemd启动配置文件并启动</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 由于缺少/usr/lib/systemd/system/openvpn@.service启动文件，可以参考centos7下的文件自已创建</span></span><br>[root@rocky9 openvpn]# rpm -ql openvpn | grep systemd<br>/usr/lib/systemd/system/openvpn-client@.service<br>/usr/lib/systemd/system/openvpn-server@.service<br>/usr/share/doc/openvpn/README.systemd<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 注意文件名比较特殊（openvpn@.service）</span></span><br>[root@rocky9 ~]# cat /usr/lib/systemd/system/openvpn@.service<br>[Unit]<br>Description=OpenVPN Robust And Highly Flexible Tunneling Application On %I<br>After=network.target<br><br>[Service]<br>Type=notify<br>PrivateTmp=true<br>ExecStart=/usr/sbin/openvpn --cd /etc/openvpn/ --config %i.conf<br><br>[Install]<br>WantedBy=multi-user.target<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 启动服务，注意服务名称（openvpn@server）</span></span><br>[root@rocky9 ~]# systemctl enable --now openvpn@server<br>Created symlink /etc/systemd/system/multi-user.target.wants/openvpn@server.service → /usr/lib/systemd/system/openvpn@.service.<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 检查服务状态及1194端口</span></span><br>[root@rocky9 ~]# systemctl status openvpn@server<br>● openvpn@server.service - OpenVPN Robust And Highly Flexible Tunneling Application On server<br>     Loaded: loaded (/usr/lib/systemd/system/openvpn@.service; enabled; preset: disabled)<br>     Active: active (running) since Tue 2024-04-30 15:28:49 CST; 3min 4s ago<br>   Main PID: 3331 (openvpn)<br>     Status: &quot;Initialization Sequence Completed&quot;<br>      Tasks: 1 (limit: 24718)<br>     Memory: 1.5M<br>        CPU: 12ms<br>     CGroup: /system.slice/system-openvpn.slice/openvpn@server.service<br>             └─3331 /usr/sbin/openvpn --cd /etc/openvpn/ --config server.conf<br><br>Apr 30 15:28:49 rocky9 systemd[1]: Starting OpenVPN Robust And Highly Flexible Tunneling Application On server...<br>Apr 30 15:28:49 rocky9 openvpn[3331]: 2024-04-30 15:28:49 WARNING: Compression for receiving enabled. Compression has been used in the past to bre&gt;<br>Apr 30 15:28:49 rocky9 systemd[1]: Started OpenVPN Robust And Highly Flexible Tunneling Application On server.<br>lines 1-14/14 (END)<br><br>[root@rocky9 ~]# ss -ntl<br>State            Recv-Q           Send-Q                     Local Address:Port                      Peer Address:Port           Process           <br>LISTEN           0                128                              0.0.0.0:22                             0.0.0.0:*                                <br>LISTEN           0                4096                             0.0.0.0:111                            0.0.0.0:*                                <br>LISTEN           0                32                               0.0.0.0:1194                           0.0.0.0:*                                <br>LISTEN           0                128                                 [::]:22                                [::]:*                                <br>LISTEN           0                4096                                [::]:111                               [::]:*  <br></code></pre></td></tr></table></figure>
+
+<h3 id="准备客户端配置文件"><a href="#准备客户端配置文件" class="headerlink" title="准备客户端配置文件"></a>准备客户端配置文件</h3><p>客户端配置文件范本：&#x2F;usr&#x2F;share&#x2F;doc&#x2F;openvpn&#x2F;sample&#x2F;sample-config-files&#x2F;client.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@rocky9 ~]# grep &#x27;^[[:alpha:]].*&#x27; /usr/share/doc/openvpn/sample/sample-config-files/client.conf &gt; /etc/openvpn/client/xcjyc/client.ovpn<br><br>[root@rocky9 ~]# vim /etc/openvpn/client/xcjyc/client.ovpn<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 修改配置项和服务端保持一致</span></span><br><br>[root@rocky9 ~]# cat /etc/openvpn/client/xcjyc/client.ovpn<br>client<br>dev tun<br>proto tcp<br>remote 192.168.23.40 1194<br>resolv-retry infinite<br>nobind<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#persist-key</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#persist-tun</span></span><br>ca ca.crt<br>cert xcjyc.crt<br>key xcjyc.key<br>remote-cert-tls server<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#tls-auth ta.key 1</span></span><br>cipher AES-256-CBC<br>verb 3<br>compress lz4-v2<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 打包配置文件给客户端</span></span><br>[root@rocky9 ~]# cd  /etc/openvpn/client/xcjyc/<br>[root@rocky9 xcjyc]# zip /root/openvpn-xcjyc.zip *<br>  adding: ca.crt (deflated 26%)<br>  adding: client.ovpn (deflated 27%)<br>  adding: xcjyc.crt (deflated 46%)<br>  adding: xcjyc.key (deflated 23%)<br>  <br>[root@rocky9 xcjyc]# sz /root/openvpn-xcjyc.zip <br><br></code></pre></td></tr></table></figure>
+
+<h3 id="安装客户端，连接测试"><a href="#安装客户端，连接测试" class="headerlink" title="安装客户端，连接测试"></a>安装客户端，连接测试</h3><p>拷贝解压打包的配置文件到 C:\Program Files\OpenVPN\config</p>
+<p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/openvpn-client.png" srcset="/img/loading.gif" lazyload alt="openvpn-client"></p>
+<p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/openvpn-client-conn.png" srcset="/img/loading.gif" lazyload alt="openvpn-client-conn"></p>
+<h3 id="实现访问openvpn内网主机"><a href="#实现访问openvpn内网主机" class="headerlink" title="实现访问openvpn内网主机"></a>实现访问openvpn内网主机</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 在服务器开启ip_forward功能</span></span><br>[root@rocky9 ~]# echo net.ipv4.ip_forward = 1 &gt;&gt; /etc/sysctl.conf<br>[root@rocky9 ~]# sysctl -p<br>net.ipv4.ip_forward = 1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 配置内网服务器回应远程客户端的路由</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">## 方法一：在主机上配置路由</span></span><br>[root@rocky9 ~]# route add -net 10.8.0.0/24 gw 192.168.200.10<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">## 方法二：在网络设备中添加路由</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">## 方法三：在openvpn服务器上添加防火墙NAT规则进行地址转换</span></span><br>[root@rocky9 ~]# iptables -vnL<br>Chain INPUT (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br><br>Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br><br>Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination  <br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">####  添加iptable 方法一：</span></span><br>[root@rocky9 ~]# iptables -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j MASQUERADE<br>[root@rocky9 ~]# iptables -vnL -t nat<br>Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br><br>Chain INPUT (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br><br>Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br><br>Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br>    0     0 MASQUERADE  all  --  *      *       10.8.0.0/24         !10.8.0.0/24  <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">####  添加iptable 方法二：</span></span><br>[root@rocky9 ~]# iptables -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to 192.168.200.10<br>[root@rocky9 ~]# iptables -vnL -t nat<br>Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br><br>Chain INPUT (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br><br>Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br><br>Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)<br> pkts bytes target     prot opt in     out     source               destination         <br>    0     0 SNAT       all  --  *      *       10.8.0.0/24         !10.8.0.0/24          to:192.168.200.10<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="测试连接内网服务器"><a href="#测试连接内网服务器" class="headerlink" title="测试连接内网服务器"></a>测试连接内网服务器</h3><h5 id="ubuntu2204：192-168-200-20"><a href="#ubuntu2204：192-168-200-20" class="headerlink" title="ubuntu2204：192.168.200.20"></a>ubuntu2204：192.168.200.20</h5><p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20240506093133.png" srcset="/img/loading.gif" lazyload alt="20240506093133"></p>
+<p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20240506100128.png" srcset="/img/loading.gif" lazyload alt="20240506100128"></p>
+<h5 id="windows-server：192-168-200-30"><a href="#windows-server：192-168-200-30" class="headerlink" title="##  windows server：192.168.200.30"></a>##  windows server：192.168.200.30</h5><p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20240506100556.png" srcset="/img/loading.gif" lazyload alt="20240506100556"></p>
+<p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20240506100950.png" srcset="/img/loading.gif" lazyload alt="20240506100950"></p>
+<p><img src="https://xcj-typora-img.oss-cn-hangzhou.aliyuncs.com/img/20240506101243.png" srcset="/img/loading.gif" lazyload alt="20240506101243"></p>
+<p>源码包：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/OpenVPN/openvpn/releases/download/v2.6.10/openvpn-2.6.10.tar.gz">https://github.com/OpenVPN/openvpn/releases/download/v2.6.10/openvpn-2.6.10.tar.gz</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.7/EasyRSA-3.1.7.tgz">https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.7/EasyRSA-3.1.7.tgz</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AE%89%E5%85%A8/" class="category-chain-item">安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OpenVPN/" class="print-no-link">#OpenVPN</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>OpenVPN安装与配置</div>
+      <div>https://www.xcjyc.top/2024/04/29/OpenVPN安装与配置/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年4月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/09/%E4%B8%BAcp%E5%92%8Cmv%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E8%BF%9B%E5%BA%A6%E6%9D%A1/" title="为cp和mv命令添加进度条">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">为cp和mv命令添加进度条</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/19/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/" title="Ubuntu2204初始化">
+                        <span class="hidden-mobile">Ubuntu2204初始化</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="安全"
+        id="heading-fdbc77bd19b9ce6318b00649645095cc" role="tab" data-toggle="collapse" href="#collapse-fdbc77bd19b9ce6318b00649645095cc"
+        aria-expanded="true"
+      >
+        安全
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-fdbc77bd19b9ce6318b00649645095cc"
+           role="tabpanel" aria-labelledby="heading-fdbc77bd19b9ce6318b00649645095cc">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/04/29/OpenVPN%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" title="OpenVPN安装与配置"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">OpenVPN安装与配置</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

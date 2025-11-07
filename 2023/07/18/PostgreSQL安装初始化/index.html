@@ -1,0 +1,836 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="PostgreSQL安装初始化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL安装初始化">
+<meta property="og:url" content="https://www.xcjyc.top/2023/07/18/PostgreSQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="PostgreSQL安装初始化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/postgresql.png">
+<meta property="article:published_time" content="2023-07-18T07:08:56.000Z">
+<meta property="article:modified_time" content="2024-01-15T08:47:41.725Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="PostgreSQL">
+<meta property="article:tag" content="init">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/postgresql.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>PostgreSQL安装初始化 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="PostgreSQL安装初始化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-18 15:08" pubdate>
+          2023年7月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">PostgreSQL安装初始化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>PostgreSQL 是一个免费的对象-关系数据库服务器(ORDBMS)，在灵活的BSD许可证下发行。</p>
+<p>PostgreSQL 开发者把它念作 post-gress-Q-L。</p>
+<p>PostgreSQL 的 Slogan 是 “世界上最先进的开源关系型数据库”。</p>
+<blockquote>
+<p>数据库排名：<a target="_blank" rel="noopener" href="https://db-engines.com/en/ranking">DB-Engines Ranking - popularity ranking of database management systems</a></p>
+</blockquote>
+<blockquote>
+<p>PostgreSQL 与 MySQL 对比：<a target="_blank" rel="noopener" href="http://bbs.chinaunix.net/thread-1688208-1-1.html">PostgreSQL与MySQL比较 - PostgreSQL-Chinaunix</a></p>
+</blockquote>
+<h3 id="PostgreSQL-安装初始化"><a href="#PostgreSQL-安装初始化" class="headerlink" title="PostgreSQL 安装初始化"></a>PostgreSQL 安装初始化</h3><h4 id="二进制安装包"><a href="#二进制安装包" class="headerlink" title="二进制安装包"></a>二进制安装包</h4><blockquote>
+<p>Rocky8 用官方源安装 PostgreSQL 15，参考官方文档：<a target="_blank" rel="noopener" href="https://www.postgresql.org/download/">PostgreSQL: Downloads</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">##  安装仓库 repository RPM</span><br>[root@Rocky8-1 ~]# dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm<br>Installed:<br>  pgdg-redhat-repo-42.0-32.noarch                                                                                                                     <br>Complete!<br><br><span class="hljs-comment">##  禁用内置的postgresql</span><br>[root@Rocky8-1 ~]# dnf -qy module <span class="hljs-built_in">disable</span> postgresql<br><br><span class="hljs-comment">##  安装postgresql</span><br>[root@Rocky8-1 ~]# dnf install -y postgresql15-server<br>Installed:<br>  lz4-1.8.3-3.el8_4.x86_64  postgresql15-15.3-2PGDG.rhel8.x86_64  postgresql15-libs-15.3-2PGDG.rhel8.x86_64  postgresql15-server-15.3-2PGDG.rhel8.x86_64 <br>Complete!<br><br><span class="hljs-comment">##  初始化数据库并设置自动启动</span><br>[root@Rocky8-1 ~]# /usr/pgsql-15/bin/postgresql-15-setup initdb<br>Initializing database ... OK<br><br>[root@Rocky8-1 ~]# systemctl <span class="hljs-built_in">enable</span> postgresql-15<br>Created symlink /etc/systemd/system/multi-user.target.wants/postgresql-15.service → /usr/lib/systemd/system/postgresql-15.service.<br><br>[root@Rocky8-1 ~]# systemctl start postgresql-15<br><br><span class="hljs-comment">##  验证</span><br>[root@Rocky8-1 ~]# <span class="hljs-built_in">sudo</span> -u postgres psql -c <span class="hljs-string">&quot;select version();&quot;</span><br>could not change directory to <span class="hljs-string">&quot;/root&quot;</span>: Permission denied<br>                                                 version                                                 <br>---------------------------------------------------------------------------------------------------------<br> PostgreSQL 15.3 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-18), 64-bit<br>(1 row)<br><br><span class="hljs-comment">##  切换postgres用户，进入数据库</span><br>[root@Rocky8-1 ~]# su - postgres<br>[postgres@Rocky8-1 ~]$ psql<br>psql (15.3)<br>Type <span class="hljs-string">&quot;help&quot;</span> <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>.<br><br>postgres=# <span class="hljs-built_in">help</span> <br>You are using psql, the command-line interface to PostgreSQL.<br>Type:  \copyright <span class="hljs-keyword">for</span> distribution terms<br>       \h <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span> with SQL commands<br>       \? <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span> with psql commands<br>       \g or terminate with semicolon to execute query<br>       \q to quit<br>postgres=# <br><br><span class="hljs-comment">##  PostgreSQL数据库目录</span><br>[root@Rocky8-1 ~]# <span class="hljs-built_in">ls</span> /var/lib/pgsql/15/data/<br>base              <span class="hljs-built_in">log</span>           pg_hba.conf    pg_multixact  pg_serial     pg_stat_tmp  pg_twophase  pg_xact               postmaster.opts<br>current_logfiles  pg_commit_ts  pg_ident.conf  pg_notify     pg_snapshots  pg_subtrans  PG_VERSION   postgresql.auto.conf  postmaster.pid<br>global            pg_dynshmem   pg_logical     pg_replslot   pg_stat       pg_tblspc    pg_wal       postgresql.conf<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="源码编译安装"><a href="#源码编译安装" class="headerlink" title="源码编译安装"></a>源码编译安装</h4><blockquote>
+<p>参考官方文档：<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/current/install-procedure.html">PostgreSQL: Documentation: 15: 17.4. Installation Procedure</a></p>
+</blockquote>
+<h5 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h5><blockquote>
+<ol>
+<li>下载源码：<a target="_blank" rel="noopener" href="https://www.postgresql.org/ftp/source/">https://www.postgresql.org/ftp/source/</a></li>
+<li>编译：<ul>
+<li>.&#x2F;configure</li>
+<li>make</li>
+<li>makeinstall</li>
+</ul>
+</li>
+<li>初始化数据库，创建启动服务</li>
+</ol>
+</blockquote>
+<h5 id="环境初始化"><a href="#环境初始化" class="headerlink" title="环境初始化"></a>环境初始化</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">##  关闭防火强和SElinux</span><br>[root@Rocky8-2 ~]# systemctl status firewalld<br>● firewalld.service - firewalld - dynamic firewall daemon<br>   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)<br>   Active: inactive (dead)<br>     Docs: man:firewalld(1)<br>[root@Rocky8-2 ~]# getenforce <br>Disabled<br><br><span class="hljs-comment">##  内核优化</span><br>[root@Rocky8-2 ~]# <br></code></pre></td></tr></table></figure>
+
+<h5 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 ~]# yum install -y  gcc make readline-devel zlib-devel<br></code></pre></td></tr></table></figure>
+
+<h5 id="下载解压"><a href="#下载解压" class="headerlink" title="下载解压"></a>下载解压</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 ~]# wget https://ftp.postgresql.org/pub/source/v15.3/postgresql-15.3.tar.gz<br>[root@Rocky8-2 ~]# tar xf postgresql-15.3.tar.gz <br><br>[root@Rocky8-2 ~]# cd postgresql-15.3/<br>[root@Rocky8-2 postgresql-15.3]# ll<br>total 780<br>-rw-r--r--  1 1107 1107    397 May  9 05:13 aclocal.m4<br>drwxrwxrwx  2 1107 1107   4096 May  9 05:25 config<br>-rwxr-xr-x  1 1107 1107 601977 May  9 05:13 configure<br>-rw-r--r--  1 1107 1107  89369 May  9 05:13 configure.ac<br>drwxrwxrwx 61 1107 1107   4096 May  9 05:24 contrib<br>-rw-r--r--  1 1107 1107   1192 May  9 05:13 COPYRIGHT<br>drwxrwxrwx  3 1107 1107     87 May  9 05:25 doc<br>-rw-r--r--  1 1107 1107   4264 May  9 05:13 GNUmakefile.in<br>-rw-r--r--  1 1107 1107    277 May  9 05:13 HISTORY<br>-rw-r--r--  1 1107 1107  63842 May  9 05:26 INSTALL<br>-rw-r--r--  1 1107 1107   1875 May  9 05:13 Makefile<br>-rw-r--r--  1 1107 1107   1213 May  9 05:13 README<br>drwxrwxrwx 16 1107 1107   4096 May  9 05:26 src<br></code></pre></td></tr></table></figure>
+
+<h5 id="查看官方安装说明"><a href="#查看官方安装说明" class="headerlink" title="查看官方安装说明"></a>查看官方安装说明</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 postgresql-15.3]# cat INSTALL | less<br>....<br>Short Version<br><br>    ./configure<br>    make<br>    su<br>    make install<br>    adduser postgres<br>    mkdir -p /usr/local/pgsql/data<br>    chown postgres /usr/local/pgsql/data<br>    su - postgres<br>    /usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data<br>    /usr/local/pgsql/bin/pg_ctl -D /usr/local/pgsql/data -l logfile start<br>    /usr/local/pgsql/bin/createdb test<br>    /usr/local/pgsql/bin/psql test<br><br>The long version is the rest of this document.<br>....<br></code></pre></td></tr></table></figure>
+
+<h5 id="开始编译安装三步曲"><a href="#开始编译安装三步曲" class="headerlink" title="开始编译安装三步曲"></a>开始编译安装三步曲</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  编译时加上安装路径（默认安装在/usr/local/pgsql下）、端口等设置（默认端口5432，也可在编译后修改配置文件）</span></span><br>[root@Rocky8-2 postgresql-15.3]# ./configure --prefix=/apps/pgsql --with-pgport=5432<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  查看CPU个数，-j指定编译的CPU数量，world 同时编译帮助文档</span></span><br>[root@Rocky8-2 postgresql-15.3]# lscpu<br>Architecture:        x86_64<br>CPU op-mode(s):      32-bit, 64-bit<br>Byte Order:          Little Endian<br>CPU(s):              4<br><br>[root@Rocky8-2 postgresql-15.3]# make -j 4 world<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  安装时同步安装帮助文档</span></span><br>[root@Rocky8-2 postgresql-15.3]# make install-world <br><br>[root@Rocky8-2 postgresql-15.3]# tree /apps/pgsql<br></code></pre></td></tr></table></figure>
+
+<h5 id="创建pgsql的数据库用户和组"><a href="#创建pgsql的数据库用户和组" class="headerlink" title="创建pgsql的数据库用户和组"></a>创建pgsql的数据库用户和组</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  注意用户需要可以交互登录</span></span><br>[root@Rocky8-2 postgresql-15.3]# useradd -s /bin/bash -m -d /home/postgres postgres<br>[root@Rocky8-2 postgresql-15.3]# echo -e &#x27;123456\n123456&#x27; | passwd postgres<br></code></pre></td></tr></table></figure>
+
+<h5 id="创建数据目录并授权"><a href="#创建数据目录并授权" class="headerlink" title="创建数据目录并授权"></a>创建数据目录并授权</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  数据目录</span></span><br>[root@Rocky8-2 postgresql-15.3]# mkdir -pv /pgsql/data/<br>mkdir: created directory &#x27;/pgsql&#x27;<br>mkdir: created directory &#x27;/pgsql/data/&#x27;<br>[root@Rocky8-2 postgresql-15.3]# chown postgres.postgres /pgsql/data/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  日志目录</span></span><br>[root@Rocky8-2 ~]# mkdir -pv /pgsql/log<br>[root@Rocky8-2 ~]# chown postgres.postgres /pgsql/log/<br><br>[root@Rocky8-2 ~]# ll /pgsql/<br>total 4<br>drwx------ 19 postgres postgres 4096 Aug  7 14:06 data<br>drwxr-xr-x  2 postgres postgres    6 Aug  7 14:12 log<br></code></pre></td></tr></table></figure>
+
+<h5 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 postgresql-15.3]# vim /etc/profile.d/pgsql.sh<br>export PGHOME=/apps/pgsql<br>export PATH=$PGHOME/bin/:$PATH<br>export PGDATA=/pgsql/data<br>export PGUSER=postgres<br>export MANPATH=/apps/pgsql/share/man:$MANPATH<br><br>[root@Rocky8-2 postgresql-15.3]# . /etc/profile.d/pgsql.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># 验证</span></span><br>[root@Rocky8-2 postgresql-15.3]# psql --version<br>psql (PostgreSQL) 15.3<br></code></pre></td></tr></table></figure>
+
+<h5 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  生产环境建议初始化方式</span></span><br>[root@Rocky8-2 postgresql-15.3]# su - postgres <br>[postgres@Rocky8-2 ~]$ initdb  -A md5  -D $PGDATA  -E utf8  --locale=C  -U postgres -W <br>The files belonging to this database system will be owned by user &quot;postgres&quot;.<br>This user must also own the server process.<br><br>The database cluster will be initialized with locale &quot;C&quot;.<br>The default text search configuration will be set to &quot;english&quot;.<br><br>Data page checksums are disabled.<br><br>Enter new superuser password: <br>Enter it again: <br><br>fixing permissions on existing directory /pgsql/data ... ok<br>creating subdirectories ... ok<br>selecting dynamic shared memory implementation ... posix<br>selecting default max_connections ... 100<br>selecting default shared_buffers ... 128MB<br>selecting default time zone ... Asia/Shanghai<br>creating configuration files ... ok<br>running bootstrap script ... ok<br>performing post-bootstrap initialization ... ok<br>syncing data to disk ... ok<br><br>Success. You can now start the database server using:<br><br>    pg_ctl -D /pgsql/data -l logfile start<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-A			指定local connections默认的身份验证方法</p>
+<p>-D			指定数据目录</p>
+<p>-E			指定字符集</p>
+<p>–local&#x3D;C	 	指定语言环境</p>
+<p>-U			指定数据库superuser用户名</p>
+<p>-W			指定数据库superuser密码</p>
+</blockquote>
+<h5 id="启动和关闭服务"><a href="#启动和关闭服务" class="headerlink" title="启动和关闭服务"></a>启动和关闭服务</h5><blockquote>
+<p>需要使用 postgres 用户</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  启动数据库</span></span><br>[postgres@Rocky8-2 ~]$ pg_ctl -D /pgsql/data -l /pgsql/log/logfile  start<br>waiting for server to start.... done<br>server started<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  关闭数据库</span></span><br>1、smart 关闭：等所有连接中止后，关闭数据库。如果客户端连接不终止，则无法关闭数据库<br>[postgres@Rocky8-2 ~]$ pg_ctl  stop  -D /pgsql/data/ -ms<br><br>2、fast 关闭：快速关闭数据库，断开客户端的连接，让已有的事务回滚，然后正常关闭数据库。此项为默认值，建议使用<br>[postgres@Rocky8-2 ~]$ pg_ctl  stop  -D /pgsql/data/ -mf<br>waiting for server to shut down.... done<br>server stopped<br><br>3、immediate: 相当于 kill -9,立即关闭数据库，数据库进程立即停止，直接退出，下次启动数据库需要进行恢复。<br>[postgres@Rocky8-2 ~]$ pg_ctl  stop  -D /pgsql/data/ -mi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  重启数据库</span></span> <br>[postgres@Rocky8-2 ~]$ pg_ctl  restart  -l /pgsql/log/logfile  -mf<br>pg_ctl: PID file &quot;/pgsql/data/postmaster.pid&quot; does not exist<br>Is server running?<br>trying to start server anyway<br>waiting for server to start.... done<br>server started<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  修改配置后重新加载配置</span></span><br>[postgres@Rocky8-2 ~]$ pg_ctl  reload  -D /pgsql/data <br></code></pre></td></tr></table></figure>
+
+<h5 id="开机启动脚本"><a href="#开机启动脚本" class="headerlink" title="开机启动脚本"></a>开机启动脚本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  源码包中自带的启动服务脚本</span></span><br>[root@Rocky8-2 ~]# cat ./postgresql-15.3/contrib/start-scripts/linux <br><br>[root@Rocky8-2 ~]# cp ./postgresql-15.3/contrib/start-scripts/linux /etc/init.d/postgresql<br>[root@Rocky8-2 ~]# ll /etc/init.d/postgresql<br>-rw-r--r-- 1 root root 3552 Aug  7 14:54 /etc/init.d/postgresql<br>[root@Rocky8-2 ~]# chmod +x /etc/init.d/postgresql<br>[root@Rocky8-2 ~]# chkconfig --add postgresql <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#  修改启动参数</span></span><br>[root@Rocky8-2 ~]# vim /etc/init.d/postgresql<br><span class="hljs-meta prompt_"># </span><span class="language-bash">Installation prefix</span><br>prefix=/apps/pgsql<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Data directory</span><br>PGDATA=&quot;/pgsql/data&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Who to run the postmaster as, usually <span class="hljs-string">&quot;postgres&quot;</span>.  (NOT <span class="hljs-string">&quot;root&quot;</span>)</span><br>PGUSER=postgres<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Where to keep a <span class="hljs-built_in">log</span> file</span><br>PGLOG=&quot;/pgsql/log/logfile&quot;<br><br><br>[root@Rocky8-2 ~]# service postgresql start <br>Starting PostgreSQL: ok<br></code></pre></td></tr></table></figure>
+
+<h5 id="service-启动文件"><a href="#service-启动文件" class="headerlink" title="service 启动文件"></a>service 启动文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 ~]# cat  &gt; /lib/systemd/system/postgresql.service &lt;&lt;EOF<br>[Unit]<br>Description=PostgreSQL database server<br><br>[Service]<br>Type=forking<br>User=postgres<br>Group=postgres<br>ExecStart=/apps/pgsql/bin/pg_ctl start -D /pgsql/data -l /pgsql/log/logfile  -s -w -t 300<br>ExecStop=/apps/pgsql/bin/pg_ctl stop -D /pgsql/data -s -m fast<br>ExecReload=/apps/pgsql/bin/pg_ctl reload -D /pgsql/data -s<br>TimeoutSec=300<br><br>[Install]<br>WantedBy=multi-user.target<br><br>EOF<br><br><br>[root@Rocky8-2 ~]# cat /usr/lib/systemd/system/postgresql.service<br>[Unit]<br>Description=PostgreSQL database server<br><br>[Service]<br>Type=forking<br>User=postgres<br>Group=postgres<br>ExecStart=/apps/pgsql/bin/pg_ctl start -D /pgsql/data -l /pgsql/log/logfile  -s -w -t 300<br>ExecStop=/apps/pgsql/bin/pg_ctl stop -D /pgsql/data -s -m fast<br>ExecReload=/apps/pgsql/bin/pg_ctl reload -D /pgsql/data -s<br>TimeoutSec=300<br><br>[Install]<br>WantedBy=multi-user.target<br><br>[root@Rocky8-2 ~]# systemctl daemon-reload <br>[root@Rocky8-2 ~]# ss -ntl <br>State                 Recv-Q                Send-Q                               Local Address:Port                                Peer Address:Port                Process                <br>LISTEN                0                     128                                        0.0.0.0:111                                      0.0.0.0:*                                          <br>LISTEN                0                     128                                        0.0.0.0:22                                       0.0.0.0:*                                          <br>LISTEN                0                     128                                           [::]:111                                         [::]:*                                          <br>LISTEN                0                     128                                           [::]:22                                          [::]:*                                          <br>[root@Rocky8-2 ~]# systemctl start postgresql.service <br>[root@Rocky8-2 ~]# systemctl status  postgresql.service <br>● postgresql.service - PostgreSQL database server<br>   Loaded: loaded (/usr/lib/systemd/system/postgresql.service; enabled; vendor preset: disabled)<br>   Active: active (running) since Wed 2023-08-16 17:09:56 CST; 10s ago<br>  Process: 2433 ExecStop=/apps/pgsql/bin/pg_ctl stop -D /pgsql/data -s -m fast (code=exited, status=0/SUCCESS)<br>  Process: 2430 ExecReload=/apps/pgsql/bin/pg_ctl reload -D /pgsql/data -s (code=exited, status=0/SUCCESS)<br>  Process: 2439 ExecStart=/apps/pgsql/bin/pg_ctl start -D /pgsql/data -l /pgsql/log/logfile -s -w -t 300 (code=exited, status=0/SUCCESS)<br> Main PID: 2441 (postgres)<br>    Tasks: 6 (limit: 12160)<br>   Memory: 14.8M<br>   CGroup: /system.slice/postgresql.service<br>           ├─2441 /apps/pgsql/bin/postgres -D /pgsql/data<br>           ├─2442 postgres: checkpointer <br>           ├─2443 postgres: background writer <br>           ├─2445 postgres: walwriter <br>           ├─2446 postgres: autovacuum launcher <br>           └─2447 postgres: logical replication launcher <br><br>Aug 16 17:09:56 Rocky8-2.xcjyc.top systemd[1]: Starting PostgreSQL database server...<br>Aug 16 17:09:56 Rocky8-2.xcjyc.top systemd[1]: Started PostgreSQL database server.<br>[root@Rocky8-2 ~]# ss -ntlp <br>State           Recv-Q          Send-Q                   Local Address:Port                   Peer Address:Port         Process                       <br>LISTEN          0               128                            0.0.0.0:111                         0.0.0.0:*             users:((&quot;rpcbind&quot;,pid=832,fd=4),(&quot;systemd&quot;,pid=1,fd=88))          <br>LISTEN          0               128                            0.0.0.0:22                          0.0.0.0:*             users:((&quot;sshd&quot;,pid=900,fd=3))                                     <br>LISTEN          0               244                          127.0.0.1:5432                        0.0.0.0:*             users:((&quot;postgres&quot;,pid=2441,fd=6))                                <br>LISTEN          0               128                               [::]:111                            [::]:*             users:((&quot;rpcbind&quot;,pid=832,fd=6),(&quot;systemd&quot;,pid=1,fd=90))          <br>LISTEN          0               128                               [::]:22                             [::]:*             users:((&quot;sshd&quot;,pid=900,fd=4))                                     <br>LISTEN          0               244                              [::1]:5432                           [::]:*             users:((&quot;postgres&quot;,pid=2441,fd=5))                                <br><br></code></pre></td></tr></table></figure>
+
+<h5 id="查看编译参数"><a href="#查看编译参数" class="headerlink" title="查看编译参数"></a>查看编译参数</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@Rocky8-2 ~]# pg_config <br>BINDIR = /apps/pgsql/bin<br>DOCDIR = /apps/pgsql/share/doc<br>HTMLDIR = /apps/pgsql/share/doc<br>INCLUDEDIR = /apps/pgsql/include<br>PKGINCLUDEDIR = /apps/pgsql/include<br>INCLUDEDIR-SERVER = /apps/pgsql/include/server<br>LIBDIR = /apps/pgsql/lib<br>PKGLIBDIR = /apps/pgsql/lib<br>LOCALEDIR = /apps/pgsql/share/locale<br>MANDIR = /apps/pgsql/share/man<br>SHAREDIR = /apps/pgsql/share<br>SYSCONFDIR = /apps/pgsql/etc<br>PGXS = /apps/pgsql/lib/pgxs/src/makefiles/pgxs.mk<br>CONFIGURE =  &#x27;--prefix=/apps/pgsql&#x27; &#x27;--with-pgport=5432&#x27;<br>CC = gcc<br>CPPFLAGS = -D_GNU_SOURCE<br>CFLAGS = -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wimplicit-fallthrough=3 -Wcast-function-type -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -O2<br>CFLAGS_SL = -fPIC<br>LDFLAGS = -Wl,--as-needed -Wl,-rpath,&#x27;/apps/pgsql/lib&#x27;,--enable-new-dtags<br>LDFLAGS_EX = <br>LDFLAGS_SL = <br>LIBS = -lpgcommon -lpgport -lz -lreadline -lpthread -lrt -ldl -lm <br>VERSION = PostgreSQL 15.3<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/PostgreSQL/" class="category-chain-item">PostgreSQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/init/" class="print-no-link">#init</a>
+      
+        <a href="/tags/PostgreSQL/" class="print-no-link">#PostgreSQL</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>PostgreSQL安装初始化</div>
+      <div>https://www.xcjyc.top/2023/07/18/PostgreSQL安装初始化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/22/PostgreSQL%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/" title="PostgreSQL体系架构">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">PostgreSQL体系架构</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/14/MySQl%E5%A4%9A%E4%B8%BB%E9%9B%86%E7%BE%A4PXC/" title="PXC(Percona XtraDB Cluster)8.0.32集群">
+                        <span class="hidden-mobile">PXC(Percona XtraDB Cluster)8.0.32集群</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="PostgreSQL"
+        id="heading-399bd1ee587245ecac6f39beaa99886f" role="tab" data-toggle="collapse" href="#collapse-399bd1ee587245ecac6f39beaa99886f"
+        aria-expanded="true"
+      >
+        PostgreSQL
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-399bd1ee587245ecac6f39beaa99886f"
+           role="tabpanel" aria-labelledby="heading-399bd1ee587245ecac6f39beaa99886f">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/07/22/PostgreSQL%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/" title="PostgreSQL体系架构"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PostgreSQL体系架构</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/31/PostgreSQL%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D/" title="PostgreSQL备份恢复"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PostgreSQL备份恢复</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/18/PostgreSQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/" title="PostgreSQL安装初始化"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">PostgreSQL安装初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/01/16/PostgreSQL%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/" title="PostgreSQL日志管理"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PostgreSQL日志管理</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

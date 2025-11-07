@@ -1,0 +1,1101 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="华为数通命令清单(收集整理)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="华为数通命令清单">
+<meta property="og:url" content="https://www.xcjyc.top/2022/06/12/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A%E5%91%BD%E4%BB%A4%E6%B8%85%E5%8D%95/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="华为数通命令清单(收集整理)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/huawei.jpg">
+<meta property="article:published_time" content="2022-06-12T05:13:33.000Z">
+<meta property="article:modified_time" content="2023-05-12T05:52:27.853Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="华为数通">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/huawei.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>华为数通命令清单 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="华为数通命令清单"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-06-12 13:13" pubdate>
+          2022年6月12日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">华为数通命令清单</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="华为命令符"><a href="#华为命令符" class="headerlink" title="华为命令符"></a>华为命令符</h2><p>从用户视图切换到系统视图 <strong>system–view</strong></p>
+<p>从系统视图切换到用户视图 <strong>quit</strong></p>
+<p>连入接口命令 <strong>interface</strong></p>
+<ul>
+<li>IP地址、子网掩码配置命令 <strong>ip address</strong></li>
+<li>接口IP信息查看命令 <strong>display ip interface brief</strong></li>
+<li>IPv4路由表信息查询命令 <strong>display ip routing–table</strong></li>
+<li>配置完成退回视图界面命令 <strong>return</strong></li>
+</ul>
+<p>命令自动补全快捷键【Tab】</p>
+<p>快捷键查看命令 <strong>display hotkey</strong></p>
+<p>路由名称修改命令 <strong>sysname</strong></p>
+<p>设置路由器时钟命令 <strong>clock datetime</strong></p>
+<p>设置路由器时区命令 <strong>clock timezone(时区）{add|minus}（偏移时间）[正向偏移add ；负向偏</strong><br><strong>移minus]</strong></p>
+<p>登录标题修改命令 <strong>header login</strong></p>
+<ul>
+<li>​                 header login information “ ”</li>
+</ul>
+<p>登录成功后标题设置命令 <strong>header shell</strong></p>
+<ul>
+<li>​                 header shell information “ ”</li>
+</ul>
+<p>路由信息查看命令 <strong>display version</strong></p>
+<p>路由当前配置查看命令 <strong>display current–configuration</strong></p>
+<p>接口状态查询命令 <strong>display interface</strong></p>
+<ul>
+<li>​                 gigabitethernet0&#x2F;0&#x2F;0</li>
+</ul>
+<p>设备当前配置情况查看命令：<strong>display current-configuration</strong></p>
+<h2 id="光标操作"><a href="#光标操作" class="headerlink" title="光标操作"></a>光标操作</h2><ul>
+<li>退格键<strong>BackSpace</strong>删除光标位置的前一个字符，光标左移；若已经到达命令起始位置，则停止</li>
+<li>左光标键或**&lt;Ctrl+B&gt;**光标向左移动一个字符位置；若已经到达命令起始位置，则停止 。</li>
+<li>右光标键或**&lt;Ctrl+F&gt;**光标向右移动一个字符位置；若已经到达命令起始位置，则停止。</li>
+<li>删除键<strong>Delete</strong>删除光标所在位置的一个字符,光标位置保持不动，光标后方字符向左移动一个字符位置；若已经到达命令尾部，则停止</li>
+<li>上光标键**【Ctrl+P】**显示上一条历史命令。如果需显示更早的历史命令，可以重复使用该功能键。</li>
+<li>下光标键**【Ctrl+N】**显示下一条历史命令，课重复使用该功能键</li>
+</ul>
+<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><ul>
+<li><p>Ctrl+A 将光标移动到当前行的开始</p>
+</li>
+<li><p>Ctrl+E 将光标移动到当前行的末尾</p>
+</li>
+<li><p>Ctrl+N 将光标向下移动一行</p>
+</li>
+<li><p>Ctrl+P 将光标向上移动一行</p>
+</li>
+<li><p>Ctrl+C 停止当前正在执行的功能</p>
+</li>
+<li><p>Ctrl+ F 返回到用户视图，相当于return命令</p>
+</li>
+<li><p>{Tab}键 部分帮助的功能，输入不完整的关键字后按下Tａｂ键，系统自动补全关键字</p>
+</li>
+</ul>
+<p>设备当前支持用户界面信息查看命令： <strong>display user-interface</strong></p>
+<p>用户界面切换命令：<strong>user-interface</strong>(用户界面相对编号)（用户界面可选参数）</p>
+<p>在对应的用户视图下对用户权限配置命令: <strong>user privilege level</strong> (用户级别)</p>
+<p>配置用户界面验证方式的命令：<strong>authentication-mode{aaa|none|password}</strong></p>
+<h2 id="配置VTY为aaa验证方式的用户名和密码"><a href="#配置VTY为aaa验证方式的用户名和密码" class="headerlink" title="配置VTY为aaa验证方式的用户名和密码"></a>配置VTY为aaa验证方式的用户名和密码</h2><ul>
+<li>命令：<strong>aaa</strong></li>
+<li>命令：<strong>local-user (用户名) password cipher (密码)</strong></li>
+<li>命令：<strong>local-user (用户名) service-type telnet(代指接入类型)</strong></li>
+</ul>
+<p>配置用户权限命令：</p>
+<ul>
+<li><strong>local-user (用户名) password cipher (密码) privilege level(权限) ；</strong></li>
+<li><strong>local-user(用户名) privilege level(权限)</strong></li>
+</ul>
+<p>配置Console用户界面为Password验证命令：</p>
+<ul>
+<li><strong>set authentication password cipher (密码)</strong></li>
+</ul>
+<p>Console用户配置信息查看命令：<strong>display current-configuration</strong></p>
+<p>手动保存当前配置命令：**save【configuration-file】*<em>参数configuration-file为指定的配置文件名，格式必须是”</em>.cfg”或”*.zip”周期性自动保存的设置</p>
+<h2 id="用户视图命令："><a href="#用户视图命令：" class="headerlink" title="用户视图命令："></a>用户视图命令：</h2><p>开启周期性自动保存命令：<strong>autosave interval on</strong></p>
+<p>设置自动保存周期命令：<strong>autosave interval time</strong> 参数time为指定周期的时间周期（参数：time取值应大于10 min）</p>
+<p>开启定时自动保存命令:<strong>autosave time on</strong></p>
+<p>设置定时保存命令:<strong>autosave time time-value</strong> 参数time-value为自动保存的时间点</p>
+<p>下次启动的配置文件夹设置命令:<strong>startup saved-configuration</strong> configuration-file 参数configuration-file为指定配置文件</p>
+<p>当前配置与下次启动配置文件差异查看命令：<strong>compare configuration</strong></p>
+<p>查看当前文件下命令：<strong>dir[&#x2F;all][ filename|directory]</strong> all表示查看当前命令下的文件和目录，参数filename表示待查看文件的名称；</p>
+<p>directory表示待查看目录的路径</p>
+<p>所在目录查询命令：<strong>pwd</strong></p>
+<p>新建目录的命令：**mkdir  **directory 参数directory表示需要创建的目录(创建文件夹)</p>
+<p>复制并重命名文件：<strong>copy source-fliename destinction-filename</strong> 参数source-fliename表示被复制文件的路径及源文件名：</p>
+<p>destinction-filename表示目标文件的路径及其目标文件名。</p>
+<p>修改当前工作路径命令：<strong>cd directory</strong></p>
+<p>删除文件命令：**delete 【&#x2F;unreserved】[&#x2F;force]**filename</p>
+<ul>
+<li>&#x2F;unerserved表示彻底删除指定文件，删除的文件将不可恢复</li>
+<li>&#x2F;force 表示无需确认直接删除文件</li>
+<li>参数filename表示删除的文件名</li>
+</ul>
+<p>注解：如果不适用&#x2F;unreserved,则delete命令删除的文件将被保存到回收站中。</p>
+<p>恢复回收站中的文件命令：<strong>undelete</strong></p>
+<p>彻底删除回收站中的所有文件命令：<strong>reset recycle-bin</strong></p>
+<p>TFTP文件传输命令：<strong>tftp</strong>   tftp-server{get|put}source-filename[destination-filename]</p>
+<p>参数 tftp-server表示TFTP服务器的IP地址；get表示从TFTP服务器下载文件到TFTP客户端；Put表示TFTP客户端上传文件到TFTP服务器。source-filename表示源文件名；destination-filename表示目标文件名。</p>
+<h2 id="TELNET"><a href="#TELNET" class="headerlink" title="TELNET"></a>TELNET</h2><p>配置Telnet的验证方式为密码验证方式： <strong>authentication-mode password</strong></p>
+<p>ste authentication password cipher (密码)</p>
+<p>远程登录设备命令：<strong>Telnet</strong> ip-address 参数ip-address为登录设备IP地址</p>
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><p>建立FTP连接命令：<strong>ftp</strong>host-ip 【port-nuber】 参数host-ip表示FTP服务器的IP地址；port-number表示FTP服务器的端口号。</p>
+<p>从FTP服务器下载文件到FTP客户端命令：<strong>get source-filename</strong>【destination-filename】</p>
+<p>从FTP客户端上传文件到FTP服务器命令：<strong>put source-filename</strong>【destination-filename】</p>
+<p>查看FTP服务器文件夹状态查询命令：<strong>ls</strong></p>
+<p>查看设备当前设置的下次启动时所用的启动文件情况命令：<strong>display startup</strong></p>
+<p>设置下次启动使用的系统软件文件的命令：<strong>startup system-software</strong> system-file 参数system-file表示指定的系统软件文件名</p>
+<p>Telnet登录方式：<strong>tnlnet ip-address</strong> 参数ip-address表示ip地址</p>
+<p>查看已经登录信息命令：<strong>display users</strong></p>
+<h2 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h2><p>生成本地RSA主机秘钥命令：<strong>rsa local-key-pair create</strong></p>
+<p>新建SSH用户命令：<strong>ssh user (用户名) authentication-type password（代指类型）</strong></p>
+<p>在ssh服务端查看ssh用户配置命令：<strong>display ssh user-information</strong> (用户名)</p>
+<p>开启ssh服务命令：<strong>stelnet server enable</strong> （服务开启命令)</p>
+<p>首次启用认证命令：<strong>ssh client first-time enable</strong> 客户端命令</p>
+<p>指定用户只支持ssh协议：<strong>protocol inbound ssh</strong></p>
+<p>指定用户的服务类型：<strong>local-user （用户名）service-type ssh</strong></p>
+<p>查看SSH服务器端的当前回话连接信息：<strong>display ssh server session</strong></p>
+<p>查看ssh服务全局配置信息命令：<strong>display ssh server status</strong></p>
+<p>查看本地秘钥对中的公钥部分命令： <strong>display rsa local-key-pair public</strong></p>
+<h2 id="SFTP"><a href="#SFTP" class="headerlink" title="SFTP"></a>SFTP</h2><p>需配置本地用户为SSH接入类型</p>
+<p>指定FTP用户可访问目录的命令：<strong>local-user (用户名) ftp-directory flash:</strong> (默认为空，不可不配)</p>
+<h2 id="配置交换机双工模式"><a href="#配置交换机双工模式" class="headerlink" title="配置交换机双工模式"></a>配置交换机双工模式</h2><p>关掉自协议商双工：<strong>undo negotiation auto</strong></p>
+<p>手工指定双工模式为全双工：<strong>duplex full</strong></p>
+<p>以太网接口速率配置 ：<strong>speed （大小）</strong>【单位Mbit&#x2F;s】</p>
+<h2 id="ARP及proxy-ARP"><a href="#ARP及proxy-ARP" class="headerlink" title="ARP及proxy ARP"></a>ARP及proxy ARP</h2><p>在PC机下查看主机ARP表：<strong>arp -a</strong></p>
+<p>查看ARPb表：<strong>display arp all</strong></p>
+<p>添加静态IP和MAC地址：<strong>arp static (IP地址)（MAC地址）</strong></p>
+<p>开启代理ARP（Proxy ARP）:**arp-proxy enable **  接口视图下</p>
+<h2 id="VLAN基本配置及Access接口"><a href="#VLAN基本配置及Access接口" class="headerlink" title="VLAN基本配置及Access接口"></a>VLAN基本配置及Access接口</h2><p>创建单个VLAN：<strong>vlan (参数)</strong></p>
+<p>创建多个VLAN：<strong>vlan batch (参数1)（参数2）</strong></p>
+<p>配置接口为Access类型接口：<strong>port link-type access</strong></p>
+<p>配置接口的默认VLAN同时加入VLAN中 ：<strong>port default vlan (参数）</strong></p>
+<p>查看VLAN相关信息（接口和所属vlna的对应关系）：<strong>display vlan</strong></p>
+<h2 id="vlan基本配置-trunk"><a href="#vlan基本配置-trunk" class="headerlink" title="vlan基本配置 trunk"></a>vlan基本配置 trunk</h2><p>标记命令：<strong>description （参数）</strong></p>
+<p>查看vlan的简单信息：<strong>display vlan summary</strong></p>
+<p>查看vlan和接口配置情况：<strong>display port vlan</strong></p>
+<p>设置接口为trunk接口：<strong>port link-type trunk</strong></p>
+<p>设置trunk接口允许通过的vlan:<strong>port trunk allow-pass vlan (参数)</strong> 【可是同时设置允许多个通过 （all为全部）】</p>
+<h2 id="Hybrid接口"><a href="#Hybrid接口" class="headerlink" title="Hybrid接口"></a>Hybrid接口</h2><p>恢复接口默认VLAN:<strong>undo port default vlan</strong></p>
+<p>删除VLAN：<strong>undo VLAN （参数）</strong></p>
+<p>修改接口类型为默认的Hybrid类型:<strong>port link-type hybrid</strong></p>
+<p>配置交换机在该接口转发指定VLAN的帧:<strong>port hybrid untagged vlan（参数&#x2F;all）</strong></p>
+<p>设置Hybrid接口的默认VLAN ID :<strong>port hybrid pvid vlan (参数)</strong></p>
+<p>配置接口接收的VLAN tag帧:<strong>port hybrid tagged vlan (参数&#x2F;all)</strong></p>
+<h2 id="单臂路由实VLAN间路由"><a href="#单臂路由实VLAN间路由" class="headerlink" title="单臂路由实VLAN间路由"></a>单臂路由实VLAN间路由</h2><p>配置路由端口子接口（逻辑接口）：<strong>interface gigabitethernet0&#x2F;0&#x2F;0</strong></p>
+<p>配置子接口对一层tag报文的终极功能：<strong>dot1q termination vid （参数）</strong></p>
+<p>开启子接口ARP广播功能：<strong>ARP broadcast</strong> <strong>enable</strong></p>
+<p>注解：不开启此功能，将导致子接口无法主动发送ARP广播报文，以及向外转发IP报文</p>
+<p>Ping跟踪查看命令：<strong>tracert (ip)</strong></p>
+<h2 id="使用三层交换实现VLAN间路由"><a href="#使用三层交换实现VLAN间路由" class="headerlink" title="使用三层交换实现VLAN间路由"></a>使用三层交换实现VLAN间路由</h2><p>创建VLANif接口命令：interface VLANif （参数）</p>
+<h2 id="GVRP配置："><a href="#GVRP配置：" class="headerlink" title="GVRP配置："></a>GVRP配置：</h2><p>开启gvrp服务：<strong>gvrp</strong></p>
+<p>查看gvrp的使用情况：<strong>display gvrp status</strong></p>
+<p>查看端口的gvrp统计信息：<strong>display gvrp statistics</strong></p>
+<p>配置模式为fixed：<strong>gvrp registration fixed</strong> （接口）（）</p>
+<p>配置模式为forbidden：<strong>gvrp registration forbidden</strong> （接口）</p>
+<h2 id="删除配置命令：undo（参数）-参数：为配置项"><a href="#删除配置命令：undo（参数）-参数：为配置项" class="headerlink" title="删除配置命令：undo（参数） 参数：为配置项"></a>删除配置命令：<strong>undo</strong>（参数） 参数：为配置项</h2><h2 id="STP基本配置命令："><a href="#STP基本配置命令：" class="headerlink" title="STP基本配置命令："></a>STP基本配置命令：</h2><p>配置设备STP的工作模式：<strong>stp mode {mstp|rstp|stp}</strong></p>
+<p>开启stp服务：<strong>stp enable</strong></p>
+<p>配置桥的优先级：<strong>stp priority</strong>priority</p>
+<p>参数：取值范围0——61440步长4096 缺省值32768 参数越小，设备被选举为根桥的可能性越大</p>
+<p>配置设备为根桥：<strong>stp root primary</strong></p>
+<p>配置设备为备份根桥：<strong>stp root secondary</strong> 桥有限级默认为4096 不可修改优先级</p>
+<p>生成树的状态信息与统计信息查询：<strong>display stp</strong> [interface interface-type interface-number][brief]</p>
+<p>配置接口的开销值：<strong>stp cost</strong> (参数)</p>
+<p>查看设备的接口信息：<strong>display （interface-type interface-number)</strong></p>
+<h2 id="stp定时器"><a href="#stp定时器" class="headerlink" title="stp定时器"></a>stp定时器</h2><p><strong>ping (ip) -t</strong></p>
+<p>定时配置：<strong>stp timer (参数）</strong>（时间单位 cs）</p>
+<p>关闭命令：<strong>shutdown</strong></p>
+<p>配置网络直径：<strong>stp bridge-diameter(参数)</strong></p>
+<p>边缘接口配置：<strong>stp edged-port enable</strong></p>
+<h2 id="MSTP基础配置"><a href="#MSTP基础配置" class="headerlink" title="MSTP基础配置"></a>MSTP基础配置</h2><p>进入mst域视窗：<strong>stp region-configuration</strong></p>
+<p>配置MST域名：<strong>region-name（参数）</strong></p>
+<p>配置mstp的修订级别：<strong>revision-level（参数）</strong></p>
+<p>制定VLAN的映射到mstp实例生成树 :<strong>instance (参数) VLAN （参数）</strong></p>
+<p>激活<strong>mst:active region-configuration</strong></p>
+<p>查看mst域配置信息：<strong>display stp region-configuration</strong></p>
+<p>查看实例中的生成树信息：<strong>display stp instance (参数) brief</strong></p>
+<p>配置交换机为实例中的根：<strong>stp instance （参数）priority（参数）</strong></p>
+<h2 id="Smart-Link-与Monitor-Link配置"><a href="#Smart-Link-与Monitor-Link配置" class="headerlink" title="Smart Link 与Monitor Link配置"></a>Smart Link 与Monitor Link配置</h2><p>创建smart link组并接入窗口：<strong>smart-link group</strong> （参数）</p>
+<p>开启smart link组功能：<strong>smart-link enable</strong></p>
+<p>关闭生成树：<strong>stp disable</strong> 【接口命令】</p>
+<p>配置主接口：<strong>port（nterface-type interface-number）master</strong></p>
+<p>配置备份接口：<strong>port（nterface-type interface-number） slave</strong></p>
+<p>开启回切功能：<strong>restore enable</strong></p>
+<p>设置回切时间：<strong>timer wtr</strong> (参数)</p>
+<p>查看smart link组状态：<strong>display smart-link group</strong> （参数）</p>
+<p>启用monitor link组：<strong>monitor-link group</strong>(参数)</p>
+<p>配置monitor link上行接口：<strong>port（nterface-type interface-number）uplink</strong></p>
+<p>配置monitor link下行接口：<strong>port（nterface-type interface-number）downlink</strong></p>
+<p>配置monitor link回切时间:<strong>timer recover-time (参数)</strong></p>
+<h2 id="配置Eth-trunk链路聚合"><a href="#配置Eth-trunk链路聚合" class="headerlink" title="配置Eth-trunk链路聚合"></a>配置Eth-trunk链路聚合</h2><p>创建Eth-trunk接口：<strong>interface Eth-trunk</strong>（参数）</p>
+<p>指定Eth-trunk为手工负载分担模式：<strong>mode manual load-balance</strong></p>
+<p>查看Eth-trunk的接口状态：<strong>display Eth-trunk</strong>（参数）</p>
+<p>查看Eth-trunk的接口信息：<strong>display interface Eth-trunk</strong>（参数）</p>
+<p>查看Eth-trunk的详细信息：<strong>disp trunkmembership eth-trunk</strong>（参数）</p>
+<p>指定Eth-trunk为静态lacp模式：<strong>mode lacp-static</strong></p>
+<p>指定接口加入指定Eth-trunk接口：<strong>Eth-trunk</strong> （参数）</p>
+<p>配置活动接口上线阙值：<strong>max active-linknumber</strong> (参数)</p>
+<p>修改优先级：<strong>lacp priority</strong> (参数) 参数：可取值范围0~32768</p>
+<h2 id="静态路由"><a href="#静态路由" class="headerlink" title="静态路由"></a>静态路由</h2><p>配置下一跳路由ip:<strong>IP route-static</strong>（目的地址IP段)(子网掩码)(目的IP)</p>
+<p><strong>IP route-static (参数1)（参数2）（nterface-type interface-number）</strong></p>
+<p>配置静态IP ：<strong>IP route-static</strong> 0.0.0.0 0(参数3)</p>
+<p>配置路由表优先级：<strong>IP route-static</strong> （参数1 ）（参数2）（参数3）<strong>preference</strong>(参数)</p>
+<p>查看静态路由信息：<strong>display ip routing-table protocol static</strong></p>
+<p>查看路由表手动添加信息：<strong>display ip routing-table protocol static</strong></p>
+<h2 id="OSPF区域配置"><a href="#OSPF区域配置" class="headerlink" title="OSPF区域配置"></a>OSPF区域配置</h2><p>创建ospf命令：**ospf 0(**0默认为主干区域）</p>
+<p>创建ospf区域命令：<strong>area</strong> (区域ID)</p>
+<p>指定ospf协议接口和接口所属区域：<strong>network （iP地址段）</strong>（ip所属网管对应子网位）</p>
+<p>检查ospf接口通告： <strong>display ospf interface</strong></p>
+<p>查看ospf邻居状态：<strong>display ospf peer</strong> （brief:简短的）</p>
+<p>查看ospf路由表：<strong>display ip routing-table protocol ospf</strong></p>
+<p>查看ospf链路状态数据库信息：<strong>display ospf lsdb</strong></p>
+<h2 id="ospf认证与被动接口配置"><a href="#ospf认证与被动接口配置" class="headerlink" title="ospf认证与被动接口配置"></a>ospf认证与被动接口配置</h2><p>区域明文认证：<strong>authentication-mode simple plain(密码)</strong> {plain：表示明文显示}</p>
+<p>区域密文认证：<strong>authentication-mode md5 1</strong> (密码) {1：为验证字标识符}</p>
+<p>链路认证：<strong>ospf authentication-mode md5 1</strong> (密码)</p>
+<p>配置被动接口，禁止接口接收和发送ospf报文：<strong>silent-interface</strong> (接口号){all}</p>
+<h2 id="Router-ID-DR与BDR"><a href="#Router-ID-DR与BDR" class="headerlink" title="Router-ID DR与BDR"></a>Router-ID DR与BDR</h2><p>查看当前设备Router-ID:display router id</p>
+<p>配置router-id:router id #.#.#.#</p>
+<p>重置ospf协议进程：reset ospf process</p>
+<p>配置ospf协议私有router-id：ospf 1 routef-id(IP地址)</p>
+<p>ospf网络类型点到多点配置：ospf network-type p2mp</p>
+<p>还原默认广播类型：ospf network-type broadcast</p>
+<p>配置接口DR优先级：ospf dr-priority (参数)</p>
+<h2 id="ospf开销值，协议优先级及计时器的修改"><a href="#ospf开销值，协议优先级及计时器的修改" class="headerlink" title="ospf开销值，协议优先级及计时器的修改"></a>ospf开销值，协议优先级及计时器的修改</h2><p>修改ospf协议优先级：prefernece (参数)</p>
+<p>配置运行ospf协议所需开销值：ospf cost (参数)</p>
+<p>修改hello计时器命令：ospf timer hello (参数)</p>
+<p>修改dead计时器命令：ospf timer dead(参数)</p>
+<h2 id="rip与ospf的配置"><a href="#rip与ospf的配置" class="headerlink" title="rip与ospf的配置"></a>rip与ospf的配置</h2><p>双向引入路由命令：import-route (参数rip&#x2F;ospf)<br>手工配置引入时的开销：imoprt-toute (参数rip&#x2F;ospf) cost 参数)<br>rip默认路由发布：default-route originate<br>ospf默认路由发布：default-route-advertise always</p>
+<h2 id="IPV6"><a href="#IPV6" class="headerlink" title="IPV6"></a>IPV6</h2><p>开启ipv6全局功能：ipv6</p>
+<p>在端口下开启ipv6功能：ipv6 enable</p>
+<p>配置自动生成的链路本地地址：ipv6 address auto link-local</p>
+<p>查看自动生成的链路本地地址：display ipv6 interface</p>
+<p>配置ipv6命令：ipv6 address (地址)</p>
+<p>查看配置的全局地址：display ipv6 interface (接口号)</p>
+<p>配置结果查看命令：display ipv6 interface brief</p>
+<p>配置ripng进程：ripng (参数)</p>
+<p>启用接口ripng:ripng （参数）enable</p>
+<p>查看ripng (参数)路由信息：display ripng 1 route</p>
+<p>创建ospfv3进程（参数）:opsfv3 (参数)</p>
+<p>配置router-ID：router id (#.#.#.#)</p>
+<p>在接口下配置ospfv3进程区域：ospfv3 (参数) area (参数)</p>
+<h2 id="DNCP"><a href="#DNCP" class="headerlink" title="DNCP"></a>DNCP</h2><p>开启dhcp功能：dhcp enable</p>
+<p>开启接口dhcp服务功能：dhcp select interface</p>
+<p>配置租期：dhcp servse lease [day ] (参数)</p>
+<p>配置地址池中不参与分配的地址范围：dhcp server excluded -ip-address (ip段始)（ip段尾）</p>
+<p>指定接口下dns服务器：dhcp server dns-list (ip 地址)</p>
+<p>查看dhcp地址池中地址分布情况：display ip pool</p>
+<p>创建一个全局地址池：ip pool (名称)</p>
+<p>配置全局地址池分配网段范围：network（ip地址）</p>
+<p>配置dncp客户端网关地址：gateway-list (ip地址)</p>
+<p>开启接口的dncp功能使用全局地址池为客户端分配地址：dhcp select global</p>
+<p>开启接口dhcp中继gon功能：dhcp select relay</p>
+<p>指定dhcp服务器地址：dhcp reley server-ip (ip地址)</p>
+<p>创建dhcp服务器组：dhcp server group (名称)</p>
+<p>添加远端dhcp服务器组：dhcp-server (ip地址)</p>
+<p>配置端口到指定的服务器组：dhcp relay server-select (名称)</p>
+<h2 id="基本ACL"><a href="#基本ACL" class="headerlink" title="基本ACL"></a>基本ACL</h2><p>基本acl规则的命令结构：</p>
+<p>rule [rule-id] {deny | permit} [source{source-address source-wildcard | any } | fragment |logging | time-rangetime-name]</p>
+<p>参数说明：</p>
+<ul>
+<li>rule:表示这是一条规则</li>
+<li>rele-id:表示这条规则的编号</li>
+<li>deny | permit:表示这是一个二选一选项，表明这条规则的相关处理动作。deny表示“拒绝”；permit表示“允许”。</li>
+<li>source:表示源ip地址信息</li>
+<li>source-address: 表示具体的源ip地址</li>
+<li>source-wildcard:表示与source-address相对应得匹配符</li>
+<li>any:表示源ip地址可以是任何地址</li>
+<li>fragment：表示该规则只对分区非首片分区报文有效</li>
+<li>logging：表示需要将匹配上该规则的ip报文进行日志记录</li>
+<li>time-range time-name :表示该规则的生效时间段为time-name</li>
+</ul>
+<p>编号区分：</p>
+<p>2000~2999基本acl</p>
+<p>3000~3999高级acl</p>
+<p>4000~4999二层acl</p>
+<p>5000~5999自定义acl</p>
+<p>创建ACL：acl （编号）</p>
+<p>拒接源ip地址规报文则：rule deny source （ip地址)（匹配符）</p>
+<p>拒接目的ip地址报文规则：rule deny destination (ip地址)（匹配符）</p>
+<p>使用报文过滤技术将acl规则应用到接口上：traffic-filter [utbound&#x2F;inbound] acl （编号）(utbound表示出站，inbound表示入站)</p>
+<p>允许源地址的规则：rule（规则id） permit source (ip地址)（子网掩码）[any]</p>
+<p>拒接源地址的规则：rule （规则id）deny source (ip地址)（子网掩码）[any]</p>
+<p>查看acl（编号)的配置：display acl (编号)</p>
+<h2 id="基础过滤工具"><a href="#基础过滤工具" class="headerlink" title="基础过滤工具"></a>基础过滤工具</h2><p>数据方向调用acl:acl(编号) [inbound&#x2F;&#x2F;utbound]</p>
+<p>查看设备控制访问列表：display acl all</p>
+<p>高级acl股则格式：rule （规则id） permit &#x2F; deny (协议) source （ip地址）（子网掩码) [any]</p>
+<p>配置（filter-policy）过滤策略调用acl:filter-policy (acl编号) impory</p>
+<p>配置前缀列表过滤路由： ip ip-prefix 1 deny (ip地址) （子网掩码） greater-equal （网络位）<br>less-equal（网络位）</p>
+<p>注解：</p>
+<p>greater-equal：表示大于等于</p>
+<p>less-equal：表示小于等于</p>
+<p>配置放行所有其它路由：ip ip-prefix 1 permit 0.0.0.0 0 less-equal 32</p>
+<p>配置（filter-policy）过滤策略调前缀列表：filter-policy ip-prefix 1 import</p>
+<h2 id="SNMP协议基础配置"><a href="#SNMP协议基础配置" class="headerlink" title="SNMP协议基础配置"></a>SNMP协议基础配置</h2><p>开启agent命令：snmp-agent</p>
+<p>查看系统信息：display SNMP-agent sys-info</p>
+<p>配置snmp版本：snmp-agent sys-info [v1&#x2F;v2c&#x2F;v3]</p>
+<p>查看agent信息：display snmp-agent sys-info version</p>
+<p>配置nms管理权限：</p>
+<p>acl (编号)</p>
+<p>限制管理设备：rule (规则编号 ) permit source （ip地址）（子网掩码）</p>
+<p>不允许管理设备：rule （规则编号）deny source (ip地址) （子网掩码）</p>
+<p>配置用户组，用户名，并指定使用acl: snmp-agent usm-user v3 (用户名)</p>
+<p>（用户组）acl (编号)</p>
+<p>查看SNMPv3的用户信息：display snmp-agent sum-user</p>
+<p>配置Agent发送trap消息：snmp-agent target-host trap-hostname (网管名) address (目标地址池) udp-port (端口号) trap-paramsname (网管名)</p>
+<p>开启设备告警开关：snmp-agent trap enable</p>
+<p>设置告警消息列队长度：snmp-agent trap queue-size (参数值)</p>
+<p>设置报文消息保存时间：snmp-agent trap life (参数值)</p>
+<p>配置管理员联系方式：snmp-agent sys-info contact call admin (电话号码)</p>
+<p>查看snmp Agent输出网管：display snmp-agent target-host</p>
+<h2 id="GRE协议基本配置（tunnel隧道创建）"><a href="#GRE协议基本配置（tunnel隧道创建）" class="headerlink" title="GRE协议基本配置（tunnel隧道创建）"></a>GRE协议基本配置（tunnel隧道创建）</h2><p>创建隧道接口：interface tunnel (接口号)</p>
+<p>指定隧道模式为gre:tunnel-protocol gre</p>
+<p>配置接口源地址：source （ip地址）</p>
+<p>配置 接口目标地址：destination （ip地址）</p>
+<p>注解：一条隧道链路两端接口ip地址必须在同一个网站</p>
+<p>注解：trunnel接口信息显示：Line protocol current state : DOWN 不知道如何启用</p>
+<p>配置动态路由协议省略</p>
+<h2 id="NTP"><a href="#NTP" class="headerlink" title="NTP"></a>NTP</h2><p>静态nat内部地址池到外部地址池一对一转换：nat static global (外部地址) inside （内部地址）</p>
+<p>查看静态ntp配置信息：display nat static</p>
+<p>配置nat outbound 外网地址池：nat addres-group 1 (头ip地址)（尾ip地址）</p>
+<p>acl (编号)</p>
+<p>rule （规则编号）permit source （ip地址）（子网掩码）</p>
+<p>在接口下将acl与地址池相关联：nat outbounb (acl编号) address-group 1 no-pat</p>
+<p>注解：只有acl规定的地址才可以使用地址池进行地址转换</p>
+<p>查看NAT outbound信息：display nat outbound</p>
+<p>在接口上配置Easy-ip特性，使用接口地址为转化后的地址：nat outbound (acl编号)</p>
+<p>查看NAT Session的详细信息：display nat session protocol udp verbose</p>
+<p>在接口指定内网服务器映射之外网，外网访问内网服务器,指定服务器通信协议类型为tcp：</p>
+<p>命令：nat server protocol [tcp(协议类型)] global （服务器公网地址）[fcp(服务协议)] inside (服务器私网地址) [ftp(协议端口号，ftp协议默认端口号为21)]</p>
+<p>启用nat alc功能：nat alg ftp enable</p>
+<p>查看nat server信息：display nat server</p>
+<h2 id="VRRP"><a href="#VRRP" class="headerlink" title="VRRP"></a>VRRP</h2><p>在接口穿件vrrp备份组：vrrp vrid (id号) virtual-ip (ip地址)</p>
+<p>配置接口vrrp优先级：vrrp vrid (id 号) priority (参数)</p>
+<p>查看vrrp信息：display vrrp &#x2F; brief(简要状态) &#x2F;interface (详细状态)</p>
+<p>修改虚拟组为非抢占模式：vrrp vrid (id号) preempt-mode disable</p>
+<p>配置上行接口监控：vrrp vrid (id号) track interface （上行接口号） reduced （参数）</p>
+<p>vrrp接口md5认证：vrrp vrid (id号) authentication-mode md5（密码）</p>
+<h2 id="ppp认证"><a href="#ppp认证" class="headerlink" title="ppp认证"></a>ppp认证</h2><p>设置本端的ppp协议对对端设备的认证方式为pap:ppp authentication-mode pap domain (域名)</p>
+<p>进入aaa视图，创建认证方案：authentication-scheme (域名-id)</p>
+<p>配置认证模式为本地认证：authentication-mode local</p>
+<p>创建域，并进入域视图：domain （域名）</p>
+<p>配置域的认证方式：authentication-scheme (域名-id)</p>
+<p>在aaa视图下，配置储存在本地，对对端口认证所使用的用户名和密码</p>
+<p>local-user （用户名） passwork cipher (密码)</p>
+<p>local-user (用户名) service-type ppp</p>
+<p>配置本端被对端以pap认证时本地发送的pap用户和密码</p>
+<p>ppp pap local-user (用户名) password cipher （密码）</p>
+<p>在接口下配置认证方式为chap:ppp authentication-mode chap</p>
+<p>在对端接口下配置chcp认证的用户名和密码：ppp chap (用户名)</p>
+<p>ppp chap password (密码)</p>
+<p>在接口下配置链路层协议HDLC:link-protocol hdlc</p>
+<h2 id="帧中继"><a href="#帧中继" class="headerlink" title="帧中继"></a>帧中继</h2><p>接口配置链路层协议为FR：link-protocol fr</p>
+<p>允许帧中继逆向解析地址生产地址映射表：fr inarp</p>
+<p>接口下手动配置ip地址与DLCI的静态映射：fr map ip (ip地址) （DLCI）[broadcast]</p>
+<p>查看pvc的建立情况：display fr pvc-info</p>
+<p>手工配置ospf邻居：peer (ip地址)</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" class="category-chain-item">华为数通</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" class="print-no-link">#华为数通</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>华为数通命令清单</div>
+      <div>https://www.xcjyc.top/2022/06/12/华为数通命令清单/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年6月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/12/Typora%E5%9B%BE%E5%BA%8A%E9%85%8D%E7%BD%AE/" title="Typora图床配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Typora图床配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/12/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A%E8%BE%B9%E5%AD%A6%E8%BE%B9%E8%AE%B0/" title="华为数通边学边记">
+                        <span class="hidden-mobile">华为数通边学边记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="华为数通"
+        id="heading-fd28f91b6c6bf1c8458e84e07db48dea" role="tab" data-toggle="collapse" href="#collapse-fd28f91b6c6bf1c8458e84e07db48dea"
+        aria-expanded="true"
+      >
+        华为数通
+        <span class="list-group-count">(2)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-fd28f91b6c6bf1c8458e84e07db48dea"
+           role="tabpanel" aria-labelledby="heading-fd28f91b6c6bf1c8458e84e07db48dea">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/06/12/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A%E5%91%BD%E4%BB%A4%E6%B8%85%E5%8D%95/" title="华为数通命令清单"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">华为数通命令清单</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/05/12/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A%E8%BE%B9%E5%AD%A6%E8%BE%B9%E8%AE%B0/" title="华为数通边学边记"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">华为数通边学边记</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

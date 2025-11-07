@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Nginx配置详解及优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx配置详解及优化">
+<meta property="og:url" content="https://www.xcjyc.top/2024/07/09/Nginx%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%E5%8F%8A%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="Nginx配置详解及优化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/nginx.png">
+<meta property="article:published_time" content="2024-07-09T07:25:34.000Z">
+<meta property="article:modified_time" content="2024-07-09T07:32:51.273Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content=".conf">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/nginx.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Nginx配置详解及优化 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Nginx配置详解及优化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-09 15:25" pubdate>
+          2024年7月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Nginx配置详解及优化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Nginx的配置文件通常分为几个部分：main（全局设置）、events（事件设置）、http（http相关设置）以及server（服务器特定设置）。每个部分都包含了影响Nginx行为的指令。</p>
+<p>可以将main、events、http配置合并在nginx.conf配置里，打开nginx.conf，配置如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">#定义了Nginx进程运行的用户和组，这里使用的是nginx用户和组</span><br>user  nginx nginx;<br><span class="hljs-comment"># 定义了Nginx的工作进程数，这里设置为2，通常与CPU核心数相匹配</span><br>worker_processes  2;<br><span class="hljs-comment">#将work process绑定到特定cpu上，避免进程在cpu间切换的开销, </span><br><span class="hljs-comment">#如2核为01 10，四核为0001 0010 0100 1000，依次类推；有多少个核，就有几位数，最多开启8个</span><br><span class="hljs-comment">#1表示该内核开启，0表示该内核关闭。</span><br>worker_cpu_affinity 01 10;<br><span class="hljs-comment"># 错误日志存在目录及日志级别[ debug | info | notice | warn | error | crit ]</span><br>error_log  /var/log/nginx/error.log warn;<br><span class="hljs-comment"># 指定 pid 存放的路径</span><br>pid        /var/run/nginx.pid;<br><span class="hljs-comment"># 定义了工作进程的最大文件打开数限制，最好小于/etc/security/limits.conf 系统配置里的nofile 数量</span><br>worker_rlimit_nofile 32000;<br><br>events &#123;<br>    <span class="hljs-comment">#单个进程允许的客户端连接数，一般比worker_rlimit_nofile小</span><br>    worker_connections  16000;<br>    <span class="hljs-comment"># 告诉nginx收到一个新连接通知后接受尽可能多的连接</span><br>    multi_accept on;<br>    <span class="hljs-comment">#epoll比poll和select性能更好，适用于高并发场景</span><br>    use epoll;<br>&#125;<br><br><br>http &#123;<br>    <span class="hljs-comment">#包含MIME类型配置文件</span><br>    include       /etc/nginx/mime.types;<br>    <span class="hljs-comment">#定义默认的MIME类型</span><br>    default_type  application/octet-stream;<br>    <span class="hljs-comment">#定义了访问日志的格式和存放路径，更多格式设置可参考官方文档</span><br>    log_format main  <span class="hljs-string">&#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; $status $body_bytes_sent &quot;$http_referer&quot; &quot;$http_user_agent&quot; &quot;$request_uri&quot;&#x27;</span>;<br>    access_log  /var/log/nginx/access.log  main;<br><br>    <span class="hljs-comment"># 启动内容压缩，有效降低网络流量</span><br>    gzip  on;<br>    <span class="hljs-comment"># 过短的内容压缩效果不佳，压缩过程还会浪费系统资源</span><br>    gzip_min_length 10k;<br>    <span class="hljs-comment"># 可选值1~9,压缩级别越高压缩率越高，但对系统性能要求越高</span><br>    gzip_comp_level 4;<br>    <span class="hljs-comment"># 压缩的内容类别</span><br>    gzip_types text/plain text/css application/javascript application/x-javascript application/json text/xml application/xml application/xml+rss application/x-httpd-php text/javascript image/jpeg image/gif image/png;<br>    <span class="hljs-comment"># 是否在http header中添加Vary: Accept-Encoding，建议开启</span><br>    gzip_vary on;<br>    gzip_static on;<br>    <span class="hljs-comment"># 设置缓存路径并且使用一块最大100M的共享内存，用于硬盘上的文件索引，包括文件名和请求次数，每个文件在1天内若不活跃（无请求）则从硬盘上淘汰，硬盘缓存最大10G，满了则根据LRU算法自动清除缓存。</span><br>    proxy_cache_path /var/cache/nginx/cache levels=1:2 keys_zone=imgcache:100m inactive=1d max_size=10g;<br>    <span class="hljs-comment"># 错误页面隐藏nginx版本，提高安全性</span><br>    server_tokens off;<br>    <span class="hljs-comment">#启用错误页面的拦截</span><br>    proxy_intercept_errors on;<br>    fastcgi_intercept_errors on;<br>    <span class="hljs-comment">#启用内核复制模式, 大幅提高IO效率</span><br>    sendfile       on;<br>    <span class="hljs-comment">#必须在sendfile开启模式才有效，防止网路阻塞，积极的减少网络报文段的数量（将响应头和正文的开始部分一起发送，而不一个接一个的发送。）</span><br>    tcp_nopush     on;<br>    <span class="hljs-comment">#HTTP长连接保持时长</span><br>    keepalive_timeout  30;<br>    <span class="hljs-comment">#在一次长连接上所允许请求的资源的最大数，根据自己站点访问量进行调整</span><br>    keepalive_requests 500;<br>    <span class="hljs-comment">#也是防止网络阻塞，不过要包涵在keepalived参数才有效</span><br>    tcp_nodelay on;<br>    <span class="hljs-comment">#设置请求体的超时时间。我们也可以把这个设置低些，超过这个时间没有发送任何数据，</span><br>    client_body_timeout 15;<br>    <span class="hljs-comment">#设置请求头的超时时间。我们也可以把这个设置低些，如果超过这个时间没有发送任何数据，nginx将返回request time out的错误。</span><br>    client_header_timeout 15;<br>    <span class="hljs-comment">#告诉nginx关闭不响应的客户端连接。这将会释放那个客户端所占有的内存空间。</span><br>    reset_timedout_connection on;<br>    <span class="hljs-comment">#响应客户端超时时间，这个超时时间仅限于两个活动之间的时间，如果超过这个时间，客户端没有任何活动，nginx关闭连接。</span><br>    send_timeout 15;<br>    <span class="hljs-comment">#上传文件大小及缓冲区大小限制</span><br>    client_max_body_size 20M;<br>    client_body_buffer_size 1M;<br>    <span class="hljs-comment"># 最大缓存数量，文件未使用存活期</span><br>    open_file_cache max=20000 inactive=20s;<br>    <span class="hljs-comment"># 验证缓存有效期时间间隔</span><br>    open_file_cache_valid 30s;<br>    <span class="hljs-comment"># 有效期内文件最少使用次数</span><br>    open_file_cache_min_uses 2;<br>    <span class="hljs-comment"># 指定是否在搜索一个文件时记录cache错误</span><br>    open_file_cache_errors on;<br>    <span class="hljs-comment">#限制IP在1s内最多访问30次，这里定义了一个共享内存区域的名字为 allips，</span><br>    <span class="hljs-comment">#并且分配了 10m（10兆字节）的内存大小给这个区域，超出这个频率的请求将被延迟处理，以此来防止滥用或者分布式拒绝服务（DDos）攻击</span><br>    <span class="hljs-comment">#具体设置多少根据自己网站流量进行修改</span><br>    limit_req_zone <span class="hljs-variable">$binary_remote_addr</span> zone=allips:10m rate=30r/s;<br><br>    <span class="hljs-comment"># 如果客户端请求升级连接到 WebSocket，Nginx 将通过设置适当的请求头来代理这些请求到配置的后端服务器</span><br>    map <span class="hljs-variable">$http_upgrade</span> <span class="hljs-variable">$connection_upgrade</span> &#123;<br>        default upgrade;<br>        <span class="hljs-string">&#x27;&#x27;</span> close;<br>    &#125;<br>    <br>    <span class="hljs-comment">#具体站点配置目录</span><br>    include /etc/nginx/conf.d/*.conf;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>服务器特定设置(server)</p>
+<p>特定设置放在conf.d目录下，这里可以包含N个设置文件，根据自己管理方便程度自行添加文件，上面 include &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;*.conf; 自动包含了conf.d下的配置文件。</p>
+<p>server配置示例如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs sh">server &#123;<br>    listen       80;  <span class="hljs-comment">#监听的端口</span><br>    server_name admin.****.com; <span class="hljs-comment"># 访问的域名</span><br>    <br>    <span class="hljs-comment"># 直接返回301重定向到HTTPS，如果没有ssl证书，将下面server 除去SSL证书配置部分COPY到这里就可以了</span><br>    <span class="hljs-built_in">return</span> 301 https://$server_name<span class="hljs-variable">$request_uri</span>;<br>&#125;<br><br>server &#123;<br>    listen       443 ssl; <span class="hljs-comment">#监听的端口</span><br>    server_name admin.****.com;<br>    <br>    <span class="hljs-comment"># SSL证书配置，具体配置要参考ssl颁发机构部署说明</span><br>    ssl_certificate /etc/nginx/cert/certificate.pem;<br>    ssl_certificate_key /etc/nginx/cert/certificate.key;<br>    ssl_session_timeout 5m;<br>    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;<br>    ssl_prefer_server_ciphers on;<br><br>    <span class="hljs-comment">#设置为 off 后端服务器可以收到原始的 URL</span><br>    proxy_redirect off;<br>    <span class="hljs-comment">#后端服务器可以获得原始请求的 Host 头部信息</span><br>    proxy_set_header Host <span class="hljs-variable">$host</span>;<br>    <span class="hljs-comment"># 后端服务器识别客户端的真实 IP 地址</span><br>    proxy_set_header X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>    <span class="hljs-comment">#指示原始请求使用的是 HTTP 还是 HTTPS   </span><br>    proxy_set_header X-Forwarded-Proto <span class="hljs-variable">$scheme</span>;<br>    <span class="hljs-comment">#表示原始请求使用的端口号</span><br>    proxy_set_header X-Forwarded-Port <span class="hljs-variable">$server_port</span>;<br>    <span class="hljs-comment">#将客户端请求中的 Cookie 头部传递给后端服务器</span><br>    proxy_set_header Cookie <span class="hljs-variable">$http_cookie</span>;<br><br>    <span class="hljs-comment"># 定义请求的处理规则，可以匹配不同的URL路径或正则表达</span><br>    location / &#123;<br>        <span class="hljs-comment">#指定网站内容的根目录</span><br>        root /usr/share/nginx/html;<br>        <span class="hljs-comment">#定义默认首页文件，当请求一个目录时使用</span><br>        index index.html index.htm;<br>    &#125;<br><br>    <span class="hljs-comment"># 路径中如有api则转发到本机的8001服务端口</span><br>    location ^~ /api/ &#123;<br>          rewrite ^/api/(.*)$ /<span class="hljs-variable">$1</span> <span class="hljs-built_in">break</span>;<br>          proxy_pass http://127.0.0.1:8001;<br>    &#125;   <br> <br>    <span class="hljs-comment"># 静态文件</span><br>    location .\.(gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$ &#123;<br>        <span class="hljs-comment"># 验证 Referer 头部，用于防盗链， </span><br>        <span class="hljs-comment"># none 表示不包括任何来源，</span><br>        <span class="hljs-comment"># blocked 表示所有未明确列出的来源都将被拒绝</span><br>        <span class="hljs-comment"># 正则表达式，表示所有以 .example.com 结尾的域名都是有效的来源。</span><br>        valid_referers none blocked server_names ~\.example\.com$;<br>        <span class="hljs-comment">#定义了当请求被拒绝时返回的自定义错误页面</span><br>        error_page 403 /usr/share/nginx/403.html;<br>        <span class="hljs-comment">#不在 Nginx 的访问日志文件中记录这些请求</span><br>        access_log  off;<br>        <span class="hljs-comment">#缓存有效期为 30 天</span><br>        expires 30d;<br>    &#125;<br>    <br>    <span class="hljs-comment"># 当 HTTP 状态码为 500、502、503 或 504 的错误时转到50x.html页面</span><br>    error_page   500 502 503 504  /50x.html;<br>    location = /50x.html &#123;<br>        root   /usr/share/nginx/html;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Nginx/" class="category-chain-item">Nginx</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Nginx/" class="print-no-link">#Nginx</a>
+      
+        <a href="/tags/conf/" class="print-no-link">#.conf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Nginx配置详解及优化</div>
+      <div>https://www.xcjyc.top/2024/07/09/Nginx配置详解及优化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/28/Docker%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/" title="Docker环境安装">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker环境安装</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/08/%E8%A7%A3%E5%86%B3%E7%B3%BB%E7%BB%9F%E8%BF%81%E7%A7%BB%E5%88%B0Nvme%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98%E5%90%8E%E7%9A%84%E8%93%9D%E5%B1%8F%E6%95%85%E9%9A%9C/" title="解决系统迁移到Nvme固态硬盘后的蓝屏故障">
+                        <span class="hidden-mobile">解决系统迁移到Nvme固态硬盘后的蓝屏故障</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Nginx"
+        id="heading-62e0b5b350c9e3d2c19aa801d9442ba9" role="tab" data-toggle="collapse" href="#collapse-62e0b5b350c9e3d2c19aa801d9442ba9"
+        aria-expanded="true"
+      >
+        Nginx
+        <span class="list-group-count">(2)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-62e0b5b350c9e3d2c19aa801d9442ba9"
+           role="tabpanel" aria-labelledby="heading-62e0b5b350c9e3d2c19aa801d9442ba9">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/04/18/Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6nginx-conf/" title="Nginx配置文件nginx.conf"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Nginx配置文件nginx.conf</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/09/Nginx%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3%E5%8F%8A%E4%BC%98%E5%8C%96/" title="Nginx配置详解及优化"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Nginx配置详解及优化</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

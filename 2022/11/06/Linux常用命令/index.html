@@ -1,0 +1,942 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Linux常用命令(收集整理)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用命令">
+<meta property="og:url" content="https://www.xcjyc.top/2022/11/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="Linux常用命令(收集整理)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/linux-bash.png">
+<meta property="article:published_time" content="2022-11-06T10:52:38.000Z">
+<meta property="article:modified_time" content="2023-05-12T05:52:42.503Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/linux-bash.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Linux常用命令 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux常用命令"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-11-06 18:52" pubdate>
+          2022年11月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Linux常用命令</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在开发中常用的一些命令。</p>
+<p>1）目录切换</p>
+<p>2）对目录（文件夹）的操作</p>
+<p>3）对文件的操作</p>
+<p>4）文件的压缩、解压</p>
+<p>5）软件的安装</p>
+<p>6）权限的操作</p>
+<p>7）防火墙端口的开启</p>
+<p>8）一些其他的命令</p>
+<p>执行以下命令时需要注意自己对应系统的版本，不同的版本会稍有差别。</p>
+<h2 id="1、目录切换"><a href="#1、目录切换" class="headerlink" title="1、目录切换"></a><strong>1、目录切换</strong></h2><p>cd &#x2F; 	切换到根目录</p>
+<p>cd ~ 切换到用户跟目录</p>
+<p>cd ..&#x2F;    切换到上一级目录</p>
+<p>cd - 	切换到上次访问目录</p>
+<p>cd etc   切换到当前目录下的etc目录</p>
+<h2 id="2、目录的操作命令（增删改查）"><a href="#2、目录的操作命令（增删改查）" class="headerlink" title="2、目录的操作命令（增删改查）"></a><strong>2、目录的操作命令（增删改查）</strong></h2><h4 id="（1）新增目录"><a href="#（1）新增目录" class="headerlink" title="（1）新增目录"></a><strong>（1）新增目录</strong></h4><p>​    mkdir xxx (xxx为自己为目录取的名字)</p>
+<p>​       mkdir  -p   xxx 		递归创建</p>
+<h4 id="（2）查看目录"><a href="#（2）查看目录" class="headerlink" title="（2）查看目录"></a><strong>（2）查看目录</strong></h4><p>​    ls[-a|-l]</p>
+<p>​    ls -a 查看当前目录下的所有目录，以及隐藏目录</p>
+<p>​    ls -l 查看当前目录下的所有目录的详细信息    缩写成ll</p>
+<h4 id="（3）搜索目录"><a href="#（3）搜索目录" class="headerlink" title="（3）搜索目录"></a><strong>（3）搜索目录</strong></h4><p>​     find &#x2F;root -name <em>test</em></p>
+<h4 id="（4）修改目录"><a href="#（4）修改目录" class="headerlink" title="（4）修改目录"></a><strong>（4）修改目录</strong></h4><p>​     mv xxx aaa  (xxx 旧目录名，aaa新目录名) mv同样可以修改文件及压缩包的名字</p>
+<h4 id="（5）移动目录"><a href="#（5）移动目录" class="headerlink" title="（5）移动目录"></a><strong>（5）移动目录</strong></h4><p>​     mv yyy &#x2F;root (yyy需要修改目录。&#x2F;root 剪切到的位置)</p>
+<h4 id="（6）复制目录及文件"><a href="#（6）复制目录及文件" class="headerlink" title="（6）复制目录及文件"></a><strong>（6）复制目录及文件</strong></h4><p>​     cp -r aaa &#x2F;  (将aaa目录复制到根目录下)</p>
+<p>  cp tt.zip &#x2F;  (将tt.zip复制到根目录下)</p>
+<h4 id="（7）删除目录"><a href="#（7）删除目录" class="headerlink" title="（7）删除目录"></a><strong>（7）删除目录</strong></h4><p>​    rm删除文件</p>
+<p>​    rm -r   删除目录</p>
+<p>​     <strong>rm-rf   强制删除目录 （就可以用本句去删除任何东西，常用这句就行了）</strong></p>
+<h2 id="3、文件的操作命令"><a href="#3、文件的操作命令" class="headerlink" title="3、文件的操作命令"></a><strong>3、文件的操作命令</strong></h2><h4 id="（1）新建文件"><a href="#（1）新建文件" class="headerlink" title="（1）新建文件"></a><strong>（1）新建文件</strong></h4><p>​     touch test.txt (Linux 下是可以不加文件的后缀名的，加上文件名是为了开发者分辨文件)</p>
+<h4 id="（2）查看文件"><a href="#（2）查看文件" class="headerlink" title="（2）查看文件"></a><strong>（2）查看文件</strong></h4><p>​     cat&#x2F;more&#x2F;less&#x2F;tail</p>
+<p>​     cat  使用cat可以比较方便的查看较小的文件。用cat查看文件直接显示的文件的最后一屏</p>
+<p>​     more  使用more查看文件，回车翻一行，空格翻一页，Q结束查看，只能往下查看</p>
+<p>​     less 使用less可以用more的方式查看，但是可以使用pg up ,pg down 向上向下翻</p>
+<p>​     tail  使用tail查看文件的后几行</p>
+<p>​       tail -10 xxx.txt 查看文件的后10行</p>
+<p>​       tail -f xxx.txt 动态监控文件 crtl+ c 退出</p>
+<h4 id="（3）修改文件"><a href="#（3）修改文件" class="headerlink" title="（3）修改文件"></a><strong>（3）修改文件</strong></h4><p>​     vim       按 i  a  o （I  A  O）进入编辑模式</p>
+<p>​     vim文件名–&gt;进入文件–&gt;命令模式–&gt;按i进入编辑模式–&gt;编辑文件–&gt;按Esc进入底行模式–&gt;输入:–&gt;</p>
+<p>​     输入命令 wq（保存并退出） 输入q! (不保存，强制退出)</p>
+<h4 id="（4）删除文件"><a href="#（4）删除文件" class="headerlink" title="（4）删除文件"></a><strong>（4）删除文件</strong></h4><p>​     rm -rf   xxx.txt</p>
+<h2 id="4、压缩文件的操作命令"><a href="#4、压缩文件的操作命令" class="headerlink" title="4、压缩文件的操作命令"></a><strong>4、压缩文件的操作命令</strong></h2><h4 id="（1）压缩"><a href="#（1）压缩" class="headerlink" title="（1）压缩"></a><strong>（1）压缩</strong></h4><p>​     tar -zcvf 打包后的名称 打包前的名称</p>
+<p>​     tar -zcvf xxx.tar.gz .&#x2F;*    (.&#x2F;*表示当前目录下的所有文件)</p>
+<h4 id="（2）解压"><a href="#（2）解压" class="headerlink" title="（2）解压"></a><strong>（2）解压</strong></h4><p>​     tar-xvf 包名    解压到当前的目录</p>
+<p>​     tar-xvf 包名 -C 目标目录  解压到指定的目标目录</p>
+<h2 id="5、安装软件"><a href="#5、安装软件" class="headerlink" title="5、安装软件"></a><strong>5、安装软件</strong></h2><h4 id="（1）yam"><a href="#（1）yam" class="headerlink" title="（1）yam"></a><strong>（1）yam</strong></h4><p><strong>1）安装Linux的源包软件</strong></p>
+<p>yum install packagexx</p>
+<p><strong>2）查看所有安装的软件</strong></p>
+<p>yum list</p>
+<p><strong>3）卸载软件</strong></p>
+<p>yum remove xx(xx为查询看到的结果)</p>
+<h4 id="（2）rpm"><a href="#（2）rpm" class="headerlink" title="（2）rpm"></a><strong>（2）rpm</strong></h4><p><strong>1）安装</strong></p>
+<p>rpm -ivh package</p>
+<p><strong>2） 查询</strong></p>
+<p>rpm -qa | grep str(str为需要查询的字符串)</p>
+<p><strong>3） 卸载</strong></p>
+<p>rpm -e –nodeps xxx（xxx为上面查询到的结果）</p>
+<p>ps：一般也卸载了之后也需要删除相应的文件夹（目录）</p>
+<p>find &#x2F; -name str查看残留的文件夹</p>
+<h2 id="6、其他常用命令"><a href="#6、其他常用命令" class="headerlink" title="6、其他常用命令"></a><strong>6、其他常用命令</strong></h2><h4 id="（1）显示当前目录的路径"><a href="#（1）显示当前目录的路径" class="headerlink" title="（1）显示当前目录的路径"></a><strong>（1）显示当前目录的路径</strong></h4><p>​     pwd</p>
+<h4 id="（2）搜索命令"><a href="#（2）搜索命令" class="headerlink" title="（2）搜索命令"></a><strong>（2）搜索命令</strong></h4><p>​     grep xx  要搜索的字符串，要搜索的文件</p>
+<p>​     grep xx test.txt    在test.txt中搜索xx字符串</p>
+<h4 id="（3）管道命令"><a href="#（3）管道命令" class="headerlink" title="（3）管道命令"></a><strong>（3）管道命令</strong></h4><p>​     |</p>
+<p>​     将上次一的命令作为下一次的输入</p>
+<h4 id="（4）查看进程"><a href="#（4）查看进程" class="headerlink" title="（4）查看进程"></a><strong>（4）查看进程</strong></h4><p>​     ps- ef</p>
+<p>​     与管道结合</p>
+<p>​     ps-ef | grep mysql  从所有进程中搜索包含mysql的内容</p>
+<h4 id="（5）杀死进程"><a href="#（5）杀死进程" class="headerlink" title="（5）杀死进程"></a><strong>（5）杀死进程</strong></h4><p>​     kill -9 pid       （pid为进程ID）</p>
+<h4 id="（6）网络配置"><a href="#（6）网络配置" class="headerlink" title="（6）网络配置"></a><strong>（6）网络配置</strong></h4><p>​     1）查看ip地址</p>
+<p>​     ifconfig</p>
+<p>​     2）查看端口状态</p>
+<p>​     netstat -a</p>
+<p>​      3）查询端口占用情况</p>
+<p>​     netstat -tulpn</p>
+<h2 id="7、Linux-的权限命令"><a href="#7、Linux-的权限命令" class="headerlink" title="7、Linux 的权限命令"></a><strong>7、Linux 的权限命令</strong></h2><p>​    -rwxrwxr–</p>
+<p>​    一共10个位</p>
+<p>​    第一个类型</p>
+<p>​    第一个3位 属主权限</p>
+<p>​    第二个3位 属组权限</p>
+<p>​    第三个3位 其他权限用户</p>
+<p>​    r 读取权</p>
+<p>​    w写入权</p>
+<p>​    x 执行权</p>
+<h4 id="（1）修改权限"><a href="#（1）修改权限" class="headerlink" title="（1）修改权限"></a><strong>（1）修改权限</strong></h4><p>​    chmod u&#x3D;rwx,g&#x3D;rw,o&#x3D;r sudo.conf   (sudo.conf为文件名)</p>
+<p>u		主权限</p>
+<p>g 	组权限</p>
+<p>o		其他权限</p>
+<h4 id="（2）修改所属主，组"><a href="#（2）修改所属主，组" class="headerlink" title="（2）修改所属主，组"></a><strong>（2）修改所属主，组</strong></h4><p>​    chown -R mysql mysql&#x2F; 将mysql文件下的所有文件及文件夹的所属主修改为mysql</p>
+<p>​    chgrp -R mysql mysql&#x2F; 	将mysql文件下的所有文件及文件夹的所属组修改为mysql</p>
+<h2 id="8、系统信息、用户"><a href="#8、系统信息、用户" class="headerlink" title="8、系统信息、用户"></a><strong>8、系统信息、用户</strong></h2><h4 id="（1）查看系统版本"><a href="#（1）查看系统版本" class="headerlink" title="（1）查看系统版本"></a><strong>（1）查看系统版本</strong></h4><p>​     cat &#x2F;proc&#x2F;version    cat &#x2F;etc&#x2F;os-release</p>
+<p>[root@x-z ~]# cat &#x2F;etc&#x2F;os-release </p>
+<p>NAME&#x3D;”CentOS Stream”</p>
+<p>VERSION&#x3D;”8”</p>
+<p>ID&#x3D;”centos”</p>
+<p>ID_LIKE&#x3D;”rhel fedora”</p>
+<p>VERSION_ID&#x3D;”8”</p>
+<p>PLATFORM_ID&#x3D;”platform:el8”</p>
+<p>PRETTY_NAME&#x3D;”CentOS Stream 8”</p>
+<p>ANSI_COLOR&#x3D;”0;31”</p>
+<p>CPE_NAME&#x3D;”cpe:&#x2F;o:centos:centos:8”</p>
+<p>HOME_URL&#x3D;”<a target="_blank" rel="noopener" href="https://centos.org/">https://centos.org/</a>“</p>
+<p>BUG_REPORT_URL&#x3D;”<a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/">https://bugzilla.redhat.com/</a>“</p>
+<p>REDHAT_SUPPORT_PRODUCT&#x3D;”Red Hat Enterprise Linux 8”</p>
+<p>REDHAT_SUPPORT_PRODUCT_VERSION&#x3D;”CentOS Stream”</p>
+<h4 id="（2）查看开机自动启动的服务使用chkconfig命令"><a href="#（2）查看开机自动启动的服务使用chkconfig命令" class="headerlink" title="（2）查看开机自动启动的服务使用chkconfig命令"></a><strong>（2）查看开机自动启动的服务使用chkconfig命令</strong></h4><p>​     chkconfig –list</p>
+<h4 id="（3）修改密码"><a href="#（3）修改密码" class="headerlink" title="（3）修改密码"></a><strong>（3）修改密码</strong></h4><p>​     passwd</p>
+<h2 id="9、配置防火墙"><a href="#9、配置防火墙" class="headerlink" title="9、配置防火墙"></a><strong>9、配置防火墙</strong></h2><h4 id="（1）安装防火墙"><a href="#（1）安装防火墙" class="headerlink" title="（1）安装防火墙"></a><strong>（1）安装防火墙</strong></h4><p>​     yum install firewalld</p>
+<h4 id="（2）启动防火墙"><a href="#（2）启动防火墙" class="headerlink" title="（2）启动防火墙"></a><strong>（2）启动防火墙</strong></h4><p>​    systemctl start firewalld</p>
+<h4 id="（3）开机自启动"><a href="#（3）开机自启动" class="headerlink" title="（3）开机自启动"></a><strong>（3）开机自启动</strong></h4><p>​    systemctl enable firewalld</p>
+<h4 id="（4）关闭防火墙"><a href="#（4）关闭防火墙" class="headerlink" title="（4）关闭防火墙"></a><strong>（4）关闭防火墙</strong></h4><p>​    systemctl stop firewalld</p>
+<h4 id="（5）关闭开机自启动"><a href="#（5）关闭开机自启动" class="headerlink" title="（5）关闭开机自启动"></a><strong>（5）关闭开机自启动</strong></h4><p>​    systemctl disable firewalld</p>
+<h4 id="（6）查看防火墙运行状态"><a href="#（6）查看防火墙运行状态" class="headerlink" title="（6）查看防火墙运行状态"></a><strong>（6）查看防火墙运行状态</strong></h4><p>​    firewall-cmd –state  或者 systemctl status firewalld.service</p>
+<h4 id="（7）重启防火墙"><a href="#（7）重启防火墙" class="headerlink" title="（7）重启防火墙"></a><strong>（7）重启防火墙</strong></h4><p>​    firewall-cmd –reload 或者systemctl [start|stop|restart] firewalld.service </p>
+<h4 id="（8）查看帮助"><a href="#（8）查看帮助" class="headerlink" title="（8）查看帮助"></a><strong>（8）查看帮助</strong></h4><p>​    firewall-cmd –help</p>
+<h2 id="10、配置防火墙端口"><a href="#10、配置防火墙端口" class="headerlink" title="10、配置防火墙端口"></a><strong>10、配置防火墙端口</strong></h2><h4 id="（1）开放端口"><a href="#（1）开放端口" class="headerlink" title="（1）开放端口"></a><strong>（1）开放端口</strong></h4><p>​    firewall-cmd –permanent –zone&#x3D;public –add-port&#x3D;8080&#x2F;tcp</p>
+<p>​    –permanent永久开放8080端口</p>
+<h4 id="（2）关闭端口（执行成功）"><a href="#（2）关闭端口（执行成功）" class="headerlink" title="（2）关闭端口（执行成功）"></a><strong>（2）关闭端口（执行成功）</strong></h4><p>​    firewall-cmd –zone&#x3D;public –remove-port&#x3D;8080&#x2F;tcp</p>
+<h4 id="（3）查询端口是否开放"><a href="#（3）查询端口是否开放" class="headerlink" title="（3）查询端口是否开放"></a><strong>（3）查询端口是否开放</strong></h4><p>​    firewall-cmd –query-port&#x3D;8080&#x2F;tcp</p>
+<h4 id="（4）查询所有用户开放的端口"><a href="#（4）查询所有用户开放的端口" class="headerlink" title="（4）查询所有用户开放的端口"></a><strong>（4）查询所有用户开放的端口</strong></h4><p>firewall-cmd –list-ports</p>
+<p><strong>–zone #作用域</strong></p>
+<p><strong>–add-port&#x3D;80&#x2F;tcp  #添加端口，格式为：端口&#x2F;通讯协议</strong></p>
+<p><strong>–permanent  #永久生效，没有此参数重启后失效</strong></p>
+<p>每次关闭开启就需要reload</p>
+<p>firewall-cmd –reload</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux%E5%9F%BA%E7%A1%80/" class="category-chain-item">Linux基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux常用命令</div>
+      <div>https://www.xcjyc.top/2022/11/06/Linux常用命令/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年11月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/06/Linux%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Linux安装初始化">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux安装初始化</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/12/Typora%E5%9B%BE%E5%BA%8A%E9%85%8D%E7%BD%AE/" title="Typora图床配置">
+                        <span class="hidden-mobile">Typora图床配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Linux基础"
+        id="heading-7f7b9d0769e6c459c4809c61cc3175d7" role="tab" data-toggle="collapse" href="#collapse-7f7b9d0769e6c459c4809c61cc3175d7"
+        aria-expanded="true"
+      >
+        Linux基础
+        <span class="list-group-count">(10)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-7f7b9d0769e6c459c4809c61cc3175d7"
+           role="tabpanel" aria-labelledby="heading-7f7b9d0769e6c459c4809c61cc3175d7">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/11/06/Linux%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C/" title="Linux安装初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux安装初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="Linux常用命令"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Linux常用命令</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/07/Linux%E6%9C%80%E5%85%A8%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" title="Linux最全基础命令"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux最全基础命令</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/07/Linux%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" title="Linux的常用命令详解"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux的常用命令详解</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/18/Rocky9%E5%88%9D%E5%A7%8B%E5%8C%96/" title="Rocky9初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Rocky9初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/09/Shell%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="Shell快捷键"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Shell快捷键</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/04/19/Ubuntu%E5%88%9D%E5%A7%8B%E5%8C%96/" title="Ubuntu2204初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Ubuntu2204初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/07/Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%94%A8%E5%AE%9E%E4%BE%8B/" title="shell编程实用实例"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">shell编程实用实例</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/05/09/%E4%B8%BAcp%E5%92%8Cmv%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E8%BF%9B%E5%BA%A6%E6%9D%A1/" title="为cp和mv命令添加进度条"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">为cp和mv命令添加进度条</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/11/08/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="正则表达式"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">正则表达式</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

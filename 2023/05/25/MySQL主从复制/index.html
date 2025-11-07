@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MySQL主从复制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL主从复制">
+<meta property="og:url" content="https://www.xcjyc.top/2023/05/25/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="MySQL主从复制">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/mysql.png">
+<meta property="article:published_time" content="2023-05-25T04:33:43.000Z">
+<meta property="article:modified_time" content="2023-07-11T06:49:05.356Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/mysql.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>MySQL主从复制 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MySQL主从复制"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-25 12:33" pubdate>
+          2023年5月25日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">MySQL主从复制</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="MySQL-主从复制原理"><a href="#MySQL-主从复制原理" class="headerlink" title="MySQL 主从复制原理"></a>MySQL 主从复制原理</h3><p>主从复制（也称 AB 复制）是指一台服务器充当主数据库服务器，另一台或多台服务器充当从数据库服务器，主服务器中的数据自动复制到从服务器之中。对于多级复制，数据库服务器既可充当主机，也可充当从机。MySQL默认采用异步复制方式。</p>
+<h5 id="主从复制的过程及原理可以总结如下："><a href="#主从复制的过程及原理可以总结如下：" class="headerlink" title="主从复制的过程及原理可以总结如下："></a>主从复制的过程及原理可以总结如下：</h5><ul>
+<li>master服务器将数据的改变记录二进制binlog日志，当master上的数据发生改变时，则将其改变写入二进制日志中。</li>
+<li>slave服务器会在一定时间间隔内对master二进制日志进行探测其是否发生改变，如果发生改变，则开始一个I&#x2F;OThread请求master二进制事件。</li>
+<li>同时主节点为每个I&#x2F;O线程启动一个dump线程，用于向其发送二进制事件，并保存至从节点本地的中继日志中，从节点将启动SQL线程从中继日志中读取二进制日志，在本地重放，使得其数据和主节点的保持一致。</li>
+</ul>
+<h5 id="主从复制所需要的条件："><a href="#主从复制所需要的条件：" class="headerlink" title="主从复制所需要的条件："></a>主从复制所需要的条件：</h5><ul>
+<li>开启二进制日志</li>
+<li>设置server-id </li>
+<li>创建同步账号</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs sh">CHANGE MASTER TO <br>  MASTER_HOST=<span class="hljs-string">&#x27;10.0.0.11&#x27;</span>,<br>  MASTER_USER=<span class="hljs-string">&#x27;repluser&#x27;</span>,<br>  MASTER_PASSWORD=<span class="hljs-string">&#x27;replpass&#x27;</span>,<br>  MASTER_LOG_FILE=<span class="hljs-string">&#x27;mariadb-bin.xxxxXX,</span><br><span class="hljs-string">  MASTER_LOG_POS=1567,</span><br><span class="hljs-string">  MASTER_DELAY=interva1;       #可指定延迟复制实现访问误操作，单位秒</span><br><span class="hljs-string">  </span><br><span class="hljs-string">START SLAVE [IO THREAD SQL THREAD];    #</span><br><span class="hljs-string">STOP SLAVE;</span><br><span class="hljs-string">RESET SLAVE ALL;</span><br><span class="hljs-string"></span><br><span class="hljs-string">SHOW SLAVE STATUS;</span><br><span class="hljs-string"></span><br><span class="hljs-string">#查看 relaylog 事件，mysql8.0已取消中继日志</span><br><span class="hljs-string">SHOW RELAYLOG EVENTS in &#x27;</span>relay-bin.00000x<span class="hljs-string">&#x27;;</span><br><span class="hljs-string"></span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="例一：将已有的mysql8-0单机变成主从复制架构"><a href="#例一：将已有的mysql8-0单机变成主从复制架构" class="headerlink" title="例一：将已有的mysql8.0单机变成主从复制架构"></a>例一：将已有的mysql8.0单机变成主从复制架构</h3><h5 id="主节点-Rocky8-11-配置"><a href="#主节点-Rocky8-11-配置" class="headerlink" title="主节点 Rocky8-11 配置"></a>主节点 Rocky8-11 配置</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">## 配置主节点配置文件，启用二进制日志，配置server-id</span><br>[root@Rocky8-11 ~]# <span class="hljs-built_in">mkdir</span> /binlog/<br>[root@Rocky8-11 ~]# <span class="hljs-built_in">chown</span> mysql. /binlog/<br>[root@Rocky8-11 ~]# vim /etc/my.cnf<br>[mysqld]<br>server-id=11<br>log-bin=/binlog/mysql-bin<br>[root@Rocky8-11 ~]# systemctl restart mysqld<br><br><span class="hljs-comment">## 完全备份</span><br>[root@Rocky8-11 ~]# <span class="hljs-built_in">mkdir</span> /data<br>[root@Rocky8-11 ~]# mysqldump -A -F --master-data=1 --single-transaction &gt; /data/all.sql <br>[root@Rocky8-11 ~]# <span class="hljs-built_in">ls</span> /data/<br>all.sql<br><br><span class="hljs-comment">## 创建复制用户并授权</span><br>[root@Rocky8-11 ~]# mysql <br>01:28:55(root@localhost) [(none)] create user repluser@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span> identified by <span class="hljs-string">&quot;123456&quot;</span>;<br>01:30:11(root@localhost) [(none)] grant replication slave on *.* to repluser@<span class="hljs-string">&#x27;10.0.0.%&#x27;</span>;<br><br><span class="hljs-comment">## 将备份复制到从节点</span><br>[root@Rocky8-11 ~]# scp /data/all.sql  10.0.0.12:/data/<br></code></pre></td></tr></table></figure>
+
+<h5 id="从节点-Rocky8-12-配置"><a href="#从节点-Rocky8-12-配置" class="headerlink" title="从节点 Rocky8-12 配置"></a>从节点 Rocky8-12 配置</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">## 安装数据库、启用二进制日志，修改日志路径、设置server-id、启用数据库只读</span><br>[root@Rocky8-12 ~]# yum install mysql-server<br>[root@Rocky8-12 ~]# <span class="hljs-built_in">mkdir</span> /binlog<br>[root@Rocky8-12 ~]# <span class="hljs-built_in">chown</span> mysql. /binlog/<br>[root@Rocky8-12 ~]# vim /etc/my.cnf<br>[mysqld]<br>server-id=12<br>log-bin=/binlog/mysql-bin<br>read-only<br><br><span class="hljs-comment">## 修改备份文件</span><br>[root@Rocky8-12 ~]# vim /data/all.sql<br>CHANGE MASTER TO<br>    MASTER_HOST=<span class="hljs-string">&#x27;10.0.0.11&#x27;</span>,<br>    MASTER_PORT=3306,<br>    MASTER_USER=<span class="hljs-string">&#x27;repluser&#x27;</span>,<br>    MASTER_PASSWORD=<span class="hljs-string">&#x27;123456&#x27;</span>,<br>    MASTER_LOG_FILE=<span class="hljs-string">&#x27;mysql-bin.000002&#x27;</span>, <br>    MASTER_LOG_POS=157;<br><br><span class="hljs-comment">## 还原数据库</span><br>[root@Rocky8-12 ~]# mysql <br>mysql&gt; <span class="hljs-built_in">set</span> sql_log_bin=0;<br>mysql&gt; <span class="hljs-built_in">source</span> /data/all.sql<br><br>mysql&gt; <span class="hljs-built_in">set</span> sql_log_bin=1;<br>mysql&gt; start slave;<br></code></pre></td></tr></table></figure>
+
+<h5 id="查看主从服务状态"><a href="#查看主从服务状态" class="headerlink" title="查看主从服务状态"></a>查看主从服务状态</h5><p>主要观察以下两项，确保状态为 Yes:</p>
+<p>  Slave_IO_Running: Yes<br>  Slave_SQL_Running: Yes</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs sh">mysql&gt; show slave status\G<br>*************************** 1. row ***************************<br>               Slave_IO_State: Waiting <span class="hljs-keyword">for</span> <span class="hljs-built_in">source</span> to send event<br>                  Master_Host: 10.0.0.11<br>                  Master_User: repluser<br>                  Master_Port: 3306<br>                Connect_Retry: 60<br>              Master_Log_File: mysql-bin.000003<br>          Read_Master_Log_Pos: 573<br>               Relay_Log_File: Rocky8-12-relay-bin.000004<br>                Relay_Log_Pos: 789<br>        Relay_Master_Log_File: mysql-bin.000003<br>             Slave_IO_Running: Yes<br>            Slave_SQL_Running: Yes<br>              Replicate_Do_DB: <br>          Replicate_Ignore_DB: <br>           Replicate_Do_Table: <br>       Replicate_Ignore_Table: <br>      Replicate_Wild_Do_Table: <br>  Replicate_Wild_Ignore_Table: <br>                   Last_Errno: 0<br>                   Last_Error: <br>                 Skip_Counter: 0<br>          Exec_Master_Log_Pos: 573<br>              Relay_Log_Space: 1050<br>              Until_Condition: None<br>               Until_Log_File: <br>                Until_Log_Pos: 0<br>           Master_SSL_Allowed: No<br>           Master_SSL_CA_File: <br>           Master_SSL_CA_Path: <br>              Master_SSL_Cert: <br>            Master_SSL_Cipher: <br>               Master_SSL_Key: <br>        Seconds_Behind_Master: 0<br>Master_SSL_Verify_Server_Cert: No<br>                Last_IO_Errno: 0<br>                Last_IO_Error: <br>               Last_SQL_Errno: 0<br>               Last_SQL_Error: <br>  Replicate_Ignore_Server_Ids: <br>             Master_Server_Id: 11<br>                  Master_UUID: f41fb64d-fb87-11ed-afcd-000c29bb093a<br>             Master_Info_File: mysql.slave_master_info<br>                    SQL_Delay: 0<br>          SQL_Remaining_Delay: NULL<br>      Slave_SQL_Running_State: Replica has <span class="hljs-built_in">read</span> all relay <span class="hljs-built_in">log</span>; waiting <span class="hljs-keyword">for</span> more updates<br>           Master_Retry_Count: 86400<br>                  Master_Bind: <br>      Last_IO_Error_Timestamp: <br>     Last_SQL_Error_Timestamp: <br>               Master_SSL_Crl: <br>           Master_SSL_Crlpath: <br>           Retrieved_Gtid_Set: <br>            Executed_Gtid_Set: <br>                Auto_Position: 0<br>         Replicate_Rewrite_DB: <br>                 Channel_Name: <br>           Master_TLS_Version: <br>       Master_public_key_path: <br>        Get_master_public_key: 0<br>            Network_Namespace: <br>1 row <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span>, 1 warning (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<h3 id="例二：当Master节点故障，提升一个Slave做为新的Master"><a href="#例二：当Master节点故障，提升一个Slave做为新的Master" class="headerlink" title="例二：当Master节点故障，提升一个Slave做为新的Master"></a>例二：当Master节点故障，提升一个Slave做为新的Master</h3><p>新master（10.0.0.12）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">## 找到一个数据最新的节点，关闭readonly</span><br>[root@Rocky8-12 ~]# vim /etc/my.cnf<br>[mysqld]<br>server-id=12<br>log-bin=/binlog/mysql-bin<br>read-only=off<br><br><span class="hljs-comment">## 清除旧的master复制信息</span><br>[root@Rocky8-12 ~]# mysql <br>mysql&gt; <span class="hljs-built_in">set</span> global read_only=off;<br>mysql&gt; stop slave;<br>mysql&gt; reset slave all;<br><br><span class="hljs-comment">## 完全备份</span><br>[root@Rocky8-12 ~]# mysqldump -A -F --single-transaction --master-data=1 &gt; /data/backup.sql<br><br><span class="hljs-comment">## 分析旧master上的二进制日志，将未同步的二进制导出来，尽可能的恢复数据到新的master;</span><br><br><span class="hljs-comment">## 将备份传到其它slave</span><br>[root@Rocky8-12 ~]# scp /data/backup.sql 10.0.0.11:/data/<br></code></pre></td></tr></table></figure>
+
+<p>slave：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs sh">[root@Rocky8-11 ~]# vim /data/backup.sql <br>CHANGE MASTER TO <br>    MASTER_HOST=<span class="hljs-string">&#x27;10.0.0.12&#x27;</span>,<br>    MASTER_PORT=3306,<br>    MASTER_USER=<span class="hljs-string">&#x27;repluser&#x27;</span>,<br>    MASTER_PASSWORD=<span class="hljs-string">&#x27;123456&#x27;</span>,<br>    MASTER_LOG_FILE=<span class="hljs-string">&#x27;mysql-bin.000003&#x27;</span>, <br>    MASTER_LOG_POS=157;<br><br>[root@Rocky8-11 ~]# mysql <br>(root@localhost) [(none)] stop slave;<br>(root@localhost) [(none)] reset slave all;<br>(root@localhost) [(none)] <span class="hljs-built_in">set</span> sql_log_bin=off;<br>(root@localhost) [(none)] <span class="hljs-built_in">source</span> /data/backup.sql;<br>(root@localhost) [(none)] <span class="hljs-built_in">set</span> sql_log_bin=on;<br>(root@localhost) [(none)] show slave status\G<br>*************************** 1. row ***************************<br>               Slave_IO_State: Waiting <span class="hljs-keyword">for</span> <span class="hljs-built_in">source</span> to send event<br>                  Master_Host: 10.0.0.12<br>                  Master_User: repluser<br>                  Master_Port: 3306<br>                Connect_Retry: 60<br>              Master_Log_File: mysql-bin.000003<br>          Read_Master_Log_Pos: 157<br>               Relay_Log_File: Rocky8-11-relay-bin.000002<br>                Relay_Log_Pos: 326<br>        Relay_Master_Log_File: mysql-bin.000003<br>             Slave_IO_Running: Yes<br>            Slave_SQL_Running: Yes<br>              Replicate_Do_DB: <br>          Replicate_Ignore_DB: <br>           Replicate_Do_Table: <br>       Replicate_Ignore_Table: <br>      Replicate_Wild_Do_Table: <br>  Replicate_Wild_Ignore_Table: <br>                   Last_Errno: 0<br>                   Last_Error: <br>                 Skip_Counter: 0<br>          Exec_Master_Log_Pos: 157<br>              Relay_Log_Space: 540<br>              Until_Condition: None<br>               Until_Log_File: <br>                Until_Log_Pos: 0<br>           Master_SSL_Allowed: No<br>           Master_SSL_CA_File: <br>           Master_SSL_CA_Path: <br>              Master_SSL_Cert: <br>            Master_SSL_Cipher: <br>               Master_SSL_Key: <br>        Seconds_Behind_Master: 0<br>Master_SSL_Verify_Server_Cert: No<br>                Last_IO_Errno: 0<br>                Last_IO_Error: <br>               Last_SQL_Errno: 0<br>               Last_SQL_Error: <br>  Replicate_Ignore_Server_Ids: <br>             Master_Server_Id: 12<br>                  Master_UUID: e0a8221e-fde2-11ed-a771-000c29df68f9<br>             Master_Info_File: mysql.slave_master_info<br>                    SQL_Delay: 0<br>          SQL_Remaining_Delay: NULL<br>      Slave_SQL_Running_State: Replica has <span class="hljs-built_in">read</span> all relay <span class="hljs-built_in">log</span>; waiting <span class="hljs-keyword">for</span> more updates<br>           Master_Retry_Count: 86400<br>                  Master_Bind: <br>      Last_IO_Error_Timestamp: <br>     Last_SQL_Error_Timestamp: <br>               Master_SSL_Crl: <br>           Master_SSL_Crlpath: <br>           Retrieved_Gtid_Set: <br>            Executed_Gtid_Set: <br>                Auto_Position: 0<br>         Replicate_Rewrite_DB: <br>                 Channel_Name: <br>           Master_TLS_Version: <br>       Master_public_key_path: <br>        Get_master_public_key: 0<br>            Network_Namespace: <br>1 row <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span>, 1 warning (0.01 sec)<br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MySQL/" class="category-chain-item">MySQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/MariaDB/" class="print-no-link">#MariaDB</a>
+      
+        <a href="/tags/MySQL/" class="print-no-link">#MySQL</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MySQL主从复制</div>
+      <div>https://www.xcjyc.top/2023/05/25/MySQL主从复制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/11/Mycat%E5%AE%9E%E7%8E%B0MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="Mycat实现MySQL读写分离">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Mycat实现MySQL读写分离</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="MySQL备份与恢复">
+                        <span class="hidden-mobile">MySQL备份与恢复</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="MySQL"
+        id="heading-62a004b95946bb97541afa471dcca73a" role="tab" data-toggle="collapse" href="#collapse-62a004b95946bb97541afa471dcca73a"
+        aria-expanded="true"
+      >
+        MySQL
+        <span class="list-group-count">(9)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-62a004b95946bb97541afa471dcca73a"
+           role="tabpanel" aria-labelledby="heading-62a004b95946bb97541afa471dcca73a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/05/25/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL主从复制"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">MySQL主从复制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/12/Mysql%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84GTID%E5%A4%8D%E5%88%B6/" title="MySQL主从架构GTID复制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL主从架构GTID复制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/11/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97/" title="MySQL二进制日志"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL二进制日志</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/11/MySQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="MySQL基础知识"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL基础知识</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="MySQL备份与恢复"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL备份与恢复</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/05/MySQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/" title="MySQL安装初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL安装初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/28/MySQL%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB/" title="MySQL常用命令汇总"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL常用命令汇总</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/11/Mycat%E5%AE%9E%E7%8E%B0MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="Mycat实现MySQL读写分离"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Mycat实现MySQL读写分离</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/14/MySQl%E5%A4%9A%E4%B8%BB%E9%9B%86%E7%BE%A4PXC/" title="PXC(Percona XtraDB Cluster)8.0.32集群"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PXC(Percona XtraDB Cluster)8.0.32集群</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

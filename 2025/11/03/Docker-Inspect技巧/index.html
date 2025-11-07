@@ -1,0 +1,820 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Docker Inspect命令技巧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Inspect命令技巧">
+<meta property="og:url" content="https://www.xcjyc.top/2025/11/03/Docker-Inspect%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="Docker Inspect命令技巧">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/docker.jpg">
+<meta property="article:published_time" content="2025-11-03T07:30:03.000Z">
+<meta property="article:modified_time" content="2025-11-07T02:38:29.470Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/docker.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Docker Inspect命令技巧 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Docker Inspect命令技巧"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-03 15:30" pubdate>
+          2025年11月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Docker Inspect命令技巧</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<ol>
+<li>容器有问题先 <code>docker logs</code> 看日志</li>
+<li>日志看不出来再用 <code>docker inspect</code> 查配置</li>
+<li>配置没问题就进容器 <code>docker exec</code> 排查</li>
+</ol>
+</blockquote>
+<p><code>docker inspect</code> 才是排查问题的大杀器，容器的所有信息都在里面。</p>
+<h2 id="1-基础用法"><a href="#1-基础用法" class="headerlink" title="1. 基础用法"></a>1. 基础用法</h2><h3 id="1-1-查看容器完整信息"><a href="#1-1-查看容器完整信息" class="headerlink" title="1.1 查看容器完整信息"></a>1.1 查看容器完整信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看容器所有信息（opsnot常用）</span><br>docker inspect my-nginx<br><br><span class="hljs-comment"># 输出是JSON格式，信息巨多（加班哥提醒！）</span><br>docker inspect my-nginx | less<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-查看镜像信息"><a href="#1-2-查看镜像信息" class="headerlink" title="1.2 查看镜像信息"></a>1.2 查看镜像信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看镜像详情</span><br>docker inspect nginx:latest<br><br><span class="hljs-comment"># 查看镜像分层</span><br>docker inspect nginx:latest | grep Layers -A 20<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-精准提取信息"><a href="#2-精准提取信息" class="headerlink" title="2. 精准提取信息"></a>2. 精准提取信息</h2><h3 id="2-1-获取容器IP"><a href="#2-1-获取容器IP" class="headerlink" title="2.1 获取容器IP"></a>2.1 获取容器IP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 方法1：直接获取IP（opsnot.com推荐）</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 方法2：获取指定网络的IP（加班哥常用）</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.NetworkSettings.Networks.bridge.IPAddress&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 方法3：用jq处理（需要安装jq）</span><br>docker inspect my-nginx | jq -r <span class="hljs-string">&#x27;.[0].NetworkSettings.IPAddress&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-查看端口映射"><a href="#2-2-查看端口映射" class="headerlink" title="2.2 查看端口映射"></a>2.2 查看端口映射</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看所有端口映射</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.NetworkSettings.Ports&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 更清晰的格式</span><br>docker inspect my-nginx | grep -A 10 <span class="hljs-string">&#x27;&quot;Ports&quot;&#x27;</span><br><br><span class="hljs-comment"># 或者用这个更简单</span><br>docker port my-nginx<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-查看挂载的数据卷"><a href="#2-3-查看挂载的数据卷" class="headerlink" title="2.3 查看挂载的数据卷"></a>2.3 查看挂载的数据卷</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看所有挂载点</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.Mounts&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 更友好的查看方式（加班哥推荐）</span><br>docker inspect my-nginx | jq <span class="hljs-string">&#x27;.[0].Mounts&#x27;</span><br><br><span class="hljs-comment"># 只看数据卷路径（opsnot.com常用）</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;range .Mounts&#125;&#125;&#123;&#123;.Source&#125;&#125; -&gt; &#123;&#123;.Destination&#125;&#125;&#123;&#123;&quot;\n&quot;&#125;&#125;&#123;&#123;end&#125;&#125;&#x27;</span> my-nginx<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-查看环境变量"><a href="#2-4-查看环境变量" class="headerlink" title="2.4 查看环境变量"></a>2.4 查看环境变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看所有环境变量</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.Config.Env&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 用jq格式化</span><br>docker inspect my-nginx | jq <span class="hljs-string">&#x27;.[0].Config.Env&#x27;</span><br><br><span class="hljs-comment"># 查看是否包含特定环境变量</span><br>docker inspect my-nginx | grep MYSQL_ROOT_PASSWORD<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-5-查看容器状态"><a href="#2-5-查看容器状态" class="headerlink" title="2.5 查看容器状态"></a>2.5 查看容器状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看运行状态</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.State.Status&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看容器启动时间</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.State.StartedAt&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看容器退出代码（排查容器挂掉的原因）</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.State.ExitCode&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看容器是否在重启</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.State.Restarting&#125;&#125;&#x27;</span> my-nginx<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-网络相关"><a href="#3-网络相关" class="headerlink" title="3. 网络相关"></a>3. 网络相关</h2><h3 id="3-1-查看网络配置"><a href="#3-1-查看网络配置" class="headerlink" title="3.1 查看网络配置"></a>3.1 查看网络配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看容器所在网络</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.NetworkSettings.Networks&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看网关</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.Gateway&#125;&#125;&#123;&#123;end&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看MAC地址</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.MacAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27;</span> my-nginx<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-查看DNS配置"><a href="#3-2-查看DNS配置" class="headerlink" title="3.2 查看DNS配置"></a>3.2 查看DNS配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看DNS服务器</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.Dns&#125;&#125;&#x27;</span> opsnot-nginx<br><br><span class="hljs-comment"># 查看/etc/hosts配置</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.ExtraHosts&#125;&#125;&#x27;</span> opsnot-nginx<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-资源限制"><a href="#4-资源限制" class="headerlink" title="4. 资源限制"></a>4. 资源限制</h2><h3 id="4-1-查看内存限制"><a href="#4-1-查看内存限制" class="headerlink" title="4.1 查看内存限制"></a>4.1 查看内存限制</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看内存限制（返回字节数）</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.Memory&#125;&#125;&#x27;</span> opsnot-nginx<br><br><span class="hljs-comment"># 转换成可读格式（需要计算）</span><br>docker inspect opsnot-nginx | jq <span class="hljs-string">&#x27;.[0].HostConfig.Memory / 1024 / 1024&#x27;</span><br><br><span class="hljs-comment"># 查看内存预留</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.MemoryReservation&#125;&#125;&#x27;</span> opsnot-nginx<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-查看CPU限制"><a href="#4-2-查看CPU限制" class="headerlink" title="4.2 查看CPU限制"></a>4.2 查看CPU限制</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看CPU配额</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.CpuQuota&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看CPU权重</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.CpuShares&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看CPU核心数限制</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.NanoCpus&#125;&#125;&#x27;</span> my-nginx<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-日志相关"><a href="#5-日志相关" class="headerlink" title="5. 日志相关"></a>5. 日志相关</h2><h3 id="5-1-查看日志配置"><a href="#5-1-查看日志配置" class="headerlink" title="5.1 查看日志配置"></a>5.1 查看日志配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看日志驱动</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.LogConfig.Type&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看日志选项（大小限制等）</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.LogConfig.Config&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看日志路径</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.LogPath&#125;&#125;&#x27;</span> my-nginx<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-重启策略"><a href="#6-重启策略" class="headerlink" title="6. 重启策略"></a>6. 重启策略</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看重启策略</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.RestartPolicy.Name&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看重启次数</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.RestartCount&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看最大重启次数</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.RestartPolicy.MaximumRetryCount&#125;&#125;&#x27;</span> my-nginx<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-镜像层信息"><a href="#7-镜像层信息" class="headerlink" title="7. 镜像层信息"></a>7. 镜像层信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看镜像ID</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.Image&#125;&#125;&#x27;</span> my-nginx<br><br><span class="hljs-comment"># 查看镜像的所有层</span><br>docker inspect nginx:latest | jq <span class="hljs-string">&#x27;.[0].RootFS.Layers&#x27;</span><br><br><span class="hljs-comment"># 查看镜像构建参数</span><br>docker inspect nginx:latest | jq <span class="hljs-string">&#x27;.[0].Config.Cmd&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="8-实战技巧"><a href="#8-实战技巧" class="headerlink" title="8. 实战技巧"></a>8. 实战技巧</h2><h3 id="8-1-批量查询容器信息"><a href="#8-1-批量查询容器信息" class="headerlink" title="8.1 批量查询容器信息"></a>8.1 批量查询容器信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查询所有容器的IP（opsnot常用）</span><br>docker ps -q | xargs -I &#123;&#125; docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.Name&#125;&#125; &#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27;</span> &#123;&#125;<br><br><span class="hljs-comment"># 查询所有容器的状态</span><br>docker ps -aq | xargs docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.Name&#125;&#125; &#123;&#123;.State.Status&#125;&#125;&#x27;</span><br><br><span class="hljs-comment"># opsnot脚本：导出所有容器配置</span><br><span class="hljs-keyword">for</span> container <span class="hljs-keyword">in</span> $(docker ps -q); <span class="hljs-keyword">do</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;=== <span class="hljs-subst">$(docker inspect -f &#x27;&#123;&#123;.Name&#125;&#125;&#x27; $container)</span> ===&quot;</span><br>    docker inspect <span class="hljs-variable">$container</span> &gt; <span class="hljs-variable">$&#123;container&#125;</span>_config.json<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="8-2-对比两个容器配置差异"><a href="#8-2-对比两个容器配置差异" class="headerlink" title="8.2 对比两个容器配置差异"></a>8.2 对比两个容器配置差异</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 导出两个容器配置之后 diff</span><br>docker inspect ops-not-container1 &gt; c1.json<br>docker inspect ops-not-container2 &gt; c2.json<br>diff c1.json c2.json<br><br><span class="hljs-comment"># 或者可以用jq对比特定字段（opsnot提示：需要安装jq）</span><br>diff &lt;(docker inspect ops-not-container1 | jq <span class="hljs-string">&#x27;.[0].Config&#x27;</span>) \<br>     &lt;(docker inspect ops-not-container2 | jq <span class="hljs-string">&#x27;.[0].Config&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="8-3-检查容器健康状态"><a href="#8-3-检查容器健康状态" class="headerlink" title="8.3 检查容器健康状态"></a>8.3 检查容器健康状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看健康检查配置</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.Config.Healthcheck&#125;&#125;&#x27;</span> opsnot-kafka<br><br><span class="hljs-comment"># 查看健康检查结果</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.State.Health.Status&#125;&#125;&#x27;</span> opsnot-kafka<br><br><span class="hljs-comment"># 查看最近的健康检查日志(opsnot常用)</span><br>docker inspect opsnot-kafka | jq <span class="hljs-string">&#x27;.[0].State.Health.Log[-1]&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="8-4-查看容器创建命令（反推）"><a href="#8-4-查看容器创建命令（反推）" class="headerlink" title="8.4 查看容器创建命令（反推）"></a>8.4 查看容器创建命令（反推）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 虽然无法完全还原，但能看到大部分配置</span><br>docker inspect opsnot-tomcat | jq <span class="hljs-string">&#x27;.[0].Config, .[0].HostConfig&#x27;</span><br><br><span class="hljs-comment"># opsnot.com提示：可以用runlike工具还原</span><br><span class="hljs-comment"># pip install runlike</span><br><span class="hljs-comment"># runlike opsnot-tomcat</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="8-5-监控脚本示例"><a href="#8-5-监控脚本示例" class="headerlink" title="8.5 监控脚本示例"></a>8.5 监控脚本示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-comment"># opsnot.com容器监控脚本</span><br><br><span class="hljs-keyword">for</span> container <span class="hljs-keyword">in</span> $(docker ps -q); <span class="hljs-keyword">do</span><br>    name=$(docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.Name&#125;&#125;&#x27;</span> <span class="hljs-variable">$container</span>)<br>    status=$(docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.State.Status&#125;&#125;&#x27;</span> <span class="hljs-variable">$container</span>)<br>    restart_count=$(docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.RestartCount&#125;&#125;&#x27;</span> <span class="hljs-variable">$container</span>)<br>    memory=$(docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.HostConfig.Memory&#125;&#125;&#x27;</span> <span class="hljs-variable">$container</span>)<br><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;容器: <span class="hljs-variable">$name</span>&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;  状态: <span class="hljs-variable">$status</span>&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;  重启次数: <span class="hljs-variable">$restart_count</span>&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;  内存限制: <span class="hljs-subst">$((memory/1024/1024)</span>)MB&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;---&quot;</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="9-常用组合命令"><a href="#9-常用组合命令" class="headerlink" title="9. 常用组合命令"></a>9. 常用组合命令</h2><h3 id="9-1-快速诊断容器问题"><a href="#9-1-快速诊断容器问题" class="headerlink" title="9.1 快速诊断容器问题"></a>9.1 快速诊断容器问题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># opsnot.com故障诊断一键脚本</span><br><span class="hljs-comment">#!/bin/bash</span><br>CONTAINER=<span class="hljs-variable">$1</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;=== 容器基本信息 ===&quot;</span><br>docker inspect -f <span class="hljs-string">&#x27;名称: &#123;&#123;.Name&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br>docker inspect -f <span class="hljs-string">&#x27;状态: &#123;&#123;.State.Status&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br>docker inspect -f <span class="hljs-string">&#x27;退出码: &#123;&#123;.State.ExitCode&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br>docker inspect -f <span class="hljs-string">&#x27;重启次数: &#123;&#123;.RestartCount&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br><br><span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;\n=== 网络信息 ===&quot;</span><br>docker inspect -f <span class="hljs-string">&#x27;IP: &#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br>docker inspect -f <span class="hljs-string">&#x27;端口: &#123;&#123;.NetworkSettings.Ports&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br><br><span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;\n=== 资源信息 ===&quot;</span><br>docker inspect -f <span class="hljs-string">&#x27;内存限制: &#123;&#123;.HostConfig.Memory&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br>docker inspect -f <span class="hljs-string">&#x27;CPU限制: &#123;&#123;.HostConfig.NanoCpus&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br><br><span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;\n=== 日志路径 ===&quot;</span><br>docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.LogPath&#125;&#125;&#x27;</span> <span class="hljs-variable">$CONTAINER</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="9-2-生成容器配置报告"><a href="#9-2-生成容器配置报告" class="headerlink" title="9.2 生成容器配置报告"></a>9.2 生成容器配置报告</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 生成容器配置报告（加班哥常用）</span><br>docker inspect ops-not-nginx | jq <span class="hljs-string">&#x27;&#123;</span><br><span class="hljs-string">  Name: .[0].Name,</span><br><span class="hljs-string">  Status: .[0].State.Status,</span><br><span class="hljs-string">  Image: .[0].Config.Image,</span><br><span class="hljs-string">  IP: .[0].NetworkSettings.IPAddress,</span><br><span class="hljs-string">  Ports: .[0].NetworkSettings.Ports,</span><br><span class="hljs-string">  Volumes: .[0].Mounts,</span><br><span class="hljs-string">  Memory: .[0].HostConfig.Memory,</span><br><span class="hljs-string">  RestartPolicy: .[0].HostConfig.RestartPolicy</span><br><span class="hljs-string">&#125;&#x27;</span> &gt; container_report.json<br></code></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>本文来自 <a target="_blank" rel="noopener" href="https://blog.opsnot.com/">opsnot.com</a>。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Docker/" class="print-no-link">#Docker</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Docker Inspect命令技巧</div>
+      <div>https://www.xcjyc.top/2025/11/03/Docker-Inspect技巧/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/04/Docker%E9%AB%98%E9%A2%91%E5%91%BD%E4%BB%A4%E5%AE%9E%E6%93%8D%E6%89%8B%E5%86%8C/" title="Docker高频命令实操手册">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker高频命令实操手册</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/28/MySQL%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB/" title="MySQL常用命令汇总">
+                        <span class="hidden-mobile">MySQL常用命令汇总</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Docker"
+        id="heading-c5fd214cdd0d2b3b4272e73b022ba5c2" role="tab" data-toggle="collapse" href="#collapse-c5fd214cdd0d2b3b4272e73b022ba5c2"
+        aria-expanded="true"
+      >
+        Docker
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-c5fd214cdd0d2b3b4272e73b022ba5c2"
+           role="tabpanel" aria-labelledby="heading-c5fd214cdd0d2b3b4272e73b022ba5c2">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/11/03/Docker-Inspect%E6%8A%80%E5%B7%A7/" title="Docker Inspect命令技巧"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Docker Inspect命令技巧</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/09/28/Docker%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/" title="Docker环境安装"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Docker环境安装</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/04/Docker%E7%9A%84%E9%95%9C%E5%83%8F%E5%88%B6%E4%BD%9C%E5%B0%8F%E8%AF%95%E9%AA%8C/" title="Docker的镜像制作小试验"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Docker的镜像制作小试验</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/11/04/Docker%E9%AB%98%E9%A2%91%E5%91%BD%E4%BB%A4%E5%AE%9E%E6%93%8D%E6%89%8B%E5%86%8C/" title="Docker高频命令实操手册"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Docker高频命令实操手册</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

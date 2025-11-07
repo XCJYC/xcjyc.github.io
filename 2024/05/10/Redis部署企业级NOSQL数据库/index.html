@@ -1,0 +1,803 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Redis部署企业级NOSQL数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis部署企业级NOSQL数据库">
+<meta property="og:url" content="https://www.xcjyc.top/2024/05/10/Redis%E9%83%A8%E7%BD%B2%E4%BC%81%E4%B8%9A%E7%BA%A7NOSQL%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="Redis部署企业级NOSQL数据库">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/redis.png">
+<meta property="article:published_time" content="2024-05-10T08:37:29.000Z">
+<meta property="article:modified_time" content="2024-05-21T06:58:33.230Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="NoSQL">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/redis.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Redis部署企业级NOSQL数据库 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Redis部署企业级NOSQL数据库"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-10 16:37" pubdate>
+          2024年5月10日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Redis部署企业级NOSQL数据库</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
+<li><p>Redis 官网：<a target="_blank" rel="noopener" href="https://redis.io/">https://redis.io/</a></p>
+</li>
+<li><p>环境：Ubuntu 2204</p>
+</li>
+</ul>
+<h3 id="使用仓库安装redis"><a href="#使用仓库安装redis" class="headerlink" title="使用仓库安装redis"></a>使用仓库安装redis</h3><p>查看仓库中的redis版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@xcjyc:~# apt update ; apt info redis<br>Package: redis<br>Version: 5:6.0.16-1ubuntu1<br>Priority: optional<br>Section: universe/database<br>Origin: Ubuntu<br>Maintainer: Ubuntu Developers &lt;ubuntu-devel-discuss@lists.ubuntu.com&gt;<br>Original-Maintainer: Chris Lamb &lt;lamby@debian.org&gt;<br>Bugs: https://bugs.launchpad.net/ubuntu/+filebug<br>Installed-Size: 67.6 kB<br>Depends: redis-server (&lt;&lt; <span class="hljs-string">5:6.0.16-1ubuntu1.1~), redis-server (&gt;= 5</span>:6.0.16-1ubuntu1)<br>Homepage: https://redis.io/<br>Download-Size: 2930 B<br>APT-Sources: https://mirrors.aliyun.com/ubuntu jammy/universe amd64 Packages<br>Description: Persistent key-value database with network interface (metapackage)<br> Redis is a key-value database <span class="hljs-keyword">in</span> a similar vein to memcache but the dataset<br> is non-volatile. Redis additionally provides native support <span class="hljs-keyword">for</span> atomically<br> manipulating and querying data structures such as lists and sets.<br> .<br> The dataset is stored entirely <span class="hljs-keyword">in</span> memory and periodically flushed to disk.<br> .<br> This package installs the main redis-server package.<br></code></pre></td></tr></table></figure>
+
+<p>安装redis，redis默认使用6379端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@xcjyc:~# apt install -y redis <br><br>root@xcjyc:~# ss -ntlp<br>State       Recv-Q      Send-Q           Local Address:Port           Peer Address:Port     Process                                         <br>LISTEN      0           511                  127.0.0.1:6379                0.0.0.0:*         <span class="hljs-built_in">users</span>:((&quot;redis-server&quot;,pid=<span class="hljs-number">1086</span>,fd=<span class="hljs-number">6</span>))         <br>LISTEN      0           4096             127.0.0.53%lo:53                  0.0.0.0:*         <span class="hljs-built_in">users</span>:((&quot;systemd-resolve&quot;,pid=<span class="hljs-number">611</span>,fd=<span class="hljs-number">14</span>))      <br>LISTEN      0           128                    0.0.0.0:22                  0.0.0.0:*         <span class="hljs-built_in">users</span>:((&quot;sshd&quot;,pid=<span class="hljs-number">659</span>,fd=<span class="hljs-number">3</span>))                  <br>LISTEN      0           511                      [::1]:6379                   [::]:*         <span class="hljs-built_in">users</span>:((&quot;redis-server&quot;,pid=<span class="hljs-number">1086</span>,fd=<span class="hljs-number">7</span>))         <br>LISTEN      0           128                       [::]:22                     [::]:*         <span class="hljs-built_in">users</span>:((&quot;sshd&quot;,pid=<span class="hljs-number">659</span>,fd=<span class="hljs-number">4</span>))                  <br><br>root@xcjyc:~# redis-cli <br>127.0.0.1:6379&gt; ping<br>PONG<br></code></pre></td></tr></table></figure>
+
+<h3 id="编译安装redis最新稳定版"><a href="#编译安装redis最新稳定版" class="headerlink" title="编译安装redis最新稳定版"></a>编译安装redis最新稳定版</h3><p>源码下载地址：<a target="_blank" rel="noopener" href="https://download.redis.io/releases/">https://download.redis.io/releases/</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 下载解压源码包</span><br>root@ubuntu2204:~# wget https://download.redis.io/releases/redis-7.2.4.tar.gz<br>root@ubuntu2204:~# tar xvf redis-7.2.4.tar.gz <br><br><span class="hljs-comment"># 安装依赖包</span><br>root@ubuntu2204:~# apt update ; apt  install -y gcc make libjemalloc-dev libsystemd-dev<br><br><span class="hljs-comment"># 检查环境安装状态</span><br>root@ubuntu2204:~# apt  install -y gcc make libjemalloc-dev libsystemd-dev<br>Reading package lists... Done<br>Building dependency tree... Done<br>Reading state information... Done<br>gcc is already the newest version (4:11.2.0-1ubuntu1).<br>make is already the newest version (4.3-4.1build1).<br>libjemalloc-dev is already the newest version (5.2.1-4ubuntu1).<br>libsystemd-dev is already the newest version (249.11-0ubuntu3.12).<br>0 upgraded, 0 newly installed, 0 to remove and 56 not upgraded.<br><br><span class="hljs-comment"># 准备安装目录</span><br>root@ubuntu2204:~# <span class="hljs-built_in">mkdir</span> -p /apps/redis <br><br><span class="hljs-comment"># 查看安装说明</span><br>root@ubuntu2204:~# <span class="hljs-built_in">cd</span> redis-7.2.4/<br>root@ubuntu2204:~/redis-7.2.4# <span class="hljs-built_in">ls</span> <br>00-RELEASENOTES     CONTRIBUTING.md  MANIFESTO  SECURITY.md  redis.conf       runtest-moduleapi  src<br>BUGS                COPYING          Makefile   TLS.md       runtest          runtest-sentinel   tests<br>CODE_OF_CONDUCT.md  INSTALL          README.md  deps         runtest-cluster  sentinel.conf      utils<br><br>root@ubuntu2204:~/redis-7.2.4# <span class="hljs-built_in">cat</span> README.md <br>-- 使用systemd,可在编译时添加参数 USE_SYSTEMD=<span class="hljs-built_in">yes</span> (提应安装环境包)--<br>...<br>To build with systemd support, you<span class="hljs-string">&#x27;ll need systemd development libraries (such </span><br><span class="hljs-string">as libsystemd-dev on Debian/Ubuntu or systemd-devel on CentOS) and run:</span><br><span class="hljs-string"></span><br><span class="hljs-string">    % make USE_SYSTEMD=yes</span><br><span class="hljs-string">...</span><br><span class="hljs-string"></span><br><span class="hljs-string"># 编译安装</span><br><span class="hljs-string">root@ubuntu2204:~/redis-7.2.4# make -j 2 PREFIX=/apps/redis USE_SYSTEMD=yes install </span><br><span class="hljs-string">root@ubuntu2204:~/redis-7.2.4# tree /apps/redis/</span><br><span class="hljs-string">/apps/redis/</span><br><span class="hljs-string">└── bin</span><br><span class="hljs-string">    ├── redis-benchmark</span><br><span class="hljs-string">    ├── redis-check-aof -&gt; redis-server</span><br><span class="hljs-string">    ├── redis-check-rdb -&gt; redis-server</span><br><span class="hljs-string">    ├── redis-cli</span><br><span class="hljs-string">    ├── redis-sentinel -&gt; redis-server</span><br><span class="hljs-string">    └── redis-server</span><br><span class="hljs-string"></span><br><span class="hljs-string">1 directory, 6 files</span><br><span class="hljs-string"></span><br><span class="hljs-string"># 配置环境变量</span><br><span class="hljs-string">root@ubuntu2204:~/redis-7.2.4# echo &#x27;</span>PATH=/apps/redis/bin:<span class="hljs-variable">$PATH</span><span class="hljs-string">&#x27; &gt; /etc/profile.d/redis.sh</span><br><span class="hljs-string">root@ubuntu2204:~/redis-7.2.4# . /etc/profile.d/redis.sh</span><br><span class="hljs-string"></span><br><span class="hljs-string"># 将redis执行程序创建链接放到PATH目录</span><br><span class="hljs-string">root@ubuntu2204:~# ln -s /apps/redis/bin/redis* /usr/bin/</span><br><span class="hljs-string">root@ubuntu2204:~# ls /usr/bin/redis*</span><br><span class="hljs-string">/usr/bin/redis-benchmark  /usr/bin/redis-check-rdb  /usr/bin/redis-sentinel</span><br><span class="hljs-string">/usr/bin/redis-check-aof  /usr/bin/redis-cli        /usr/bin/redis-server</span><br><span class="hljs-string"></span><br><span class="hljs-string"># 或将redis执行程序加入到PATH</span><br><span class="hljs-string">root@ubuntu2204:~/redis-7.2.4# echo $PATH</span><br><span class="hljs-string">/apps/redis/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin</span><br><span class="hljs-string"></span><br><span class="hljs-string"># 准备redis相关目录和配置文件</span><br><span class="hljs-string">root@ubuntu2204:~/redis-7.2.4# mkdir /apps/redis/&#123;etc,log,data,run&#125;</span><br><span class="hljs-string">root@ubuntu2204:~/redis-7.2.4# cp redis.conf  /apps/redis/etc/</span><br><span class="hljs-string"></span><br><span class="hljs-string">root@ubuntu2204:~/redis-7.2.4# tree /apps/redis/</span><br><span class="hljs-string">/apps/redis/</span><br><span class="hljs-string">├── bin</span><br><span class="hljs-string">│   ├── redis-benchmark</span><br><span class="hljs-string">│   ├── redis-check-aof -&gt; redis-server</span><br><span class="hljs-string">│   ├── redis-check-rdb -&gt; redis-server</span><br><span class="hljs-string">│   ├── redis-cli</span><br><span class="hljs-string">│   ├── redis-sentinel -&gt; redis-server</span><br><span class="hljs-string">│   └── redis-server</span><br><span class="hljs-string">├── data</span><br><span class="hljs-string">├── etc</span><br><span class="hljs-string">│   └── redis.conf</span><br><span class="hljs-string">├── log</span><br><span class="hljs-string">└── run</span><br></code></pre></td></tr></table></figure>
+
+<p>前台启动redis</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看启动帮助</span><br>root@ubuntu2204:~# redis-server --<span class="hljs-built_in">help</span><br>Usage: ./redis-server [/path/to/redis.conf] [options] [-]<br>       ./redis-server - (<span class="hljs-built_in">read</span> config from stdin)<br>       ./redis-server -v or --version<br>       ./redis-server -h or --<span class="hljs-built_in">help</span><br>       ./redis-server --test-memory &lt;megabytes&gt;<br>       ./redis-server --check-system<br><br>Examples:<br>       ./redis-server (run the server with default conf)<br>       <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;maxmemory 128mb&#x27;</span> | ./redis-server -<br>       ./redis-server /etc/redis/6379.conf<br>       ./redis-server --port 7777<br>       ./redis-server --port 7777 --replicaof 127.0.0.1 8888<br>       ./redis-server /etc/myredis.conf --loglevel verbose -<br>       ./redis-server /etc/myredis.conf --loglevel verbose<br><br>Sentinel mode:<br>       ./redis-server /etc/sentinel.conf --sentinel<br>       <br><span class="hljs-comment"># 前台启动测试</span><br>root@ubuntu2204:~# redis-server /apps/redis/etc/redis.conf <br>8030:C 14 May 2024 07:54:18.370 <span class="hljs-comment"># WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add &#x27;vm.overcommit_memory = 1&#x27; to /etc/sysctl.conf and then reboot or run the command &#x27;sysctl vm.overcommit_memory=1&#x27; for this to take effect.</span><br>8030:C 14 May 2024 07:54:18.370 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo<br>8030:C 14 May 2024 07:54:18.370 * Redis version=7.2.4, bits=64, commit=00000000, modified=0, pid=8030, just started<br>8030:C 14 May 2024 07:54:18.370 * Configuration loaded<br>8030:M 14 May 2024 07:54:18.371 * Increased maximum number of open files to 10032 (it was originally <span class="hljs-built_in">set</span> to 1024).<br>8030:M 14 May 2024 07:54:18.371 * monotonic clock: POSIX clock_gettime<br>                _._                                                  <br>           _.-``__ <span class="hljs-string">&#x27;&#x27;</span>-._                                             <br>      _.-``    `.  `_.  <span class="hljs-string">&#x27;&#x27;</span>-._           Redis 7.2.4 (00000000/0) 64 bit<br>  .-`` .-```.  ```\/    _.,_ <span class="hljs-string">&#x27;&#x27;</span>-._                                  <br> (    <span class="hljs-string">&#x27;      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="hljs-string"> |`-._`-...-` __...-.``-._|&#x27;</span>` _.-<span class="hljs-string">&#x27;|     Port: 6379</span><br><span class="hljs-string"> |    `-._   `._    /     _.-&#x27;</span>    |     PID: 8030<br>  `-._    `-._  `-./  _.-<span class="hljs-string">&#x27;    _.-&#x27;</span>                                   <br> |`-._`-._    `-.__.-<span class="hljs-string">&#x27;    _.-&#x27;</span>_.-<span class="hljs-string">&#x27;|                                  </span><br><span class="hljs-string"> |    `-._`-._        _.-&#x27;</span>_.-<span class="hljs-string">&#x27;    |           https://redis.io       </span><br><span class="hljs-string">  `-._    `-._`-.__.-&#x27;</span>_.-<span class="hljs-string">&#x27;    _.-&#x27;</span>                                   <br> |`-._`-._    `-.__.-<span class="hljs-string">&#x27;    _.-&#x27;</span>_.-<span class="hljs-string">&#x27;|                                  </span><br><span class="hljs-string"> |    `-._`-._        _.-&#x27;</span>_.-<span class="hljs-string">&#x27;    |                                  </span><br><span class="hljs-string">  `-._    `-._`-.__.-&#x27;</span>_.-<span class="hljs-string">&#x27;    _.-&#x27;</span>                                   <br>      `-._    `-.__.-<span class="hljs-string">&#x27;    _.-&#x27;</span>                                       <br>          `-._        _.-<span class="hljs-string">&#x27;                                           </span><br><span class="hljs-string">              `-.__.-&#x27;</span>                                               <br><br>8030:M 14 May 2024 07:54:18.373 * Server initialized<br>8030:M 14 May 2024 07:54:18.373 * Ready to accept connections tcp<br><br><span class="hljs-comment"># 消除启动警告信息，添加内核参数</span><br>WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add <span class="hljs-string">&#x27;vm.overcommit_memory = 1&#x27;</span> to /etc/sysctl.conf and <span class="hljs-keyword">then</span> reboot or run the <span class="hljs-built_in">command</span> <span class="hljs-string">&#x27;sysctl vm.overcommit_memory=1&#x27;</span> <span class="hljs-keyword">for</span> this to take effect.<br><br>root@ubuntu2204:~# <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;vm.overcommit_memory = 1&#x27;</span> &gt;&gt; /etc/sysctl.conf <br>root@ubuntu2204:~# sysctl -p<br>vm.overcommit_memory = 1<br><br><span class="hljs-comment"># 重新测试启动（警告信息消除）</span><br>root@ubuntu2204:~# redis-server /apps/redis/etc/redis.conf <br>1024:C 15 May 2024 06:11:01.266 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo<br>1024:C 15 May 2024 06:11:01.266 * Redis version=7.2.4, bits=64, commit=00000000, modified=0, pid=1024, just started<br>1024:C 15 May 2024 06:11:01.266 * Configuration loaded<br>1024:M 15 May 2024 06:11:01.266 * Increased maximum number of open files to 10032 (it was originally <span class="hljs-built_in">set</span> to 1024).<br>1024:M 15 May 2024 06:11:01.266 * monotonic clock: POSIX clock_gettime<br>                _._                                                  <br>           _.-``__ <span class="hljs-string">&#x27;&#x27;</span>-._                                             <br>      _.-``    `.  `_.  <span class="hljs-string">&#x27;&#x27;</span>-._           Redis 7.2.4 (00000000/0) 64 bit<br>  .-`` .-```.  ```\/    _.,_ <span class="hljs-string">&#x27;&#x27;</span>-._                                  <br> (    <span class="hljs-string">&#x27;      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="hljs-string"> |`-._`-...-` __...-.``-._|&#x27;</span>` _.-<span class="hljs-string">&#x27;|     Port: 6379</span><br><span class="hljs-string"> |    `-._   `._    /     _.-&#x27;</span>    |     PID: 1024<br>  `-._    `-._  `-./  _.-<span class="hljs-string">&#x27;    _.-&#x27;</span>                                   <br> |`-._`-._    `-.__.-<span class="hljs-string">&#x27;    _.-&#x27;</span>_.-<span class="hljs-string">&#x27;|                                  </span><br><span class="hljs-string"> |    `-._`-._        _.-&#x27;</span>_.-<span class="hljs-string">&#x27;    |           https://redis.io       </span><br><span class="hljs-string">  `-._    `-._`-.__.-&#x27;</span>_.-<span class="hljs-string">&#x27;    _.-&#x27;</span>                                   <br> |`-._`-._    `-.__.-<span class="hljs-string">&#x27;    _.-&#x27;</span>_.-<span class="hljs-string">&#x27;|                                  </span><br><span class="hljs-string"> |    `-._`-._        _.-&#x27;</span>_.-<span class="hljs-string">&#x27;    |                                  </span><br><span class="hljs-string">  `-._    `-._`-.__.-&#x27;</span>_.-<span class="hljs-string">&#x27;    _.-&#x27;</span>                                   <br>      `-._    `-.__.-<span class="hljs-string">&#x27;    _.-&#x27;</span>                                       <br>          `-._        _.-<span class="hljs-string">&#x27;                                           </span><br><span class="hljs-string">              `-.__.-&#x27;</span>                                               <br><br>1024:M 15 May 2024 06:11:01.269 * Server initialized<br>1024:M 15 May 2024 06:11:01.270 * Loading RDB produced by version 7.2.4<br>1024:M 15 May 2024 06:11:01.270 * RDB age 77247 seconds<br>1024:M 15 May 2024 06:11:01.270 * RDB memory usage when created 0.83 Mb<br>1024:M 15 May 2024 06:11:01.270 * Done loading RDB, keys loaded: 0, keys expired: 0.<br>1024:M 15 May 2024 06:11:01.270 * DB loaded from disk: 0.001 seconds<br>1024:M 15 May 2024 06:11:01.270 * Ready to accept connections tcp<br><br><span class="hljs-comment"># 新开一个窗口，检查端口状态（redis默认使用6379端口）使用redis-cli测试</span><br>root@ubuntu2204:~# ss -ntpl<br>State     Recv-Q     Send-Q         Local Address:Port         Peer Address:Port    Process                                       <br>LISTEN    0          128                  0.0.0.0:22                0.0.0.0:*        <span class="hljs-built_in">users</span>:((&quot;sshd&quot;,pid=<span class="hljs-number">809</span>,fd=<span class="hljs-number">3</span>))                <br>LISTEN    0          511                127.0.0.1:6379              0.0.0.0:*        <span class="hljs-built_in">users</span>:((&quot;redis-server&quot;,pid=<span class="hljs-number">1024</span>,fd=<span class="hljs-number">6</span>))       <br>LISTEN    0          4096           127.0.0.53%lo:53                0.0.0.0:*        <span class="hljs-built_in">users</span>:((&quot;systemd-resolve&quot;,pid=<span class="hljs-number">761</span>,fd=<span class="hljs-number">14</span>))    <br>LISTEN    0          128                     [::]:22                   [::]:*        <span class="hljs-built_in">users</span>:((&quot;sshd&quot;,pid=<span class="hljs-number">809</span>,fd=<span class="hljs-number">4</span>))                <br>LISTEN    0          511                    [::1]:6379                 [::]:*        <span class="hljs-built_in">users</span>:((&quot;redis-server&quot;,pid=<span class="hljs-number">1024</span>,fd=<span class="hljs-number">7</span>)) <br><br>root@ubuntu2204:~# redis-cli <br>127.0.0.1:6379&gt; ping<br>PONG<br>127.0.0.1:6379&gt; <br></code></pre></td></tr></table></figure>
+
+<p>创建redis服务启动账户并授权</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ubuntu2204:~# useradd -r -s /sbin/nologin redis<br>root@ubuntu2204:~# <span class="hljs-built_in">chown</span> -R redis:redis /apps/redis/<br><br>root@ubuntu2204:~# ll /apps/redis/<br>total 28<br>drwxr-xr-x 7 redis redis 4096 May 14 07:49 ./<br>drwxr-xr-x 3 root  root  4096 May 14 07:10 ../<br>drwxr-xr-x 2 redis redis 4096 May 14 07:26 bin/<br>drwxr-xr-x 2 redis redis 4096 May 14 07:49 data/<br>drwxr-xr-x 2 redis redis 4096 May 14 07:49 etc/<br>drwxr-xr-x 2 redis redis 4096 May 14 07:49 <span class="hljs-built_in">log</span>/<br>drwxr-xr-x 2 redis redis 4096 May 14 07:49 run/<br></code></pre></td></tr></table></figure>
+
+<p>创建 systemd service 文件，可以参考编译包中的service模板，也可参考yum安装生成的systemd service文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ubuntu2204:~# <span class="hljs-built_in">ls</span> ./redis-7.2.4/utils/systemd-redis_server.service <br>./redis-7.2.4/utils/systemd-redis_server.service<br><br><span class="hljs-comment"># 修改好的redis.service文件内容</span><br>root@ubuntu2204:~# vim /etc/systemd/system/redis.service<br>[Unit]<br>Description=Redis data structure server<br>Documentation=https://redis.io/documentation<br>Wants=network-online.target<br>After=network-online.target<br><br>[Service]<br>ExecStart=/apps/redis/bin/redis-server /apps/redis/etc/redis.conf --supervised systemd<br>ExecStop=/bin/kill -s QUIT <span class="hljs-variable">$MAINPID</span><br>LimitNOFILE=1000000<br>NoNewPrivileges=<span class="hljs-built_in">yes</span><br>Type=notify<br>TimeoutStartSec=infinity<br>TimeoutStopSec=infinity<br>User=redis<br>Group=redis<br>RuntimeDirectory=redis<br>RuntimeDirectoryMode=0755<br><br>[Install]<br>WantedBy=multi-user.target<br><br><span class="hljs-comment"># 利用cat创建文件</span><br><span class="hljs-built_in">cat</span> &gt; /etc/systemd/system/redis.service &lt;&lt;<span class="hljs-string">EOF</span><br><span class="hljs-string">[Unit]</span><br><span class="hljs-string">Description=Redis data structure server</span><br><span class="hljs-string">Documentation=https://redis.io/documentation</span><br><span class="hljs-string">Wants=network-online.target</span><br><span class="hljs-string">After=network-online.target</span><br><span class="hljs-string"></span><br><span class="hljs-string">[Service]</span><br><span class="hljs-string">ExecStart=/apps/redis/bin/redis-server /apps/redis/etc/redis.conf --supervised systemd</span><br><span class="hljs-string">ExecStop=/bin/kill -s QUIT $MAINPID</span><br><span class="hljs-string">LimitNOFILE=1000000</span><br><span class="hljs-string">NoNewPrivileges=yes</span><br><span class="hljs-string">Type=notify</span><br><span class="hljs-string">TimeoutStartSec=infinity</span><br><span class="hljs-string">TimeoutStopSec=infinity</span><br><span class="hljs-string">User=redis</span><br><span class="hljs-string">Group=redis</span><br><span class="hljs-string">RuntimeDirectory=redis</span><br><span class="hljs-string">RuntimeDirectoryMode=0755</span><br><span class="hljs-string"></span><br><span class="hljs-string">[Install]</span><br><span class="hljs-string">WantedBy=multi-user.target</span><br><span class="hljs-string">EOF</span><br></code></pre></td></tr></table></figure>
+
+<p>修改redis配置文件，设置服务IP，PID文件目录，连接密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改配置文件（先更改如下三项，其它配置参考文档修改）</span><br>root@ubuntu2204:~# vim /apps/redis/etc/redis.conf <br><span class="hljs-built_in">bind</span> 0.0.0.0										<span class="hljs-comment"># 监听端口</span><br>pidfile /apps/redis/run/redis_6379.pid				<span class="hljs-comment"># PID文件，由于使用redis用户启动服务，需更改到有权限的目录</span><br>requirepass <span class="hljs-string">&quot;12345678&quot;</span>								<span class="hljs-comment"># 客户端连接密码（若有特殊字符使用引号）</span><br>maxmemory <br></code></pre></td></tr></table></figure>
+
+<p>测试systemd启动服务配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ubuntu2204:~# systemctl daemon-reload<br>root@ubuntu2204:~# systemctl <span class="hljs-built_in">enable</span> --now redis.service <br>Created symlink /etc/systemd/system/multi-user.target.wants/redis.service → /etc/systemd/system/redis.service.<br><br>root@ubuntu2204:~# systemctl status redis.service <br>● redis.service - Redis data structure server<br>     Loaded: loaded (/etc/systemd/system/redis.service; enabled; vendor preset: enabled)<br>     Active: active (running) since Wed 2024-05-15 07:21:59 UTC; 25s ago<br>       Docs: https://redis.io/documentation<br>   Main PID: 23950 (redis-server)<br>     Status: <span class="hljs-string">&quot;Ready to accept connections&quot;</span><br>      Tasks: 5 (<span class="hljs-built_in">limit</span>: 4515)<br>     Memory: 2.1M<br>        CPU: 97ms<br>     CGroup: /system.slice/redis.service<br>             └─23950 <span class="hljs-string">&quot;/apps/redis/bin/redis-server 0.0.0.0:6379&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span><br> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span> <span class="hljs-string">&quot;&quot;</span><br><br>May 15 07:21:59 ubuntu2204 systemd[1]: Starting Redis data structure server...<br>May 15 07:21:59 ubuntu2204 redis-server[23950]: 23950:C 15 May 2024 07:21:59.143 * Supervised by systemd. Please make sure you <span class="hljs-built_in">set</span><br> appropriate values <span class="hljs-keyword">for</span> TimeoutStartSec and TimeoutStopSec <span class="hljs-keyword">in</span> your service unit.<br>May 15 07:21:59 ubuntu2204 redis-server[23950]: 23950:C 15 May 2024 07:21:59.143 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo<br>May 15 07:21:59 ubuntu2204 redis-server[23950]: 23950:C 15 May 2024 07:21:59.143 * Redis version=7.2.4, bits=64, commit=00000000, <br>modified=0, pid=23950, just started<br>May 15 07:21:59 ubuntu2204 redis-server[23950]: 23950:C 15 May 2024 07:21:59.143 * Configuration loaded<br>May 15 07:21:59 ubuntu2204 redis-server[23950]: 23950:M 15 May 2024 07:21:59.144 * monotonic clock: POSIX clock_gettime<br>May 15 07:21:59 ubuntu2204 redis-server[23950]: 23950:M 15 May 2024 07:21:59.145 * Running mode=standalone, port=6379.<br>May 15 07:21:59 ubuntu2204 redis-server[23950]: 23950:M 15 May 2024 07:21:59.146 * Server initialized<br>May 15 07:21:59 ubuntu2204 redis-server[23950]: 23950:M 15 May 2024 07:21:59.146 * Ready to accept connections tcp<br>May 15 07:21:59 ubuntu2204 systemd[1]: Started Redis data structure server.<br><br></code></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ubuntu2204:~# ss -ntlp<br>State     Recv-Q     Send-Q         Local Address:Port         Peer Address:Port    Process                                       <br>LISTEN    0          511                  0.0.0.0:6379              0.0.0.0:*        <span class="hljs-built_in">users</span>:((&quot;redis-server&quot;,pid=<span class="hljs-number">23950</span>,fd=<span class="hljs-number">6</span>))      <br>LISTEN    0          128                  0.0.0.0:22                0.0.0.0:*        <span class="hljs-built_in">users</span>:((&quot;sshd&quot;,pid=<span class="hljs-number">809</span>,fd=<span class="hljs-number">3</span>))                <br>LISTEN    0          4096           127.0.0.53%lo:53                0.0.0.0:*        <span class="hljs-built_in">users</span>:((&quot;systemd-resolve&quot;,pid=<span class="hljs-number">761</span>,fd=<span class="hljs-number">14</span>))    <br>LISTEN    0          128                     [::]:22                   [::]:*        <span class="hljs-built_in">users</span>:((&quot;sshd&quot;,pid=<span class="hljs-number">809</span>,fd=<span class="hljs-number">4</span>))     <br><br><span class="hljs-comment"># 使用redis-cli测试</span><br><span class="hljs-comment"># 格式：redis-cli -h &lt;redis服务器&gt; -p &lt;PORT&gt; -a &lt;PASSWORD&gt;</span><br><br>root@ubuntu2204:~# redis-cli -h 10.0.0.7 -p 6379 -a 12345678<br>Warning: Using a password with <span class="hljs-string">&#x27;-a&#x27;</span> or <span class="hljs-string">&#x27;-u&#x27;</span> option on the <span class="hljs-built_in">command</span> line interface may not be safe.<br>10.0.0.7:6379&gt; ping<br>PONG<br>10.0.0.7:6379&gt; info<br><span class="hljs-comment"># Server</span><br>redis_version:7.2.4<br>redis_git_sha1:00000000<br>redis_git_dirty:0<br>redis_build_id:cfa841a5bc8661c5<br>redis_mode:standalone<br>os:Linux 5.15.0-102-generic x86_64<br>arch_bits:64<br>monotonic_clock:POSIX clock_gettime<br>multiplexing_api:epoll<br>atomicvar_api:c11-builtin<br>gcc_version:11.4.0<br>process_id:23986<br>process_supervised:systemd<br>run_id:a1f26808d76b9e2b984e46979c55d9af2bd8a161<br>tcp_port:6379<br>server_time_usec:1715758640316473<br>uptime_in_seconds:132<br>uptime_in_days:0<br>hz:10<br>configured_hz:10<br>lru_clock:4482608<br>executable:/apps/redis/bin/redis-server<br>config_file:/apps/redis/etc/redis.conf<br>io_threads_active:0<br>listener0:name=tcp,<span class="hljs-built_in">bind</span>=0.0.0.0,port=6379<br><br><span class="hljs-comment"># Clients</span><br>connected_clients:1<br>cluster_connections:0<br>maxclients:10000<br>client_recent_max_input_buffer:20480<br>client_recent_max_output_buffer:0<br>blocked_clients:0<br>tracking_clients:0<br>clients_in_timeout_table:0<br>total_blocking_keys:0<br>total_blocking_keys_on_nokey:0<br><br><span class="hljs-comment"># Memory</span><br>used_memory:965424<br>used_memory_human:942.80K<br>used_memory_rss:7987200<br>used_memory_rss_human:7.62M<br>used_memory_peak:1158792<br>used_memory_peak_human:1.11M<br>used_memory_peak_perc:83.31%<br>used_memory_overhead:888576<br>used_memory_startup:865992<br>used_memory_dataset:76848<br>used_memory_dataset_perc:77.29%<br>allocator_allocated:1811968<br>allocator_active:1966080<br>allocator_resident:4943872<br>total_system_memory:4064628736<br>total_system_memory_human:3.79G<br>used_memory_lua:31744<br>used_memory_vm_eval:31744<br>used_memory_lua_human:31.00K<br>used_memory_scripts_eval:0<br>number_of_cached_scripts:0<br>number_of_functions:0<br>number_of_libraries:0<br>used_memory_vm_functions:32768<br>used_memory_vm_total:64512<br>used_memory_vm_total_human:63.00K<br>used_memory_functions:184<br>used_memory_scripts:184<br>used_memory_scripts_human:184B<br>maxmemory:0<br>maxmemory_human:0B<br>maxmemory_policy:noeviction<br>allocator_frag_ratio:1.09<br>allocator_frag_bytes:154112<br>allocator_rss_ratio:2.51<br>allocator_rss_bytes:2977792<br>rss_overhead_ratio:1.62<br>rss_overhead_bytes:3043328<br>mem_fragmentation_ratio:8.29<br>mem_fragmentation_bytes:7024192<br>mem_not_counted_for_evict:0<br>mem_replication_backlog:0<br>mem_total_replication_buffers:0<br>mem_clients_slaves:0<br>mem_clients_normal:22400<br>mem_cluster_links:0<br>mem_aof_buffer:0<br>mem_allocator:jemalloc-5.3.0<br>active_defrag_running:0<br>lazyfree_pending_objects:0<br>lazyfreed_objects:0<br><br><span class="hljs-comment"># Persistence</span><br>loading:0<br>async_loading:0<br>current_cow_peak:0<br>current_cow_size:0<br>current_cow_size_age:0<br>current_fork_perc:0.00<br>current_save_keys_processed:0<br>current_save_keys_total:0<br>rdb_changes_since_last_save:0<br>rdb_bgsave_in_progress:0<br>rdb_last_save_time:1715758508<br>rdb_last_bgsave_status:ok<br>rdb_last_bgsave_time_sec:-1<br>rdb_current_bgsave_time_sec:-1<br>rdb_saves:0<br>rdb_last_cow_size:0<br>rdb_last_load_keys_expired:0<br>rdb_last_load_keys_loaded:0<br>aof_enabled:0<br>aof_rewrite_in_progress:0<br>aof_rewrite_scheduled:0<br>aof_last_rewrite_time_sec:-1<br>aof_current_rewrite_time_sec:-1<br>aof_last_bgrewrite_status:ok<br>aof_rewrites:0<br>aof_rewrites_consecutive_failures:0<br>aof_last_write_status:ok<br>aof_last_cow_size:0<br>module_fork_in_progress:0<br>module_fork_last_cow_size:0<br><br><span class="hljs-comment"># Stats</span><br>total_connections_received:1<br>total_commands_processed:3<br>instantaneous_ops_per_sec:0<br>total_net_input_bytes:83<br>total_net_output_bytes:205217<br>total_net_repl_input_bytes:0<br>total_net_repl_output_bytes:0<br>instantaneous_input_kbps:0.00<br>instantaneous_output_kbps:0.00<br>instantaneous_input_repl_kbps:0.00<br>instantaneous_output_repl_kbps:0.00<br>rejected_connections:0<br>sync_full:0<br>sync_partial_ok:0<br>sync_partial_err:0<br>expired_keys:0<br>expired_stale_perc:0.00<br>expired_time_cap_reached_count:0<br>expire_cycle_cpu_milliseconds:4<br>evicted_keys:0<br>evicted_clients:0<br>total_eviction_exceeded_time:0<br>current_eviction_exceeded_time:0<br>keyspace_hits:0<br>keyspace_misses:0<br>pubsub_channels:0<br>pubsub_patterns:0<br>pubsubshard_channels:0<br>latest_fork_usec:0<br>total_forks:0<br>migrate_cached_sockets:0<br>slave_expires_tracked_keys:0<br>active_defrag_hits:0<br>active_defrag_misses:0<br>active_defrag_key_hits:0<br>active_defrag_key_misses:0<br>total_active_defrag_time:0<br>current_active_defrag_time:0<br>tracking_total_keys:0<br>tracking_total_items:0<br>tracking_total_prefixes:0<br>unexpected_error_replies:0<br>total_error_replies:0<br>dump_payload_sanitizations:0<br>total_reads_processed:4<br>total_writes_processed:5<br>io_threaded_reads_processed:0<br>io_threaded_writes_processed:0<br>reply_buffer_shrinks:1<br>reply_buffer_expands:0<br>eventloop_cycles:1315<br>eventloop_duration_sum:313813<br>eventloop_duration_cmd_sum:1688<br>instantaneous_eventloop_cycles_per_sec:9<br>instantaneous_eventloop_duration_usec:268<br>acl_access_denied_auth:0<br>acl_access_denied_cmd:0<br>acl_access_denied_key:0<br>acl_access_denied_channel:0<br><br><span class="hljs-comment"># Replication</span><br>role:master<br>connected_slaves:0<br>master_failover_state:no-failover<br>master_replid:cbcfc8bbb3ca49ffe80f7d402ae7d55fb280400d<br>master_replid2:0000000000000000000000000000000000000000<br>master_repl_offset:0<br>second_repl_offset:-1<br>repl_backlog_active:0<br>repl_backlog_size:1048576<br>repl_backlog_first_byte_offset:0<br>repl_backlog_histlen:0<br><br><span class="hljs-comment"># CPU</span><br>used_cpu_sys:0.102829<br>used_cpu_user:0.331917<br>used_cpu_sys_children:0.000000<br>used_cpu_user_children:0.000000<br>used_cpu_sys_main_thread:0.090418<br>used_cpu_user_main_thread:0.343591<br><br><span class="hljs-comment"># Modules</span><br><br><span class="hljs-comment"># Errorstats</span><br><br><span class="hljs-comment"># Cluster</span><br>cluster_enabled:0<br><br><span class="hljs-comment"># Keyspace</span><br>10.0.0.7:6379&gt; <br></code></pre></td></tr></table></figure>
+
+<h3 id="编译安装脚本"><a href="#编译安装脚本" class="headerlink" title="编译安装脚本"></a>编译安装脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br>REDIS_VERSION=redis-7.2.4<br>PASSWORD=12345678<br>INSTALL_DIR=/apps/redis<br><br>CPUS=`lscpu |awk <span class="hljs-string">&#x27;/^CPU\(s\)/&#123;print $2&#125;&#x27;</span>`<br><br>. /etc/os-release<br><br><span class="hljs-function"><span class="hljs-title">color</span></span> () &#123;<br>    RES_COL=60<br>    MOVE_TO_COL=<span class="hljs-string">&quot;echo -en \\033[<span class="hljs-variable">$&#123;RES_COL&#125;</span>G&quot;</span><br>    SETCOLOR_SUCCESS=<span class="hljs-string">&quot;echo -en \\033[1;32m&quot;</span><br>    SETCOLOR_FAILURE=<span class="hljs-string">&quot;echo -en \\033[1;31m&quot;</span><br>    SETCOLOR_WARNING=<span class="hljs-string">&quot;echo -en \\033[1;33m&quot;</span><br>    SETCOLOR_NORMAL=<span class="hljs-string">&quot;echo -en \E[0m&quot;</span><br>    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span> &amp;&amp; <span class="hljs-variable">$MOVE_TO_COL</span><br>    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">&quot;[&quot;</span><br>    <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$2</span> = <span class="hljs-string">&quot;success&quot;</span> -o <span class="hljs-variable">$2</span> = <span class="hljs-string">&quot;0&quot;</span> ] ;<span class="hljs-keyword">then</span><br>        <span class="hljs-variable">$&#123;SETCOLOR_SUCCESS&#125;</span><br>        <span class="hljs-built_in">echo</span> -n $<span class="hljs-string">&quot;  OK  &quot;</span>    <br>    <span class="hljs-keyword">elif</span> [ <span class="hljs-variable">$2</span> = <span class="hljs-string">&quot;failure&quot;</span> -o <span class="hljs-variable">$2</span> = <span class="hljs-string">&quot;1&quot;</span>  ] ;<span class="hljs-keyword">then</span> <br>        <span class="hljs-variable">$&#123;SETCOLOR_FAILURE&#125;</span><br>        <span class="hljs-built_in">echo</span> -n $<span class="hljs-string">&quot;FAILED&quot;</span><br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-variable">$&#123;SETCOLOR_WARNING&#125;</span><br>        <span class="hljs-built_in">echo</span> -n $<span class="hljs-string">&quot;WARNING&quot;</span><br>    <span class="hljs-keyword">fi</span><br>    <span class="hljs-variable">$&#123;SETCOLOR_NORMAL&#125;</span><br>    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">&quot;]&quot;</span><br>    <span class="hljs-built_in">echo</span> <br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-title">prepare</span></span>()&#123;<br>    <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$ID</span> = <span class="hljs-string">&quot;centos&quot;</span> -o <span class="hljs-variable">$ID</span> = <span class="hljs-string">&quot;rocky&quot;</span> ];<span class="hljs-keyword">then</span><br>        yum  -y install gcc make jemalloc-devel systemd-devel wget<br>    <span class="hljs-keyword">else</span><br>	    apt update <br>	    apt -y install  gcc make libjemalloc-dev libsystemd-dev wget<br>    <span class="hljs-keyword">fi</span><br>    <span class="hljs-keyword">if</span> [ $? -eq 0 ];<span class="hljs-keyword">then</span><br>        color <span class="hljs-string">&quot;安装软件包成功&quot;</span>  0<br>    <span class="hljs-keyword">else</span><br>        color <span class="hljs-string">&quot;安装软件包失败，请检查网络配置&quot;</span> 1<br>        <span class="hljs-built_in">exit</span><br>    <span class="hljs-keyword">fi</span><br>&#125;<br><span class="hljs-function"><span class="hljs-title">install</span></span>() &#123;   <br>    <span class="hljs-keyword">if</span> [ ! -f <span class="hljs-variable">$&#123;REDIS_VERSION&#125;</span>.tar.gz ];<span class="hljs-keyword">then</span><br>        wget http://download.redis.io/releases/<span class="hljs-variable">$&#123;REDIS_VERSION&#125;</span>.tar.gz || &#123; color <span class="hljs-string">&quot;Redis 源码下载失败&quot;</span> 1 ; <span class="hljs-built_in">exit</span>; &#125;<br>    <span class="hljs-keyword">fi</span><br>    tar xf <span class="hljs-variable">$&#123;REDIS_VERSION&#125;</span>.tar.gz -C /usr/local/src<br>    <span class="hljs-built_in">cd</span> /usr/local/src/<span class="hljs-variable">$&#123;REDIS_VERSION&#125;</span><br>    make -j <span class="hljs-variable">$CUPS</span> USE_SYSTEMD=<span class="hljs-built_in">yes</span> PREFIX=<span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span> USE_SYSTEMD=<span class="hljs-built_in">yes</span> install &amp;&amp; color <span class="hljs-string">&quot;Redis 编译安装完成&quot;</span> 0 || &#123; color <span class="hljs-string">&quot;Redis 编译安装失败&quot;</span> 1 ;<span class="hljs-built_in">exit</span> ; &#125;<br><br>    <span class="hljs-built_in">ln</span> -s <span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span>/bin/redis-*  /usr/bin/<br>    <br>    <span class="hljs-built_in">mkdir</span> -p <span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span>/&#123;etc,<span class="hljs-built_in">log</span>,data,run&#125;<br>  <br>    <span class="hljs-built_in">cp</span> redis.conf  <span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span>/etc/<br><br>    sed -i -e <span class="hljs-string">&#x27;s/bind 127.0.0.1/bind 0.0.0.0/&#x27;</span>  -e <span class="hljs-string">&quot;/# requirepass/a requirepass <span class="hljs-variable">$PASSWORD</span>&quot;</span>  -e <span class="hljs-string">&quot;/^dir .*/c dir <span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span>/data/&quot;</span>  -e <span class="hljs-string">&quot;/logfile .*/c logfile <span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span>/log/redis-6379.log&quot;</span>  -e  <span class="hljs-string">&quot;/^pidfile .*/c  pidfile <span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span>/run/redis_6379.pid&quot;</span> <span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span>/etc/redis.conf<br><br><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">id</span> redis &amp;&gt; /dev/null ;<span class="hljs-keyword">then</span> <br>         color <span class="hljs-string">&quot;Redis 用户已存在&quot;</span> 1 <br>    <span class="hljs-keyword">else</span><br>         useradd -r -s /sbin/nologin redis<br>         color <span class="hljs-string">&quot;Redis 用户创建成功&quot;</span> 0<br>    <span class="hljs-keyword">fi</span><br><br>    <span class="hljs-built_in">chown</span> -R redis:redis <span class="hljs-variable">$&#123;INSTALL_DIR&#125;</span><br><br>    <span class="hljs-built_in">cat</span> &gt;&gt; /etc/sysctl.conf &lt;&lt;<span class="hljs-string">EOF</span><br><span class="hljs-string">net.core.somaxconn = 1024</span><br><span class="hljs-string">vm.overcommit_memory = 1</span><br><span class="hljs-string">EOF</span><br>    sysctl -p <br>    <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$ID</span> = <span class="hljs-string">&quot;centos&quot;</span> -o <span class="hljs-variable">$ID</span> = <span class="hljs-string">&quot;rocky&quot;</span> ];<span class="hljs-keyword">then</span><br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#x27;</span> &gt;&gt; /etc/rc.d/rc.local<br>        <span class="hljs-built_in">chmod</span> +x /etc/rc.d/rc.local<br>        /etc/rc.d/rc.local <br>    <span class="hljs-keyword">else</span> <br>        <span class="hljs-built_in">echo</span> -e <span class="hljs-string">&#x27;#!/bin/bash\necho never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#x27;</span> &gt;&gt; /etc/rc.local<br>        <span class="hljs-built_in">chmod</span> +x /etc/rc.local<br>        /etc/rc.local<br>    <span class="hljs-keyword">fi</span><br><br><br><span class="hljs-built_in">cat</span> &gt; /lib/systemd/system/redis.service &lt;&lt;<span class="hljs-string">EOF</span><br><span class="hljs-string">[Unit]</span><br><span class="hljs-string">Description=Redis data structure server</span><br><span class="hljs-string">Documentation=https://redis.io/documentation</span><br><span class="hljs-string">Wants=network-online.target</span><br><span class="hljs-string">After=network-online.target</span><br><span class="hljs-string"></span><br><span class="hljs-string">[Service]</span><br><span class="hljs-string">ExecStart=$&#123;INSTALL_DIR&#125;/bin/redis-server $&#123;INSTALL_DIR&#125;/etc/redis.conf --supervised systemd</span><br><span class="hljs-string">ExecStop=/bin/kill -s QUIT \$MAINPID</span><br><span class="hljs-string">LimitNOFILE=1000000</span><br><span class="hljs-string">NoNewPrivileges=yes</span><br><span class="hljs-string">Type=notify</span><br><span class="hljs-string">TimeoutStartSec=infinity</span><br><span class="hljs-string">TimeoutStopSec=infinity</span><br><span class="hljs-string">User=redis</span><br><span class="hljs-string">Group=redis</span><br><span class="hljs-string">RuntimeDirectory=redis</span><br><span class="hljs-string">RuntimeDirectoryMode=0755</span><br><span class="hljs-string"></span><br><span class="hljs-string">[Install]</span><br><span class="hljs-string">WantedBy=multi-user.target</span><br><span class="hljs-string"></span><br><span class="hljs-string">EOF</span><br>     systemctl daemon-reload <br>     systemctl <span class="hljs-built_in">enable</span> --now  redis &amp;&gt; /dev/null <br>     <span class="hljs-keyword">if</span> [ $? -eq 0 ];<span class="hljs-keyword">then</span><br>         color <span class="hljs-string">&quot;Redis 服务启动成功,Redis信息如下:&quot;</span>  0 <br>     <span class="hljs-keyword">else</span><br>         color <span class="hljs-string">&quot;Redis 启动失败&quot;</span> 1 <br>         <span class="hljs-built_in">exit</span><br>     <span class="hljs-keyword">fi</span><br>     <span class="hljs-built_in">sleep</span> 2<br>     redis-cli -a <span class="hljs-variable">$PASSWORD</span> INFO Server 2&gt; /dev/null<br>&#125;<br><br>prepare <br>install <br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Redis/" class="category-chain-item">Redis</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/NoSQL/" class="print-no-link">#NoSQL</a>
+      
+        <a href="/tags/Redis/" class="print-no-link">#Redis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Redis部署企业级NOSQL数据库</div>
+      <div>https://www.xcjyc.top/2024/05/10/Redis部署企业级NOSQL数据库/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/16/Redis%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%AE%BE%E7%BD%AE/" title="Redis基本操作及常用设置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Redis基本操作及常用设置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/09/%E4%B8%BAcp%E5%92%8Cmv%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0%E8%BF%9B%E5%BA%A6%E6%9D%A1/" title="为cp和mv命令添加进度条">
+                        <span class="hidden-mobile">为cp和mv命令添加进度条</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Redis"
+        id="heading-e111446745a1825b862f8727ae63bce4" role="tab" data-toggle="collapse" href="#collapse-e111446745a1825b862f8727ae63bce4"
+        aria-expanded="true"
+      >
+        Redis
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e111446745a1825b862f8727ae63bce4"
+           role="tabpanel" aria-labelledby="heading-e111446745a1825b862f8727ae63bce4">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/05/16/Redis%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%8F%8A%E5%B8%B8%E7%94%A8%E8%AE%BE%E7%BD%AE/" title="Redis基本操作及常用设置"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Redis基本操作及常用设置</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/05/10/Redis%E9%83%A8%E7%BD%B2%E4%BC%81%E4%B8%9A%E7%BA%A7NOSQL%E6%95%B0%E6%8D%AE%E5%BA%93/" title="Redis部署企业级NOSQL数据库"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Redis部署企业级NOSQL数据库</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/14/Redis%E9%9B%86%E7%BE%A4%E4%B8%8E%E9%AB%98%E5%8F%AF%E7%94%A8-redis%E5%93%A8%E5%85%B5/" title="Redis集群与高可用-redis哨兵"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Redis集群与高可用-redis哨兵</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/05/20/Redis%E9%9B%86%E7%BE%A4%E4%B8%8E%E9%AB%98%E5%8F%AF%E7%94%A8-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="Redis集群与高可用-主从复制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Redis集群与高可用-主从复制</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

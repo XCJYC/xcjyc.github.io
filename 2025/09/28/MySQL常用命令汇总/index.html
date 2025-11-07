@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MySQL常用命令汇总">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL常用命令汇总">
+<meta property="og:url" content="https://www.xcjyc.top/2025/09/28/MySQL%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="MySQL常用命令汇总">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/mysql.png">
+<meta property="article:published_time" content="2025-09-28T01:15:17.000Z">
+<meta property="article:modified_time" content="2025-09-28T01:27:21.429Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/mysql.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>MySQL常用命令汇总 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MySQL常用命令汇总"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-28 09:15" pubdate>
+          2025年9月28日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">MySQL常用命令汇总</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="MySQL-常用命令汇总"><a href="#MySQL-常用命令汇总" class="headerlink" title="MySQL 常用命令汇总"></a>MySQL 常用命令汇总</h3><p>MySQL 常用命令，覆盖账号管理、库表管理、增删改查、事务与锁、索引视图、性能优化、备份恢复与安全等十个模块，适合作为学习与工作的速查手册。</p>
+<h4 id="一、连接与账号管理"><a href="#一、连接与账号管理" class="headerlink" title="一、连接与账号管理"></a>一、连接与账号管理</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs mysql">连接本地 MySQL：mysql -u root -p<br>连接远程 MySQL：mysql -h 192.168.1.10 -u root -p<br>指定端口连接：mysql -h 127.0.0.1 -P 3307 -u root -p<br>查看当前用户：SELECT USER();<br>查看当前数据库：SELECT DATABASE();<br>查看所有用户：SELECT user,host FROM mysql.user;<br>创建用户：CREATE USER &#x27;test&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;123456&#x27;;<br>修改密码：ALTER USER &#x27;test&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;newpass&#x27;;<br>设置密码（老方法）：SET PASSWORD FOR &#x27;test&#x27;@&#x27;%&#x27; = PASSWORD(&#x27;pwd&#x27;);<br>删除用户：DROP USER &#x27;test&#x27;@&#x27;%&#x27;;<br>授权用户：GRANT ALL PRIVILEGES ON db1.* TO &#x27;test&#x27;@&#x27;%&#x27;;<br>授权只读：GRANT SELECT ON db1.* TO &#x27;test&#x27;@&#x27;%&#x27;;<br>查看用户权限：SHOW GRANTS FOR &#x27;test&#x27;@&#x27;%&#x27;;<br>撤销权限：REVOKE INSERT ON db1.* FROM &#x27;test&#x27;@&#x27;%&#x27;;<br>刷新权限：FLUSH PRIVILEGES;<br>修改 root 密码：ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;123456&#x27;;<br>创建超级用户：GRANT ALL ON . TO &#x27;admin&#x27;@&#x27;%&#x27; WITH GRANT OPTION;<br>锁定用户：ALTER USER &#x27;test&#x27;@&#x27;%&#x27; ACCOUNT LOCK;<br>解锁用户：ALTER USER &#x27;test&#x27;@&#x27;%&#x27; ACCOUNT UNLOCK;<br>删除匿名用户：DROP USER &#x27;&#x27;@&#x27;localhost&#x27;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="二、数据库操作"><a href="#二、数据库操作" class="headerlink" title="二、数据库操作"></a><strong>二、数据库操作</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs mysql">查看所有数据库：SHOW DATABASES;<br>创建数据库：CREATE DATABASE db1;<br>创建带字符集数据库：CREATE DATABASE db1 CHARACTER SET utf8mb4;<br>删除数据库：DROP DATABASE db1;<br>切换数据库：USE db1;<br>查看当前数据库：SELECT DATABASE();<br>修改数据库字符集：ALTER DATABASE db1 CHARACTER SET utf8;<br>查看建库语句：SHOW CREATE DATABASE db1;<br>数据库版本：SELECT VERSION();<br>查看状态：SHOW STATUS;<br>查看当前连接数：SHOW PROCESSLIST;<br>显示完整连接：SHOW FULL PROCESSLIST;<br>查看线程数：SHOW STATUS LIKE &#x27;Threads_connected&#x27;;<br>查看最大连接数：SHOW VARIABLES LIKE &#x27;max_connections&#x27;;<br>修改最大连接数：SET GLOBAL max_connections=500;<br>查看字符集：SHOW VARIABLES LIKE &#x27;character_set_%&#x27;;<br>查看排序规则：SHOW VARIABLES LIKE &#x27;collation_%&#x27;;<br>设置默认字符集：SET NAMES utf8mb4;<br>查看数据库大小：SELECT table_schema, SUM(data_length+index_length)/1024/1024 AS MB FROM information_schema.tables GROUP BY table_schema;<br>查看表数量：SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=&#x27;db1&#x27;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="三、数据表操作"><a href="#三、数据表操作" class="headerlink" title="三、数据表操作"></a><strong>三、数据表操作</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs mysql">查看所有表：SHOW TABLES;<br>查看表结构：DESC users;<br>查看建表语句：SHOW CREATE TABLE users;<br>创建表：CREATE TABLE users(id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(50));<br>创建带约束表：CREATE TABLE orders(id INT, uid INT, FOREIGN KEY(uid) REFERENCES users(id));<br>删除表：DROP TABLE users;<br>清空表：TRUNCATE TABLE users;<br>修改表名：RENAME TABLE users TO members;<br>添加列：ALTER TABLE users ADD email VARCHAR(100);<br>修改列名：ALTER TABLE users CHANGE name username VARCHAR(50);<br>修改列类型：ALTER TABLE users MODIFY age SMALLINT;<br>删除列：ALTER TABLE users DROP COLUMN email;<br>添加主键：ALTER TABLE users ADD PRIMARY KEY(id);<br>删除主键：ALTER TABLE users DROP PRIMARY KEY;<br>添加唯一约束：ALTER TABLE users ADD UNIQUE(email);<br>删除唯一约束：ALTER TABLE users DROP INDEX email;<br>添加外键：ALTER TABLE orders ADD CONSTRAINT fk_user FOREIGN KEY(uid) REFERENCES users(id);<br>删除外键：ALTER TABLE orders DROP FOREIGN KEY fk_user;<br>添加默认值：ALTER TABLE users ALTER age SET DEFAULT 18;<br>删除默认值：ALTER TABLE users ALTER age DROP DEFAULT;<br>查看索引：SHOW INDEX FROM users;<br>添加普通索引：CREATE INDEX idx_age ON users(age);<br>删除索引：DROP INDEX idx_age ON users;<br>创建唯一索引：CREATE UNIQUE INDEX idx_name ON users(name);<br>复制表结构：CREATE TABLE new_users LIKE users;<br>复制表数据：INSERT INTO new_users SELECT * FROM users;<br>查看表状态：SHOW TABLE STATUS LIKE &#x27;users&#x27;;<br>修改表存储引擎：ALTER TABLE users ENGINE=InnoDB;<br>查看表大小：SELECT table_name, data_length+index_length FROM information_schema.tables WHERE table_schema=&#x27;db1&#x27;;<br>查看自增值：SHOW TABLE STATUS LIKE &#x27;users&#x27;\G;<br></code></pre></td></tr></table></figure>
+
+<h4 id="四、数据操作"><a href="#四、数据操作" class="headerlink" title="四、数据操作"></a><strong>四、数据操作</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs mysql">插入数据：INSERT INTO users(name,age)VALUES(&#x27;Tom&#x27;,20);<br>批量插入：INSERT INTO users(name,age)VALUES(&#x27;A&#x27;,18),(&#x27;B&#x27;,19);<br>插入或更新：INSERT INTO users(id,name)VALUES(1,&#x27;Tom&#x27;) ON DUPLICATE KEY UPDATE name=&#x27;Tom&#x27;;<br>更新数据：UPDATE users SET age=22 WHERE name=&#x27;Tom&#x27;;<br>删除数据：DELETE FROM users WHERE id=1;<br>删除所有数据：DELETE FROM users;<br>查询所有：SELECT * FROM users;<br>查询部分列：SELECT name,age FROM users;<br>条件查询：SELECT * FROM users WHERE age&gt;20;<br>多条件查询：SELECT * FROM users WHERE age&gt;20 AND name=&#x27;Tom&#x27;;<br>模糊查询：SELECT * FROM users WHERE name LIKE &#x27;T%&#x27;;<br>IN 查询：SELECT * FROM users WHERE age IN(18,20,25);<br>NOT IN 查询：SELECT * FROM users WHERE age NOT IN(18,20,25);<br>BETWEEN 查询：SELECT * FROM users WHERE age BETWEEN 20 AND 30;<br>NULL 查询：SELECT * FROM users WHERE email IS NULL;<br>NOT NULL 查询：SELECT * FROM users WHERE email IS NOT NULL;<br>排序：SELECT * FROM users ORDER BY age DESC;<br>去重：SELECT DISTINCT name FROM users;<br>限制行数：SELECT * FROM users LIMIT 10;<br>分页：SELECT * FROM users LIMIT 10 OFFSET 20;<br>别名：SELECT name AS username FROM users;<br>聚合-计数：SELECT COUNT(*) FROM users;<br>聚合-平均：SELECT AVG(age) FROM users;<br>聚合-最大：SELECT MAX(age) FROM users;<br>聚合-最小：SELECT MIN(age) FROM users;<br>聚合-求和：SELECT SUM(age) FROM users;<br>分组：SELECT age,COUNT(*) FROM users GROUP BY age;<br>分组过滤：SELECT age,COUNT(*) FROM users GROUP BY age HAVING COUNT(*)&gt;2;<br>联表查询：SELECT u.name,o.amount FROM users u JOIN orders o ON u.id=o.uid;<br>左连接：SELECT u.name,o.amount FROM users u LEFT JOIN orders o ON u.id=o.uid;<br></code></pre></td></tr></table></figure>
+
+<h4 id="五、查询与条件"><a href="#五、查询与条件" class="headerlink" title="五、查询与条件"></a>五、查询与条件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs mysql">右连接：SELECT u.name,o.amount FROM users u RIGHT JOIN orders o ON u.id=o.uid;<br>全连接（模拟）：SELECT * FROM users u LEFT JOIN orders o ON u.id=o.uid UNION SELECT * FROM users u RIGHT JOIN orders o ON u.id=o.uid;<br>子查询：SELECT * FROM users WHERE id IN(SELECT uid FROM orders);<br>EXISTS 子查询：SELECT * FROM users u WHERE EXISTS(SELECT 1 FROM orders o WHERE o.uid=u.id);<br>CASE 表达式：SELECT name,CASE WHEN age&gt;=18 THEN &#x27;adult&#x27; ELSE &#x27;child&#x27; END FROM users;<br>IF 函数：SELECT name,IF(age&gt;=18,&#x27;Y&#x27;,&#x27;N&#x27;) FROM users;<br>COALESCE：SELECT COALESCE(email,&#x27;N/A&#x27;) FROM users;<br>CONCAT：SELECT CONCAT(name,&#x27;-&#x27;,age) FROM users;<br>LENGTH：SELECT LENGTH(name) FROM users;<br>SUBSTRING：SELECT SUBSTRING(name,1,2) FROM users;<br>UPPER：SELECT UPPER(name) FROM users;<br>LOWER：SELECT LOWER(name) FROM users;<br>NOW：SELECT NOW();<br>DATE 函数：SELECT CURDATE();<br>时间加减：SELECT DATE_ADD(NOW(),INTERVAL 7 DAY);<br>DATEDIFF：SELECT DATEDIFF(NOW(),&#x27;2025-01-01&#x27;);<br>RAND：SELECT RAND();<br>LIMIT 排序随机取样：SELECT * FROM users ORDER BY RAND() LIMIT 1;<br>正则查询：SELECT * FROM users WHERE name REGEXP &#x27;^T&#x27;;<br>JSON 查询：SELECT JSON_EXTRACT(info,&#x27;$.age&#x27;) FROM users;<br></code></pre></td></tr></table></figure>
+
+<h4 id="六、索引-视图-存储过程-触发器"><a href="#六、索引-视图-存储过程-触发器" class="headerlink" title="六、索引 &#x2F; 视图 &#x2F; 存储过程 &#x2F; 触发器"></a><strong>六、索引 &#x2F; 视图 &#x2F;</strong> 存储过程 &#x2F; 触发器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs mysql">创建索引：CREATE INDEX idx_age ON users(age);<br>删除索引：DROP INDEX idx_age ON users;<br>唯一索引：CREATE UNIQUE INDEX idx_email ON users(email);<br>组合索引：CREATE INDEX idx_name_age ON users(name,age);<br>查看索引：SHOW INDEX FROM users;<br>创建视图：CREATE VIEW v_users AS SELECT name,age FROM users;<br>查看视图：SHOW CREATE VIEW v_users;<br>删除视图：DROP VIEW v_users;<br>更新视图：CREATE OR REPLACE VIEW v_users AS SELECT id,name FROM users;<br>创建存储过程：<br>DELIMITER //<br>CREATE PROCEDURE get_all()<br>BEGIN<br>  SELECT * FROM users;<br>END //<br>DELIMITER ;<br><br>调用存储过程：CALL get_all();<br>删除存储过程：DROP PROCEDURE get_all;<br>创建带参数存储过程：<br>CREATE PROCEDURE get_user(IN uid INT) SELECT * FROM users WHERE id=uid;<br><br>创建函数：<br>CREATE FUNCTION add_age(a INT,b INT) RETURNS INT RETURN a+b;<br><br>调用函数：SELECT add_age(1,2);<br>删除函数：DROP FUNCTION add_age;<br>创建触发器：<br>CREATE TRIGGER before_insert BEFORE INSERT ON users FOR EACH ROW SET NEW.age=IFNULL(NEW.age,18);<br></code></pre></td></tr></table></figure>
+
+<h4 id="七、事务与锁管理"><a href="#七、事务与锁管理" class="headerlink" title="七、事务与锁管理"></a><strong>七、事务与锁管理</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs mysql">开始事务：START TRANSACTION;<br>提交事务：COMMIT;<br>回滚事务：ROLLBACK;<br>设置保存点：SAVEPOINT sp1;<br>回滚到保存点：ROLLBACK TO sp1;<br>释放保存点：RELEASE SAVEPOINT sp1;<br>设置自动提交：SET autocommit=0;<br>查看隔离级别：SHOW VARIABLES LIKE &#x27;tx_isolation&#x27;;<br>设置隔离级别：SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;<br>显式锁表：LOCK TABLES users WRITE;<br>解锁表：UNLOCK TABLES;<br>查看锁等待：SHOW ENGINE INNODB STATUS\G;<br>查看元数据锁：SELECT * FROM performance_schema.metadata_locks;<br>悲观锁：SELECT * FROM users WHERE id=1 FOR UPDATE;<br>乐观锁（版本号实现）：UPDATE users SET age=age+1, version=version+1 WHERE id=1 AND version=2;<br>查看死锁信息：SHOW ENGINE INNODB STATUS\G;<br>杀死事务：KILL 1234;<br>查看运行事务：SELECT * FROM information_schema.innodb_trx;<br>查看锁等待情况：SELECT * FROM information_schema.innodb_locks;<br>查看锁等待关系：SELECT * FROM information_schema.innodb_lock_waits;<br></code></pre></td></tr></table></figure>
+
+<h4 id="八、日志与性能优化"><a href="#八、日志与性能优化" class="headerlink" title="八、日志与性能优化"></a><strong>八、日志与性能优化</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs mysql">查看变量：SHOW VARIABLES;<br>查看状态：SHOW STATUS;<br>查看慢查询：SHOW VARIABLES LIKE &#x27;slow_query_log&#x27;;<br>开启慢查询日志：SET GLOBAL slow_query_log=1;<br>设置慢查询时间：SET GLOBAL long_query_time=2;<br>查看执行计划：EXPLAIN SELECT * FROM users WHERE age&gt;20;<br>分析执行计划：EXPLAIN FORMAT=JSON SELECT * FROM users;<br>查看缓存：SHOW VARIABLES LIKE &#x27;query_cache%&#x27;;<br>清空缓存：RESET QUERY CACHE;<br>分析表：ANALYZE TABLE users;<br>优化表：OPTIMIZE TABLE users;<br>修复表：REPAIR TABLE users;<br>查看引擎状态：SHOW ENGINE INNODB STATUS\G;<br>查看事务统计：SHOW GLOBAL STATUS LIKE &#x27;Com_commit&#x27;;<br>Profiling 开启：SET profiling=1;<br>查看 Profiling：SHOW PROFILES;<br>查看具体耗时：SHOW PROFILE FOR QUERY 1;<br>查看内存使用：SHOW ENGINE PERFORMANCE_SCHEMA STATUS;<br>Performance Schema 开启：UPDATE performance_schema.setup_consumers SET ENABLED=&#x27;YES&#x27; WHERE NAME=&#x27;events_statements_history&#x27;;<br>查看连接延迟：SHOW STATUS LIKE &#x27;Threads_running&#x27;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="九、备份恢复与导入导出"><a href="#九、备份恢复与导入导出" class="headerlink" title="九、备份恢复与导入导出"></a><strong>九、备份恢复与导入导出</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs mysql">导出数据库：mysqldump -u root -p db1 &gt; db1.sql<br>导出表：mysqldump -u root -p db1 users &gt; users.sql<br>导出带数据和结构：mysqldump -u root -p --databases db1 &gt; db1.sql<br>导出所有库：mysqldump -u root -p --all-databases &gt; all.sql<br>导入数据库：mysql -u root -p db1 &lt; db1.sql<br>交互式导入：SOURCE /path/db1.sql;<br>仅导出表结构：mysqldump -u root -p -d db1 &gt; db1_schema.sql<br>仅导出数据：mysqldump -u root -p -t db1 &gt; db1_data.sql<br>压缩导出：mysqldump -u root -p db1 | gzip &gt; db1.sql.gz<br>压缩导入：gunzip &lt; db1.sql.gz | mysql -u root -p db1<br>按条件导出：mysqldump -u root -p db1 users --where=&quot;age&gt;20&quot; &gt; users.sql<br>导出带触发器和存储过程：mysqldump -u root -p --routines --triggers db1 &gt; db1.sql<br>导出 CSV：SELECT * FROM users INTO OUTFILE &#x27;/tmp/users.csv&#x27; FIELDS TERMINATED BY &#x27;,&#x27;;<br>导入 CSV：LOAD DATA INFILE &#x27;/tmp/users.csv&#x27; INTO TABLE users FIELDS TERMINATED BY &#x27;,&#x27;;<br>检查备份完整性：mysqlcheck -u root -p --all-databases<br></code></pre></td></tr></table></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MySQL/" class="category-chain-item">MySQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/MySQL/" class="print-no-link">#MySQL</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MySQL常用命令汇总</div>
+      <div>https://www.xcjyc.top/2025/09/28/MySQL常用命令汇总/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/03/Docker-Inspect%E6%8A%80%E5%B7%A7/" title="Docker Inspect命令技巧">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker Inspect命令技巧</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/26/%E4%BF%AE%E5%A4%8D-Windows-11-%E6%9B%B4%E6%96%B0%E5%90%8E%E5%85%B1%E4%BA%AB%E6%89%93%E5%8D%B0%E6%9C%BA%E9%94%99%E8%AF%AF/" title="修复 Windows 11 更新后共享打印机错误">
+                        <span class="hidden-mobile">修复 Windows 11 更新后共享打印机错误</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="MySQL"
+        id="heading-62a004b95946bb97541afa471dcca73a" role="tab" data-toggle="collapse" href="#collapse-62a004b95946bb97541afa471dcca73a"
+        aria-expanded="true"
+      >
+        MySQL
+        <span class="list-group-count">(9)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-62a004b95946bb97541afa471dcca73a"
+           role="tabpanel" aria-labelledby="heading-62a004b95946bb97541afa471dcca73a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/05/25/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL主从复制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL主从复制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/12/Mysql%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84GTID%E5%A4%8D%E5%88%B6/" title="MySQL主从架构GTID复制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL主从架构GTID复制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/11/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97/" title="MySQL二进制日志"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL二进制日志</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/11/MySQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="MySQL基础知识"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL基础知识</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="MySQL备份与恢复"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL备份与恢复</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/05/MySQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/" title="MySQL安装初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL安装初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/28/MySQL%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB/" title="MySQL常用命令汇总"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">MySQL常用命令汇总</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/11/Mycat%E5%AE%9E%E7%8E%B0MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="Mycat实现MySQL读写分离"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Mycat实现MySQL读写分离</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/14/MySQl%E5%A4%9A%E4%B8%BB%E9%9B%86%E7%BE%A4PXC/" title="PXC(Percona XtraDB Cluster)8.0.32集群"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PXC(Percona XtraDB Cluster)8.0.32集群</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,799 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="K8s高频命令实操手册">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8s高频命令实操手册">
+<meta property="og:url" content="https://www.xcjyc.top/2025/11/05/K8s%E9%AB%98%E9%A2%91%E5%91%BD%E4%BB%A4%E5%AE%9E%E6%93%8D%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="K8s高频命令实操手册">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/K8s.jpg">
+<meta property="article:published_time" content="2025-11-05T06:50:07.000Z">
+<meta property="article:modified_time" content="2025-11-07T02:39:07.872Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="K8s">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/K8s.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>K8s高频命令实操手册 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="K8s高频命令实操手册"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-05 14:50" pubdate>
+          2025年11月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">K8s高频命令实操手册</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>这些命令基本覆盖日常90%的操作，建议收藏。实际使用中配合tab自动补全，效率会更高。遇到复杂问题，先看events、log和describe，大部分都能找到原因。</p>
+<p><strong>记住：生产环境删东西前一定要确认命名空间！！！</strong></p>
+</blockquote>
+<h3 id="1-查看资源-看东西"><a href="#1-查看资源-看东西" class="headerlink" title="1. 查看资源 - 看东西"></a>1. 查看资源 - 看东西</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查Pod，带IP和节点信息，这个最常用</span><br>kubectl get pod -o wide -n opsnot<br><br><span class="hljs-comment"># 看所有命名空间的Pod</span><br>kubectl get pod -A<br><br><span class="hljs-comment"># 筛选某个节点上的Pod</span><br>kubectl get pod -A --field-selector spec.nodeName=node-01<br><br><span class="hljs-comment"># 查看Pod详情，排查问题必备</span><br>kubectl describe pod &lt;pod-name&gt; -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 看Pod日志，加-f实时刷新</span><br>kubectl logs &lt;pod-name&gt; -n opsnot -f<br><br><span class="hljs-comment"># 多容器Pod看指定容器日志</span><br>kubectl logs &lt;pod-name&gt; -c &lt;container-name&gt; -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 看之前挂掉的容器日志</span><br>kubectl logs &lt;pod-name&gt; --previous<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-进容器-调试"><a href="#2-进容器-调试" class="headerlink" title="2. 进容器 - 调试"></a>2. 进容器 - 调试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进Pod执行命令，最常用sh或bash</span><br>kubectl <span class="hljs-built_in">exec</span> -it &lt;pod-name&gt; -n opsnot -- /bin/sh<br><br><span class="hljs-comment"># 多容器指定进哪个</span><br>kubectl <span class="hljs-built_in">exec</span> -it &lt;pod-name&gt; -c &lt;container-name&gt; -n &lt;namespace&gt; -- /bin/bash<br><br><span class="hljs-comment"># 不进容器直接执行命令</span><br>kubectl <span class="hljs-built_in">exec</span> &lt;pod-name&gt; -n &lt;namespace&gt; -- <span class="hljs-built_in">ls</span> -la /app<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-删除重建-常规操作"><a href="#3-删除重建-常规操作" class="headerlink" title="3. 删除重建 - 常规操作"></a>3. 删除重建 - 常规操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 删Pod，ReplicaSet会自动重建</span><br>kubectl delete pod &lt;pod-name&gt; -n opsnot<br><br><span class="hljs-comment"># 强制删除卡住的Pod</span><br>kubectl delete pod &lt;pod-name&gt; -n &lt;namespace&gt; --force --grace-period=0<br><br><span class="hljs-comment"># 删除deployment（慎用）</span><br>kubectl delete deployment &lt;deployment-name&gt; -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 批量删除某个标签的Pod</span><br>kubectl delete pod -l app=opsnot -n &lt;namespace&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-扩缩容-调资源"><a href="#4-扩缩容-调资源" class="headerlink" title="4. 扩缩容 - 调资源"></a>4. 扩缩容 - 调资源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 手动扩容到3个副本</span><br>kubectl scale deployment opsnot-app --replicas=3 -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 缩到0，相当于停服务 </span><br>kubectl scale deployment &lt;deployment-name&gt; --replicas=0 -n &lt;namespace&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-滚动更新-发版"><a href="#5-滚动更新-发版" class="headerlink" title="5. 滚动更新 - 发版"></a>5. 滚动更新 - 发版</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 更新镜像版本</span><br>kubectl <span class="hljs-built_in">set</span> image deployment/&lt;deployment-name&gt; &lt;container-name&gt;=&lt;new-image&gt; -n opsnot<br><br><span class="hljs-comment"># 例子</span><br>kubectl <span class="hljs-built_in">set</span> image deployment/opsnot-app nginx=nginx:1.21 -n prod<br><br><span class="hljs-comment"># 查看发布状态</span><br>kubectl rollout status deployment/&lt;deployment-name&gt; -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 看发布历史</span><br>kubectl rollout <span class="hljs-built_in">history</span> deployment/&lt;deployment-name&gt; -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 回滚到上一版本</span><br>kubectl rollout undo deployment/opsnot-app -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 回滚到指定版本</span><br>kubectl rollout undo deployment/&lt;deployment-name&gt; --to-revision=2 -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 暂停发布</span><br>kubectl rollout pause deployment/&lt;deployment-name&gt; -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 恢复发布</span><br>kubectl rollout resume deployment/&lt;deployment-name&gt; -n &lt;namespace&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-配置管理-改配置"><a href="#6-配置管理-改配置" class="headerlink" title="6. 配置管理 - 改配置"></a>6. 配置管理 - 改配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编辑deployment配置</span><br>kubectl edit deployment opsnot-app -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 查看ConfigMap</span><br>kubectl get cm -n &lt;namespace&gt;<br>kubectl describe cm opsnot-config -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 查看Secret（base64编码的）</span><br>kubectl get secret -n &lt;namespace&gt;<br>kubectl get secret &lt;secret-name&gt; -n &lt;namespace&gt; -o yaml<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-资源导出-备份配置"><a href="#7-资源导出-备份配置" class="headerlink" title="7. 资源导出 - 备份配置"></a>7. 资源导出 - 备份配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 导出yaml，方便备份或迁移</span><br>kubectl get deployment opsnot-app -n &lt;namespace&gt; -o yaml &gt; backup.yaml<br><br><span class="hljs-comment"># 导出所有deployment</span><br>kubectl get deployment -n &lt;namespace&gt; -o yaml &gt; all-deployments.yaml<br><br><span class="hljs-comment"># 不要status和一些无用信息</span><br>kubectl get deployment &lt;deployment-name&gt; -n &lt;namespace&gt; -o yaml --<span class="hljs-built_in">export</span> &gt; clean.yaml<br></code></pre></td></tr></table></figure>
+
+<h3 id="8-应用配置-部署"><a href="#8-应用配置-部署" class="headerlink" title="8. 应用配置 - 部署"></a>8. 应用配置 - 部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 从yaml创建资源</span><br>kubectl apply -f deployment.yaml<br><br><span class="hljs-comment"># 从目录批量创建</span><br>kubectl apply -f ./opsnot-configs/<br><br><span class="hljs-comment"># 从URL直接部署</span><br>kubectl apply -f https://xxx.com/deploy.yaml<br><br><span class="hljs-comment"># 删除yaml定义的资源</span><br>kubectl delete -f deployment.yaml<br></code></pre></td></tr></table></figure>
+
+<h3 id="9-端口转发-本地调试"><a href="#9-端口转发-本地调试" class="headerlink" title="9. 端口转发 - 本地调试"></a>9. 端口转发 - 本地调试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 把Pod端口转发到本地，调试神器</span><br>kubectl port-forward opsnot-pod-xxx 8080:80 -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 转发Service</span><br>kubectl port-forward service/opsnot-svc 8080:80 -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 监听所有网卡（可以让局域网其他机器访问）</span><br>kubectl port-forward --address 0.0.0.0 &lt;pod-name&gt; 8080:80 -n &lt;namespace&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="10-复制文件-传文件"><a href="#10-复制文件-传文件" class="headerlink" title="10. 复制文件 - 传文件"></a>10. 复制文件 - 传文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 从Pod复制文件到本地</span><br>kubectl <span class="hljs-built_in">cp</span> opsnot/&lt;pod-name&gt;:/path/to/file ./local-file<br><br><span class="hljs-comment"># 从本地复制到Pod</span><br>kubectl <span class="hljs-built_in">cp</span> ./local-file &lt;namespace&gt;/&lt;pod-name&gt;:/path/to/file<br><br><span class="hljs-comment"># 多容器指定容器</span><br>kubectl <span class="hljs-built_in">cp</span> &lt;namespace&gt;/&lt;pod-name&gt;:/path/to/file ./local-file -c &lt;container-name&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="11-节点操作-维护"><a href="#11-节点操作-维护" class="headerlink" title="11. 节点操作 - 维护"></a>11. 节点操作 - 维护</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看节点</span><br>kubectl get nodes -o wide<br><br><span class="hljs-comment"># 查看节点详情（能看到资源使用）</span><br>kubectl describe node opsnot-node-01<br><br><span class="hljs-comment"># 标记节点不可调度，要维护时用</span><br>kubectl cordon &lt;node-name&gt;<br><br><span class="hljs-comment"># 恢复节点调度</span><br>kubectl uncordon &lt;node-name&gt;<br><br><span class="hljs-comment"># 驱逐节点上的Pod（维护前操作）</span><br>kubectl drain &lt;node-name&gt; --ignore-daemonsets --delete-emptydir-data<br></code></pre></td></tr></table></figure>
+
+<h3 id="12-资源使用-看监控"><a href="#12-资源使用-看监控" class="headerlink" title="12. 资源使用 - 看监控"></a>12. 资源使用 - 看监控</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 看Pod资源占用（需要metrics-server）</span><br>kubectl top pod -n opsnot<br><br><span class="hljs-comment"># 看所有命名空间</span><br>kubectl top pod -A<br><br><span class="hljs-comment"># 看节点资源</span><br>kubectl top node<br><br><span class="hljs-comment"># 按CPU排序</span><br>kubectl top pod -n &lt;namespace&gt; --sort-by=cpu<br><br><span class="hljs-comment"># 按内存排序</span><br>kubectl top pod -n &lt;namespace&gt; --sort-by=memory<br></code></pre></td></tr></table></figure>
+
+<h3 id="13-标签操作-打标签"><a href="#13-标签操作-打标签" class="headerlink" title="13. 标签操作 - 打标签"></a>13. 标签操作 - 打标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 给Pod打标签</span><br>kubectl label pod &lt;pod-name&gt; <span class="hljs-built_in">env</span>=opsnot -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 修改标签（覆盖）</span><br>kubectl label pod &lt;pod-name&gt; <span class="hljs-built_in">env</span>=<span class="hljs-built_in">test</span> --overwrite -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 删除标签</span><br>kubectl label pod &lt;pod-name&gt; <span class="hljs-built_in">env</span>- -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 查询带标签的资源</span><br>kubectl get pod -l <span class="hljs-built_in">env</span>=prod -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 多个标签条件</span><br>kubectl get pod -l <span class="hljs-string">&#x27;env=prod,app=opsnot&#x27;</span> -n &lt;namespace&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="14-事件查看-排查问题"><a href="#14-事件查看-排查问题" class="headerlink" title="14. 事件查看 - 排查问题"></a>14. 事件查看 - 排查问题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看命名空间事件，找问题先看这个</span><br>kubectl get events -n opsnot --sort-by=<span class="hljs-string">&#x27;.lastTimestamp&#x27;</span><br><br><span class="hljs-comment"># 看所有命名空间事件</span><br>kubectl get events -A --sort-by=<span class="hljs-string">&#x27;.lastTimestamp&#x27;</span><br><br><span class="hljs-comment"># 监控事件（实时）</span><br>kubectl get events -n &lt;namespace&gt; -w<br></code></pre></td></tr></table></figure>
+
+<h3 id="15-常用组合技-实战"><a href="#15-常用组合技-实战" class="headerlink" title="15. 常用组合技 - 实战"></a>15. 常用组合技 - 实战</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 批量重启某个deployment的所有Pod</span><br>kubectl rollout restart deployment/opsnot-app -n &lt;namespace&gt;<br><br><span class="hljs-comment"># 找出不在Running状态的Pod</span><br>kubectl get pod -A --field-selector=status.phase!=Running<br><br><span class="hljs-comment"># 找出重启次数多的Pod（可能有问题）</span><br>kubectl get pod -A --sort-by=<span class="hljs-string">&#x27;.status.containerStatuses[0].restartCount&#x27;</span><br><br><span class="hljs-comment"># 看某个Pod的完整yaml（调试配置问题）</span><br>kubectl get pod &lt;pod-name&gt; -n &lt;namespace&gt; -o yaml | less<br><br><span class="hljs-comment"># 临时起个Pod测试网络（用完自动删）</span><br>kubectl run opsnot-test --<span class="hljs-built_in">rm</span> -i --<span class="hljs-built_in">tty</span> --image=nicolaka/netshoot -- /bin/bash<br><br><span class="hljs-comment"># 查看集群信息</span><br>kubectl cluster-info<br><br><span class="hljs-comment"># 查看API资源类型</span><br>kubectl api-resources<br></code></pre></td></tr></table></figure>
+
+<h3 id="16-命名空间操作"><a href="#16-命名空间操作" class="headerlink" title="16. 命名空间操作"></a>16. 命名空间操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 列出所有命名空间</span><br>kubectl get ns<br><br><span class="hljs-comment"># 创建命名空间 </span><br>kubectl create ns opsnot<br><br><span class="hljs-comment"># 删除命名空间（小心，会删里面所有东西）</span><br>kubectl delete ns &lt;namespace&gt;<br><br><span class="hljs-comment"># 切换默认命名空间（需要kubens工具）</span><br>kubens opsnot<br></code></pre></td></tr></table></figure>
+
+<h3 id="17-小技巧"><a href="#17-小技巧" class="headerlink" title="17. 小技巧"></a>17. 小技巧</h3><p><strong>设置别名，省时间：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 加到 ~/.bashrc 或 ~/.zshrc</span><br><span class="hljs-built_in">alias</span> k=<span class="hljs-string">&#x27;kubectl&#x27;</span><br><span class="hljs-built_in">alias</span> kgp=<span class="hljs-string">&#x27;kubectl get pod&#x27;</span><br><span class="hljs-built_in">alias</span> kgpa=<span class="hljs-string">&#x27;kubectl get pod -A&#x27;</span><br><span class="hljs-built_in">alias</span> kd=<span class="hljs-string">&#x27;kubectl describe&#x27;</span><br><span class="hljs-built_in">alias</span> ke=<span class="hljs-string">&#x27;kubectl edit&#x27;</span><br><span class="hljs-built_in">alias</span> kdel=<span class="hljs-string">&#x27;kubectl delete&#x27;</span><br><span class="hljs-built_in">alias</span> kl=<span class="hljs-string">&#x27;kubectl logs&#x27;</span><br><span class="hljs-built_in">alias</span> kx=<span class="hljs-string">&#x27;kubectl exec -it&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>自动补全（强烈推荐）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Bash</span><br><span class="hljs-built_in">source</span> &lt;(kubectl completion bash)<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;source &lt;(kubectl completion bash)&quot;</span> &gt;&gt; ~/.bashrc<br><br><span class="hljs-comment"># Zsh</span><br><span class="hljs-built_in">source</span> &lt;(kubectl completion zsh)<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;source &lt;(kubectl completion zsh)&quot;</span> &gt;&gt; ~/.zshrc<br></code></pre></td></tr></table></figure>
+
+<p><strong>切换上下文：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看所有集群上下文</span><br>kubectl config get-contexts<br><br><span class="hljs-comment"># 切换集群</span><br>kubectl config use-context &lt;context-name&gt;<br><br><span class="hljs-comment"># 切换集群</span><br>kubectx prod-cluster   （加班哥强烈推荐，好用！）<br><br><span class="hljs-comment"># 查看当前上下文</span><br>kubectl config current-context<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<blockquote>
+<p>本文来自 <a target="_blank" rel="noopener" href="https://blog.opsnot.com/">opsnot.com</a>。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/K8s/" class="category-chain-item">K8s</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/K8s/" class="print-no-link">#K8s</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>K8s高频命令实操手册</div>
+      <div>https://www.xcjyc.top/2025/11/05/K8s高频命令实操手册/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年11月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/06/Kubectl-Describe%EF%BC%8Ck8s%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%E5%88%A9%E5%99%A8/" title="Kubectl Describe，k8s故障排查利器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Kubectl Describe，k8s故障排查利器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/04/Docker%E9%AB%98%E9%A2%91%E5%91%BD%E4%BB%A4%E5%AE%9E%E6%93%8D%E6%89%8B%E5%86%8C/" title="Docker高频命令实操手册">
+                        <span class="hidden-mobile">Docker高频命令实操手册</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="K8s"
+        id="heading-88fd6764b79c7f9a3dd50b5d42cd24a9" role="tab" data-toggle="collapse" href="#collapse-88fd6764b79c7f9a3dd50b5d42cd24a9"
+        aria-expanded="true"
+      >
+        K8s
+        <span class="list-group-count">(2)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-88fd6764b79c7f9a3dd50b5d42cd24a9"
+           role="tabpanel" aria-labelledby="heading-88fd6764b79c7f9a3dd50b5d42cd24a9">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/11/05/K8s%E9%AB%98%E9%A2%91%E5%91%BD%E4%BB%A4%E5%AE%9E%E6%93%8D%E6%89%8B%E5%86%8C/" title="K8s高频命令实操手册"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">K8s高频命令实操手册</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/11/06/Kubectl-Describe%EF%BC%8Ck8s%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%E5%88%A9%E5%99%A8/" title="Kubectl Describe，k8s故障排查利器"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Kubectl Describe，k8s故障排查利器</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

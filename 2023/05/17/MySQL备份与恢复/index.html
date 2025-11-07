@@ -1,0 +1,914 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCJYC">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MySQL备份与恢复,mysqldump备份工具，xtrabackup备份工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL备份与恢复">
+<meta property="og:url" content="https://www.xcjyc.top/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/index.html">
+<meta property="og:site_name" content="xcjyc.top">
+<meta property="og:description" content="MySQL备份与恢复,mysqldump备份工具，xtrabackup备份工具">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xcjyc.top/img/mysql.png">
+<meta property="article:published_time" content="2023-05-17T06:59:42.000Z">
+<meta property="article:modified_time" content="2023-07-18T05:30:20.090Z">
+<meta property="article:author" content="XCJYC">
+<meta property="article:tag" content="Backup">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="MysqlDump">
+<meta property="article:tag" content="XtraBackup">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.xcjyc.top/img/mysql.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>MySQL备份与恢复 - xcjyc.top</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.xcjyc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"bash"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 50vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCJYC-BLOG</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MySQL备份与恢复"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        XCJYC
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-17 14:59" pubdate>
+          2023年5月17日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">MySQL备份与恢复</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="备份类型"><a href="#备份类型" class="headerlink" title="备份类型"></a>备份类型</h3><p>完全备份：备份整个数据集</p>
+<p>部分备份：只备份数据子集（如部分库或表）</p>
+<p>增量备份：仅备份最近一次完全备份或增量备份以来变化的数据，备份较快，还原复杂</p>
+<p>差异备份：仅备份最近一次完全备份以来变化的数据，备份较快，还原简单</p>
+<h3 id="冷备份与还原"><a href="#冷备份与还原" class="headerlink" title="冷备份与还原"></a>冷备份与还原</h3><blockquote>
+<p>需要停止数据库服务</p>
+</blockquote>
+<p>备份步骤：停止数据库服务–&gt;备份数据库文件、配置、日志</p>
+<p>还原步骤：安装数据库服务（最好版本一致）–&gt;复制相应文件（数据文件、配置文件、日志文件）并保留属性–&gt;启动服务</p>
+<h4 id="mysql-8-0"><a href="#mysql-8-0" class="headerlink" title="mysql 8.0:"></a>mysql 8.0:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## 备份</span><br>[root@Rocky8-11 ~]# systemctl stop mysqld<br>[root@Rocky8-11 ~]# <span class="hljs-built_in">mkdir</span> /backup<br>[root@Rocky8-11 ~]# rsync -av /var/lib/mysql 10.0.0.11:/backup/<br>[root@Rocky8-11 ~]# rsync -arv /etc/my*  10.0.0.11:/backup/<br>[root@Rocky8-11 ~]# rsync -arv /data/binlog  10.0.0.11:/backup/<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## 还原</span><br>[root@Rocky8-12 ~]# yum install -y mysql-server<br>[root@Rocky8-12 ~]# rsync -arv 10.0.0.11:/backup/mysql/ /var/lib/mysql/<br>[root@Rocky8-12 ~]# rsync -arv 10.0.0.11:/backup/my.cnf* /etc/<br>[root@Rocky8-12 ~]# rsync -arv 10.0.0.11:/backup/binlog /data/<br>[root@Rocky8-12 ~]# systemctl <span class="hljs-built_in">enable</span> --now mysqld<br>[root@Rocky8-12 ~]# ss -ntl <br>[root@Rocky8-12 ~]# mysql <br>01:43:07(root@localhost) [(none)] show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| hellodb            |<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| sys                |<br>| <span class="hljs-built_in">test</span>               |<br>+--------------------+<br>6 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.01 sec)<br></code></pre></td></tr></table></figure>
+
+<h4 id="mariadb-10-3"><a href="#mariadb-10-3" class="headerlink" title="mariadb 10.3"></a>mariadb 10.3</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">## 备份+还原（源主机：Rocky8-12  目标主机：Rocky8-13）</span><br>[root@Rocky8-13 ~]# dnf install -y  mariadb-server<br>[root@Rocky8-13 ~]# <span class="hljs-built_in">mkdir</span> -p /data/binlog<br><br>[root@Rocky8-12 ~]# systemctl stop mariadb<br>[root@Rocky8-12 ~]# rsync -arv /etc/my.cnf*  10.0.0.13:/etc/<br>[root@Rocky8-12 ~]# rsync -arv /var/lib/mysql/ 10.0.0.13:/var/lib/mysql/<br>[root@Rocky8-12 ~]# rsync -arv /data/binlog/ 10.0.0.13:/data/binlog<br><br>[root@Rocky8-13 data]# <span class="hljs-built_in">chown</span> -R mysql.mysql /var/lib/mysql/<br>[root@Rocky8-13 data]# <span class="hljs-built_in">chown</span> -R mysql.mysql /data/binlog/<br>[root@Rocky8-13 data]# systemctl start mariadb<br>[root@Rocky8-13 data]# mysql <br>Welcome to the MariaDB monitor.  Commands end with ; or \g.<br>Your MariaDB connection <span class="hljs-built_in">id</span> is 9<br>Server version: 10.3.35-MariaDB-<span class="hljs-built_in">log</span> MariaDB Server<br><br>Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.<br><br>Type <span class="hljs-string">&#x27;help;&#x27;</span> or <span class="hljs-string">&#x27;\h&#x27;</span> <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>. Type <span class="hljs-string">&#x27;\c&#x27;</span> to clear the current input statement.<br><br>MariaDB [(none)]&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="MysqlDump工具"><a href="#MysqlDump工具" class="headerlink" title="MysqlDump工具"></a>MysqlDump工具</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Dumping structure <span class="hljs-keyword">and</span> contents <span class="hljs-keyword">of</span> MySQL databases <span class="hljs-keyword">and</span> <span class="hljs-keyword">tables</span>.<br><span class="hljs-keyword">Usage</span>: mysqldump [<span class="hljs-keyword">OPTIONS</span>] <span class="hljs-keyword">database</span> [<span class="hljs-keyword">tables</span>]<br><span class="hljs-keyword">OR</span>     mysqldump [<span class="hljs-keyword">OPTIONS</span>] <span class="hljs-comment">--databases DB1 [DB2 DB3...]</span><br><span class="hljs-keyword">OR</span>     mysqldump [<span class="hljs-keyword">OPTIONS</span>] <span class="hljs-comment">--all-databases</span><br><span class="hljs-keyword">OR</span>     mysqldump [<span class="hljs-keyword">OPTIONS</span>] <span class="hljs-comment">--system=[SYSTEMOPTIONS]]</span><br></code></pre></td></tr></table></figure>
+
+<p>常用参数：</p>
+<p>  -u, –user&#x3D;name     		登录用户名</p>
+<p>  -p, –password[&#x3D;name] 	  登录密码</p>
+<p>  -A, –all-databases 		备份所有数据库</p>
+<p>  -B, –databases     		备份指定数据库</p>
+<p>  -E, –events        		备份相关的所有事件调度器（计划任务）</p>
+<p>  -R, –routines      		备份存储过程和自定义函数</p>
+<p>  –master-data[&#x3D;#]   		默认为&#x3D;1，&#x3D;1 适合于主从复制（数据之前加一个非注释的CHANGE MASTER TO语句） &#x3D;2适合于单机备份还原（记录为被注释的CHANGE MASTER TO语句）CHANGE MASTER TO 记录的为备份时间点的二进制日志位置				 </p>
+<p>  -F, –flush-logs    		备份前生成新的二进制文件</p>
+<h4 id="建议备份策略："><a href="#建议备份策略：" class="headerlink" title="建议备份策略："></a>建议备份策略：</h4><p>innoDB</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysqldump -uroot -p -A -F -E -R --triggers --single-transaction --master-data=1 --flush-privileges --default-character-set=utf8 --hex-blob&gt;<span class="hljs-variable">$&#123;BACKuP&#125;</span>/fu11bak_<span class="hljs-variable">$&#123;BACKUP_TIME&#125;</span>.sql<br></code></pre></td></tr></table></figure>
+
+<p>myisam</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysqldump -uroot -p -A -F -E -R -x --master-data=1 --flush-privileges  --triggers --defau1t-character-set=utf8 --hex-b1ob &gt;<span class="hljs-variable">$&#123;BACKUP&#125;</span>/fu11bak_<span class="hljs-variable">$&#123;BACKUP_TIME&#125;</span>.sql<br></code></pre></td></tr></table></figure>
+
+<h4 id="例一：完全备份和还原（冷备份）"><a href="#例一：完全备份和还原（冷备份）" class="headerlink" title="例一：完全备份和还原（冷备份）"></a>例一：完全备份和还原（冷备份）</h4><p>备份</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-11 ~]# <span class="hljs-built_in">cat</span> /etc/my.cnf<br>[mysqld]<br>log_bin=/data/binlog/mysql-bin<br>[root@Rocky8-11 ~]# <span class="hljs-built_in">mkdir</span> /backup<br>[root@Rocky8-11 ~]# mysqldump -u root -A -F --single-transaction --master-data=2 | gzip &gt; /backup/all-`<span class="hljs-built_in">date</span> +%F`.sql.gz<br>WARNING: --master-data is deprecated and will be removed <span class="hljs-keyword">in</span> a future version. Use --source-data instead.<br>[root@Rocky8-11 ~]# scp /backup/all-2023-05-25.sql.gz 10.0.0.16:/backup<br></code></pre></td></tr></table></figure>
+
+<p>还原</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-16 ~]# yum -y install mysql-server<br>[root@Rocky8-16 ~]# systemctl start mysqld<br>[root@Rocky8-16 ~]# gzip -d /backup/all-2023-05-25.sql.gz<br>[root@Rocky8-16 ~]# mysql <br>mysql&gt; <span class="hljs-built_in">set</span> sql_log_bin=off;<br>mysql&gt; <span class="hljs-built_in">source</span> /backup/all-2023-05-25.sql<br>mysql&gt; <span class="hljs-built_in">set</span> sql_log_bin=on;<br>mysql&gt; show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| hellodb            |<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| sys                |<br>| <span class="hljs-built_in">test</span>               |<br>+--------------------+<br>6 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.01 sec)<br></code></pre></td></tr></table></figure>
+
+<h4 id="例二：利用二进制日志，恢复误删除的表"><a href="#例二：利用二进制日志，恢复误删除的表" class="headerlink" title="例二：利用二进制日志，恢复误删除的表"></a>例二：利用二进制日志，恢复误删除的表</h4><p><strong>误删除数据</strong></p>
+<p>二进制日志文件独立位置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-11 ~]# <span class="hljs-built_in">cat</span> /etc/my.cnf<br>[mysqld]<br>log_bin=/data/binlog/mysql-bin<br></code></pre></td></tr></table></figure>
+
+<p>完全备份</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-11 ~]# mysqldump -uroot -p -A -F --single-transaction --master-data=2  &gt; /backup/all-backup-`<span class="hljs-built_in">date</span> +%F`.sql<br>WARNING: --master-data is deprecated and will be removed <span class="hljs-keyword">in</span> a future version. Use --source-data instead.<br>Enter password: <br>[root@Rocky8-11 ~]# ll /backup/<br>total 1264<br>-rw-r--r-- 1 root root 1292875 May 25 21:02 all-backup-2023-05-25.sql<br></code></pre></td></tr></table></figure>
+
+<p>完全备份后数据库继续更新</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">09:03:45(root@localhost) [hellodb] insert students (name,age,gender) value (<span class="hljs-string">&#x27;x1&#x27;</span>,20,<span class="hljs-string">&#x27;m&#x27;</span>);<br>Query OK, 1 row affected (0.01 sec)<br><br>09:03:56(root@localhost) [hellodb] insert students (name,age,gender) value (<span class="hljs-string">&#x27;y2&#x27;</span>,22,<span class="hljs-string">&#x27;m&#x27;</span>);<br>Query OK, 1 row affected (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<p>破坏数据库，误删除了一张表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">09:04:05(root@localhost) [hellodb] drop table students;<br>Query OK, 0 rows affected (0.09 sec)<br></code></pre></td></tr></table></figure>
+
+<p>其它表继续更新</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs sh">09:05:34(root@localhost) [hellodb] insert teachers (name,age,gender) values (<span class="hljs-string">&#x27;A1&#x27;</span>,30,<span class="hljs-string">&#x27;M&#x27;</span>);<br>Query OK, 1 row affected (0.01 sec)<br><br>09:08:38(root@localhost) [hellodb] insert teachers (name,age,gender) values (<span class="hljs-string">&#x27;b2&#x27;</span>,33,<span class="hljs-string">&#x27;M&#x27;</span>);<br>Query OK, 1 row affected (0.01 sec)<br><br>09:09:04(root@localhost) [hellodb] <span class="hljs-keyword">select</span> * from teachers;<br>+-----+---------------+-----+--------+<br>| TID | Name          | Age | Gender |<br>+-----+---------------+-----+--------+<br>|   1 | Song Jiang    |  45 | M      |<br>|   2 | Zhang Sanfeng |  94 | M      |<br>|   3 | Miejue Shitai |  77 | F      |<br>|   4 | Lin Chaoying  |  93 | F      |<br>|   5 | A1            |  30 | M      |<br>|   6 | b2            |  33 | M      |<br>+-----+---------------+-----+--------+<br>6 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<p><strong>还原过程</strong></p>
+<p>从最新的完全备份中找到change master to 位置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-11 ~]# grep <span class="hljs-string">&#x27;\-\- CHANGE MASTER TO&#x27;</span>  /backup/all-backup-2023-05-25.sql <br>-- CHANGE MASTER TO MASTER_LOG_FILE=<span class="hljs-string">&#x27;mysql-bin.000003&#x27;</span>, MASTER_LOG_POS=157;<br></code></pre></td></tr></table></figure>
+
+<p>备份完全备份之后的二进制日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@Rocky8-11 ~]# mysqlbinlog --start-position=157 /data/binlog/mysql-bin.000003 &gt; /backup/binlog.sql<br></code></pre></td></tr></table></figure>
+
+<p>找到误操作语句，从备份中删除，若文件过大可以用sed工具：sed -i.bak ‘&#x2F;^DROP TABLE&#x2F;d’ &#x2F;backup&#x2F;binlog.sql</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"> [root@Rocky8-11 ~]# vim /backup/binlog.sql <br><span class="hljs-comment">### DROP TABLE `students` /* generated by server */</span><br></code></pre></td></tr></table></figure>
+
+<p>测试还原</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs sh">mysql&gt; <span class="hljs-built_in">set</span> sql_log_bin=0;<br>mysql&gt; <span class="hljs-built_in">source</span> all-backup-2023-05-25.sql<br>mysql&gt; <span class="hljs-built_in">source</span> binlog.sql<br>mysql&gt; <span class="hljs-built_in">set</span> sql_log_bin=1;<br><br>mysql&gt; use hellodb<br>mysql&gt; show tables;<br>+-------------------+<br>| Tables_in_hellodb |<br>+-------------------+<br>| classes           |<br>| coc               |<br>| courses           |<br>| scores            |<br>| students          |<br>| teachers          |<br>| toc               |<br>+-------------------+<br>7 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br>mysql&gt; <span class="hljs-keyword">select</span> * from students;<br>+-------+---------------+-----+--------+---------+-----------+<br>| StuID | Name          | Age | Gender | ClassID | TeacherID |<br>+-------+---------------+-----+--------+---------+-----------+<br>|     1 | Shi Zhongyu   |  22 | M      |       2 |         3 |<br>|     2 | Shi Potian    |  22 | M      |       1 |         7 |<br>|     3 | Xie Yanke     |  53 | M      |       2 |        16 |<br>|     4 | Ding Dian     |  32 | M      |       4 |         4 |<br>|     5 | Yu Yutong     |  26 | M      |       3 |         1 |<br>|     6 | Shi Qing      |  46 | M      |       5 |      NULL |<br>|     7 | Xi Ren        |  19 | F      |       3 |      NULL |<br>|     8 | Lin Daiyu     |  17 | F      |       7 |      NULL |<br>|     9 | Ren Yingying  |  20 | F      |       6 |      NULL |<br>|    10 | Yue Lingshan  |  19 | F      |       3 |      NULL |<br>|    11 | Yuan Chengzhi |  23 | M      |       6 |      NULL |<br>|    12 | Wen Qingqing  |  19 | F      |       1 |      NULL |<br>|    13 | Tian Boguang  |  33 | M      |       2 |      NULL |<br>|    14 | Lu Wushuang   |  17 | F      |       3 |      NULL |<br>|    15 | Duan Yu       |  19 | M      |       4 |      NULL |<br>|    16 | Xu Zhu        |  21 | M      |       1 |      NULL |<br>|    17 | Lin Chong     |  25 | M      |       4 |      NULL |<br>|    18 | Hua Rong      |  23 | M      |       7 |      NULL |<br>|    19 | Xue Baochai   |  18 | F      |       6 |      NULL |<br>|    20 | Diao Chan     |  19 | F      |       7 |      NULL |<br>|    21 | Huang Yueying |  22 | F      |       6 |      NULL |<br>|    22 | Xiao Qiao     |  20 | F      |       1 |      NULL |<br>|    23 | Ma Chao       |  23 | M      |       4 |      NULL |<br>|    24 | Xu Xian       |  27 | M      |    NULL |      NULL |<br>|    25 | Sun Dasheng   | 100 | M      |    NULL |      NULL |<br>|    26 | x1            |  20 | M      |    NULL |      NULL |<br>|    27 | y2            |  22 | M      |    NULL |      NULL |<br>+-------+---------------+-----+--------+---------+-----------+<br>27 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br>mysql&gt; <span class="hljs-keyword">select</span> * from teachers;<br>+-----+---------------+-----+--------+<br>| TID | Name          | Age | Gender |<br>+-----+---------------+-----+--------+<br>|   1 | Song Jiang    |  45 | M      |<br>|   2 | Zhang Sanfeng |  94 | M      |<br>|   3 | Miejue Shitai |  77 | F      |<br>|   4 | Lin Chaoying  |  93 | F      |<br>|   5 | A1            |  30 | M      |<br>|   6 | b2            |  33 | M      |<br>+-----+---------------+-----+--------+<br>6 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br>mysql&gt; <br></code></pre></td></tr></table></figure>
+
+<h3 id="XtraBackup备份工具"><a href="#XtraBackup备份工具" class="headerlink" title="XtraBackup备份工具"></a>XtraBackup备份工具</h3><p>官网：<a target="_blank" rel="noopener" href="https://www.percona.com/downloads">https://www.percona.com/downloads</a></p>
+<p>特点：</p>
+<ul>
+<li>备份还原过程快速、可靠</li>
+<li>备份过程不会打断正在执行的事务</li>
+<li>能够基于压缩等功能节约磁盘空间和流量</li>
+<li>自动实现备份检验</li>
+<li>开源、免费</li>
+</ul>
+<p>安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">[root@Rocky8-11 ~]# yum install -y percona-xtrabackup-80-8.0.33-27.1.el8.x86_64.rpm<br></code></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>备份文件父路径必须存在</li>
+<li>还原时必须停止数据库服务</li>
+<li>还原时目标数据目录必须为空，除非指定innobackuppex –force-non-empty-directorires，否则–copy-back不会覆盖</li>
+<li>还原后文件属性会被保留，须调整文件属主属组</li>
+</ul>
+<h4 id="案例：利用xtrabackup，实现数据库增量备份及还原"><a href="#案例：利用xtrabackup，实现数据库增量备份及还原" class="headerlink" title="案例：利用xtrabackup，实现数据库增量备份及还原"></a>案例：利用xtrabackup，实现数据库增量备份及还原</h4><p>备份：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><code class="hljs sh">[root@Rocky8-11 ~]# mysql <br>03:31:17(root@localhost) [(none)] show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| hellodb            |<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| sys                |<br>+--------------------+<br>5 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.02 sec)<br><br><span class="hljs-comment">## 安装，创建备份目录</span><br>[root@Rocky8-11 ~]# yum install -y percona-xtrabackup-80-8.0.33-27.1.el8.x86_64.rpm<br>[root@Rocky8-11 ~]# <span class="hljs-built_in">mkdir</span> /backup<br><br><span class="hljs-comment">## 完全备份</span><br>[root@Rocky8-11 ~]# xtrabackup  -uroot -p  --backup --target-dir=/backup/base<br>[root@Rocky8-11 ~]# ll /backup<br>total 4<br>drwxr-x--- 6 root root 4096 May 26 15:34 base<br><br><span class="hljs-comment">## 第一次增加修改数据</span><br>03:36:18(root@localhost) [hellodb] insert students (name,age,gender) value (<span class="hljs-string">&#x27;X1&#x27;</span>,20,<span class="hljs-string">&#x27;M&#x27;</span>);<br>Query OK, 1 row affected (0.01 sec)<br><br>03:36:33(root@localhost) [hellodb] insert students (name,age,gender) value (<span class="hljs-string">&#x27;Y1&#x27;</span>,23,<span class="hljs-string">&#x27;M&#x27;</span>);<br>Query OK, 1 row affected (0.00 sec)<br><br><span class="hljs-comment">## 第一次增量备份，备份目录/backup/inc1,相对于/backup/base做增量备份</span><br>[root@Rocky8-11 ~]# xtrabackup  -uroot -p  --backup --target-dir=/backup/inc1 --incremental-basedir=/backup/base<br>[root@Rocky8-11 ~]# ll /backup<br>total 8<br>drwxr-x--- 6 root root 4096 May 26 15:34 base<br>drwxr-x--- 6 root root 4096 May 26 15:39 inc1<br><br><span class="hljs-comment">## 第二次增加修改数据</span><br>03:42:03(root@localhost) [hellodb] insert teachers (name,age,gender) values (<span class="hljs-string">&#x27;A1&#x27;</span>,30,<span class="hljs-string">&#x27;M&#x27;</span>);<br>Query OK, 1 row affected (0.02 sec)<br><br>03:42:57(root@localhost) [hellodb] insert teachers (name,age,gender) values (<span class="hljs-string">&#x27;B2&#x27;</span>,36,<span class="hljs-string">&#x27;F&#x27;</span>);<br>Query OK, 1 row affected (0.01 sec)<br><br><span class="hljs-comment">## 第二次增量备份，备份目录/backup/inc2,相对于/backup/inc1做增量备份</span><br>[root@Rocky8-11 ~]# xtrabackup  -uroot -p  --backup --target-dir=/backup/inc2 --incremental-basedir=/backup/inc1<br>[root@Rocky8-11 ~]# ll /backup<br>total 12<br>drwxr-x--- 6 root root 4096 May 26 15:34 base<br>drwxr-x--- 6 root root 4096 May 26 15:39 inc1<br>drwxr-x--- 6 root root 4096 May 26 15:44 inc2<br><br><span class="hljs-comment">## 可以查看备份目录的文件信息：（innodb_from_lsn、innodb_to_lsn）</span><br>[root@Rocky8-11 ~]# <span class="hljs-built_in">cat</span> /backup/base/xtrabackup_info <br>uuid = ba0a28c7-fb97-11ed-985c-000c29bb093a<br>name = <br>tool_name = xtrabackup<br>tool_command = -uroot -p=... --backup --target-dir=/backup/base<br>tool_version = 8.0.33-27<br>ibbackup_version = 8.0.33-27<br>server_version = 8.0.32<br>start_time = 2023-05-26 15:34:17<br>end_time = 2023-05-26 15:34:19<br>lock_time = 0<br>binlog_pos = filename <span class="hljs-string">&#x27;binlog.000003&#x27;</span>, position <span class="hljs-string">&#x27;157&#x27;</span><br>innodb_from_lsn = 0<br>innodb_to_lsn = 19586280<br>partial = N<br>incremental = N<br>format = file<br>compressed = N<br>encrypted = N<br><br>[root@Rocky8-11 ~]# <span class="hljs-built_in">cat</span> /backup/inc1/xtrabackup_info <br>uuid = 615f869f-fb98-11ed-985c-000c29bb093a<br>name = <br>tool_name = xtrabackup<br>tool_command = -uroot -p=... --backup --target-dir=/backup/inc1 --incremental-basedir=/backup/base<br>tool_version = 8.0.33-27<br>ibbackup_version = 8.0.33-27<br>server_version = 8.0.32<br>start_time = 2023-05-26 15:38:57<br>end_time = 2023-05-26 15:39:00<br>lock_time = 0<br>binlog_pos = filename <span class="hljs-string">&#x27;binlog.000004&#x27;</span>, position <span class="hljs-string">&#x27;157&#x27;</span><br>innodb_from_lsn = 19586280<br>innodb_to_lsn = 19587049<br>partial = N<br>incremental = Y<br>format = file<br>compressed = N<br>encrypted = N<br><br>[root@Rocky8-11 ~]# <span class="hljs-built_in">cat</span> /backup/inc2/xtrabackup_info <br>uuid = 298b2cfc-fb99-11ed-985c-000c29bb093a<br>name = <br>tool_name = xtrabackup<br>tool_command = -uroot -p=... --backup --target-dir=/backup/inc2 --incremental-basedir=/backup/inc1<br>tool_version = 8.0.33-27<br>ibbackup_version = 8.0.33-27<br>server_version = 8.0.32<br>start_time = 2023-05-26 15:44:34<br>end_time = 2023-05-26 15:44:36<br>lock_time = 0<br>binlog_pos = filename <span class="hljs-string">&#x27;binlog.000005&#x27;</span>, position <span class="hljs-string">&#x27;157&#x27;</span><br>innodb_from_lsn = 19587049<br>innodb_to_lsn = 19590016<br>partial = N<br>incremental = Y<br>format = file<br>compressed = N<br>encrypted = N<br><br></code></pre></td></tr></table></figure>
+
+<p>还原：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs sh">[root@Rocky8-11 ~]# rsync  -avr /backup/ 10.0.0.12:/backup/<br><br><span class="hljs-comment">## 安装软件包，不启动mysql服务</span><br>[root@Rocky8-12 ~]# yum install -y mysql-server<br>[root@Rocky8-12 ~]# yum install -y percona-xtrabackup-80-8.0.33-27.1.el8.x86_64.rpm<br><br><span class="hljs-comment">## 预准备完全备份，--apply-log-only 阻止回滚未完成的事务</span><br>[root@Rocky8-12 ~]# xtrabackup --prepare --apply-log-only --target-dir=/backup/base<br><br><span class="hljs-comment">## 合并第一次增量备份到完全备份</span><br>[root@Rocky8-12 ~]# xtrabackup --prepare --apply-log-only --target-dir=/backup/base --incremental-dir=/backup/inc1<br><br><span class="hljs-comment">## 合并第二次增量备份到完全备份，最后一次增量备份不需要加选项--apply-log-only</span><br>[root@Rocky8-12 ~]# xtrabackup --prepare --target-dir=/backup/base --incremental-dir=/backup/inc2<br><br><span class="hljs-comment">## 将文件复制到数据目录</span><br>[root@Rocky8-12 ~]# <span class="hljs-built_in">rm</span> -f /var/lib/mysql/*<br>[root@Rocky8-12 ~]# xtrabackup --copy-back --target-dir=/backup/base<br>[root@Rocky8-12 ~]# <span class="hljs-built_in">chown</span> -R mysql.mysql /var/lib/mysql<br>[root@Rocky8-12 ~]# systemctl start mysqld<br><br><span class="hljs-comment">## 检查还原的数据 </span><br>mysql&gt; show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| hellodb            |<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| sys                |<br>+--------------------+<br>5 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.02 sec)<br><br>mysql&gt; <span class="hljs-keyword">select</span> * from teachers;<br>+-----+---------------+-----+--------+<br>| TID | Name          | Age | Gender |<br>+-----+---------------+-----+--------+<br>|   1 | Song Jiang    |  45 | M      |<br>|   2 | Zhang Sanfeng |  94 | M      |<br>|   3 | Miejue Shitai |  77 | F      |<br>|   4 | Lin Chaoying  |  93 | F      |<br>|   5 | A1            |  30 | M      |<br>|   6 | B2            |  36 | F      |<br>+-----+---------------+-----+--------+<br>6 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br>mysql&gt; <span class="hljs-keyword">select</span> * from students;<br>+-------+---------------+-----+--------+---------+-----------+<br>| StuID | Name          | Age | Gender | ClassID | TeacherID |<br>+-------+---------------+-----+--------+---------+-----------+<br>|     1 | Shi Zhongyu   |  22 | M      |       2 |         3 |<br>|     2 | Shi Potian    |  22 | M      |       1 |         7 |<br>|     3 | Xie Yanke     |  53 | M      |       2 |        16 |<br>|     4 | Ding Dian     |  32 | M      |       4 |         4 |<br>|     5 | Yu Yutong     |  26 | M      |       3 |         1 |<br>|     6 | Shi Qing      |  46 | M      |       5 |      NULL |<br>|     7 | Xi Ren        |  19 | F      |       3 |      NULL |<br>|     8 | Lin Daiyu     |  17 | F      |       7 |      NULL |<br>|     9 | Ren Yingying  |  20 | F      |       6 |      NULL |<br>|    10 | Yue Lingshan  |  19 | F      |       3 |      NULL |<br>|    11 | Yuan Chengzhi |  23 | M      |       6 |      NULL |<br>|    12 | Wen Qingqing  |  19 | F      |       1 |      NULL |<br>|    13 | Tian Boguang  |  33 | M      |       2 |      NULL |<br>|    14 | Lu Wushuang   |  17 | F      |       3 |      NULL |<br>|    15 | Duan Yu       |  19 | M      |       4 |      NULL |<br>|    16 | Xu Zhu        |  21 | M      |       1 |      NULL |<br>|    17 | Lin Chong     |  25 | M      |       4 |      NULL |<br>|    18 | Hua Rong      |  23 | M      |       7 |      NULL |<br>|    19 | Xue Baochai   |  18 | F      |       6 |      NULL |<br>|    20 | Diao Chan     |  19 | F      |       7 |      NULL |<br>|    21 | Huang Yueying |  22 | F      |       6 |      NULL |<br>|    22 | Xiao Qiao     |  20 | F      |       1 |      NULL |<br>|    23 | Ma Chao       |  23 | M      |       4 |      NULL |<br>|    24 | Xu Xian       |  27 | M      |    NULL |      NULL |<br>|    25 | Sun Dasheng   | 100 | M      |    NULL |      NULL |<br>|    26 | X1            |  20 | M      |    NULL |      NULL |<br>|    27 | Y1            |  23 | M      |    NULL |      NULL |<br>+-------+---------------+-----+--------+---------+-----------+<br>27 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.01 sec)<br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/MySQL/" class="category-chain-item">MySQL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/MariaDB/" class="print-no-link">#MariaDB</a>
+      
+        <a href="/tags/MySQL/" class="print-no-link">#MySQL</a>
+      
+        <a href="/tags/Backup/" class="print-no-link">#Backup</a>
+      
+        <a href="/tags/XtraBackup/" class="print-no-link">#XtraBackup</a>
+      
+        <a href="/tags/MysqlDump/" class="print-no-link">#MysqlDump</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MySQL备份与恢复</div>
+      <div>https://www.xcjyc.top/2023/05/17/MySQL备份与恢复/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCJYC</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/25/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL主从复制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MySQL主从复制</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/11/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97/" title="MySQL二进制日志">
+                        <span class="hidden-mobile">MySQL二进制日志</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-left: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="MySQL"
+        id="heading-62a004b95946bb97541afa471dcca73a" role="tab" data-toggle="collapse" href="#collapse-62a004b95946bb97541afa471dcca73a"
+        aria-expanded="true"
+      >
+        MySQL
+        <span class="list-group-count">(9)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-62a004b95946bb97541afa471dcca73a"
+           role="tabpanel" aria-labelledby="heading-62a004b95946bb97541afa471dcca73a">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/05/25/MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="MySQL主从复制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL主从复制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/12/Mysql%E4%B8%BB%E4%BB%8E%E6%9E%B6%E6%9E%84GTID%E5%A4%8D%E5%88%B6/" title="MySQL主从架构GTID复制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL主从架构GTID复制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/11/MySQL%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97/" title="MySQL二进制日志"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL二进制日志</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/11/MySQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="MySQL基础知识"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL基础知识</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/17/MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="MySQL备份与恢复"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">MySQL备份与恢复</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/05/05/MySQL%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/" title="MySQL安装初始化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL安装初始化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/28/MySQL%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB/" title="MySQL常用命令汇总"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL常用命令汇总</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/11/Mycat%E5%AE%9E%E7%8E%B0MySQL%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="Mycat实现MySQL读写分离"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Mycat实现MySQL读写分离</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/14/MySQl%E5%A4%9A%E4%B8%BB%E9%9B%86%E7%BE%A4PXC/" title="PXC(Percona XtraDB Cluster)8.0.32集群"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">PXC(Percona XtraDB Cluster)8.0.32集群</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
