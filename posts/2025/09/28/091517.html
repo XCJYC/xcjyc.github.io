@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>MySQL常用命令汇总 | XCJYC.top</title><meta name="keywords" content="MySQL"><meta name="author" content="XCJYC"><meta name="copyright" content="XCJYC"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="MySQL常用命令汇总"><meta name="application-name" content="MySQL常用命令汇总"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="MySQL常用命令汇总"><meta property="og:url" content="https://www.xcjyc.top/posts/2025/09/28/091517.html"><meta property="og:site_name" content="XCJYC.top"><meta property="og:description" content="MySQL 常用命令汇总MySQL 常用命令，覆盖账号管理、库表管理、增删改查、事务与锁、索引视图、性能优化、备份恢复与安全等十个模块，适合作为学习与工作的速查手册。 一、连接与账号管理1234567891011121314151617181920连接本地 MySQL：mysql -u root -"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://www.xcjyc.top/img/mysql.png"><meta property="article:author" content="XCJYC"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.xcjyc.top/img/mysql.png"><meta name="description" content="MySQL 常用命令汇总MySQL 常用命令，覆盖账号管理、库表管理、增删改查、事务与锁、索引视图、性能优化、备份恢复与安全等十个模块，适合作为学习与工作的速查手册。 一、连接与账号管理1234567891011121314151617181920连接本地 MySQL：mysql -u root -"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://www.xcjyc.top/posts/2025/09/28/091517.html"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@1.0.17/lib/assets/font-awesome-animation.min.css"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: undefined,
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: {"mode":"both","api":"https://img2color-go.vercel.app/api?img=","cover_change":true},
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'XCJYC.top',
+  title: 'MySQL常用命令汇总',
+  postAI: '',
+  pageFillDescription: 'MySQL 常用命令汇总, 一、连接与账号管理, 二、数据库操作, 三、数据表操作, 四、数据操作, 五、查询与条件, 六、索引 x2F 视图 x2F 存储过程 x2F 触发器, 七、事务与锁管理, 八、日志与性能优化, 九、备份恢复与导入导出常用命令汇总常用命令覆盖账号管理库表管理增删改查事务与锁索引视图性能优化备份恢复与安全等十个模块适合作为学习与工作的速查手册一连接与账号管理连接本地连接远程指定端口连接查看当前用户查看当前数据库查看所有用户创建用户修改密码设置密码老方法删除用户授权用户授权只读查看用户权限撤销权限刷新权限修改密码创建超级用户锁定用户解锁用户删除匿名用户二数据库操作查看所有数据库创建数据库创建带字符集数据库删除数据库切换数据库查看当前数据库修改数据库字符集查看建库语句数据库版本查看状态查看当前连接数显示完整连接查看线程数查看最大连接数修改最大连接数查看字符集查看排序规则设置默认字符集查看数据库大小查看表数量三数据表操作查看所有表查看表结构查看建表语句创建表创建带约束表删除表清空表修改表名添加列修改列名修改列类型删除列添加主键删除主键添加唯一约束删除唯一约束添加外键删除外键添加默认值删除默认值查看索引添加普通索引删除索引创建唯一索引复制表结构复制表数据查看表状态修改表存储引擎查看表大小查看自增值四数据操作插入数据批量插入插入或更新更新数据删除数据删除所有数据查询所有查询部分列条件查询多条件查询模糊查询查询查询查询查询查询排序去重限制行数分页别名聚合计数聚合平均聚合最大聚合最小聚合求和分组分组过滤联表查询左连接五查询与条件右连接全连接模拟子查询子查询表达式函数函数时间加减排序随机取样正则查询查询六索引视图存储过程触发器创建索引删除索引唯一索引组合索引查看索引创建视图查看视图删除视图更新视图创建存储过程调用存储过程删除存储过程创建带参数存储过程创建函数调用函数删除函数创建触发器七事务与锁管理开始事务提交事务回滚事务设置保存点回滚到保存点释放保存点设置自动提交查看隔离级别设置隔离级别显式锁表解锁表查看锁等待查看元数据锁悲观锁乐观锁版本号实现查看死锁信息杀死事务查看运行事务查看锁等待情况查看锁等待关系八日志与性能优化查看变量查看状态查看慢查询开启慢查询日志设置慢查询时间查看执行计划分析执行计划查看缓存清空缓存分析表优化表修复表查看引擎状态查看事务统计开启查看查看具体耗时查看内存使用开启查看连接延迟九备份恢复与导入导出导出数据库导出表导出带数据和结构导出所有库导入数据库交互式导入仅导出表结构仅导出数据压缩导出压缩导入按条件导出导出带触发器和存储过程导出导入检查备份完整性',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-11-18 16:16:31',
+  postMainColor: '#FFA500',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 8.1.1"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/siteicon/avatar.png"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">XCJYC.top</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><span> 归档</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><span> 分类</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/music/"><span> 音乐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/about/"><span> 关于</span></a></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/conf/" style="font-size: 1.05rem;">.conf<sup>2</sup></a><a href="/tags/Backup/" style="font-size: 1.05rem;">Backup<sup>3</sup></a><a href="/tags/Cluster/" style="font-size: 1.05rem;">Cluster<sup>3</sup></a><a href="/tags/Docker/" style="font-size: 1.05rem;">Docker<sup>4</sup></a><a href="/tags/Edusoho/" style="font-size: 1.05rem;">Edusoho<sup>1</sup></a><a href="/tags/Example/" style="font-size: 1.05rem;">Example<sup>1</sup></a><a href="/tags/K8s/" style="font-size: 1.05rem;">K8s<sup>2</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>6</sup></a><a href="/tags/MariaDB/" style="font-size: 1.05rem;">MariaDB<sup>9</sup></a><a href="/tags/MarkDown/" style="font-size: 1.05rem;">MarkDown<sup>1</sup></a><a href="/tags/MySQL/" style="font-size: 1.05rem;">MySQL<sup>9</sup></a><a href="/tags/Mycat/" style="font-size: 1.05rem;">Mycat<sup>1</sup></a><a href="/tags/MysqlDump/" style="font-size: 1.05rem;">MysqlDump<sup>1</sup></a><a href="/tags/Nginx/" style="font-size: 1.05rem;">Nginx<sup>2</sup></a><a href="/tags/NoSQL/" style="font-size: 1.05rem;">NoSQL<sup>4</sup></a><a href="/tags/OpenVPN/" style="font-size: 1.05rem;">OpenVPN<sup>1</sup></a><a href="/tags/PXC/" style="font-size: 1.05rem;">PXC<sup>1</sup></a><a href="/tags/PostgreSQL/" style="font-size: 1.05rem;">PostgreSQL<sup>4</sup></a><a href="/tags/Redis/" style="font-size: 1.05rem;">Redis<sup>4</sup></a><a href="/tags/RockyLinux/" style="font-size: 1.05rem;">RockyLinux<sup>1</sup></a><a href="/tags/Typora/" style="font-size: 1.05rem;">Typora<sup>1</sup></a><a href="/tags/Ubuntu/" style="font-size: 1.05rem;">Ubuntu<sup>2</sup></a><a href="/tags/Windows/" style="font-size: 1.05rem;">Windows<sup>4</sup></a><a href="/tags/XtraBackup/" style="font-size: 1.05rem;">XtraBackup<sup>1</sup></a><a href="/tags/init/" style="font-size: 1.05rem;">init<sup>7</sup></a><a href="/tags/pg-dump/" style="font-size: 1.05rem;">pg_dump<sup>2</sup></a><a href="/tags/shell/" style="font-size: 1.05rem;">shell<sup>2</sup></a><a href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" style="font-size: 1.05rem;">华为数通<sup>2</sup></a><a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 1.05rem;">正则表达式<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="anzhiyufont anzhiyu-icon-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/11/"><span class="card-archive-list-date">十一月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/09/"><span class="card-archive-list-date">九月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/03/"><span class="card-archive-list-date">三月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">十月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">六月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/MySQL/" itemprop="url">MySQL</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/MySQL/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>MySQL</span></a></span></div></div><h1 class="post-title" itemprop="name headline">MySQL常用命令汇总</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-09-28T01:15:17.000Z" title="发表于 2025-09-28 09:15:17">2025-09-28</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-11-18T08:16:31.784Z" title="更新于 2025-11-18 16:16:31">2025-11-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为宜昌"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>宜昌</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/mysql.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://www.xcjyc.top/posts/2025/09/28/091517.html"><header><a class="post-meta-categories" href="/categories/MySQL/" itemprop="url">MySQL</a><a href="/tags/MySQL/" tabindex="-1" itemprop="url">MySQL</a><h1 id="CrawlerTitle" itemprop="name headline">MySQL常用命令汇总</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">XCJYC</span><time itemprop="dateCreated datePublished" datetime="2025-09-28T01:15:17.000Z" title="发表于 2025-09-28 09:15:17">2025-09-28</time><time itemprop="dateCreated datePublished" datetime="2025-11-18T08:16:31.784Z" title="更新于 2025-11-18 16:16:31">2025-11-18</time></header><h3 id="MySQL-常用命令汇总"><a href="#MySQL-常用命令汇总" class="headerlink" title="MySQL 常用命令汇总"></a>MySQL 常用命令汇总</h3><p>MySQL 常用命令，覆盖账号管理、库表管理、增删改查、事务与锁、索引视图、性能优化、备份恢复与安全等十个模块，适合作为学习与工作的速查手册。</p>
+<h4 id="一、连接与账号管理"><a href="#一、连接与账号管理" class="headerlink" title="一、连接与账号管理"></a>一、连接与账号管理</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">连接本地 MySQL：mysql -u root -p</span><br><span class="line">连接远程 MySQL：mysql -h 192.168.1.10 -u root -p</span><br><span class="line">指定端口连接：mysql -h 127.0.0.1 -P 3307 -u root -p</span><br><span class="line">查看当前用户：SELECT USER();</span><br><span class="line">查看当前数据库：SELECT DATABASE();</span><br><span class="line">查看所有用户：SELECT user,host FROM mysql.user;</span><br><span class="line">创建用户：CREATE USER &#x27;test&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line">修改密码：ALTER USER &#x27;test&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;newpass&#x27;;</span><br><span class="line">设置密码（老方法）：SET PASSWORD FOR &#x27;test&#x27;@&#x27;%&#x27; = PASSWORD(&#x27;pwd&#x27;);</span><br><span class="line">删除用户：DROP USER &#x27;test&#x27;@&#x27;%&#x27;;</span><br><span class="line">授权用户：GRANT ALL PRIVILEGES ON db1.* TO &#x27;test&#x27;@&#x27;%&#x27;;</span><br><span class="line">授权只读：GRANT SELECT ON db1.* TO &#x27;test&#x27;@&#x27;%&#x27;;</span><br><span class="line">查看用户权限：SHOW GRANTS FOR &#x27;test&#x27;@&#x27;%&#x27;;</span><br><span class="line">撤销权限：REVOKE INSERT ON db1.* FROM &#x27;test&#x27;@&#x27;%&#x27;;</span><br><span class="line">刷新权限：FLUSH PRIVILEGES;</span><br><span class="line">修改 root 密码：ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line">创建超级用户：GRANT ALL ON . TO &#x27;admin&#x27;@&#x27;%&#x27; WITH GRANT OPTION;</span><br><span class="line">锁定用户：ALTER USER &#x27;test&#x27;@&#x27;%&#x27; ACCOUNT LOCK;</span><br><span class="line">解锁用户：ALTER USER &#x27;test&#x27;@&#x27;%&#x27; ACCOUNT UNLOCK;</span><br><span class="line">删除匿名用户：DROP USER &#x27;&#x27;@&#x27;localhost&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="二、数据库操作"><a href="#二、数据库操作" class="headerlink" title="二、数据库操作"></a><strong>二、数据库操作</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">查看所有数据库：SHOW DATABASES;</span><br><span class="line">创建数据库：CREATE DATABASE db1;</span><br><span class="line">创建带字符集数据库：CREATE DATABASE db1 CHARACTER SET utf8mb4;</span><br><span class="line">删除数据库：DROP DATABASE db1;</span><br><span class="line">切换数据库：USE db1;</span><br><span class="line">查看当前数据库：SELECT DATABASE();</span><br><span class="line">修改数据库字符集：ALTER DATABASE db1 CHARACTER SET utf8;</span><br><span class="line">查看建库语句：SHOW CREATE DATABASE db1;</span><br><span class="line">数据库版本：SELECT VERSION();</span><br><span class="line">查看状态：SHOW STATUS;</span><br><span class="line">查看当前连接数：SHOW PROCESSLIST;</span><br><span class="line">显示完整连接：SHOW FULL PROCESSLIST;</span><br><span class="line">查看线程数：SHOW STATUS LIKE &#x27;Threads_connected&#x27;;</span><br><span class="line">查看最大连接数：SHOW VARIABLES LIKE &#x27;max_connections&#x27;;</span><br><span class="line">修改最大连接数：SET GLOBAL max_connections=500;</span><br><span class="line">查看字符集：SHOW VARIABLES LIKE &#x27;character_set_%&#x27;;</span><br><span class="line">查看排序规则：SHOW VARIABLES LIKE &#x27;collation_%&#x27;;</span><br><span class="line">设置默认字符集：SET NAMES utf8mb4;</span><br><span class="line">查看数据库大小：SELECT table_schema, SUM(data_length+index_length)/1024/1024 AS MB FROM information_schema.tables GROUP BY table_schema;</span><br><span class="line">查看表数量：SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=&#x27;db1&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="三、数据表操作"><a href="#三、数据表操作" class="headerlink" title="三、数据表操作"></a><strong>三、数据表操作</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">查看所有表：SHOW TABLES;</span><br><span class="line">查看表结构：DESC users;</span><br><span class="line">查看建表语句：SHOW CREATE TABLE users;</span><br><span class="line">创建表：CREATE TABLE users(id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(50));</span><br><span class="line">创建带约束表：CREATE TABLE orders(id INT, uid INT, FOREIGN KEY(uid) REFERENCES users(id));</span><br><span class="line">删除表：DROP TABLE users;</span><br><span class="line">清空表：TRUNCATE TABLE users;</span><br><span class="line">修改表名：RENAME TABLE users TO members;</span><br><span class="line">添加列：ALTER TABLE users ADD email VARCHAR(100);</span><br><span class="line">修改列名：ALTER TABLE users CHANGE name username VARCHAR(50);</span><br><span class="line">修改列类型：ALTER TABLE users MODIFY age SMALLINT;</span><br><span class="line">删除列：ALTER TABLE users DROP COLUMN email;</span><br><span class="line">添加主键：ALTER TABLE users ADD PRIMARY KEY(id);</span><br><span class="line">删除主键：ALTER TABLE users DROP PRIMARY KEY;</span><br><span class="line">添加唯一约束：ALTER TABLE users ADD UNIQUE(email);</span><br><span class="line">删除唯一约束：ALTER TABLE users DROP INDEX email;</span><br><span class="line">添加外键：ALTER TABLE orders ADD CONSTRAINT fk_user FOREIGN KEY(uid) REFERENCES users(id);</span><br><span class="line">删除外键：ALTER TABLE orders DROP FOREIGN KEY fk_user;</span><br><span class="line">添加默认值：ALTER TABLE users ALTER age SET DEFAULT 18;</span><br><span class="line">删除默认值：ALTER TABLE users ALTER age DROP DEFAULT;</span><br><span class="line">查看索引：SHOW INDEX FROM users;</span><br><span class="line">添加普通索引：CREATE INDEX idx_age ON users(age);</span><br><span class="line">删除索引：DROP INDEX idx_age ON users;</span><br><span class="line">创建唯一索引：CREATE UNIQUE INDEX idx_name ON users(name);</span><br><span class="line">复制表结构：CREATE TABLE new_users LIKE users;</span><br><span class="line">复制表数据：INSERT INTO new_users SELECT * FROM users;</span><br><span class="line">查看表状态：SHOW TABLE STATUS LIKE &#x27;users&#x27;;</span><br><span class="line">修改表存储引擎：ALTER TABLE users ENGINE=InnoDB;</span><br><span class="line">查看表大小：SELECT table_name, data_length+index_length FROM information_schema.tables WHERE table_schema=&#x27;db1&#x27;;</span><br><span class="line">查看自增值：SHOW TABLE STATUS LIKE &#x27;users&#x27;\G;</span><br></pre></td></tr></table></figure>
+
+<h4 id="四、数据操作"><a href="#四、数据操作" class="headerlink" title="四、数据操作"></a><strong>四、数据操作</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">插入数据：INSERT INTO users(name,age)VALUES(&#x27;Tom&#x27;,20);</span><br><span class="line">批量插入：INSERT INTO users(name,age)VALUES(&#x27;A&#x27;,18),(&#x27;B&#x27;,19);</span><br><span class="line">插入或更新：INSERT INTO users(id,name)VALUES(1,&#x27;Tom&#x27;) ON DUPLICATE KEY UPDATE name=&#x27;Tom&#x27;;</span><br><span class="line">更新数据：UPDATE users SET age=22 WHERE name=&#x27;Tom&#x27;;</span><br><span class="line">删除数据：DELETE FROM users WHERE id=1;</span><br><span class="line">删除所有数据：DELETE FROM users;</span><br><span class="line">查询所有：SELECT * FROM users;</span><br><span class="line">查询部分列：SELECT name,age FROM users;</span><br><span class="line">条件查询：SELECT * FROM users WHERE age&gt;20;</span><br><span class="line">多条件查询：SELECT * FROM users WHERE age&gt;20 AND name=&#x27;Tom&#x27;;</span><br><span class="line">模糊查询：SELECT * FROM users WHERE name LIKE &#x27;T%&#x27;;</span><br><span class="line">IN 查询：SELECT * FROM users WHERE age IN(18,20,25);</span><br><span class="line">NOT IN 查询：SELECT * FROM users WHERE age NOT IN(18,20,25);</span><br><span class="line">BETWEEN 查询：SELECT * FROM users WHERE age BETWEEN 20 AND 30;</span><br><span class="line">NULL 查询：SELECT * FROM users WHERE email IS NULL;</span><br><span class="line">NOT NULL 查询：SELECT * FROM users WHERE email IS NOT NULL;</span><br><span class="line">排序：SELECT * FROM users ORDER BY age DESC;</span><br><span class="line">去重：SELECT DISTINCT name FROM users;</span><br><span class="line">限制行数：SELECT * FROM users LIMIT 10;</span><br><span class="line">分页：SELECT * FROM users LIMIT 10 OFFSET 20;</span><br><span class="line">别名：SELECT name AS username FROM users;</span><br><span class="line">聚合-计数：SELECT COUNT(*) FROM users;</span><br><span class="line">聚合-平均：SELECT AVG(age) FROM users;</span><br><span class="line">聚合-最大：SELECT MAX(age) FROM users;</span><br><span class="line">聚合-最小：SELECT MIN(age) FROM users;</span><br><span class="line">聚合-求和：SELECT SUM(age) FROM users;</span><br><span class="line">分组：SELECT age,COUNT(*) FROM users GROUP BY age;</span><br><span class="line">分组过滤：SELECT age,COUNT(*) FROM users GROUP BY age HAVING COUNT(*)&gt;2;</span><br><span class="line">联表查询：SELECT u.name,o.amount FROM users u JOIN orders o ON u.id=o.uid;</span><br><span class="line">左连接：SELECT u.name,o.amount FROM users u LEFT JOIN orders o ON u.id=o.uid;</span><br></pre></td></tr></table></figure>
+
+<h4 id="五、查询与条件"><a href="#五、查询与条件" class="headerlink" title="五、查询与条件"></a>五、查询与条件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">右连接：SELECT u.name,o.amount FROM users u RIGHT JOIN orders o ON u.id=o.uid;</span><br><span class="line">全连接（模拟）：SELECT * FROM users u LEFT JOIN orders o ON u.id=o.uid UNION SELECT * FROM users u RIGHT JOIN orders o ON u.id=o.uid;</span><br><span class="line">子查询：SELECT * FROM users WHERE id IN(SELECT uid FROM orders);</span><br><span class="line">EXISTS 子查询：SELECT * FROM users u WHERE EXISTS(SELECT 1 FROM orders o WHERE o.uid=u.id);</span><br><span class="line">CASE 表达式：SELECT name,CASE WHEN age&gt;=18 THEN &#x27;adult&#x27; ELSE &#x27;child&#x27; END FROM users;</span><br><span class="line">IF 函数：SELECT name,IF(age&gt;=18,&#x27;Y&#x27;,&#x27;N&#x27;) FROM users;</span><br><span class="line">COALESCE：SELECT COALESCE(email,&#x27;N/A&#x27;) FROM users;</span><br><span class="line">CONCAT：SELECT CONCAT(name,&#x27;-&#x27;,age) FROM users;</span><br><span class="line">LENGTH：SELECT LENGTH(name) FROM users;</span><br><span class="line">SUBSTRING：SELECT SUBSTRING(name,1,2) FROM users;</span><br><span class="line">UPPER：SELECT UPPER(name) FROM users;</span><br><span class="line">LOWER：SELECT LOWER(name) FROM users;</span><br><span class="line">NOW：SELECT NOW();</span><br><span class="line">DATE 函数：SELECT CURDATE();</span><br><span class="line">时间加减：SELECT DATE_ADD(NOW(),INTERVAL 7 DAY);</span><br><span class="line">DATEDIFF：SELECT DATEDIFF(NOW(),&#x27;2025-01-01&#x27;);</span><br><span class="line">RAND：SELECT RAND();</span><br><span class="line">LIMIT 排序随机取样：SELECT * FROM users ORDER BY RAND() LIMIT 1;</span><br><span class="line">正则查询：SELECT * FROM users WHERE name REGEXP &#x27;^T&#x27;;</span><br><span class="line">JSON 查询：SELECT JSON_EXTRACT(info,&#x27;$.age&#x27;) FROM users;</span><br></pre></td></tr></table></figure>
+
+<h4 id="六、索引-视图-存储过程-触发器"><a href="#六、索引-视图-存储过程-触发器" class="headerlink" title="六、索引 &#x2F; 视图 &#x2F; 存储过程 &#x2F; 触发器"></a><strong>六、索引 &#x2F; 视图 &#x2F;</strong> 存储过程 &#x2F; 触发器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">创建索引：CREATE INDEX idx_age ON users(age);</span><br><span class="line">删除索引：DROP INDEX idx_age ON users;</span><br><span class="line">唯一索引：CREATE UNIQUE INDEX idx_email ON users(email);</span><br><span class="line">组合索引：CREATE INDEX idx_name_age ON users(name,age);</span><br><span class="line">查看索引：SHOW INDEX FROM users;</span><br><span class="line">创建视图：CREATE VIEW v_users AS SELECT name,age FROM users;</span><br><span class="line">查看视图：SHOW CREATE VIEW v_users;</span><br><span class="line">删除视图：DROP VIEW v_users;</span><br><span class="line">更新视图：CREATE OR REPLACE VIEW v_users AS SELECT id,name FROM users;</span><br><span class="line">创建存储过程：</span><br><span class="line">DELIMITER //</span><br><span class="line">CREATE PROCEDURE get_all()</span><br><span class="line">BEGIN</span><br><span class="line">  SELECT * FROM users;</span><br><span class="line">END //</span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line">调用存储过程：CALL get_all();</span><br><span class="line">删除存储过程：DROP PROCEDURE get_all;</span><br><span class="line">创建带参数存储过程：</span><br><span class="line">CREATE PROCEDURE get_user(IN uid INT) SELECT * FROM users WHERE id=uid;</span><br><span class="line"></span><br><span class="line">创建函数：</span><br><span class="line">CREATE FUNCTION add_age(a INT,b INT) RETURNS INT RETURN a+b;</span><br><span class="line"></span><br><span class="line">调用函数：SELECT add_age(1,2);</span><br><span class="line">删除函数：DROP FUNCTION add_age;</span><br><span class="line">创建触发器：</span><br><span class="line">CREATE TRIGGER before_insert BEFORE INSERT ON users FOR EACH ROW SET NEW.age=IFNULL(NEW.age,18);</span><br></pre></td></tr></table></figure>
+
+<h4 id="七、事务与锁管理"><a href="#七、事务与锁管理" class="headerlink" title="七、事务与锁管理"></a><strong>七、事务与锁管理</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">开始事务：START TRANSACTION;</span><br><span class="line">提交事务：COMMIT;</span><br><span class="line">回滚事务：ROLLBACK;</span><br><span class="line">设置保存点：SAVEPOINT sp1;</span><br><span class="line">回滚到保存点：ROLLBACK TO sp1;</span><br><span class="line">释放保存点：RELEASE SAVEPOINT sp1;</span><br><span class="line">设置自动提交：SET autocommit=0;</span><br><span class="line">查看隔离级别：SHOW VARIABLES LIKE &#x27;tx_isolation&#x27;;</span><br><span class="line">设置隔离级别：SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">显式锁表：LOCK TABLES users WRITE;</span><br><span class="line">解锁表：UNLOCK TABLES;</span><br><span class="line">查看锁等待：SHOW ENGINE INNODB STATUS\G;</span><br><span class="line">查看元数据锁：SELECT * FROM performance_schema.metadata_locks;</span><br><span class="line">悲观锁：SELECT * FROM users WHERE id=1 FOR UPDATE;</span><br><span class="line">乐观锁（版本号实现）：UPDATE users SET age=age+1, version=version+1 WHERE id=1 AND version=2;</span><br><span class="line">查看死锁信息：SHOW ENGINE INNODB STATUS\G;</span><br><span class="line">杀死事务：KILL 1234;</span><br><span class="line">查看运行事务：SELECT * FROM information_schema.innodb_trx;</span><br><span class="line">查看锁等待情况：SELECT * FROM information_schema.innodb_locks;</span><br><span class="line">查看锁等待关系：SELECT * FROM information_schema.innodb_lock_waits;</span><br></pre></td></tr></table></figure>
+
+<h4 id="八、日志与性能优化"><a href="#八、日志与性能优化" class="headerlink" title="八、日志与性能优化"></a><strong>八、日志与性能优化</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">查看变量：SHOW VARIABLES;</span><br><span class="line">查看状态：SHOW STATUS;</span><br><span class="line">查看慢查询：SHOW VARIABLES LIKE &#x27;slow_query_log&#x27;;</span><br><span class="line">开启慢查询日志：SET GLOBAL slow_query_log=1;</span><br><span class="line">设置慢查询时间：SET GLOBAL long_query_time=2;</span><br><span class="line">查看执行计划：EXPLAIN SELECT * FROM users WHERE age&gt;20;</span><br><span class="line">分析执行计划：EXPLAIN FORMAT=JSON SELECT * FROM users;</span><br><span class="line">查看缓存：SHOW VARIABLES LIKE &#x27;query_cache%&#x27;;</span><br><span class="line">清空缓存：RESET QUERY CACHE;</span><br><span class="line">分析表：ANALYZE TABLE users;</span><br><span class="line">优化表：OPTIMIZE TABLE users;</span><br><span class="line">修复表：REPAIR TABLE users;</span><br><span class="line">查看引擎状态：SHOW ENGINE INNODB STATUS\G;</span><br><span class="line">查看事务统计：SHOW GLOBAL STATUS LIKE &#x27;Com_commit&#x27;;</span><br><span class="line">Profiling 开启：SET profiling=1;</span><br><span class="line">查看 Profiling：SHOW PROFILES;</span><br><span class="line">查看具体耗时：SHOW PROFILE FOR QUERY 1;</span><br><span class="line">查看内存使用：SHOW ENGINE PERFORMANCE_SCHEMA STATUS;</span><br><span class="line">Performance Schema 开启：UPDATE performance_schema.setup_consumers SET ENABLED=&#x27;YES&#x27; WHERE NAME=&#x27;events_statements_history&#x27;;</span><br><span class="line">查看连接延迟：SHOW STATUS LIKE &#x27;Threads_running&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="九、备份恢复与导入导出"><a href="#九、备份恢复与导入导出" class="headerlink" title="九、备份恢复与导入导出"></a><strong>九、备份恢复与导入导出</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">导出数据库：mysqldump -u root -p db1 &gt; db1.sql</span><br><span class="line">导出表：mysqldump -u root -p db1 users &gt; users.sql</span><br><span class="line">导出带数据和结构：mysqldump -u root -p --databases db1 &gt; db1.sql</span><br><span class="line">导出所有库：mysqldump -u root -p --all-databases &gt; all.sql</span><br><span class="line">导入数据库：mysql -u root -p db1 &lt; db1.sql</span><br><span class="line">交互式导入：SOURCE /path/db1.sql;</span><br><span class="line">仅导出表结构：mysqldump -u root -p -d db1 &gt; db1_schema.sql</span><br><span class="line">仅导出数据：mysqldump -u root -p -t db1 &gt; db1_data.sql</span><br><span class="line">压缩导出：mysqldump -u root -p db1 | gzip &gt; db1.sql.gz</span><br><span class="line">压缩导入：gunzip &lt; db1.sql.gz | mysql -u root -p db1</span><br><span class="line">按条件导出：mysqldump -u root -p db1 users --where=&quot;age&gt;20&quot; &gt; users.sql</span><br><span class="line">导出带触发器和存储过程：mysqldump -u root -p --routines --triggers db1 &gt; db1.sql</span><br><span class="line">导出 CSV：SELECT * FROM users INTO OUTFILE &#x27;/tmp/users.csv&#x27; FIELDS TERMINATED BY &#x27;,&#x27;;</span><br><span class="line">导入 CSV：LOAD DATA INFILE &#x27;/tmp/users.csv&#x27; INTO TABLE users FIELDS TERMINATED BY &#x27;,&#x27;;</span><br><span class="line">检查备份完整性：mysqlcheck -u root -p --all-databases</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/siteicon/fluid.png" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/siteicon/fluid.png" title="头像" alt="头像"></a><div class="post-copyright__author_name">XCJYC</div><div class="post-copyright__author_desc">XCJYC.top</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://www.xcjyc.top/posts/2025/09/28/091517.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://www.xcjyc.top/posts/2025/09/28/091517.html')">MySQL常用命令汇总</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://www.xcjyc.top/posts/2025/09/28/091517.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.xcjyc.top" target="_blank">XCJYC.top</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/MySQL/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>MySQL<span class="categoryesPageCount">9</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/MySQL/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>MySQL<span class="tagsPageCount">9</span></a></div></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/2025/05/26/103122.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/windows.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">修复 Windows 11 更新后共享打印机错误</div></div></a></div><div class="next-post pull-right"><a href="/posts/2025/11/03/153003.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/docker.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Docker Inspect命令技巧</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/2023/05/11/205238.html" title="MySQL基础知识"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mysql.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-05-11</div><div class="title">MySQL基础知识</div></div></a></div><div><a href="/posts/2023/05/25/123343.html" title="MySQL主从复制"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mysql.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-05-25</div><div class="title">MySQL主从复制</div></div></a></div><div><a href="/posts/2023/05/11/225851.html" title="MySQL二进制日志"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mysql.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-05-11</div><div class="title">MySQL二进制日志</div></div></a></div><div><a href="/posts/2023/05/17/145942.html" title="MySQL备份与恢复"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mysql.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-05-17</div><div class="title">MySQL备份与恢复</div></div></a></div><div><a href="/posts/2023/07/14/114907.html" title="PXC(Percona XtraDB Cluster)8.0.32集群"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mysql.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-07-14</div><div class="title">PXC(Percona XtraDB Cluster)8.0.32集群</div></div></a></div><div><a href="/posts/2023/05/05/220430.html" title="MySQL安装初始化"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mysql.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-05-05</div><div class="title">MySQL安装初始化</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/siteicon/fluid.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">XCJYC BLOGS</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">XCJYC</h1><div class="author-info__desc">XCJYC.top</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://www.github.com/" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://www.bilibili.com/" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB"><span class="toc-number">1.</span> <span class="toc-text">MySQL 常用命令汇总</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%BF%9E%E6%8E%A5%E4%B8%8E%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">一、连接与账号管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.</span> <span class="toc-text">二、数据库操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.</span> <span class="toc-text">三、数据表操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.</span> <span class="toc-text">四、数据操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9F%A5%E8%AF%A2%E4%B8%8E%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.5.</span> <span class="toc-text">五、查询与条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%B4%A2%E5%BC%95-%E8%A7%86%E5%9B%BE-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B-%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-number">1.6.</span> <span class="toc-text">六、索引 &#x2F; 视图 &#x2F; 存储过程 &#x2F; 触发器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81%E7%AE%A1%E7%90%86"><span class="toc-number">1.7.</span> <span class="toc-text">七、事务与锁管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%97%A5%E5%BF%97%E4%B8%8E%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">1.8.</span> <span class="toc-text">八、日志与性能优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D%E4%B8%8E%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA"><span class="toc-number">1.9.</span> <span class="toc-text">九、备份恢复与导入导出</span></a></li></ol></li></ol></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><div id="runtimeTextTip"></div></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v8.1.1" title="博客框架为Hexo_v8.1.1"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Frame-Hexo.svg" alt="博客框架为Hexo_v8.1.1"/></a><a class="github-badge" target="_blank" href="https://hexo.anheyu.com/" style="margin-inline:5px" data-title="本站使用AnZhiYu主题" title="本站使用AnZhiYu主题"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.9/img/Theme-AnZhiYu-2E67D3.svg" alt="本站使用AnZhiYu主题"/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title="本站项目由Github托管"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Source-Github.svg" alt="本站项目由Github托管"/></a></p></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">44</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">12</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><span> 归档</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><span> 分类</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/music/"><span> 音乐</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/about/"><span> 关于</span></a></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/conf/" style="font-size: 0.88rem;">.conf<sup>2</sup></a><a href="/tags/Backup/" style="font-size: 0.88rem;">Backup<sup>3</sup></a><a href="/tags/Cluster/" style="font-size: 0.88rem;">Cluster<sup>3</sup></a><a href="/tags/Docker/" style="font-size: 0.88rem;">Docker<sup>4</sup></a><a href="/tags/Edusoho/" style="font-size: 0.88rem;">Edusoho<sup>1</sup></a><a href="/tags/Example/" style="font-size: 0.88rem;">Example<sup>1</sup></a><a href="/tags/K8s/" style="font-size: 0.88rem;">K8s<sup>2</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>6</sup></a><a href="/tags/MariaDB/" style="font-size: 0.88rem;">MariaDB<sup>9</sup></a><a href="/tags/MarkDown/" style="font-size: 0.88rem;">MarkDown<sup>1</sup></a><a href="/tags/MySQL/" style="font-size: 0.88rem;">MySQL<sup>9</sup></a><a href="/tags/Mycat/" style="font-size: 0.88rem;">Mycat<sup>1</sup></a><a href="/tags/MysqlDump/" style="font-size: 0.88rem;">MysqlDump<sup>1</sup></a><a href="/tags/Nginx/" style="font-size: 0.88rem;">Nginx<sup>2</sup></a><a href="/tags/NoSQL/" style="font-size: 0.88rem;">NoSQL<sup>4</sup></a><a href="/tags/OpenVPN/" style="font-size: 0.88rem;">OpenVPN<sup>1</sup></a><a href="/tags/PXC/" style="font-size: 0.88rem;">PXC<sup>1</sup></a><a href="/tags/PostgreSQL/" style="font-size: 0.88rem;">PostgreSQL<sup>4</sup></a><a href="/tags/Redis/" style="font-size: 0.88rem;">Redis<sup>4</sup></a><a href="/tags/RockyLinux/" style="font-size: 0.88rem;">RockyLinux<sup>1</sup></a><a href="/tags/Typora/" style="font-size: 0.88rem;">Typora<sup>1</sup></a><a href="/tags/Ubuntu/" style="font-size: 0.88rem;">Ubuntu<sup>2</sup></a><a href="/tags/Windows/" style="font-size: 0.88rem;">Windows<sup>4</sup></a><a href="/tags/XtraBackup/" style="font-size: 0.88rem;">XtraBackup<sup>1</sup></a><a href="/tags/init/" style="font-size: 0.88rem;">init<sup>7</sup></a><a href="/tags/pg-dump/" style="font-size: 0.88rem;">pg_dump<sup>2</sup></a><a href="/tags/shell/" style="font-size: 0.88rem;">shell<sup>2</sup></a><a href="/tags/%E5%8D%8E%E4%B8%BA%E6%95%B0%E9%80%9A/" style="font-size: 0.88rem;">华为数通<sup>2</sup></a><a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 0.88rem;">正则表达式<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("05/01/2022 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2022 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 XCJYC 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("05/01/2022 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "";
+        img.title = "";
+        img.alt = "";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script defer="defer" id="ribbon" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
